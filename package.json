@@ -2,6 +2,6 @@
   "name": "quantum-dashboard",
   "version": "1.0.0",
   "scripts": {
-    "start": "npx serve -l $PORT --no-clean-urls"
+    "start": "npx serve -l $PORT"
   }
 }
