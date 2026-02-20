@@ -18,7 +18,7 @@
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-market-analysis.html"><span class="material-symbols-outlined">monitoring</span><span>ניתוח שוק</span></a>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-properties.html"><span class="material-symbols-outlined">apartment</span><span>נכסים</span></a>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-messaging.html"><span class="material-symbols-outlined">mail</span><span>הודעות</span></a>
-<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-alerts.html"><span class="material-symbols-outlined">notifications</span><span>התראות</span><span class="mr-auto px-1.5 py-0.5 bg-alert-rose/20 text-alert-rose text-[9px] font-bold rounded">703</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-alerts.html"><span class="material-symbols-outlined">notifications</span><span>התראות</span><span id="nav-alert-badge" class="hidden mr-auto px-1.5 py-0.5 bg-alert-rose text-white text-[9px] font-bold rounded-full min-w-[18px] text-center"></span></a>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-reports.html"><span class="material-symbols-outlined">description</span><span>דוחות</span></a>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary text-white font-semibold" href="quantum-settings.html"><span class="material-symbols-outlined">settings</span><span>הגדרות</span></a>
 </nav>
@@ -70,14 +70,21 @@
 </div></div>
 <div class="bg-surface/40 border border-white/5 rounded-2xl p-6">
 <h4 class="font-bold text-white mb-4 flex items-center gap-2"><span class="material-symbols-outlined text-primary">info</span>מידע מערכת</h4>
-<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div id="system-info" class="grid grid-cols-2 md:grid-cols-4 gap-4">
 <div class="p-3 bg-white/5 rounded-xl text-center"><p class="text-[10px] text-slate-500 font-bold uppercase mb-1">גרסה</p><p class="text-sm font-bold text-white">v4.7.3</p></div>
-<div class="p-3 bg-white/5 rounded-xl text-center"><p class="text-[10px] text-slate-500 font-bold uppercase mb-1">מתחמים</p><p class="text-sm font-bold text-white">490</p></div>
-<div class="p-3 bg-white/5 rounded-xl text-center"><p class="text-[10px] text-slate-500 font-bold uppercase mb-1">סריקה אחרונה</p><p class="text-sm font-bold text-success-green">16/02 09:45</p></div>
+<div class="p-3 bg-white/5 rounded-xl text-center"><p class="text-[10px] text-slate-500 font-bold uppercase mb-1">מתחמים</p><p id="sys-complexes" class="text-sm font-bold text-white">...</p></div>
+<div class="p-3 bg-white/5 rounded-xl text-center"><p class="text-[10px] text-slate-500 font-bold uppercase mb-1">סריקה אחרונה</p><p class="text-sm font-bold text-success-green">טוען...</p></div>
 <div class="p-3 bg-white/5 rounded-xl text-center"><p class="text-[10px] text-slate-500 font-bold uppercase mb-1">שרת</p><p class="text-sm font-bold text-success-green">Railway</p></div>
 </div></div>
 </div>
-<footer class="mt-auto px-8 py-6 border-t border-white/5 text-center text-slate-500 text-[11px] font-medium tracking-widest uppercase">© 2026 Quantum Unified Analytics</footer>
+<footer class="mt-auto px-8 py-6 border-t border-white/5 text-center text-slate-500 text-[11px] font-medium tracking-widest uppercase">&copy; 2026 Quantum Unified Analytics</footer>
 </main>
+<script>
+fetch('https://pinuy-binuy-analyzer-production.up.railway.app/api/ssi/dashboard-data').then(function(r){return r.json()}).then(function(d){
+  var s=d.stats||{};
+  document.getElementById('sys-complexes').textContent=s.total_complexes||'?';
+}).catch(function(){});
+</script>
+<script>fetch('https://pinuy-binuy-analyzer-production.up.railway.app/api/alerts?limit=500').then(function(r){return r.json()}).then(function(d){var u=(d.alerts||[]).filter(function(a){return !a.is_read}).length;var b=document.getElementById('nav-alert-badge');if(b&&u>0){b.textContent=u>99?'99+':u;b.classList.remove('hidden')}}).catch(function(){});</script>
 </body>
 </html>
