@@ -18,7 +18,7 @@
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-market-analysis.html"><span class="material-symbols-outlined">monitoring</span><span>ניתוח שוק</span></a>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary text-white font-semibold" href="quantum-properties.html"><span class="material-symbols-outlined">apartment</span><span>נכסים</span></a>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-messaging.html"><span class="material-symbols-outlined">mail</span><span>הודעות</span></a>
-<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-alerts.html"><span class="material-symbols-outlined">notifications</span><span>התראות</span><span class="mr-auto px-1.5 py-0.5 bg-alert-rose/20 text-alert-rose text-[9px] font-bold rounded alert-count-badge" style="display:none"></span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-alerts.html"><span class="material-symbols-outlined">notifications</span><span>התראות</span><span id="nav-alert-badge" class="hidden mr-auto px-1.5 py-0.5 bg-alert-rose text-white text-[9px] font-bold rounded-full min-w-[18px] text-center"></span></a>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-reports.html"><span class="material-symbols-outlined">description</span><span>דוחות</span></a>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-settings.html"><span class="material-symbols-outlined">settings</span><span>הגדרות</span></a>
 </nav>
@@ -107,7 +107,7 @@ loadProperties();
 document.getElementById('toggle-filters').addEventListener('click',function(){document.getElementById('filters-panel').classList.toggle('hidden');});
 
 // Dynamic alert badge
-fetch(API_BASE + '/api/ssi/dashboard-data').then(function(r){return r.json()}).then(function(d){var alerts=d.recentAlerts||[];var unread=alerts.filter(function(a){return !a.is_read}).length;document.querySelectorAll('.alert-count-badge').forEach(function(el){if(unread>0){el.textContent=unread;el.style.display='';}});}).catch(function(){});
+fetch(API_BASE + '/api/alerts?limit=500').then(function(r){return r.json()}).then(function(d){var u=(d.alerts||[]).filter(function(a){return !a.is_read}).length;var b=document.getElementById('nav-alert-badge');if(b&&u>0){b.textContent=u>99?'99+':u;b.classList.remove('hidden')}}).catch(function(){});
 </script>
 </body>
 </html>
