@@ -1,1 +1,113 @@
-PLACEHOLDER
+<!DOCTYPE html>
+<html class="dark" dir="rtl" lang="he">
+<head>
+<meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>QUANTUM | נכסים</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>tailwind.config={darkMode:"class",theme:{extend:{colors:{"primary":"#137fec","background-dark":"#101922","surface":"#1a2530","border-dark":"#2d3a4b","alert-rose":"#f43f5e","success-green":"#10b981"},fontFamily:{"display":["Manrope","sans-serif"]}}}}</script>
+<style>body{font-family:'Manrope',sans-serif;}.glass-panel{background:rgba(26,37,48,0.7);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.05);}.custom-scrollbar::-webkit-scrollbar{width:6px;}.custom-scrollbar::-webkit-scrollbar-track{background:transparent;}.custom-scrollbar::-webkit-scrollbar-thumb{background:#2d3a4b;border-radius:10px;}</style>
+</head>
+<body class="bg-background-dark text-slate-200 min-h-screen flex">
+<aside class="w-64 flex-shrink-0 border-l border-white/5 bg-surface/50 h-screen sticky top-0 hidden lg:flex flex-col">
+<div class="p-6 flex items-center gap-3"><div class="size-10 rounded-lg bg-primary flex items-center justify-center text-white shadow-lg shadow-primary/20"><span class="material-symbols-outlined text-2xl">computer</span></div><div><h1 class="text-xl font-extrabold tracking-tight text-white uppercase">QUANTUM</h1><p class="text-[10px] text-primary font-bold tracking-widest leading-none">UNIFIED ANALYTICS</p></div></div>
+<nav class="flex-1 px-4 space-y-1 mt-4">
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-dashboard.html"><span class="material-symbols-outlined">dashboard</span><span>לוח בקרה</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-map-view.html"><span class="material-symbols-outlined">map</span><span>מפת פרויקטים</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-market-analysis.html"><span class="material-symbols-outlined">monitoring</span><span>ניתוח שוק</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary text-white font-semibold" href="quantum-properties.html"><span class="material-symbols-outlined">apartment</span><span>נכסים</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-messaging.html"><span class="material-symbols-outlined">mail</span><span>הודעות</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-alerts.html"><span class="material-symbols-outlined">notifications</span><span>התראות</span><span class="mr-auto px-1.5 py-0.5 bg-alert-rose/20 text-alert-rose text-[9px] font-bold rounded alert-count-badge" style="display:none"></span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-reports.html"><span class="material-symbols-outlined">description</span><span>דוחות</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-settings.html"><span class="material-symbols-outlined">settings</span><span>הגדרות</span></a>
+</nav>
+<div class="p-4 mt-auto"><div class="flex items-center gap-3 px-2"><div class="size-10 rounded-full bg-primary/20 flex items-center justify-center"><span class="material-symbols-outlined text-primary">person</span></div><div class="flex-1 min-w-0"><p class="text-sm font-bold text-white truncate">אלון כהן</p><p class="text-xs text-slate-500 truncate">מנהל השקעות</p></div><span class="material-symbols-outlined text-slate-500 cursor-pointer hover:text-white">logout</span></div></div>
+</aside>
+<main class="flex-1 min-w-0 h-screen overflow-y-auto overflow-x-hidden flex flex-col">
+<header class="flex items-center justify-between px-8 py-5 border-b border-white/5 glass-panel sticky top-0 z-10">
+<div class="flex flex-col"><h2 class="text-2xl font-bold text-white leading-tight">דפדפן נכסים</h2><p class="text-sm text-slate-400">מודעות פעילות ממקורות מרובים - yad2, madlan, כינוסים ועוד</p></div>
+<div class="flex items-center gap-3">
+<div class="relative group"><span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors">search</span><input class="bg-surface/50 border-white/10 rounded-xl pr-10 pl-4 py-2.5 text-sm w-72 focus:ring-primary focus:border-primary transition-all" placeholder="חיפוש נכס, עיר או כתובת..." type="text" id="search-input"/></div>
+<button class="flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all" id="toggle-filters"><span class="material-symbols-outlined text-xl">filter_list</span><span>מסנן מתקדם</span></button>
+</div>
+</header>
+<div id="filters-panel" class="border-b border-white/5 bg-surface/30 px-8 py-4 hidden">
+<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+<div><label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-1">עיר</label><select class="w-full bg-surface border-white/10 rounded-lg text-sm py-2"><option>הכל</option><option>תל אביב</option><option>ירושלים</option><option>רמת גן</option><option>בת ים</option><option>חיפה</option><option>נתניה</option><option>אשדוד</option><option>באר שבע</option></select></div>
+<div><label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-1">מקור</label><select class="w-full bg-surface border-white/10 rounded-lg text-sm py-2"><option>הכל</option><option>yad2</option><option>madlan</option><option>כינוס נכסים</option><option>facebook</option></select></div>
+<div><label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-1">מחיר מינימום</label><input class="w-full bg-surface border-white/10 rounded-lg text-sm py-2 px-3" placeholder="500,000" type="text"/></div>
+<div><label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-1">מחיר מקסימום</label><input class="w-full bg-surface border-white/10 rounded-lg text-sm py-2 px-3" placeholder="3,000,000" type="text"/></div>
+<div><label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-1">חדרים</label><select class="w-full bg-surface border-white/10 rounded-lg text-sm py-2"><option>הכל</option><option>2-2.5</option><option>3-3.5</option><option>4-4.5</option><option>5+</option></select></div>
+<div><label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-1">SSI מינימום</label><select class="w-full bg-surface border-white/10 rounded-lg text-sm py-2"><option>ללא סינון</option><option>40+ (בינוני)</option><option>60+ (גבוה)</option><option>80+ (קריטי)</option></select></div>
+</div>
+<div class="flex gap-3 mt-4"><button class="bg-primary hover:brightness-110 px-6 py-2 rounded-xl text-xs font-bold text-white transition-all">החל מסנן</button><button class="bg-white/5 hover:bg-white/10 px-6 py-2 rounded-xl text-xs font-bold text-slate-400 transition-all">נקה הכל</button></div>
+</div>
+<div class="px-8 py-4 flex items-center justify-between border-b border-white/5">
+<div class="flex items-center gap-4"><span class="text-sm text-slate-400">מציג <span class="font-bold text-white" id="count-display">0</span> נכסים</span><span class="text-xs text-slate-500">|</span><span class="text-xs text-slate-500" id="last-update">טוען...</span></div>
+<div class="flex items-center gap-2">
+<button class="p-2 rounded-lg bg-primary/20 text-primary"><span class="material-symbols-outlined text-lg">view_list</span></button>
+<button class="p-2 rounded-lg bg-white/5 text-slate-400 hover:bg-white/10"><span class="material-symbols-outlined text-lg">grid_view</span></button>
+<select class="bg-surface border-white/10 rounded-lg text-xs py-1.5 px-3"><option>מיון: SSI (גבוה לנמוך)</option><option>מיון: מחיר (נמוך לגבוה)</option><option>מיון: מחיר (גבוה לנמוך)</option><option>מיון: תאריך (חדש)</option><option>מיון: ימים בשוק</option></select>
+</div>
+</div>
+<div class="flex-1 overflow-x-auto">
+<table class="w-full text-right border-collapse">
+<thead class="sticky top-0 bg-surface z-5"><tr class="bg-white/5"><th class="px-4 py-3 text-[10px] font-bold text-slate-500 uppercase tracking-widest w-8"><input type="checkbox" class="rounded border-white/20 bg-transparent"/></th><th class="px-4 py-3 text-[10px] font-bold text-slate-500 uppercase tracking-widest">נכס</th><th class="px-4 py-3 text-[10px] font-bold text-slate-500 uppercase tracking-widest">עיר / מתחם</th><th class="px-4 py-3 text-[10px] font-bold text-slate-500 uppercase tracking-widest text-center">מחיר</th><th class="px-4 py-3 text-[10px] font-bold text-slate-500 uppercase tracking-widest text-center">חדרים</th><th class="px-4 py-3 text-[10px] font-bold text-slate-500 uppercase tracking-widest text-center">מ"ר</th><th class="px-4 py-3 text-[10px] font-bold text-slate-500 uppercase tracking-widest text-center">SSI</th><th class="px-4 py-3 text-[10px] font-bold text-slate-500 uppercase tracking-widest text-center">ימים בשוק</th><th class="px-4 py-3 text-[10px] font-bold text-slate-500 uppercase tracking-widest text-center">מקור</th><th class="px-4 py-3 text-[10px] font-bold text-slate-500 uppercase tracking-widest text-center">פעולות</th></tr></thead>
+<tbody class="divide-y divide-white/5" id="properties-body"></tbody>
+</table>
+</div>
+<div class="px-8 py-4 border-t border-white/5 flex items-center justify-between">
+<span class="text-xs text-slate-500" id="page-info">עמוד 1</span>
+<div class="flex gap-1" id="pagination"></div>
+</div>
+<footer class="mt-auto px-8 py-6 border-t border-white/5 text-center text-slate-500 text-[11px] font-medium tracking-widest uppercase">&copy; 2026 Quantum Unified Analytics</footer>
+</main>
+<script>
+const API_BASE = 'https://pinuy-binuy-analyzer-production.up.railway.app';
+function ssiClass(s){return s>=80?'bg-alert-rose/20 text-alert-rose border-alert-rose/30':s>=60?'bg-amber-500/20 text-amber-500 border-amber-500/30':s>=40?'bg-primary/20 text-primary border-primary/30':'bg-white/5 text-slate-400 border-white/10';}
+function ssiLabel(s){return s>=80?'קריטי':s>=60?'גבוה':s>=40?'בינוני':'נמוך';}
+function srcBadge(s){const m={'yad2':['bg-blue-500/20 text-blue-400','yad2'],'madlan':['bg-purple-500/20 text-purple-400','madlan'],'kones':['bg-alert-rose/20 text-alert-rose','כינוס'],'facebook':['bg-sky-500/20 text-sky-400','FB']};const d=m[s]||['bg-white/5 text-slate-400',s];return '<span class="px-2 py-0.5 rounded text-[10px] font-bold '+d[0]+'">'+d[1]+'</span>';}
+
+async function loadProperties() {
+    try {
+        const resp = await fetch(API_BASE + '/api/stressed-sellers?limit=50');
+        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+        const data = await resp.json();
+        const listings = data.sellers || data.complexes || [];
+        document.getElementById('count-display').textContent = listings.length;
+        document.getElementById('last-update').textContent = 'עדכון: ' + new Date().toLocaleTimeString('he-IL', {hour:'2-digit',minute:'2-digit'});
+        const tbody = document.getElementById('properties-body');
+        if (listings.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="10" class="text-center py-12 text-slate-500">אין נכסים להצגה</td></tr>';
+            return;
+        }
+        tbody.innerHTML = listings.map(function(p) {
+            var addr = p.addresses || p.name || 'לא ידוע';
+            var city = p.city || '';
+            var ssi = p.enhanced_ssi_score || p.ssi_score || 0;
+            return '<tr class="hover:bg-white/5 transition-colors cursor-pointer">' +
+                '<td class="px-4 py-3"><input type="checkbox" class="rounded border-white/20 bg-transparent"/></td>' +
+                '<td class="px-4 py-3"><p class="font-semibold text-white text-sm">' + addr + '</p></td>' +
+                '<td class="px-4 py-3"><p class="text-sm text-white">' + city + '</p></td>' +
+                '<td class="px-4 py-3 text-center text-sm text-slate-400">-</td>' +
+                '<td class="px-4 py-3 text-center text-sm">-</td>' +
+                '<td class="px-4 py-3 text-center text-sm">-</td>' +
+                '<td class="px-4 py-3 text-center"><span class="px-2 py-1 rounded-lg text-[11px] font-bold border ' + ssiClass(ssi) + '">' + ssi + ' ' + ssiLabel(ssi) + '</span></td>' +
+                '<td class="px-4 py-3 text-center text-sm text-slate-400">-</td>' +
+                '<td class="px-4 py-3 text-center">-</td>' +
+                '<td class="px-4 py-3 text-center"><div class="flex items-center justify-center gap-1"><button class="p-1.5 rounded-lg bg-white/5 hover:bg-primary/20 hover:text-primary transition-all" title="צפה"><span class="material-symbols-outlined text-sm">visibility</span></button></div></td>' +
+                '</tr>';
+        }).join('');
+    } catch(err) {
+        document.getElementById('properties-body').innerHTML = '<tr><td colspan="10" class="text-center py-12 text-slate-500">שגיאה בטעינת נכסים: ' + err.message + '</td></tr>';
+    }
+}
+loadProperties();
+document.getElementById('toggle-filters').addEventListener('click',function(){document.getElementById('filters-panel').classList.toggle('hidden');});
+
+// Dynamic alert badge
+fetch(API_BASE + '/api/ssi/dashboard-data').then(function(r){return r.json()}).then(function(d){var alerts=d.recentAlerts||[];var unread=alerts.filter(function(a){return !a.is_read}).length;document.querySelectorAll('.alert-count-badge').forEach(function(el){if(unread>0){el.textContent=unread;el.style.display='';}});}).catch(function(){});
+</script>
+</body>
+</html>
