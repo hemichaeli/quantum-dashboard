@@ -19,6 +19,8 @@ body { font-family: 'Manrope', sans-serif; }
 .custom-scrollbar::-webkit-scrollbar { width: 4px; }
 .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
 .custom-scrollbar::-webkit-scrollbar-thumb { background: #2d3a4b; border-radius: 10px; }
+.skeleton { background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.06) 50%, rgba(255,255,255,0.03) 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 12px; }
+@keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 </style>
 </head>
 <body class="bg-background-dark text-slate-200 min-h-screen flex">
@@ -30,7 +32,7 @@ body { font-family: 'Manrope', sans-serif; }
         <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-market-analysis.html"><span class="material-symbols-outlined">monitoring</span><span>ניתוח שוק</span></a>
         <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-properties.html"><span class="material-symbols-outlined">apartment</span><span>נכסים</span></a>
         <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-messaging.html"><span class="material-symbols-outlined">mail</span><span>הודעות</span></a>
-        <a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary text-white font-semibold" href="quantum-alerts.html"><span class="material-symbols-outlined">notifications</span><span>התראות</span></a>
+        <a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary text-white font-semibold" href="quantum-alerts.html"><span class="material-symbols-outlined">notifications</span><span>התראות</span><span id="sidebar-badge" class="hidden px-2 py-0.5 bg-alert-rose text-white text-[10px] font-bold rounded-full mr-auto"></span></a>
         <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-reports.html"><span class="material-symbols-outlined">description</span><span>דוחות</span></a>
         <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-settings.html"><span class="material-symbols-outlined">settings</span><span>הגדרות</span></a>
     </nav>
@@ -38,30 +40,196 @@ body { font-family: 'Manrope', sans-serif; }
 </aside>
 <main class="flex-1 min-w-0 h-screen overflow-y-auto overflow-x-hidden flex flex-col">
     <header class="flex items-center justify-between px-8 py-5 border-b border-white/5 glass-panel sticky top-0 z-10">
-        <div><div class="flex items-center gap-3"><h2 class="text-2xl font-bold text-white leading-tight">התראות</h2><span class="px-2.5 py-1 bg-alert-rose/20 text-alert-rose text-[11px] font-bold rounded-lg border border-alert-rose/30">703 לא נקראו</span></div><p class="text-sm text-slate-400">מודעות חדשות, ירידות מחיר, אישורי ועדות, זינוקי SSI</p></div>
-        <div class="flex items-center gap-3"><button class="flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all"><span class="material-symbols-outlined text-lg">done_all</span><span>סמן הכל כנקרא</span></button><button class="flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all"><span class="material-symbols-outlined text-lg">tune</span><span>העדפות התראה</span></button></div>
+        <div><div class="flex items-center gap-3"><h2 class="text-2xl font-bold text-white leading-tight">התראות</h2><span id="header-unread-badge" class="hidden px-2.5 py-1 bg-alert-rose/20 text-alert-rose text-[11px] font-bold rounded-lg border border-alert-rose/30"></span></div><p class="text-sm text-slate-400">מודעות חדשות, ירידות מחיר, אישורי ועדות, זינוקי SSI</p></div>
+        <div class="flex items-center gap-3"><button onclick="markAllRead()" class="flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all"><span class="material-symbols-outlined text-lg">done_all</span><span>סמן הכל כנקרא</span></button><button class="flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all"><span class="material-symbols-outlined text-lg">tune</span><span>העדפות התראה</span></button></div>
     </header>
     <div class="p-8 space-y-6">
-        <div class="flex items-center gap-2 overflow-x-auto pb-2">
-            <button class="flex items-center gap-2 px-4 py-2 bg-primary text-white text-sm font-bold rounded-xl whitespace-nowrap"><span class="material-symbols-outlined text-lg">select_all</span>הכל (703)</button>
-            <button class="flex items-center gap-2 px-4 py-2 bg-white/5 text-slate-400 border border-white/10 text-sm font-semibold rounded-xl hover:bg-white/10 transition-all whitespace-nowrap"><span class="material-symbols-outlined text-lg text-alert-rose">trending_down</span>ירידות מחיר (42)</button>
-            <button class="flex items-center gap-2 px-4 py-2 bg-white/5 text-slate-400 border border-white/10 text-sm font-semibold rounded-xl hover:bg-white/10 transition-all whitespace-nowrap"><span class="material-symbols-outlined text-lg text-success-green">add_home</span>מודעות חדשות (156)</button>
-            <button class="flex items-center gap-2 px-4 py-2 bg-white/5 text-slate-400 border border-white/10 text-sm font-semibold rounded-xl hover:bg-white/10 transition-all whitespace-nowrap"><span class="material-symbols-outlined text-lg text-primary">gavel</span>אישורי ועדות (8)</button>
-            <button class="flex items-center gap-2 px-4 py-2 bg-white/5 text-slate-400 border border-white/10 text-sm font-semibold rounded-xl hover:bg-white/10 transition-all whitespace-nowrap"><span class="material-symbols-outlined text-lg text-amber-400">warning</span>SSI קריטי (23)</button>
-            <button class="flex items-center gap-2 px-4 py-2 bg-white/5 text-slate-400 border border-white/10 text-sm font-semibold rounded-xl hover:bg-white/10 transition-all whitespace-nowrap"><span class="material-symbols-outlined text-lg text-indigo-400">balance</span>כינוס נכסים (12)</button>
+        <div class="flex items-center gap-2 overflow-x-auto pb-2" id="filter-buttons">
+            <button onclick="filterAlerts('all')" class="filter-btn active flex items-center gap-2 px-4 py-2 bg-primary text-white text-sm font-bold rounded-xl whitespace-nowrap" data-filter="all"><span class="material-symbols-outlined text-lg">select_all</span>הכל (<span class="count-all">0</span>)</button>
+            <button onclick="filterAlerts('price_drop')" class="filter-btn flex items-center gap-2 px-4 py-2 bg-white/5 text-slate-400 border border-white/10 text-sm font-semibold rounded-xl hover:bg-white/10 transition-all whitespace-nowrap" data-filter="price_drop"><span class="material-symbols-outlined text-lg text-alert-rose">trending_down</span>ירידות מחיר (<span class="count-price_drop">0</span>)</button>
+            <button onclick="filterAlerts('new_listing')" class="filter-btn flex items-center gap-2 px-4 py-2 bg-white/5 text-slate-400 border border-white/10 text-sm font-semibold rounded-xl hover:bg-white/10 transition-all whitespace-nowrap" data-filter="new_listing"><span class="material-symbols-outlined text-lg text-success-green">add_home</span>מודעות חדשות (<span class="count-new_listing">0</span>)</button>
+            <button onclick="filterAlerts('committee')" class="filter-btn flex items-center gap-2 px-4 py-2 bg-white/5 text-slate-400 border border-white/10 text-sm font-semibold rounded-xl hover:bg-white/10 transition-all whitespace-nowrap" data-filter="committee"><span class="material-symbols-outlined text-lg text-primary">gavel</span>אישורי ועדות (<span class="count-committee">0</span>)</button>
+            <button onclick="filterAlerts('ssi_high')" class="filter-btn flex items-center gap-2 px-4 py-2 bg-white/5 text-slate-400 border border-white/10 text-sm font-semibold rounded-xl hover:bg-white/10 transition-all whitespace-nowrap" data-filter="ssi_high"><span class="material-symbols-outlined text-lg text-amber-400">warning</span>SSI קריטי (<span class="count-ssi_high">0</span>)</button>
+            <button onclick="filterAlerts('new_complex')" class="filter-btn flex items-center gap-2 px-4 py-2 bg-white/5 text-slate-400 border border-white/10 text-sm font-semibold rounded-xl hover:bg-white/10 transition-all whitespace-nowrap" data-filter="new_complex"><span class="material-symbols-outlined text-lg text-indigo-400">domain_add</span>מתחמים חדשים (<span class="count-new_complex">0</span>)</button>
         </div>
-        <div class="space-y-3">
-            <div class="bg-alert-rose/5 border border-alert-rose/15 rounded-2xl p-5 hover:bg-alert-rose/10 transition-all cursor-pointer"><div class="flex items-start gap-4"><div class="size-10 rounded-xl bg-alert-rose/20 flex items-center justify-center flex-shrink-0 mt-0.5"><span class="material-symbols-outlined text-alert-rose">warning</span></div><div class="flex-1 min-w-0"><div class="flex items-center gap-3 mb-1.5"><span class="px-2 py-0.5 bg-alert-rose/20 text-alert-rose text-[10px] font-bold rounded uppercase">SSI קריטי</span><span class="text-[10px] text-slate-500">לפני 12 דקות</span></div><h5 class="text-sm font-bold text-white mb-1">בן צבי 8, רמת גן - SSI ירד ל-18</h5><p class="text-xs text-slate-400 leading-relaxed">המוכר הוריד מחיר בפעם השלישית. נכס בשוק 187 ימים. מחיר עדכני: ₪1,450,000 (ירידה של 12% מהמחיר המקורי).</p><div class="flex items-center gap-4 mt-3"><button class="text-xs text-primary font-bold hover:underline">צפה בנכס</button><button class="text-xs text-success-green font-bold hover:underline">צור קשר</button><button class="text-xs text-slate-500 font-bold hover:underline">השתק</button></div></div><span class="size-2.5 rounded-full bg-alert-rose flex-shrink-0 mt-2"></span></div></div>
-            <div class="bg-primary/5 border border-primary/15 rounded-2xl p-5 hover:bg-primary/10 transition-all cursor-pointer"><div class="flex items-start gap-4"><div class="size-10 rounded-xl bg-primary/20 flex items-center justify-center flex-shrink-0 mt-0.5"><span class="material-symbols-outlined text-primary">gavel</span></div><div class="flex-1 min-w-0"><div class="flex items-center gap-3 mb-1.5"><span class="px-2 py-0.5 bg-primary/20 text-primary text-[10px] font-bold rounded uppercase">אישור ועדה</span><span class="text-[10px] text-slate-500">לפני שעה</span></div><h5 class="text-sm font-bold text-white mb-1">מתחם נאות שקד, נתניה - אושר בוועדה מקומית</h5><p class="text-xs text-slate-400 leading-relaxed">הוועדה המקומית אישרה את תכנית נת/1234. 392 יח"ד ייהרסו ויוקמו 1,558 יח"ד חדשות. IAI צפוי לעלות.</p><div class="flex items-center gap-4 mt-3"><button class="text-xs text-primary font-bold hover:underline">צפה במתחם</button><button class="text-xs text-success-green font-bold hover:underline">חפש מודעות</button></div></div><span class="size-2.5 rounded-full bg-primary flex-shrink-0 mt-2"></span></div></div>
-            <div class="bg-amber-500/5 border border-amber-500/10 rounded-2xl p-5 hover:bg-amber-500/10 transition-all cursor-pointer"><div class="flex items-start gap-4"><div class="size-10 rounded-xl bg-amber-500/20 flex items-center justify-center flex-shrink-0 mt-0.5"><span class="material-symbols-outlined text-amber-400">trending_down</span></div><div class="flex-1 min-w-0"><div class="flex items-center gap-3 mb-1.5"><span class="px-2 py-0.5 bg-amber-500/20 text-amber-400 text-[10px] font-bold rounded uppercase">ירידת מחיר</span><span class="text-[10px] text-slate-500">לפני 3 שעות</span></div><h5 class="text-sm font-bold text-white mb-1">הרצל 22, בת ים - ירידה של ₪80,000</h5><p class="text-xs text-slate-400 leading-relaxed">מחיר עודכן מ-₪1,580,000 ל-₪1,500,000 (ירידה של 5.1%). הנכס בשוק 94 ימים. SSI: 32.</p><div class="flex items-center gap-4 mt-3"><button class="text-xs text-primary font-bold hover:underline">צפה בנכס</button><button class="text-xs text-success-green font-bold hover:underline">צור קשר</button></div></div><span class="size-2.5 rounded-full bg-amber-400 flex-shrink-0 mt-2"></span></div></div>
-            <div class="bg-success-green/5 border border-success-green/10 rounded-2xl p-5 hover:bg-success-green/10 transition-all cursor-pointer"><div class="flex items-start gap-4"><div class="size-10 rounded-xl bg-success-green/20 flex items-center justify-center flex-shrink-0 mt-0.5"><span class="material-symbols-outlined text-success-green">add_home</span></div><div class="flex-1 min-w-0"><div class="flex items-center gap-3 mb-1.5"><span class="px-2 py-0.5 bg-success-green/20 text-success-green text-[10px] font-bold rounded uppercase">מודעה חדשה</span><span class="text-[10px] text-slate-500">לפני 5 שעות</span></div><h5 class="text-sm font-bold text-white mb-1">ז'בוטינסקי 44, רמת גן - 3 חד' | 78 מ"ר | ₪1,780,000</h5><p class="text-xs text-slate-400 leading-relaxed">מודעה חדשה במתחם מגדלי שדרות המנור (IAI 74). מחיר למ"ר: ₪22,820.</p><div class="flex items-center gap-4 mt-3"><button class="text-xs text-primary font-bold hover:underline">צפה במודעה</button><button class="text-xs text-success-green font-bold hover:underline">צור קשר</button></div></div><span class="size-2.5 rounded-full bg-success-green flex-shrink-0 mt-2"></span></div></div>
-            <div class="bg-indigo-500/5 border border-indigo-500/10 rounded-2xl p-5 hover:bg-indigo-500/10 transition-all cursor-pointer"><div class="flex items-start gap-4"><div class="size-10 rounded-xl bg-indigo-500/20 flex items-center justify-center flex-shrink-0 mt-0.5"><span class="material-symbols-outlined text-indigo-400">balance</span></div><div class="flex-1 min-w-0"><div class="flex items-center gap-3 mb-1.5"><span class="px-2 py-0.5 bg-indigo-500/20 text-indigo-400 text-[10px] font-bold rounded uppercase">כינוס נכסים</span><span class="text-[10px] text-slate-500">לפני 8 שעות</span></div><h5 class="text-sm font-bold text-white mb-1">סוקולוב 18, חולון - נכס חדש בכינוס</h5><p class="text-xs text-slate-400 leading-relaxed">נכס 3 חד' (65 מ"ר) נכנס לכינוס נכסים. מחיר פתיחה: ₪1,150,000. מתחם בשלב תכנון (IAI 48).</p><div class="flex items-center gap-4 mt-3"><button class="text-xs text-primary font-bold hover:underline">צפה בפרטים</button><button class="text-xs text-success-green font-bold hover:underline">הגש הצעה</button></div></div><span class="size-2.5 rounded-full bg-indigo-400 flex-shrink-0 mt-2"></span></div></div>
-            <div class="bg-surface/20 border border-white/5 rounded-2xl p-5 hover:bg-surface/40 transition-all cursor-pointer opacity-60 hover:opacity-100"><div class="flex items-start gap-4"><div class="size-10 rounded-xl bg-success-green/10 flex items-center justify-center flex-shrink-0 mt-0.5"><span class="material-symbols-outlined text-success-green/50">add_home</span></div><div class="flex-1 min-w-0"><div class="flex items-center gap-3 mb-1.5"><span class="px-2 py-0.5 bg-white/5 text-slate-500 text-[10px] font-bold rounded uppercase">מודעה חדשה</span><span class="text-[10px] text-slate-600">אתמול, 14:30</span></div><h5 class="text-sm font-semibold text-slate-400 mb-1">ויצמן 12, תל אביב - 4 חד' | 92 מ"ר | ₪2,850,000</h5><p class="text-xs text-slate-500 leading-relaxed">מודעה חדשה במתחם פארק בבלי T4. מחיר למ"ר: ₪30,978.</p></div></div></div>
-            <div class="bg-surface/20 border border-white/5 rounded-2xl p-5 hover:bg-surface/40 transition-all cursor-pointer opacity-60 hover:opacity-100"><div class="flex items-start gap-4"><div class="size-10 rounded-xl bg-amber-500/10 flex items-center justify-center flex-shrink-0 mt-0.5"><span class="material-symbols-outlined text-amber-400/50">trending_down</span></div><div class="flex-1 min-w-0"><div class="flex items-center gap-3 mb-1.5"><span class="px-2 py-0.5 bg-white/5 text-slate-500 text-[10px] font-bold rounded uppercase">ירידת מחיר</span><span class="text-[10px] text-slate-600">אתמול, 09:15</span></div><h5 class="text-sm font-semibold text-slate-400 mb-1">אלנבי 78, תל אביב - ירידה של ₪50,000</h5><p class="text-xs text-slate-500 leading-relaxed">מחיר עודכן ל-₪1,850,000. הנכס בשוק 67 ימים.</p></div></div></div>
+        <div id="alerts-container" class="space-y-3">
+            <div class="skeleton h-24 w-full"></div>
+            <div class="skeleton h-24 w-full"></div>
+            <div class="skeleton h-24 w-full"></div>
         </div>
-        <div class="text-center py-4"><button class="px-8 py-3 bg-white/5 text-slate-400 border border-white/10 rounded-xl text-sm font-bold hover:bg-white/10 transition-all">טען עוד התראות (693 נוספות)</button></div>
+        <div id="load-more-container" class="hidden text-center py-4">
+            <button onclick="loadMore()" class="px-8 py-3 bg-white/5 text-slate-400 border border-white/10 rounded-xl text-sm font-bold hover:bg-white/10 transition-all" id="load-more-btn">טען עוד התראות</button>
+        </div>
+        <div id="empty-state" class="hidden text-center py-16">
+            <span class="material-symbols-outlined text-6xl text-slate-600 mb-4">notifications_off</span>
+            <p class="text-slate-500 text-lg font-semibold">אין התראות חדשות</p>
+            <p class="text-slate-600 text-sm mt-1">כשנמצא משהו חדש, תקבל התראה כאן</p>
+        </div>
     </div>
-    <footer class="mt-auto px-8 py-6 border-t border-white/5 text-center text-slate-500 text-[11px] font-medium tracking-widest uppercase">© 2026 Quantum Unified Analytics</footer>
+    <footer class="mt-auto px-8 py-6 border-t border-white/5 text-center text-slate-500 text-[11px] font-medium tracking-widest uppercase">&copy; 2026 Quantum Unified Analytics</footer>
 </main>
+
+<script>
+const API_BASE = 'https://pinuy-binuy-analyzer-production.up.railway.app';
+let allAlerts = [];
+let currentFilter = 'all';
+
+const ALERT_CONFIG = {
+    ssi_high:     { icon: 'warning',       color: 'alert-rose',    label: 'SSI קריטי' },
+    price_drop:   { icon: 'trending_down',  color: 'amber-500',     label: 'ירידת מחיר' },
+    new_listing:  { icon: 'add_home',       color: 'success-green', label: 'מודעה חדשה' },
+    new_complex:  { icon: 'domain_add',     color: 'indigo-400',    label: 'מתחם חדש' },
+    committee:    { icon: 'gavel',          color: 'primary',       label: 'אישור ועדה' },
+    receivership: { icon: 'balance',        color: 'indigo-400',    label: 'כינוס נכסים' },
+    default:      { icon: 'notifications',  color: 'slate-400',     label: 'התראה' }
+};
+
+function getConfig(type) {
+    return ALERT_CONFIG[type] || ALERT_CONFIG.default;
+}
+
+function timeAgo(dateStr) {
+    if (!dateStr) return '';
+    const now = new Date();
+    const d = new Date(dateStr);
+    const mins = Math.floor((now - d) / 60000);
+    if (mins < 1) return 'עכשיו';
+    if (mins < 60) return 'לפני ' + mins + ' דקות';
+    const hrs = Math.floor(mins / 60);
+    if (hrs < 24) return 'לפני ' + hrs + ' שעות';
+    const days = Math.floor(hrs / 24);
+    if (days === 1) return 'אתמול';
+    if (days < 7) return 'לפני ' + days + ' ימים';
+    return d.toLocaleDateString('he-IL');
+}
+
+function renderAlert(a) {
+    const cfg = getConfig(a.alert_type);
+    const isRead = a.is_read;
+    const title = (a.title || a.message || 'התראה').replace(/[\u{1F195}\u{26A0}\u{FE0F}\u{1F534}\u{1F7E1}\u{1F4C9}]/gu, '').trim();
+    const desc = a.message || a.description || '';
+    const city = a.city || '';
+
+    const cardBg = isRead ? 'background:rgba(26,37,48,0.2);border:1px solid rgba(255,255,255,0.03);opacity:0.6;' : '';
+    
+    return '<div class="rounded-2xl p-5 transition-all cursor-pointer hover:brightness-110" style="' + cardBg + '" data-type="' + (a.alert_type||'default') + '">' +
+        '<div class="flex items-start gap-4">' +
+            '<div class="size-10 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5" style="background:rgba(255,255,255,0.05);">' +
+                '<span class="material-symbols-outlined" style="font-size:20px;">' + cfg.icon + '</span>' +
+            '</div>' +
+            '<div class="flex-1 min-w-0">' +
+                '<div class="flex items-center gap-3 mb-1.5">' +
+                    '<span class="px-2 py-0.5 text-[10px] font-bold rounded uppercase" style="background:rgba(255,255,255,0.05);">' + cfg.label + '</span>' +
+                    (city ? '<span class="text-[10px] text-slate-500">' + city + '</span>' : '') +
+                    '<span class="text-[10px] text-slate-500">' + timeAgo(a.created_at || a.sent_at) + '</span>' +
+                '</div>' +
+                '<h5 class="text-sm font-bold text-white mb-1">' + title + '</h5>' +
+                (desc && desc !== title ? '<p class="text-xs text-slate-400 leading-relaxed">' + desc.substring(0, 200) + '</p>' : '') +
+            '</div>' +
+            (!isRead ? '<span class="size-2.5 rounded-full bg-primary flex-shrink-0 mt-2"></span>' : '') +
+        '</div>' +
+    '</div>';
+}
+
+function updateCounts() {
+    const counts = { all: allAlerts.length };
+    allAlerts.forEach(function(a) {
+        var t = a.alert_type || 'default';
+        counts[t] = (counts[t] || 0) + 1;
+    });
+    document.querySelectorAll('[class*="count-"]').forEach(function(el) {
+        var cls = Array.from(el.classList).find(function(c) { return c.startsWith('count-'); });
+        if (cls) {
+            var key = cls.replace('count-', '');
+            el.textContent = counts[key] || 0;
+        }
+    });
+
+    var unread = allAlerts.filter(function(a) { return !a.is_read; }).length;
+    var headerBadge = document.getElementById('header-unread-badge');
+    var sidebarBadge = document.getElementById('sidebar-badge');
+    if (unread > 0) {
+        headerBadge.textContent = unread + ' לא נקראו';
+        headerBadge.classList.remove('hidden');
+        sidebarBadge.textContent = unread;
+        sidebarBadge.classList.remove('hidden');
+    } else {
+        headerBadge.classList.add('hidden');
+        sidebarBadge.classList.add('hidden');
+    }
+}
+
+function renderFiltered() {
+    var container = document.getElementById('alerts-container');
+    var filtered = currentFilter === 'all' ? allAlerts : allAlerts.filter(function(a) { return a.alert_type === currentFilter; });
+    
+    if (filtered.length === 0) {
+        container.innerHTML = '';
+        document.getElementById('empty-state').classList.remove('hidden');
+        document.getElementById('load-more-container').classList.add('hidden');
+        return;
+    }
+    document.getElementById('empty-state').classList.add('hidden');
+    container.innerHTML = filtered.map(renderAlert).join('');
+}
+
+function filterAlerts(type) {
+    currentFilter = type;
+    document.querySelectorAll('.filter-btn').forEach(function(btn) {
+        if (btn.dataset.filter === type) {
+            btn.className = 'filter-btn active flex items-center gap-2 px-4 py-2 bg-primary text-white text-sm font-bold rounded-xl whitespace-nowrap';
+        } else {
+            btn.className = 'filter-btn flex items-center gap-2 px-4 py-2 bg-white/5 text-slate-400 border border-white/10 text-sm font-semibold rounded-xl hover:bg-white/10 transition-all whitespace-nowrap';
+        }
+    });
+    renderFiltered();
+}
+
+async function loadAlerts() {
+    try {
+        var resp = await fetch(API_BASE + '/api/ssi/dashboard-data');
+        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+        var data = await resp.json();
+        
+        allAlerts = (data.recentAlerts || []).map(function(a) {
+            return Object.assign({}, a, {
+                alert_type: a.alert_type || 'default',
+                title: a.title || a.complex_name || 'התראה',
+                city: a.city || '',
+                complex_name: a.complex_name || ''
+            });
+        });
+
+        updateCounts();
+        renderFiltered();
+
+        if (allAlerts.length >= 20) {
+            document.getElementById('load-more-container').classList.remove('hidden');
+        }
+    } catch (err) {
+        console.error('Failed to load alerts:', err);
+        document.getElementById('alerts-container').innerHTML =
+            '<div class="text-center py-12">' +
+                '<span class="material-symbols-outlined text-4xl text-slate-600 mb-3">cloud_off</span>' +
+                '<p class="text-slate-500 font-semibold">לא ניתן לטעון התראות</p>' +
+                '<p class="text-slate-600 text-sm mt-1">' + err.message + '</p>' +
+                '<button onclick="loadAlerts()" class="mt-4 px-6 py-2 bg-primary text-white text-sm font-bold rounded-xl">נסה שוב</button>' +
+            '</div>';
+    }
+}
+
+function markAllRead() {
+    allAlerts.forEach(function(a) { a.is_read = true; });
+    updateCounts();
+    renderFiltered();
+}
+
+function loadMore() {
+    document.getElementById('load-more-btn').textContent = 'בקרוב...';
+    document.getElementById('load-more-btn').disabled = true;
+}
+
+loadAlerts();
+</script>
 </body>
 </html>
