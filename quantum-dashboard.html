@@ -49,7 +49,7 @@ tr.data-row:hover{background:rgba(255,255,255,0.04);}
 <div class="p-4 mt-auto">
 <div class="flex items-center gap-3 px-2">
 <div class="size-10 rounded-full bg-primary/20 flex items-center justify-center"><span class="material-symbols-outlined text-primary">person</span></div>
-<div class="flex-1 min-w-0"><p class="text-sm font-bold text-white truncate">QUANTUM Admin</p><p class="text-xs text-slate-500 truncate">v4.24.0</p></div>
+<div class="flex-1 min-w-0"><p class="text-sm font-bold text-white truncate">QUANTUM Admin</p><p class="text-xs text-slate-500 truncate">v4.8.0</p></div>
 </div>
 </div>
 </aside>
@@ -88,36 +88,37 @@ tr.data-row:hover{background:rgba(255,255,255,0.04);}
 
 <!-- KPI Cards -->
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="kpi-cards">
-<div class="bg-surface/40 border border-white/5 p-6 rounded-2xl fade-in" style="animation-delay:0.1s">
+
+<div class="bg-surface/40 border border-white/5 p-6 rounded-2xl fade-in cursor-pointer hover:border-primary/30 hover:bg-surface/60 transition-all group" style="animation-delay:0.1s" data-go="quantum-properties.html">
 <div class="flex justify-between items-start mb-4">
-<div><p class="text-slate-400 text-sm font-medium">סה"כ מתחמים</p>
+<div><p class="text-slate-400 text-sm font-medium group-hover:text-primary transition-colors">סה"כ מתחמים</p>
 <h3 class="text-3xl font-bold text-white mt-1 tracking-tight" id="kpi-total">...</h3></div>
 <div class="p-2 bg-primary/20 text-primary rounded-lg"><span class="material-symbols-outlined">apartment</span></div>
 </div>
 <p class="text-[11px] text-slate-500 font-medium"><span id="kpi-enriched" class="text-primary font-bold">...</span> מועשרים מתוך הסה"כ</p>
 </div>
 
-<div class="bg-surface/40 border border-white/5 p-6 rounded-2xl fade-in" style="animation-delay:0.15s">
+<div class="bg-surface/40 border border-white/5 p-6 rounded-2xl fade-in cursor-pointer hover:border-success-green/30 hover:bg-surface/60 transition-all group" style="animation-delay:0.15s" data-go-filter="excellent">
 <div class="flex justify-between items-start mb-4">
-<div><p class="text-slate-400 text-sm font-medium">הזדמנויות מצוינות</p>
+<div><p class="text-slate-400 text-sm font-medium group-hover:text-success-green transition-colors">הזדמנויות מצוינות</p>
 <h3 class="text-3xl font-bold text-white mt-1 tracking-tight" id="kpi-excellent">...</h3></div>
 <div class="p-2 bg-success-green/20 text-success-green rounded-lg"><span class="material-symbols-outlined">trending_up</span></div>
 </div>
 <p class="text-[11px] text-success-green font-medium">IAI 70+ | הכי אטרקטיביים להשקעה</p>
 </div>
 
-<div class="bg-surface/40 border border-white/5 p-6 rounded-2xl fade-in" style="animation-delay:0.2s">
+<div class="bg-surface/40 border border-white/5 p-6 rounded-2xl fade-in cursor-pointer hover:border-warning-amber/30 hover:bg-surface/60 transition-all group" style="animation-delay:0.2s" data-go="quantum-market-analysis.html">
 <div class="flex justify-between items-start mb-4">
-<div><p class="text-slate-400 text-sm font-medium">כיסוי חתימות</p>
+<div><p class="text-slate-400 text-sm font-medium group-hover:text-warning-amber transition-colors">כיסוי חתימות</p>
 <h3 class="text-3xl font-bold text-white mt-1 tracking-tight" id="kpi-signatures">...</h3></div>
 <div class="p-2 bg-warning-amber/20 text-warning-amber rounded-lg"><span class="material-symbols-outlined">draw</span></div>
 </div>
 <p class="text-[11px] text-slate-500 font-medium"><span id="kpi-sig-avg" class="text-warning-amber font-bold">...</span> ממוצע חתימות</p>
 </div>
 
-<div class="bg-surface/40 border border-white/5 p-6 rounded-2xl fade-in" style="animation-delay:0.25s">
+<div class="bg-surface/40 border border-white/5 p-6 rounded-2xl fade-in cursor-pointer hover:border-success-green/30 hover:bg-surface/60 transition-all group" style="animation-delay:0.25s" data-go="quantum-market-analysis.html">
 <div class="flex justify-between items-start mb-4">
-<div><p class="text-slate-400 text-sm font-medium">פרמיום ממוצע</p>
+<div><p class="text-slate-400 text-sm font-medium group-hover:text-success-green transition-colors">פרמיום ממוצע</p>
 <h3 class="text-3xl font-bold text-white mt-1 tracking-tight" id="kpi-premium">...</h3></div>
 <div class="p-2 bg-success-green/20 text-success-green rounded-lg"><span class="material-symbols-outlined">payments</span></div>
 </div>
@@ -182,7 +183,7 @@ tr.data-row:hover{background:rgba(255,255,255,0.04);}
 </div>
 
 <footer class="mt-auto px-8 py-6 border-t border-white/5 text-center text-slate-500 text-[11px] font-medium tracking-widest uppercase">
-&copy; 2026 QUANTUM Unified Analytics | v4.24.0
+&copy; 2026 QUANTUM Unified Analytics | v4.8.0
 </footer>
 </main>
 
@@ -210,11 +211,10 @@ async function fetchJSON(url) {
 
 async function loadAllData() {
   showLoadingState();
-  const [opps, enrichment, sigs, premiumPrices] = await Promise.all([
+  const [opps, enrichment, sigs] = await Promise.all([
     fetchJSON(`${API_BASE}/api/opportunities`),
     fetchJSON(`${API_BASE}/api/enrichment/status`),
-    fetchJSON(`${API_BASE}/api/signatures/stats`),
-    fetchJSON(`${API_BASE}/api/premium/prices`)
+    fetchJSON(`${API_BASE}/api/signatures/stats`)
   ]);
   if (opps) { allData = opps.opportunities || []; }
   enrichmentStatus = enrichment;
@@ -301,7 +301,7 @@ function renderTable() {
     const sigColor = sigSource === 'protocol' ? 'sig-green' : sig ? 'sig-yellow' : 'sig-gray';
     const sigIcon = sigSource === 'protocol' ? '🟢' : sig ? '🟡' : '';
     const sigHtml = sig ? `<span class="${sigColor} font-bold">${sigIcon} ${sig}%</span>` : '<span class="text-slate-600">-</span>';
-    const statusMap = {'approved': 'מאושר', 'construction': 'בנייה', 'planning': 'תכנון', 'permit': 'היתר', 'marketing': 'שיווק', 'deposit': 'הפקדה', 'initial': 'ראשוני', 'stalled': 'תקוע'};
+    const statusMap = {'approved':'מאושר','construction':'בנייה','planning':'תכנון','permit':'היתר','marketing':'שיווק','deposit':'הפקדה','initial':'ראשוני','stalled':'תקוע'};
     const statusLabel = statusMap[d.status] || d.status || '-';
     const listings = parseInt(d.active_listings) || 0;
     return `<tr class="data-row border-b border-white/5 transition-colors cursor-pointer fade-in" style="animation-delay:${i * 0.02}s" onclick="openDetail(${d.id})">
@@ -391,8 +391,27 @@ document.getElementById('iai-filter').addEventListener('change', applyFilters);
 
 function debounce(fn, delay) { let timer; return (...args) => { clearTimeout(timer); timer = setTimeout(() => fn(...args), delay); }; }
 
+// KPI Card click handlers
+document.querySelectorAll('[data-go]').forEach(function(card) {
+  card.addEventListener('click', function() {
+    window.location.href = this.getAttribute('data-go');
+  });
+});
+document.querySelectorAll('[data-go-filter]').forEach(function(card) {
+  card.addEventListener('click', function() {
+    var filterVal = this.getAttribute('data-go-filter');
+    var iaiFilter = document.getElementById('iai-filter');
+    if (iaiFilter) {
+      iaiFilter.value = filterVal;
+      applyFilters();
+      document.getElementById('main-table').scrollIntoView({behavior:'smooth', block:'start'});
+    }
+  });
+});
+
 loadAllData();
 </script>
-<script>fetch('https://pinuy-binuy-analyzer-production.up.railway.app/api/alerts?limit=500').then(function(r){return r.json()}).then(function(d){var u=(d.alerts||[]).filter(function(a){return !a.is_read}).length;var b=document.getElementById('nav-alert-badge');if(b&&u>0){b.textContent=u>99?'99+':u;b.classList.remove('hidden')}}).catch(function(){});</script>
+<script>fetch('https://pinuy-binuy-analyzer-production.up.railway.app/api/alerts?limit=500').then(function(r){return r.json()}).then(function(d){var u=(d.alerts||[]).filter(function(a){return !a.is_read}).length;var b=document.getElementById('nav-alert-badge');if(b&&u>0){b.textContent=u>99?'99+':u;b.classList.remove('hidden')}}).catch(function(){});
+</script>
 </body>
 </html>
