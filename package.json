@@ -1,7 +1,7 @@
 {
   "name": "quantum-dashboard",
   "scripts": {
-    "start": "npx serve -s . -l $PORT --no-clipboard"
+    "start": "npx serve . -l $PORT --no-clipboard"
   },
   "dependencies": {
     "serve": "^14.2.0"
