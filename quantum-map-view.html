@@ -1,1 +1,125 @@
-<![CDATA[]]>
+<!DOCTYPE html>
+<html class="dark" dir="rtl" lang="he">
+<head>
+<meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>QUANTUM | מפת פרויקטים</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>tailwind.config={darkMode:"class",theme:{extend:{colors:{"primary":"#137fec","background-dark":"#101922","surface":"#1a2530","border-dark":"#2d3a4b","alert-rose":"#f43f5e","success-green":"#10b981"},fontFamily:{"display":["Manrope","sans-serif"]}}}}}</script>
+<style>
+body{font-family:'Manrope',sans-serif;}
+.glass-panel{background:rgba(26,37,48,0.7);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.05);}
+.custom-scrollbar::-webkit-scrollbar{width:6px;}
+.custom-scrollbar::-webkit-scrollbar-track{background:transparent;}
+.custom-scrollbar::-webkit-scrollbar-thumb{background:#2d3a4b;border-radius:10px;}
+.leaflet-container{background:#0d1117!important;}
+.leaflet-tile-pane{filter:brightness(0.7) contrast(1.1) saturate(0.3) hue-rotate(180deg) invert(1);}
+.custom-marker{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;border:2px solid rgba(255,255,255,0.3);box-shadow:0 4px 12px rgba(0,0,0,0.4);cursor:pointer;transition:transform 0.2s;}
+.custom-marker:hover{transform:scale(1.3);z-index:1000!important;}
+.marker-excellent{background:#10b981;}
+.marker-good{background:#137fec;}
+.marker-moderate{background:#f59e0b;}
+.marker-low{background:#6b7280;}
+.marker-critical{background:#f43f5e;}
+.leaflet-popup-content-wrapper{background:#1a2530!important;color:#e2e8f0!important;border:1px solid rgba(255,255,255,0.1)!important;border-radius:12px!important;box-shadow:0 8px 32px rgba(0,0,0,0.5)!important;font-family:'Manrope',sans-serif!important;}
+.leaflet-popup-tip{background:#1a2530!important;}
+.leaflet-popup-close-button{color:#64748b!important;font-size:20px!important;}
+.map-panel{position:absolute;top:16px;z-index:500;pointer-events:auto;}
+@keyframes pulse-ring{0%{transform:scale(0.8);opacity:1;}100%{transform:scale(2.5);opacity:0;}}
+.pulse-dot::before{content:'';position:absolute;inset:-4px;border-radius:50%;background:inherit;opacity:0.4;animation:pulse-ring 2s infinite;}
+</style>
+</head>
+<body class="bg-background-dark text-slate-200 min-h-screen flex">
+<aside class="w-64 flex-shrink-0 border-l border-white/5 bg-surface/50 h-screen sticky top-0 hidden lg:flex flex-col z-[600]">
+<div class="p-6 flex items-center gap-3"><div class="size-10 rounded-lg bg-primary flex items-center justify-center text-white shadow-lg shadow-primary/20"><span class="material-symbols-outlined text-2xl">diamond</span></div><div><h1 class="text-xl font-extrabold tracking-tight text-white uppercase">QUANTUM</h1><p class="text-[10px] text-primary font-bold tracking-widest leading-none">UNIFIED ANALYTICS</p></div></div>
+<nav class="flex-1 px-4 space-y-1 mt-4">
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-dashboard.html"><span class="material-symbols-outlined">dashboard</span><span>לוח בקרה</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary text-white font-semibold" href="quantum-map-view.html"><span class="material-symbols-outlined">map</span><span>מפת פרויקטים</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-market-analysis.html"><span class="material-symbols-outlined">monitoring</span><span>ניתוח שוק</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-properties.html"><span class="material-symbols-outlined">apartment</span><span>נכסים</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-messaging.html"><span class="material-symbols-outlined">mail</span><span>הודעות</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-alerts.html"><span class="material-symbols-outlined">notifications</span><span>התראות</span><span id="nav-alert-badge" class="hidden mr-auto px-1.5 py-0.5 bg-alert-rose text-white text-[9px] font-bold rounded-full min-w-[18px] text-center"></span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-reports.html"><span class="material-symbols-outlined">description</span><span>דוחות</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-settings.html"><span class="material-symbols-outlined">settings</span><span>הגדרות</span></a>
+</nav>
+<div class="p-4 mt-auto">
+<div class="flex items-center gap-3 px-2">
+<div class="size-10 rounded-full bg-primary/20 flex items-center justify-center"><span class="material-symbols-outlined text-primary">person</span></div>
+<div class="flex-1 min-w-0"><p class="text-sm font-bold text-white truncate">QUANTUM Admin</p><p class="text-xs text-slate-500 truncate">v4.8.0</p></div>
+</div>
+</div>
+</aside>
+<main class="flex-1 min-w-0 h-screen relative">
+<div id="map" class="w-full h-full"></div>
+<div class="map-panel right-4 left-4 flex items-start gap-4 justify-between pointer-events-none">
+  <div class="glass-panel rounded-2xl p-4 w-96 pointer-events-auto">
+    <div class="relative"><span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-400">search</span><input id="map-search" class="w-full bg-white/5 border border-white/10 rounded-xl pr-10 pl-4 py-2.5 text-sm focus:ring-primary focus:border-primary transition-all" placeholder="חיפוש מתחם, עיר או כתובת..." type="text"/></div>
+    <div class="flex gap-2 mt-3 flex-wrap">
+      <button class="filter-btn active px-3 py-1.5 rounded-lg text-[11px] font-bold transition-all bg-primary text-white" data-filter="all">הכל</button>
+      <button class="filter-btn px-3 py-1.5 rounded-lg text-[11px] font-bold transition-all bg-white/5 text-slate-400 hover:bg-white/10" data-filter="excellent">מצוין 70+</button>
+      <button class="filter-btn px-3 py-1.5 rounded-lg text-[11px] font-bold transition-all bg-white/5 text-slate-400 hover:bg-white/10" data-filter="good">טוב 50-69</button>
+      <button class="filter-btn px-3 py-1.5 rounded-lg text-[11px] font-bold transition-all bg-white/5 text-slate-400 hover:bg-white/10" data-filter="stressed">SSI גבוה</button>
+      <button class="filter-btn px-3 py-1.5 rounded-lg text-[11px] font-bold transition-all bg-white/5 text-slate-400 hover:bg-white/10" data-filter="kones">כינוס</button>
+    </div>
+  </div>
+  <div class="glass-panel rounded-2xl p-4 pointer-events-auto">
+    <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-3">מקרא IAI</p>
+    <div class="space-y-2">
+      <div class="flex items-center gap-2"><div class="size-4 rounded-full bg-success-green"></div><span class="text-xs text-slate-300">מצוין (70+)</span></div>
+      <div class="flex items-center gap-2"><div class="size-4 rounded-full bg-primary"></div><span class="text-xs text-slate-300">טוב (50-69)</span></div>
+      <div class="flex items-center gap-2"><div class="size-4 rounded-full bg-amber-500"></div><span class="text-xs text-slate-300">בינוני (30-49)</span></div>
+      <div class="flex items-center gap-2"><div class="size-4 rounded-full bg-slate-500"></div><span class="text-xs text-slate-300">נמוך (&lt;30)</span></div>
+      <div class="flex items-center gap-2"><div class="size-4 rounded-full bg-alert-rose relative pulse-dot"></div><span class="text-xs text-alert-rose font-semibold">SSI קריטי</span></div>
+    </div>
+  </div>
+</div>
+<div class="absolute bottom-4 right-4 left-4 z-[500] pointer-events-none">
+  <div class="glass-panel rounded-2xl p-4 pointer-events-auto">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center gap-6">
+        <div class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-lg">location_on</span><span id="shown-count" class="text-sm font-bold text-white">0</span><span class="text-xs text-slate-400">מתחמים מוצגים</span></div>
+      </div>
+      <div class="flex items-center gap-3">
+        <button class="flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 px-3 py-2 rounded-xl text-xs font-semibold transition-all"><span class="material-symbols-outlined text-sm">layers</span>שכבות</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="detail-panel" class="absolute top-0 left-0 bottom-0 w-96 z-[550] transform -translate-x-full transition-transform duration-300 ease-out">
+  <div class="h-full bg-surface border-r border-white/10 overflow-y-auto custom-scrollbar">
+    <div class="p-6">
+      <div class="flex items-center justify-between mb-6">
+        <button id="close-detail" class="p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-all"><span class="material-symbols-outlined text-slate-400">close</span></button>
+      </div>
+      <div id="detail-content"><div class="text-center py-12 text-slate-500">בחר מתחם מהמפה</div></div>
+    </div>
+  </div>
+</div>
+<script>
+var API='https://pinuy-binuy-analyzer-production.up.railway.app';
+var map=L.map('map',{zoomControl:false,attributionControl:false}).setView([32.05,34.78],10);
+L.control.zoom({position:'bottomleft'}).addTo(map);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18}).addTo(map);
+var allProjects=[];var markers=[];
+function getMarkerClass(p){if(p.is_receivership)return'marker-critical';if(p.enhanced_ssi_score>=60)return'marker-critical';if(p.iai_score>=70)return'marker-excellent';if(p.iai_score>=50)return'marker-good';if(p.iai_score>=30)return'marker-moderate';return'marker-low';}
+function renderMarkers(filter){markers.forEach(function(m){map.removeLayer(m)});markers=[];var f=allProjects;if(filter==='excellent')f=allProjects.filter(function(p){return p.iai_score>=70});else if(filter==='good')f=allProjects.filter(function(p){return p.iai_score>=50&&p.iai_score<70});else if(filter==='stressed')f=allProjects.filter(function(p){return p.enhanced_ssi_score>=40});else if(filter==='kones')f=allProjects.filter(function(p){return p.is_receivership});
+f.forEach(function(p){if(!p.lat||!p.lng)return;var iai=p.iai_score||0;var icon=L.divIcon({className:'',html:'<div class="custom-marker '+getMarkerClass(p)+(p.enhanced_ssi_score>=60?' pulse-dot':'')+'">'+(iai)+'</div>',iconSize:[32,32],iconAnchor:[16,16]});var m=L.marker([p.lat,p.lng],{icon:icon}).addTo(map);m.bindPopup('<div style="min-width:220px;direction:rtl;font-family:Manrope,sans-serif;"><p style="font-weight:800;font-size:14px;margin:0 0 4px;color:#f1f5f9;">'+(p.name||p.addresses)+'</p><p style="font-size:11px;color:#64748b;margin:0 0 10px;">'+(p.city||'')+' | '+(p.plan_stage||p.status||'')+'</p><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;"><div style="background:rgba(255,255,255,0.05);border-radius:8px;padding:8px;text-align:center;"><p style="font-size:9px;color:#64748b;margin:0;">IAI</p><p style="font-size:18px;font-weight:800;color:'+(iai>=70?'#10b981':iai>=50?'#137fec':'#f59e0b')+';margin:4px 0 0;">'+iai+'</p></div><div style="background:rgba(255,255,255,0.05);border-radius:8px;padding:8px;text-align:center;"><p style="font-size:9px;color:#64748b;margin:0;">SSI</p><p style="font-size:18px;font-weight:800;color:'+(p.enhanced_ssi_score>=40?'#f43f5e':'#e2e8f0')+';margin:4px 0 0;">'+(p.enhanced_ssi_score||0)+'</p></div></div><a href="quantum-project-detail.html?id='+p.id+'" style="display:block;margin-top:10px;padding:8px;background:#137fec;color:#fff;border-radius:8px;text-align:center;font-size:12px;font-weight:700;text-decoration:none;">פירוט מלא</a></div>',{maxWidth:280});markers.push(m);});document.getElementById('shown-count').textContent=f.length;}
+// Load real data from API
+fetch(API+'/api/opportunities?limit=600').then(function(r){return r.json()}).then(function(d){
+  var opps=d.opportunities||[];
+  var cityCoords={"תל אביב":[32.08,34.78],"רמת גן":[32.08,34.81],"חולון":[32.02,34.77],"בת ים":[32.02,34.74],"גבעתיים":[32.07,34.81],"ירושלים":[31.78,35.21],"חיפה":[32.79,34.99],"באר שבע":[31.25,34.79],"נתניה":[32.33,34.86],"ראשון לציון":[31.96,34.80],"פתח תקווה":[32.09,34.88],"אשדוד":[31.80,34.65],"הרצליה":[32.16,34.84],"כפר סבא":[32.18,34.91],"רעננה":[32.19,34.87],"הוד השרון":[32.15,34.89],"רחובות":[31.89,34.81],"נס ציונה":[31.93,34.80],"לוד":[31.95,34.89],"רמלה":[31.93,34.87],"עכו":[32.93,35.08],"נהריה":[33.01,35.09],"קרית אתא":[32.81,35.10],"קרית ביאליק":[32.83,35.08],"קרית מוצקין":[32.84,35.07],"טירת כרמל":[32.76,34.97],"נשר":[32.77,35.04],"אור יהודה":[32.03,34.85],"יהוד":[32.03,34.89],"אזור":[32.03,34.79]};
+  allProjects=opps.map(function(o){var coords=cityCoords[o.city]||[32.05+Math.random()*0.1,34.7+Math.random()*0.2];return Object.assign(o,{lat:coords[0]+(Math.random()-0.5)*0.01,lng:coords[1]+(Math.random()-0.5)*0.01});});
+  renderMarkers('all');
+}).catch(function(err){console.error('Map data load failed:',err);document.getElementById('shown-count').textContent='שגיאה';});
+document.querySelectorAll('.filter-btn').forEach(function(btn){btn.addEventListener('click',function(){document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('bg-primary','text-white','active');b.classList.add('bg-white/5','text-slate-400');});btn.classList.add('bg-primary','text-white','active');btn.classList.remove('bg-white/5','text-slate-400');renderMarkers(btn.dataset.filter);});});
+document.getElementById('map-search').addEventListener('input',function(e){var q=e.target.value;if(!q){renderMarkers('all');return;}markers.forEach(function(m){map.removeLayer(m)});markers=[];allProjects.filter(function(p){return (p.name||'').includes(q)||(p.city||'').includes(q)||(p.addresses||'').includes(q)}).forEach(function(p){if(!p.lat||!p.lng)return;var icon=L.divIcon({className:'',html:'<div class="custom-marker '+getMarkerClass(p)+'">'+(p.iai_score||0)+'</div>',iconSize:[32,32],iconAnchor:[16,16]});var m=L.marker([p.lat,p.lng],{icon:icon}).addTo(map);markers.push(m);if(markers.length===1)map.setView([p.lat,p.lng],14);});document.getElementById('shown-count').textContent=markers.length;});
+document.getElementById('close-detail').addEventListener('click',function(){document.getElementById('detail-panel').classList.add('-translate-x-full');});
+</script>
+<footer class="mt-auto px-8 py-6 border-t border-white/5 text-center text-slate-500 text-[11px] font-medium tracking-widest uppercase">&copy; 2026 QUANTUM Unified Analytics | v4.8.0</footer>
+</main>
+<script>fetch('https://pinuy-binuy-analyzer-production.up.railway.app/api/alerts?limit=500').then(function(r){return r.json()}).then(function(d){var u=(d.alerts||[]).filter(function(a){return !a.is_read}).length;var b=document.getElementById('nav-alert-badge');if(b&&u>0){b.textContent=u>99?'99+':u;b.classList.remove('hidden')}}).catch(function(){});</script>
+</body>
+</html>
