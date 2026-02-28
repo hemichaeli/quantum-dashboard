@@ -22,7 +22,7 @@
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-reports.html"><span class="material-symbols-outlined">description</span><span>דוחות</span></a>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-settings.html"><span class="material-symbols-outlined">settings</span><span>הגדרות</span></a>
 </nav>
-<div class="p-4 mt-auto"><div class="flex items-center gap-3 px-2"><div class="size-10 rounded-full bg-primary/20 flex items-center justify-center"><span class="material-symbols-outlined text-primary">person</span></div><div class="flex-1 min-w-0"><p class="text-sm font-bold text-white truncate">QUANTUM Admin</p><p class="text-xs text-slate-500 truncate quantum-version">v...</p></div></div></div>
+<div class="p-4 mt-auto"><div class="flex items-center gap-3 px-2"><div class="size-10 rounded-full bg-primary/20 flex items-center justify-center"><span class="material-symbols-outlined text-primary">person</span></div><div class="flex-1 min-w-0"><p class="text-sm font-bold text-white truncate">QUANTUM Admin</p><p class="text-xs text-slate-500 truncate q-ver">v...</p></div></div></div>
 </aside>
 <main class="flex-1 min-w-0 h-screen overflow-y-auto overflow-x-hidden flex flex-col">
 <header class="flex items-center justify-between px-8 py-5 border-b border-white/5 glass-panel sticky top-0 z-10">
@@ -53,7 +53,7 @@
 </div></div>
 <div class="glass-panel rounded-2xl"><div class="p-5 border-b border-white/5 flex items-center gap-3"><span class="material-symbols-outlined text-amber-400">history</span><div><h3 class="font-bold text-white">היסטוריית הודעות</h3><p class="text-xs text-slate-400">הודעות שנשלחו בפועל דרך המערכת</p></div></div><div class="p-5" id="history-container"><div class="text-center py-12 text-slate-500"><span class="material-symbols-outlined text-4xl block mb-3 opacity-30">mail</span><p class="font-semibold">עדיין לא נשלחה אף הודעה</p><p class="text-xs mt-1">שלח את ההודעה הראשונה דרך תבניות למעלה</p></div></div></div>
 </div>
-<footer class="mt-auto px-8 py-6 border-t border-white/5 text-center text-slate-500 text-[11px] font-medium tracking-widest uppercase">&copy; 2026 QUANTUM Unified Analytics | <span class="quantum-version">v...</span></footer>
+<footer class="mt-auto px-8 py-6 border-t border-white/5 text-center text-slate-500 text-[11px] font-medium tracking-widest uppercase">&copy; 2026 QUANTUM Unified Analytics | <span class="q-ver">v...</span></footer>
 </main>
 <script>
 const API_BASE='https://pinuy-binuy-analyzer-production.up.railway.app';let currentTemplate=null;let templatesData=[];
@@ -75,7 +75,7 @@ loadStats();loadTemplates();
   var base="https://pinuy-binuy-analyzer-production.up.railway.app";
   fetch(base+"/health").then(function(r){return r.json()}).then(function(d){
     var ver="v"+d.version;
-    document.querySelectorAll(".quantum-version").forEach(function(el){el.textContent=ver});
+    document.querySelectorAll(".q-ver").forEach(function(el){el.textContent=ver});
   }).catch(function(){});
   fetch(base+"/api/alerts?limit=500").then(function(r){return r.json()}).then(function(d){
     var u=(d.alerts||[]).filter(function(a){return !a.is_read}).length;
