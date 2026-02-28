@@ -27,7 +27,7 @@ body { font-family: 'Manrope', sans-serif; }
 </head>
 <body class="bg-background-dark text-slate-200 min-h-screen flex">
 <aside class="w-64 flex-shrink-0 border-l border-white/5 bg-surface/50 h-screen sticky top-0 hidden lg:flex flex-col">
-    <div class="p-6 flex items-center gap-3"><div class="size-10 rounded-lg bg-primary flex items-center justify-center text-white shadow-lg shadow-primary/20"><span class="material-symbols-outlined text-2xl">computer</span></div><div><h1 class="text-xl font-extrabold tracking-tight text-white uppercase">QUANTUM</h1><p class="text-[10px] text-primary font-bold tracking-widest leading-none">UNIFIED ANALYTICS</p></div></div>
+    <div class="p-6 flex items-center gap-3"><div class="size-10 rounded-lg bg-primary flex items-center justify-center text-white shadow-lg shadow-primary/20"><span class="material-symbols-outlined text-2xl">diamond</span></div><div><h1 class="text-xl font-extrabold tracking-tight text-white uppercase">QUANTUM</h1><p class="text-[10px] text-primary font-bold tracking-widest leading-none">UNIFIED ANALYTICS</p></div></div>
     <nav class="flex-1 px-4 space-y-1 mt-4">
         <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-dashboard.html"><span class="material-symbols-outlined">dashboard</span><span>לוח בקרה</span></a>
         <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-map-view.html"><span class="material-symbols-outlined">map</span><span>מפת פרויקטים</span></a>
@@ -38,19 +38,14 @@ body { font-family: 'Manrope', sans-serif; }
         <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-reports.html"><span class="material-symbols-outlined">description</span><span>דוחות</span></a>
         <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-settings.html"><span class="material-symbols-outlined">settings</span><span>הגדרות</span></a>
     </nav>
-    <div class="p-4 mt-auto">
-<div class="flex items-center gap-3 px-2">
-<div class="size-10 rounded-full bg-primary/20 flex items-center justify-center"><span class="material-symbols-outlined text-primary">person</span></div>
-<div class="flex-1 min-w-0"><p class="text-sm font-bold text-white truncate">QUANTUM Admin</p><p class="text-xs text-slate-500 truncate">v4.8.0</p></div>
-</div>
-</div>
+    <div class="p-4 mt-auto"><div class="flex items-center gap-3 px-2"><div class="size-10 rounded-full bg-primary/20 flex items-center justify-center"><span class="material-symbols-outlined text-primary">person</span></div><div class="flex-1 min-w-0"><p class="text-sm font-bold text-white truncate">QUANTUM Admin</p><p class="text-xs text-slate-500 truncate">v4.8.0</p></div></div></div>
 </aside>
 <main class="flex-1 min-w-0 h-screen overflow-y-auto overflow-x-hidden flex flex-col">
     <header class="flex items-center justify-between px-8 py-5 border-b border-white/5 glass-panel sticky top-0 z-10">
         <div><div class="flex items-center gap-3"><h2 class="text-2xl font-bold text-white leading-tight">התראות</h2><span id="header-unread-badge" class="hidden px-2.5 py-1 bg-alert-rose/20 text-alert-rose text-[11px] font-bold rounded-lg border border-alert-rose/30"></span></div><p class="text-sm text-slate-400">מודעות חדשות, ירידות מחיר, אישורי ועדות, זינוקי SSI</p></div>
         <div class="flex items-center gap-3"><button onclick="markAllRead()" class="flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all"><span class="material-symbols-outlined text-lg">done_all</span><span>סמן הכל כנקרא</span></button><button class="flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all"><span class="material-symbols-outlined text-lg">tune</span><span>העדפות התראה</span></button></div>
     </header>
-    <div class="p-8 space-y-6">
+    <div class="p-8 space-y-4">
         <div class="flex items-center gap-2 overflow-x-auto pb-2" id="filter-buttons">
             <button onclick="filterAlerts('all')" data-filter="all" class="filter-btn flex items-center gap-2 px-4 py-2 bg-primary text-white text-sm font-bold rounded-xl whitespace-nowrap"><span class="material-symbols-outlined text-lg">select_all</span>הכל (<span class="count">0</span>)</button>
             <button onclick="filterAlerts('price_drop')" data-filter="price_drop" class="filter-btn flex items-center gap-2 px-4 py-2 bg-white/5 text-slate-400 border border-white/10 text-sm font-semibold rounded-xl hover:bg-white/10 transition-all whitespace-nowrap"><span class="material-symbols-outlined text-lg text-alert-rose">trending_down</span>ירידות מחיר (<span class="count">0</span>)</button>
@@ -58,6 +53,18 @@ body { font-family: 'Manrope', sans-serif; }
             <button onclick="filterAlerts('committee')" data-filter="committee" class="filter-btn flex items-center gap-2 px-4 py-2 bg-white/5 text-slate-400 border border-white/10 text-sm font-semibold rounded-xl hover:bg-white/10 transition-all whitespace-nowrap"><span class="material-symbols-outlined text-lg text-primary">gavel</span>אישורי ועדות (<span class="count">0</span>)</button>
             <button onclick="filterAlerts('ssi_high')" data-filter="ssi_high" class="filter-btn flex items-center gap-2 px-4 py-2 bg-white/5 text-slate-400 border border-white/10 text-sm font-semibold rounded-xl hover:bg-white/10 transition-all whitespace-nowrap"><span class="material-symbols-outlined text-lg text-amber-400">warning</span>SSI קריטי (<span class="count">0</span>)</button>
             <button onclick="filterAlerts('opportunity')" data-filter="opportunity" class="filter-btn flex items-center gap-2 px-4 py-2 bg-white/5 text-slate-400 border border-white/10 text-sm font-semibold rounded-xl hover:bg-white/10 transition-all whitespace-nowrap"><span class="material-symbols-outlined text-lg text-indigo-400">diamond</span>הזדמנויות (<span class="count">0</span>)</button>
+        </div>
+        <div class="flex items-center gap-3">
+            <div class="flex-1 relative">
+                <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 text-lg">search</span>
+                <input type="text" id="alert-search" placeholder="חיפוש התראות..." oninput="applyFilters()" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 pr-10 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/20">
+            </div>
+            <select id="alert-sort" onchange="applyFilters()" class="bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-slate-300 focus:outline-none focus:border-primary/50 appearance-none cursor-pointer" style="min-width:140px">
+                <option value="newest">חדשות לישנות</option>
+                <option value="oldest">ישנות לחדשות</option>
+                <option value="unread">לא נקראו קודם</option>
+                <option value="type">לפי סוג</option>
+            </select>
         </div>
         <div id="alerts-container" class="space-y-3">
             <div class="skeleton rounded-2xl h-24"></div>
@@ -74,14 +81,12 @@ body { font-family: 'Manrope', sans-serif; }
     </div>
     <footer class="mt-auto px-8 py-6 border-t border-white/5 text-center text-slate-500 text-[11px] font-medium tracking-widest uppercase">&copy; 2026 Quantum Unified Analytics</footer>
 </main>
-
 <script>
 const API_BASE = 'https://pinuy-binuy-analyzer-production.up.railway.app';
 let allAlerts = [];
 let currentFilter = 'all';
 let displayedCount = 0;
 const PAGE_SIZE = 20;
-
 const ALERT_CONFIG = {
     new_complex: { icon: 'add_home', color: 'success-green', label: 'מתחם חדש', bgClass: 'bg-success-green/5 border-success-green/10 hover:bg-success-green/10' },
     price_drop: { icon: 'trending_down', color: 'amber-400', label: 'ירידת מחיר', bgClass: 'bg-amber-500/5 border-amber-500/10 hover:bg-amber-500/10' },
@@ -90,37 +95,32 @@ const ALERT_CONFIG = {
     opportunity: { icon: 'diamond', color: 'indigo-400', label: 'הזדמנות', bgClass: 'bg-indigo-500/5 border-indigo-500/10 hover:bg-indigo-500/10' },
     default: { icon: 'notifications', color: 'slate-400', label: 'התראה', bgClass: 'bg-surface/20 border-white/5 hover:bg-surface/40' }
 };
-
 function getConfig(type) { return ALERT_CONFIG[type] || ALERT_CONFIG.default; }
-
 function timeAgo(dateStr) {
-    const diff = Date.now() - new Date(dateStr).getTime();
-    const mins = Math.floor(diff / 60000);
+    var diff = Date.now() - new Date(dateStr).getTime();
+    var mins = Math.floor(diff / 60000);
     if (mins < 1) return 'עכשיו';
     if (mins < 60) return 'לפני ' + mins + ' דקות';
-    const hours = Math.floor(mins / 60);
+    var hours = Math.floor(mins / 60);
     if (hours < 24) return 'לפני ' + hours + ' שעות';
-    const days = Math.floor(hours / 24);
+    var days = Math.floor(hours / 24);
     if (days < 7) return 'לפני ' + days + ' ימים';
     return new Date(dateStr).toLocaleDateString('he-IL');
 }
-
 function renderAlert(alert) {
-    const cfg = getConfig(alert.alert_type);
-    const isRead = alert.is_read;
-    const readClass = isRead ? 'opacity-60 hover:opacity-100' : '';
-    const dotHtml = isRead ? '' : '<span class="size-2.5 rounded-full bg-' + cfg.color + ' flex-shrink-0 mt-2 pulse-dot"></span>';
-    const titleClass = isRead ? 'text-slate-400' : 'text-white';
-    const msgClass = isRead ? 'text-slate-500' : 'text-slate-400';
-    const badgeBg = isRead ? 'bg-white/5 text-slate-500' : 'bg-' + cfg.color + '/20 text-' + cfg.color;
-    const title = (alert.title || '').replace(/^[\u{1F195}\u{1F514}\u{26A0}\u{FE0F}\u{1F4CA}\u{1F4B0}\u{1F3E0}]+\s*/gu, '');
-    const message = alert.message || '';
-    const city = alert.city || '';
+    var cfg = getConfig(alert.alert_type);
+    var isRead = alert.is_read;
+    var readClass = isRead ? 'opacity-60 hover:opacity-100' : '';
+    var dotHtml = isRead ? '' : '<span class="size-2.5 rounded-full bg-' + cfg.color + ' flex-shrink-0 mt-2 pulse-dot"></span>';
+    var titleClass = isRead ? 'text-slate-400' : 'text-white';
+    var msgClass = isRead ? 'text-slate-500' : 'text-slate-400';
+    var badgeBg = isRead ? 'bg-white/5 text-slate-500' : 'bg-' + cfg.color + '/20 text-' + cfg.color;
+    var title = (alert.title || '').replace(/^[\u{1F195}\u{1F514}\u{26A0}\u{FE0F}\u{1F4CA}\u{1F4B0}\u{1F3E0}]+\s*/gu, '');
+    var message = alert.message || '';
+    var city = alert.city || '';
     return '<div class="' + cfg.bgClass + ' ' + readClass + ' border rounded-2xl p-5 transition-all cursor-pointer" data-type="' + alert.alert_type + '" data-id="' + alert.id + '">' +
         '<div class="flex items-start gap-4">' +
-            '<div class="size-10 rounded-xl bg-' + cfg.color + '/20 flex items-center justify-center flex-shrink-0 mt-0.5">' +
-                '<span class="material-symbols-outlined text-' + cfg.color + '">' + cfg.icon + '</span>' +
-            '</div>' +
+            '<div class="size-10 rounded-xl bg-' + cfg.color + '/20 flex items-center justify-center flex-shrink-0 mt-0.5"><span class="material-symbols-outlined text-' + cfg.color + '">' + cfg.icon + '</span></div>' +
             '<div class="flex-1 min-w-0">' +
                 '<div class="flex items-center gap-3 mb-1.5">' +
                     '<span class="px-2 py-0.5 ' + badgeBg + ' text-[10px] font-bold rounded uppercase">' + cfg.label + '</span>' +
@@ -132,52 +132,47 @@ function renderAlert(alert) {
                 '<div class="flex items-center gap-4 mt-3">' +
                     (alert.complex_id ? '<a href="quantum-project-detail.html?id=' + alert.complex_id + '" class="text-xs text-primary font-bold hover:underline">צפה במתחם</a>' : '') +
                 '</div>' +
-            '</div>' +
-            dotHtml +
-        '</div>' +
-    '</div>';
+            '</div>' + dotHtml +
+        '</div></div>';
 }
-
 function getFilteredAlerts() {
-    if (currentFilter === 'all') return allAlerts;
+    if (currentFilter === 'all') return allAlerts.slice();
     return allAlerts.filter(function(a) { return a.alert_type === currentFilter; });
 }
-
-function updateUI() {
+function applyFilters() {
+    var search = (document.getElementById('alert-search').value || '').toLowerCase();
+    var sort = document.getElementById('alert-sort').value;
     var filtered = getFilteredAlerts();
-    var container = document.getElementById('alerts-container');
-    var emptyState = document.getElementById('empty-state');
-    var loadMoreContainer = document.getElementById('load-more-container');
-    var toShow = filtered.slice(0, displayedCount);
-    if (toShow.length === 0) {
-        container.innerHTML = '';
-        emptyState.classList.remove('hidden');
-        loadMoreContainer.classList.add('hidden');
-    } else {
-        emptyState.classList.add('hidden');
-        container.innerHTML = toShow.map(renderAlert).join('');
-        var remaining = filtered.length - displayedCount;
-        if (remaining > 0) {
-            loadMoreContainer.classList.remove('hidden');
-            document.getElementById('load-more-btn').textContent = 'טען עוד התראות (' + remaining + ' נוספות)';
-        } else {
-            loadMoreContainer.classList.add('hidden');
-        }
+    if (search) {
+        filtered = filtered.filter(function(a) {
+            return (a.title || '').toLowerCase().includes(search) || 
+                   (a.message || '').toLowerCase().includes(search) ||
+                   (a.complex_name || '').toLowerCase().includes(search) ||
+                   (a.city || '').toLowerCase().includes(search);
+        });
     }
+    if (sort === 'newest') filtered.sort(function(a,b) { return new Date(b.created_at) - new Date(a.created_at); });
+    else if (sort === 'oldest') filtered.sort(function(a,b) { return new Date(a.created_at) - new Date(b.created_at); });
+    else if (sort === 'unread') filtered.sort(function(a,b) { return (a.is_read === b.is_read) ? (new Date(b.created_at) - new Date(a.created_at)) : (a.is_read ? 1 : -1); });
+    else if (sort === 'type') filtered.sort(function(a,b) { return (a.alert_type || '').localeCompare(b.alert_type || ''); });
+    var container = document.getElementById('alerts-container');
+    var toShow = filtered.slice(0, displayedCount);
+    container.innerHTML = toShow.map(renderAlert).join('');
+    var remaining = filtered.length - displayedCount;
+    var loadMoreC = document.getElementById('load-more-container');
+    var emptyState = document.getElementById('empty-state');
+    if (remaining > 0) { loadMoreC.classList.remove('hidden'); document.getElementById('load-more-btn').textContent = 'טען עוד ' + Math.min(20, remaining) + ' התראות'; }
+    else { loadMoreC.classList.add('hidden'); }
+    if (toShow.length === 0) emptyState.classList.remove('hidden'); else emptyState.classList.add('hidden');
 }
-
 function updateCounts() {
     var unread = allAlerts.filter(function(a) { return !a.is_read; }).length;
     var headerBadge = document.getElementById('header-unread-badge');
-    if (unread > 0) {
-        headerBadge.textContent = unread + ' לא נקראו';
-        headerBadge.classList.remove('hidden');
-    } else { headerBadge.classList.add('hidden'); }
+    if (unread > 0) { headerBadge.textContent = unread + ' לא נקראו'; headerBadge.classList.remove('hidden'); }
+    else { headerBadge.classList.add('hidden'); }
     var sidebarBadge = document.getElementById('sidebar-badge');
-    if (unread > 0) {
-        sidebarBadge.textContent = unread > 99 ? '99+' : unread;
-        sidebarBadge.classList.remove('hidden');
-    } else { sidebarBadge.classList.add('hidden'); }
+    if (unread > 0) { sidebarBadge.textContent = unread > 99 ? '99+' : unread; sidebarBadge.classList.remove('hidden'); }
+    else { sidebarBadge.classList.add('hidden'); }
     var typeCounts = { all: allAlerts.length };
     allAlerts.forEach(function(a) { typeCounts[a.alert_type] = (typeCounts[a.alert_type] || 0) + 1; });
     document.querySelectorAll('.filter-btn').forEach(function(btn) {
@@ -186,8 +181,8 @@ function updateCounts() {
         if (countEl) countEl.textContent = typeCounts[filter] || 0;
     });
 }
-
 function filterAlerts(type) {
+    document.getElementById('alert-search').value = '';
     currentFilter = type;
     displayedCount = PAGE_SIZE;
     document.querySelectorAll('.filter-btn').forEach(function(btn) {
@@ -198,18 +193,15 @@ function filterAlerts(type) {
             if (btn.className.indexOf('border') === -1) btn.className += ' border border-white/10';
         }
     });
-    updateUI();
+    applyFilters();
 }
-
-function loadMore() { displayedCount += PAGE_SIZE; updateUI(); }
-
+function loadMore() { displayedCount += PAGE_SIZE; applyFilters(); }
 function markAllRead() {
     allAlerts.forEach(function(a) { a.is_read = true; });
     updateCounts();
-    updateUI();
+    applyFilters();
     try { fetch(API_BASE + '/api/alerts/mark-all-read', { method: 'POST' }); } catch(e) {}
 }
-
 function loadAlerts() {
     fetch(API_BASE + '/api/alerts?limit=500')
         .then(function(resp) { if (!resp.ok) throw new Error('HTTP ' + resp.status); return resp.json(); })
@@ -217,18 +209,16 @@ function loadAlerts() {
             allAlerts = data.alerts || [];
             displayedCount = PAGE_SIZE;
             updateCounts();
-            updateUI();
+            applyFilters();
         })
         .catch(function(err) {
             document.getElementById('alerts-container').innerHTML =
-                '<div class="text-center py-16">' +
-                '<span class="material-symbols-outlined text-5xl text-alert-rose/50 mb-4">cloud_off</span>' +
+                '<div class="text-center py-16"><span class="material-symbols-outlined text-5xl text-alert-rose/50 mb-4">cloud_off</span>' +
                 '<p class="text-slate-500 text-sm mb-2">שגיאה בטעינת התראות</p>' +
                 '<p class="text-slate-600 text-xs">' + err.message + '</p>' +
                 '<button onclick="loadAlerts()" class="mt-4 px-6 py-2 bg-primary text-white text-sm rounded-xl">נסה שוב</button></div>';
         });
 }
-
 loadAlerts();
 </script>
 </body>
