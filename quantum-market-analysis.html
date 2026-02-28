@@ -12,7 +12,7 @@
 </head>
 <body class="bg-background-dark text-slate-200 min-h-screen flex">
 <aside class="w-64 flex-shrink-0 border-l border-white/5 bg-surface/50 h-screen sticky top-0 hidden lg:flex flex-col">
-<div class="p-6 flex items-center gap-3"><div class="size-10 rounded-lg bg-primary flex items-center justify-center text-white shadow-lg shadow-primary/20"><span class="material-symbols-outlined text-2xl">diamond</span></div><div><h1 class="text-xl font-extrabold tracking-tight text-white uppercase">QUANTUM</h1><p class="text-[10px] text-primary font-bold tracking-widest leading-none">UNIFIED ANALYTICS</p></div></div>
+<div class="p-6 flex items-center gap-3"><div class="size-10 rounded-lg bg-primary flex items-center justify-center text-white shadow-lg shadow-primary/20"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="size-6"><circle cx="12" cy="11" r="8" stroke="white" stroke-width="2.5" fill="none"/><line x1="15" y1="14" x2="20" y2="19" stroke="white" stroke-width="2.5" stroke-linecap="round"/></svg></div><div><h1 class="text-xl font-extrabold tracking-tight text-white uppercase">QUANTUM</h1><p class="text-[10px] text-primary font-bold tracking-widest leading-none">UNIFIED ANALYTICS</p></div></div>
 <nav class="flex-1 px-4 space-y-1 mt-4">
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-dashboard.html"><span class="material-symbols-outlined">dashboard</span><span>לוח בקרה</span></a>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-map-view.html"><span class="material-symbols-outlined">map</span><span>מפת פרויקטים</span></a>
@@ -23,7 +23,7 @@
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-reports.html"><span class="material-symbols-outlined">description</span><span>דוחות</span></a>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-settings.html"><span class="material-symbols-outlined">settings</span><span>הגדרות</span></a>
 </nav>
-<div class="p-4 mt-auto"><div class="flex items-center gap-3 px-2"><div class="size-10 rounded-full bg-primary/20 flex items-center justify-center"><span class="material-symbols-outlined text-primary">person</span></div><div class="flex-1 min-w-0"><p class="text-sm font-bold text-white truncate">QUANTUM Admin</p><p class="text-xs text-slate-500 truncate">v4.8.0</p></div></div></div>
+<div class="p-4 mt-auto"><div class="flex items-center gap-3 px-2"><div class="size-10 rounded-full bg-primary/20 flex items-center justify-center"><span class="material-symbols-outlined text-primary">person</span></div><div class="flex-1 min-w-0"><p class="text-sm font-bold text-white truncate">QUANTUM Admin</p><p class="text-xs text-slate-500 truncate"><span class="q-version">v...</span></p></div></div></div>
 </aside>
 <main class="flex-1 min-w-0 h-screen overflow-y-auto overflow-x-hidden flex flex-col">
 <header class="flex items-center justify-between px-8 py-5 border-b border-white/5 glass-panel sticky top-0 z-10">
@@ -56,18 +56,16 @@
 <tbody id="city-tbody" class="divide-y divide-white/5"></tbody></table></div>
 </div>
 </div>
-<footer class="mt-auto px-8 py-6 border-t border-white/5 text-center text-slate-500 text-[11px] font-medium tracking-widest uppercase">&copy; 2026 QUANTUM Unified Analytics | v4.8.0</footer>
+<footer class="mt-auto px-8 py-6 border-t border-white/5 text-center text-slate-500 text-[11px] font-medium tracking-widest uppercase">&copy; 2026 Quantum Unified Analytics</footer>
 </main>
 <script>
 Chart.defaults.color='#64748b';Chart.defaults.borderColor='rgba(255,255,255,0.05)';Chart.defaults.font.family='Manrope';
 var API='https://pinuy-binuy-analyzer-production.up.railway.app';
 var cityChartInstance=null,ssiChartInstance=null;
 var cityData=[],citySortCol='complexes',citySortDir='desc';
-
 function sortCityTable(col){if(citySortCol===col)citySortDir=citySortDir==='asc'?'desc':'asc';else{citySortCol=col;citySortDir='desc'}document.querySelectorAll('[data-col] .sort-arrow').forEach(function(el){el.textContent=''});var th=document.querySelector('[data-col="'+col+'"] .sort-arrow');if(th)th.textContent=citySortDir==='asc'?' \u25B2':' \u25BC';renderCityTable()}
 function filterCityTable(){renderCityTable()}
 function renderCityTable(){var search=(document.getElementById('city-search')?document.getElementById('city-search').value:'').toLowerCase();var data=cityData.slice();if(search)data=data.filter(function(c){return(c.city||'').toLowerCase().includes(search)});data.sort(function(a,b){var va=a[citySortCol],vb=b[citySortCol];if(citySortCol==='city')return citySortDir==='asc'?(va||'').localeCompare(vb||''):(vb||'').localeCompare(va||'');va=parseFloat(va)||0;vb=parseFloat(vb)||0;return citySortDir==='asc'?va-vb:vb-va});var tbody=document.getElementById('city-tbody');tbody.innerHTML=data.map(function(c){var iaiClass=c.avg_iai>=50?'text-success-green':c.avg_iai>=30?'text-amber-400':'text-alert-rose';var premClass=c.avg_premium>0?'text-alert-rose':'text-success-green';return '<tr class="hover:bg-white/5 transition-colors cursor-pointer"><td class="px-6 py-4 text-sm font-bold text-white">'+(c.city||'-')+'</td><td class="px-6 py-4 text-sm text-center text-slate-300">'+(c.complexes||0)+'</td><td class="px-6 py-4 text-sm text-center font-bold text-primary">'+(c.opportunities||0)+'</td><td class="px-6 py-4 text-sm text-center font-bold '+iaiClass+'">'+(c.avg_iai?c.avg_iai.toFixed(1):'-')+'</td><td class="px-6 py-4 text-sm text-center font-bold '+premClass+'">'+(c.avg_premium?c.avg_premium.toFixed(1)+'%':'-')+'</td><td class="px-6 py-4 text-sm text-center"><span class="px-2 py-1 rounded-lg bg-alert-rose/10 text-alert-rose text-xs font-bold">'+(c.stressed||0)+'</span></td></tr>'}).join('');var th=document.querySelector('[data-col="'+citySortCol+'"] .sort-arrow');if(th)th.textContent=citySortDir==='asc'?' \u25B2':' \u25BC'}
-
 function loadDashboard(){
 fetch(API+'/api/ssi/dashboard-data').then(function(r){return r.json()}).then(function(d){
   var s=d.stats||{};
@@ -90,6 +88,21 @@ fetch(API+'/api/ssi/dashboard-data').then(function(r){return r.json()}).then(fun
 }
 loadDashboard();
 </script>
-<script>fetch('https://pinuy-binuy-analyzer-production.up.railway.app/api/alerts?limit=500').then(function(r){return r.json()}).then(function(d){var u=(d.alerts||[]).filter(function(a){return !a.is_read}).length;var b=document.getElementById('nav-alert-badge');if(b&&u>0){b.textContent=u>99?'99+':u;b.classList.remove('hidden')}}).catch(function(){});</script>
+<!-- Dynamic version + alert badge -->
+<script>
+(function(){
+  fetch('https://pinuy-binuy-analyzer-production.up.railway.app/health').then(function(r){return r.json()}).then(function(d){
+    var v='v'+(d.version||'?');
+    document.querySelectorAll('.q-version').forEach(function(el){el.textContent=v});
+  }).catch(function(){
+    document.querySelectorAll('.q-version').forEach(function(el){el.textContent='v4.30.0'});
+  });
+  fetch('https://pinuy-binuy-analyzer-production.up.railway.app/api/alerts?limit=500').then(function(r){return r.json()}).then(function(d){
+    var u=(d.alerts||[]).filter(function(a){return !a.is_read}).length;
+    var b=document.getElementById('nav-alert-badge')||document.getElementById('sidebar-badge');
+    if(b&&u>0){b.textContent=u>99?'99+':u;b.classList.remove('hidden')}
+  }).catch(function(){});
+})();
+</script>
 </body>
 </html>
