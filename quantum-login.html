@@ -27,26 +27,22 @@ body { font-family: 'Manrope', sans-serif; background: linear-gradient(135deg, #
         <h1 class="text-3xl font-extrabold text-white tracking-tight">QUANTUM</h1>
         <p class="text-sm text-primary font-bold tracking-widest mt-1">UNIFIED ANALYTICS</p>
     </div>
-    
     <div class="glass-panel rounded-3xl p-8 glow-primary">
         <h2 class="text-xl font-bold text-white mb-6 text-center">התחברות למערכת</h2>
-        
         <form id="login-form" onsubmit="handleLogin(event)">
             <div class="space-y-5">
                 <div>
                     <label class="block text-sm font-semibold text-slate-400 mb-2">שם משתמש</label>
                     <div class="relative">
                         <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-500">person</span>
-                        <input type="text" id="username" required placeholder="הכנס שם משתמש"
-                            class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 pr-11 text-white placeholder-slate-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"/>
+                        <input type="text" id="username" required placeholder="הכנס שם משתמש" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 pr-11 text-white placeholder-slate-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"/>
                     </div>
                 </div>
                 <div>
                     <label class="block text-sm font-semibold text-slate-400 mb-2">סיסמה</label>
                     <div class="relative">
                         <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-500">lock</span>
-                        <input type="password" id="password" required placeholder="הכנס סיסמה"
-                            class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 pr-11 text-white placeholder-slate-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"/>
+                        <input type="password" id="password" required placeholder="הכנס סיסמה" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 pr-11 text-white placeholder-slate-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"/>
                         <button type="button" onclick="togglePassword()" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white transition-colors">
                             <span class="material-symbols-outlined" id="pw-toggle">visibility_off</span>
                         </button>
@@ -58,20 +54,16 @@ body { font-family: 'Manrope', sans-serif; background: linear-gradient(135deg, #
                         <span class="text-sm text-slate-400">זכור אותי</span>
                     </label>
                 </div>
-                <button type="submit" id="login-btn"
-                    class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-3.5 rounded-xl transition-all duration-200 flex items-center justify-center gap-2">
+                <button type="submit" id="login-btn" class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-3.5 rounded-xl transition-all duration-200 flex items-center justify-center gap-2">
                     <span>כניסה</span>
                     <span class="material-symbols-outlined text-lg">arrow_back</span>
                 </button>
             </div>
         </form>
-
         <div id="login-error" class="hidden mt-4 p-3 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-sm text-center"></div>
     </div>
-
-    <p class="text-center text-slate-600 text-xs mt-6">QUANTUM Unified Analytics v4.8.0</p>
+    <p class="text-center text-slate-600 text-xs mt-6">QUANTUM Unified Analytics <span class="q-ver">v...</span></p>
 </div>
-
 <script>
 function togglePassword() {
     var pw = document.getElementById('password');
@@ -79,7 +71,6 @@ function togglePassword() {
     if (pw.type === 'password') { pw.type = 'text'; icon.textContent = 'visibility'; }
     else { pw.type = 'password'; icon.textContent = 'visibility_off'; }
 }
-
 function handleLogin(e) {
     e.preventDefault();
     var btn = document.getElementById('login-btn');
@@ -87,11 +78,9 @@ function handleLogin(e) {
     btn.innerHTML = '<span class="animate-spin material-symbols-outlined">progress_activity</span>';
     btn.disabled = true;
     err.classList.add('hidden');
-
     setTimeout(function() {
         var user = document.getElementById('username').value;
         var pass = document.getElementById('password').value;
-        
         if ((user === 'admin' && pass === 'quantum2026') || (user === 'hemi' && pass === 'quantum')) {
             sessionStorage.setItem('quantum_auth', 'true');
             sessionStorage.setItem('quantum_user', user);
@@ -105,5 +94,6 @@ function handleLogin(e) {
     }, 800);
 }
 </script>
+<script>fetch("https://pinuy-binuy-analyzer-production.up.railway.app/health").then(function(r){return r.json()}).then(function(d){var v="v"+d.version;document.querySelectorAll(".q-ver").forEach(function(el){el.textContent=v})}).catch(function(){});</script>
 </body>
 </html>
