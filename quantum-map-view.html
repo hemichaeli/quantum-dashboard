@@ -45,7 +45,12 @@ body{font-family:'Manrope',sans-serif;}
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-reports.html"><span class="material-symbols-outlined">description</span><span>דוחות</span></a>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-settings.html"><span class="material-symbols-outlined">settings</span><span>הגדרות</span></a>
 </nav>
-<div class="p-4 mt-auto"><div class="flex items-center gap-3 px-2"><div class="size-10 rounded-full bg-primary/20 flex items-center justify-center"><span class="material-symbols-outlined text-primary">person</span></div><div class="flex-1 min-w-0"><p class="text-sm font-bold text-white truncate">אלון כהן</p><p class="text-xs text-slate-500 truncate">מנהל השקעות</p></div><span class="material-symbols-outlined text-slate-500 cursor-pointer hover:text-white">logout</span></div></div>
+<div class="p-4 mt-auto">
+<div class="flex items-center gap-3 px-2">
+<div class="size-10 rounded-full bg-primary/20 flex items-center justify-center"><span class="material-symbols-outlined text-primary">person</span></div>
+<div class="flex-1 min-w-0"><p class="text-sm font-bold text-white truncate">QUANTUM Admin</p><p class="text-xs text-slate-500 truncate">v4.8.0</p></div>
+</div>
+</div>
 </aside>
 <main class="flex-1 min-w-0 h-screen relative">
 <div id="map" class="w-full h-full"></div>
@@ -105,7 +110,6 @@ f.forEach(function(p){if(!p.lat||!p.lng)return;var iai=p.iai_score||0;var icon=L
 // Load real data from API
 fetch(API+'/api/opportunities?limit=600').then(function(r){return r.json()}).then(function(d){
   var opps=d.opportunities||[];
-  // Geocode using city centers as fallback
   var cityCoords={"תל אביב":[32.08,34.78],"רמת גן":[32.08,34.81],"חולון":[32.02,34.77],"בת ים":[32.02,34.74],"גבעתיים":[32.07,34.81],"ירושלים":[31.78,35.21],"חיפה":[32.79,34.99],"באר שבע":[31.25,34.79],"נתניה":[32.33,34.86],"ראשון לציון":[31.96,34.80],"פתח תקווה":[32.09,34.88],"אשדוד":[31.80,34.65],"הרצליה":[32.16,34.84],"כפר סבא":[32.18,34.91],"רעננה":[32.19,34.87],"הוד השרון":[32.15,34.89],"רחובות":[31.89,34.81],"נס ציונה":[31.93,34.80],"לוד":[31.95,34.89],"רמלה":[31.93,34.87],"עכו":[32.93,35.08],"נהריה":[33.01,35.09],"קרית אתא":[32.81,35.10],"קרית ביאליק":[32.83,35.08],"קרית מוצקין":[32.84,35.07],"טירת כרמל":[32.76,34.97],"נשר":[32.77,35.04],"אור יהודה":[32.03,34.85],"יהוד":[32.03,34.89],"אזור":[32.03,34.79]};
   allProjects=opps.map(function(o){var coords=cityCoords[o.city]||[32.05+Math.random()*0.1,34.7+Math.random()*0.2];return Object.assign(o,{lat:coords[0]+(Math.random()-0.5)*0.01,lng:coords[1]+(Math.random()-0.5)*0.01});});
   renderMarkers('all');
