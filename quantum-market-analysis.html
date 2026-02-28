@@ -23,7 +23,12 @@
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-reports.html"><span class="material-symbols-outlined">description</span><span>דוחות</span></a>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-settings.html"><span class="material-symbols-outlined">settings</span><span>הגדרות</span></a>
 </nav>
-<div class="p-4 mt-auto"><div class="flex items-center gap-3 px-2"><div class="size-10 rounded-full bg-primary/20 flex items-center justify-center"><span class="material-symbols-outlined text-primary">person</span></div><div class="flex-1 min-w-0"><p class="text-sm font-bold text-white truncate">אלון כהן</p><p class="text-xs text-slate-500 truncate">מנהל השקעות</p></div><span class="material-symbols-outlined text-slate-500 cursor-pointer hover:text-white">logout</span></div></div>
+<div class="p-4 mt-auto">
+<div class="flex items-center gap-3 px-2">
+<div class="size-10 rounded-full bg-primary/20 flex items-center justify-center"><span class="material-symbols-outlined text-primary">person</span></div>
+<div class="flex-1 min-w-0"><p class="text-sm font-bold text-white truncate">QUANTUM Admin</p><p class="text-xs text-slate-500 truncate">v4.8.0</p></div>
+</div>
+</div>
 </aside>
 <main class="flex-1 min-w-0 h-screen overflow-y-auto overflow-x-hidden flex flex-col">
 <header class="flex items-center justify-between px-8 py-5 border-b border-white/5 glass-panel sticky top-0 z-10">
@@ -75,14 +80,11 @@ fetch(API+'/api/ssi/dashboard-data').then(function(r){return r.json()}).then(fun
     var iaiColor=parseFloat(c.avg_iai)>=60?'success-green':parseFloat(c.avg_iai)>=45?'primary':'amber-500';
     return '<tr class="hover:bg-white/5 transition-colors cursor-pointer"><td class="px-6 py-4 font-semibold text-white text-sm">'+c.city+'</td><td class="px-6 py-4 text-center text-sm">'+c.total+'</td><td class="px-6 py-4 text-center text-sm font-bold text-success-green">'+c.opportunities+'</td><td class="px-6 py-4 text-center"><span class="px-2.5 py-1 rounded-lg bg-'+iaiColor+'/20 text-'+iaiColor+' text-[11px] font-bold">'+(c.avg_iai||'-')+'</span></td><td class="px-6 py-4 text-center text-sm">'+(c.avg_premium?c.avg_premium+'%':'-')+'</td><td class="px-6 py-4 text-center text-sm text-alert-rose font-bold">'+(c.stressed||0)+'</td></tr>';
   }).join('');
-  // City select
   var sel=document.getElementById('city-select');
   cities.forEach(function(c){var o=document.createElement('option');o.value=c.city;o.textContent=c.city+' ('+c.total+')';sel.appendChild(o);});
-  // City bar chart
   var topCities=cities.slice(0,10);
   if(cityChartInstance)cityChartInstance.destroy();
   cityChartInstance=new Chart(document.getElementById('cityChart'),{type:'bar',data:{labels:topCities.map(function(c){return c.city}),datasets:[{label:'הזדמנויות',data:topCities.map(function(c){return c.opportunities}),backgroundColor:'#137fec',borderRadius:6},{label:'מוכרים לחוצים',data:topCities.map(function(c){return c.stressed||0}),backgroundColor:'#f43f5e',borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{usePointStyle:true,padding:20}}},scales:{y:{beginAtZero:true}}}});
-  // SSI doughnut
   var ssi=d.ssiDistribution||{};
   if(ssiChartInstance)ssiChartInstance.destroy();
   ssiChartInstance=new Chart(document.getElementById('ssiChart'),{type:'doughnut',data:{labels:['קריטי (80+)','גבוה (60-79)','בינוני (40-59)','נמוך (20-39)','מינימלי (<20)','ללא'],datasets:[{data:[parseInt(ssi.critical)||0,parseInt(ssi.high)||0,parseInt(ssi.medium)||0,parseInt(ssi.low)||0,parseInt(ssi.minimal)||0,parseInt(ssi.none)||0],backgroundColor:['#f43f5e','#f59e0b','#137fec','#06b6d4','#64748b','#334155']}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{usePointStyle:true,padding:12,font:{size:11}}}}}});
