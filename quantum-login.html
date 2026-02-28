@@ -1,52 +1,109 @@
 <!DOCTYPE html>
-<html class="dark" dir="rtl" lang="he">
+<html dir="rtl" lang="he">
 <head>
-<meta charset="utf-8"/>
+<meta charset="UTF-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>QUANTUM | התחברות</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="https://cdn.tailwindcss.com?plugins=forms"></script>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
 <script>
 tailwind.config = {
-    darkMode: "class",
     theme: { extend: { colors: { "primary": "#137fec", "background-dark": "#101922", "surface": "#1a2530", "border-dark": "#2d3a4b" }, fontFamily: { "display": ["Manrope", "sans-serif"] } } },
-}
+};
 </script>
 <style>
-body { font-family: 'Manrope', sans-serif; }
-@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
-@keyframes gridMove { 0% { transform: translateX(0) translateY(0); } 100% { transform: translateX(20px) translateY(20px); } }
-.float-animation { animation: float 4s ease-in-out infinite; }
-.grid-bg { background-image: radial-gradient(circle at 1px 1px, rgba(19,127,236,0.08) 1px, transparent 0); background-size: 30px 30px; animation: gridMove 20s linear infinite; }
-.glow-orb { background: radial-gradient(circle, rgba(19,127,236,0.15) 0%, transparent 70%); }
+body { font-family: 'Manrope', sans-serif; background: linear-gradient(135deg, #0a1018 0%, #101922 50%, #0d1520 100%); }
+.glass-panel { background: rgba(26, 37, 48, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.05); }
+.glow-primary { box-shadow: 0 0 30px rgba(19,127,236,0.15), 0 0 60px rgba(19,127,236,0.05); }
 </style>
 </head>
-<body class="bg-background-dark text-slate-200 min-h-screen flex items-center justify-center relative overflow-hidden">
-<div class="absolute inset-0 grid-bg"></div>
-<div class="absolute top-1/4 left-1/4 w-96 h-96 glow-orb rounded-full blur-3xl"></div>
-<div class="absolute bottom-1/4 right-1/4 w-72 h-72 glow-orb rounded-full blur-3xl"></div>
-<div class="relative z-10 w-full max-w-md">
-    <div class="text-center mb-10">
-        <div class="inline-flex items-center justify-center size-16 rounded-2xl bg-primary shadow-2xl shadow-primary/30 mb-6 float-animation"><span class="material-symbols-outlined text-white text-3xl">computer</span></div>
-        <h1 class="text-4xl font-extrabold text-white tracking-tight uppercase mb-2">QUANTUM</h1>
-        <p class="text-primary text-xs font-bold tracking-[0.3em] uppercase">Unified Analytics</p>
-        <p class="text-slate-500 text-sm mt-3">מערכת אנליטיקה למקצוענים בהתחדשות עירונית</p>
-    </div>
-    <div class="bg-surface/60 backdrop-blur-xl border border-white/5 rounded-2xl p-8 shadow-2xl">
-        <div class="space-y-5">
-            <div><label class="text-[10px] text-slate-500 font-bold uppercase tracking-widest block mb-2">אימייל</label><div class="relative"><span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 text-lg">mail</span><input type="email" placeholder="your@email.com" class="w-full bg-white/5 border border-white/10 rounded-xl text-sm py-3 pr-10 pl-4 focus:ring-primary focus:border-primary placeholder-slate-600"/></div></div>
-            <div><label class="text-[10px] text-slate-500 font-bold uppercase tracking-widest block mb-2">סיסמה</label><div class="relative"><span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 text-lg">lock</span><input type="password" placeholder="••••••••" class="w-full bg-white/5 border border-white/10 rounded-xl text-sm py-3 pr-10 pl-10 focus:ring-primary focus:border-primary placeholder-slate-600"/><button class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white transition-colors"><span class="material-symbols-outlined text-lg">visibility_off</span></button></div></div>
-            <div class="flex items-center justify-between"><label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="rounded bg-white/5 border-white/20 text-primary focus:ring-primary"/><span class="text-sm text-slate-400">זכור אותי</span></label><a href="#" class="text-sm text-primary font-semibold hover:underline">שכחתי סיסמה</a></div>
-            <a href="quantum-dashboard.html" class="w-full py-3 bg-primary text-white text-sm font-bold rounded-xl hover:brightness-110 transition-all shadow-lg shadow-primary/20 flex items-center justify-center gap-2"><span class="material-symbols-outlined text-lg">login</span>התחברות</a>
+<body class="min-h-screen flex items-center justify-center p-4">
+<div class="w-full max-w-md">
+    <div class="text-center mb-8">
+        <div class="inline-flex items-center justify-center size-16 rounded-2xl bg-primary/10 border border-primary/20 mb-4 glow-primary">
+            <span class="material-symbols-outlined text-white text-3xl">diamond</span>
         </div>
-        <div class="flex items-center gap-4 my-6"><div class="flex-1 h-px bg-white/10"></div><span class="text-[10px] text-slate-500 font-bold uppercase tracking-widest">או</span><div class="flex-1 h-px bg-white/10"></div></div>
-        <div class="space-y-3">
-            <button class="w-full py-3 bg-white/5 border border-white/10 rounded-xl text-sm font-semibold hover:bg-white/10 transition-all flex items-center justify-center gap-3"><svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>התחברות עם Google</button>
-            <button class="w-full py-3 bg-white/5 border border-white/10 rounded-xl text-sm font-semibold hover:bg-white/10 transition-all flex items-center justify-center gap-3"><span class="material-symbols-outlined text-lg">smartphone</span>התחברות עם קוד SMS</button>
-        </div>
+        <h1 class="text-3xl font-extrabold text-white tracking-tight">QUANTUM</h1>
+        <p class="text-sm text-primary font-bold tracking-widest mt-1">UNIFIED ANALYTICS</p>
     </div>
-    <div class="text-center mt-8 space-y-2"><p class="text-xs text-slate-500">אין לך חשבון? <a href="#" class="text-primary font-bold hover:underline">צור קשר למנוי</a></p><p class="text-[10px] text-slate-600 tracking-widest uppercase">© 2026 Quantum - Real Estate Intelligence</p></div>
+    
+    <div class="glass-panel rounded-3xl p-8 glow-primary">
+        <h2 class="text-xl font-bold text-white mb-6 text-center">התחברות למערכת</h2>
+        
+        <form id="login-form" onsubmit="handleLogin(event)">
+            <div class="space-y-5">
+                <div>
+                    <label class="block text-sm font-semibold text-slate-400 mb-2">שם משתמש</label>
+                    <div class="relative">
+                        <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-500">person</span>
+                        <input type="text" id="username" required placeholder="הכנס שם משתמש"
+                            class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 pr-11 text-white placeholder-slate-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"/>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-400 mb-2">סיסמה</label>
+                    <div class="relative">
+                        <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-500">lock</span>
+                        <input type="password" id="password" required placeholder="הכנס סיסמה"
+                            class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 pr-11 text-white placeholder-slate-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"/>
+                        <button type="button" onclick="togglePassword()" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white transition-colors">
+                            <span class="material-symbols-outlined" id="pw-toggle">visibility_off</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="flex items-center justify-between">
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox" id="remember" class="rounded border-white/20 bg-white/5 text-primary focus:ring-primary focus:ring-offset-0"/>
+                        <span class="text-sm text-slate-400">זכור אותי</span>
+                    </label>
+                </div>
+                <button type="submit" id="login-btn"
+                    class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-3.5 rounded-xl transition-all duration-200 flex items-center justify-center gap-2">
+                    <span>כניסה</span>
+                    <span class="material-symbols-outlined text-lg">arrow_back</span>
+                </button>
+            </div>
+        </form>
+
+        <div id="login-error" class="hidden mt-4 p-3 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-sm text-center"></div>
+    </div>
+
+    <p class="text-center text-slate-600 text-xs mt-6">QUANTUM Unified Analytics v4.8.0</p>
 </div>
+
+<script>
+function togglePassword() {
+    var pw = document.getElementById('password');
+    var icon = document.getElementById('pw-toggle');
+    if (pw.type === 'password') { pw.type = 'text'; icon.textContent = 'visibility'; }
+    else { pw.type = 'password'; icon.textContent = 'visibility_off'; }
+}
+
+function handleLogin(e) {
+    e.preventDefault();
+    var btn = document.getElementById('login-btn');
+    var err = document.getElementById('login-error');
+    btn.innerHTML = '<span class="animate-spin material-symbols-outlined">progress_activity</span>';
+    btn.disabled = true;
+    err.classList.add('hidden');
+
+    setTimeout(function() {
+        var user = document.getElementById('username').value;
+        var pass = document.getElementById('password').value;
+        
+        if ((user === 'admin' && pass === 'quantum2026') || (user === 'hemi' && pass === 'quantum')) {
+            sessionStorage.setItem('quantum_auth', 'true');
+            sessionStorage.setItem('quantum_user', user);
+            window.location.href = 'quantum-properties.html';
+        } else {
+            err.textContent = 'שם משתמש או סיסמה שגויים';
+            err.classList.remove('hidden');
+            btn.innerHTML = '<span>כניסה</span><span class="material-symbols-outlined text-lg">arrow_back</span>';
+            btn.disabled = false;
+        }
+    }, 800);
+}
+</script>
 </body>
 </html>
