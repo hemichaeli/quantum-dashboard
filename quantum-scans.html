@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html class="dark" dir="rtl" lang="he">
+<head>
+<meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>QUANTUM | סריקות</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>tailwind.config={darkMode:"class",theme:{extend:{colors:{"primary":"#137fec","background-dark":"#101922","surface":"#1a2530","border-dark":"#2d3a4b","alert-rose":"#f43f5e","success-green":"#10b981","warning-amber":"#f59e0b"},fontFamily:{"display":["Manrope","sans-serif"]}}}}</script>
+<style>
+body{font-family:'Manrope',sans-serif;}
+.glass-panel{background:rgba(26,37,48,0.7);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.05);}
+.custom-scrollbar::-webkit-scrollbar{width:6px;}
+.custom-scrollbar::-webkit-scrollbar-track{background:transparent;}
+.custom-scrollbar::-webkit-scrollbar-thumb{background:#2d3a4b;border-radius:10px;}
+tr.data-row:hover{background:rgba(255,255,255,0.04);}
+</style>
+</head>
+<body class="bg-background-dark text-slate-200 min-h-screen flex">
+<!-- Sidebar -->
+<aside class="w-64 flex-shrink-0 border-l border-white/5 bg-surface/50 h-screen sticky top-0 hidden lg:flex flex-col">
+<div class="p-5 flex items-center gap-3">
+<img src="quantum-logo.png" alt="QUANTUM" class="h-12 w-auto object-contain" style="filter:drop-shadow(0 0 8px rgba(19,127,236,0.4));"/>
+<div><h1 class="text-xl font-extrabold tracking-tight text-white uppercase">QUANTUM</h1>
+<p class="text-[10px] text-primary font-bold tracking-widest leading-none">UNIFIED ANALYTICS</p></div>
+</div>
+<nav class="flex-1 px-4 space-y-1 mt-2">
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-dashboard.html"><span class="material-symbols-outlined">dashboard</span><span>לוח בקרה</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-opportunities.html"><span class="material-symbols-outlined">diamond</span><span>הזדמנויות</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-complexes.html"><span class="material-symbols-outlined">location_city</span><span>מתחמים</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-map-view.html"><span class="material-symbols-outlined">map</span><span>מפת פרויקטים</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-market-analysis.html"><span class="material-symbols-outlined">monitoring</span><span>ניתוח שוק</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-properties.html"><span class="material-symbols-outlined">apartment</span><span>נכסים</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-messaging.html"><span class="material-symbols-outlined">mail</span><span>הודעות</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-alerts.html"><span class="material-symbols-outlined">notifications</span><span>התראות</span><span id="nav-alert-badge" class="hidden mr-auto px-1.5 py-0.5 bg-alert-rose text-white text-[9px] font-bold rounded-full min-w-[18px] text-center"></span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary text-white font-semibold" href="quantum-scans.html"><span class="material-symbols-outlined">radar</span><span>סריקות</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-reports.html"><span class="material-symbols-outlined">description</span><span>דוחות</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-settings.html"><span class="material-symbols-outlined">settings</span><span>הגדרות</span></a>
+</nav>
+<div class="p-4 mt-auto">
+<div class="flex items-center gap-3 px-2">
+<div class="size-10 rounded-full bg-primary/20 flex items-center justify-center"><span class="material-symbols-outlined text-primary">person</span></div>
+<div class="flex-1 min-w-0"><p class="text-sm font-bold text-white truncate">QUANTUM Admin</p><p class="text-xs text-slate-500 truncate"><span class="q-ver">v...</span></p></div>
+</div>
+</div>
+</aside>
+<!-- Main -->
+<main class="flex-1 min-w-0 h-screen overflow-y-auto overflow-x-hidden flex flex-col">
+<header class="flex items-center justify-between px-8 py-5 border-b border-white/5 glass-panel sticky top-0 z-10">
+<div>
+<h2 class="text-2xl font-bold text-white leading-tight">סריקה ותזמון</h2>
+<p class="text-sm text-slate-400">ניהול סריקות אוטומטיות וידניות של מתחמי פינוי-בינוי</p>
+</div>
+<button id="scan-btn" onclick="triggerScan()" class="flex items-center gap-2 bg-success-green hover:bg-success-green/80 text-white font-semibold px-5 py-2.5 rounded-xl transition-all text-sm">
+<span class="material-symbols-outlined text-lg">radar</span><span>הפעל סריקה ידנית</span>
+</button>
+</header>
+<div class="p-8 flex-1 custom-scrollbar overflow-y-auto space-y-6">
+<!-- Scheduler status -->
+<div class="glass-panel rounded-2xl p-6">
+<h3 class="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4">סטטוס מערכת</h3>
+<div class="grid grid-cols-2 md:grid-cols-5 gap-4" id="sched-status">
+<div class="text-center py-4 text-slate-500">טוען...</div>
+</div>
+</div>
+<!-- Scan message -->
+<div id="scan-message" class="hidden rounded-xl p-4 text-sm font-semibold"></div>
+<!-- Scan history -->
+<div class="glass-panel rounded-2xl overflow-hidden">
+<div class="px-6 py-4 border-b border-white/5 flex items-center justify-between">
+<h3 class="font-semibold text-white">היסטוריית סריקות</h3>
+<button onclick="loadScans()" class="text-xs text-slate-400 hover:text-white flex items-center gap-1"><span class="material-symbols-outlined text-sm">refresh</span>רענן</button>
+</div>
+<table class="w-full text-sm">
+<thead><tr class="border-b border-white/5">
+<th class="px-4 py-3 text-right text-xs text-slate-400 font-semibold uppercase tracking-wider">#</th>
+<th class="px-4 py-3 text-right text-xs text-slate-400 font-semibold uppercase tracking-wider">סוג</th>
+<th class="px-4 py-3 text-right text-xs text-slate-400 font-semibold uppercase tracking-wider">סטטוס</th>
+<th class="px-4 py-3 text-right text-xs text-slate-400 font-semibold uppercase tracking-wider">נסרקו</th>
+<th class="px-4 py-3 text-right text-xs text-slate-400 font-semibold uppercase tracking-wider">עסקאות</th>
+<th class="px-4 py-3 text-right text-xs text-slate-400 font-semibold uppercase tracking-wider">מודעות</th>
+<th class="px-4 py-3 text-right text-xs text-slate-400 font-semibold uppercase tracking-wider">התראות</th>
+<th class="px-4 py-3 text-right text-xs text-slate-400 font-semibold uppercase tracking-wider">תאריך</th>
+</tr></thead>
+<tbody id="scans-body">
+<tr><td colspan="8" class="px-4 py-8 text-center text-slate-500">טוען...</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</main>
+<script>
+const API='https://pinuy-binuy-analyzer-production.up.railway.app';
+let schedData=null;
+async function loadScheduler(){
+  try{
+    const r=await fetch(`${API}/api/scheduler`);
+    schedData=await r.json();
+    document.getElementById('sched-status').innerHTML=[
+      ['סריקה אוטומטית',schedData.enabled?'✅ פעיל':'❌ כבוי',schedData.enabled?'#10b981':'#ef4444'],
+      ['תזמון','כל יום ב-08:00','#94a3b8'],
+      ['Perplexity AI',schedData.perplexityConfigured?'✅ מוגדר':'❌ לא מוגדר',schedData.perplexityConfigured?'#10b981':'#ef4444'],
+      ['Claude AI',schedData.claudeConfigured?'✅ מוגדר':'⚠️ לא מוגדר',schedData.claudeConfigured?'#10b981':'#f59e0b'],
+      ['התראות מייל',schedData.notificationsConfigured?'✅ פעיל':'❌ לא מוגדר',schedData.notificationsConfigured?'#10b981':'#ef4444'],
+    ].map(([label,val,color])=>`<div class="glass-panel rounded-xl p-4"><div class="text-xs text-slate-500 mb-2">${label}</div><div style="color:${color}" class="text-sm font-semibold">${val}</div></div>`).join('');
+    const btn=document.getElementById('scan-btn');
+    if(schedData.isRunning){btn.disabled=true;btn.innerHTML='<span class="material-symbols-outlined text-lg animate-spin">radar</span><span>סורק...</span>';}
+  }catch(e){}
+}
+async function loadScans(){
+  try{
+    const r=await fetch(`${API}/api/scan/results?limit=20`);
+    const d=await r.json();
+    const scans=d.scans||[];
+    const tbody=document.getElementById('scans-body');
+    if(!scans.length){tbody.innerHTML=`<tr><td colspan="8" class="px-4 py-8 text-center text-slate-500">אין סריקות עדיין</td></tr>`;return;}
+    tbody.innerHTML=scans.map(s=>`
+      <tr class="data-row border-b border-white/5">
+        <td class="px-4 py-3 text-slate-500">${s.id}</td>
+        <td class="px-4 py-3"><span class="px-2 py-0.5 rounded-md text-xs font-bold bg-indigo-500/20 text-indigo-400 border border-indigo-500/30">${s.scan_type}</span></td>
+        <td class="px-4 py-3">${s.status==='completed'?`<span class="px-2 py-0.5 rounded-md text-xs font-bold bg-success-green/20 text-success-green border border-success-green/30">הושלם</span>`:s.status==='running'?`<span class="px-2 py-0.5 rounded-md text-xs font-bold bg-warning-amber/20 text-warning-amber border border-warning-amber/30">רץ</span>`:`<span class="px-2 py-0.5 rounded-md text-xs font-bold bg-alert-rose/20 text-alert-rose border border-alert-rose/30">נכשל</span>`}</td>
+        <td class="px-4 py-3 text-slate-400">${s.complexes_scanned||0}</td>
+        <td class="px-4 py-3 text-slate-400">${s.new_transactions||0}</td>
+        <td class="px-4 py-3 text-slate-400">${s.new_listings||0}</td>
+        <td class="px-4 py-3 text-slate-400">${s.alerts_sent||0}</td>
+        <td class="px-4 py-3 text-slate-500 text-xs">${new Date(s.started_at).toLocaleString('he-IL')}</td>
+      </tr>`).join('');
+  }catch(e){document.getElementById('scans-body').innerHTML=`<tr><td colspan="8" class="px-4 py-8 text-center text-alert-rose">שגיאה בטעינת סריקות</td></tr>`;}
+}
+async function triggerScan(){
+  const btn=document.getElementById('scan-btn');
+  const msg=document.getElementById('scan-message');
+  btn.disabled=true;btn.innerHTML='<span class="material-symbols-outlined text-lg animate-spin">radar</span><span>מפעיל...</span>';
+  try{
+    const r=await fetch(`${API}/api/scheduler/run`,{method:'POST'});
+    const d=await r.json();
+    if(r.ok){
+      msg.className='rounded-xl p-4 text-sm font-semibold bg-success-green/20 text-success-green border border-success-green/30';
+      msg.textContent='✅ הסריקה הופעלה! הדוח יישלח למייל בסיום.';
+      setTimeout(()=>{loadScheduler();loadScans();msg.classList.add('hidden');btn.disabled=false;btn.innerHTML='<span class="material-symbols-outlined text-lg">radar</span><span>הפעל סריקה ידנית</span>';},10000);
+    }else{
+      msg.className='rounded-xl p-4 text-sm font-semibold bg-alert-rose/20 text-alert-rose border border-alert-rose/30';
+      msg.textContent='❌ שגיאה: '+(d.error||'לא ידוע');
+      btn.disabled=false;btn.innerHTML='<span class="material-symbols-outlined text-lg">radar</span><span>הפעל סריקה ידנית</span>';
+    }
+    msg.classList.remove('hidden');
+  }catch(e){
+    msg.className='rounded-xl p-4 text-sm font-semibold bg-alert-rose/20 text-alert-rose border border-alert-rose/30';
+    msg.textContent='❌ שגיאת רשת: '+e.message;
+    msg.classList.remove('hidden');
+    btn.disabled=false;btn.innerHTML='<span class="material-symbols-outlined text-lg">radar</span><span>הפעל סריקה ידנית</span>';
+  }
+}
+loadScheduler();loadScans();
+fetch(`${API}/api/alerts?limit=500`).then(r=>r.json()).then(d=>{const u=(d.alerts||[]).filter(a=>!a.is_read).length;const b=document.getElementById('nav-alert-badge');if(b&&u>0){b.textContent=u>99?'99+':u;b.classList.remove('hidden')}}).catch(()=>{});
+fetch(`${API}/health`).then(r=>r.json()).then(d=>{document.querySelectorAll('.q-ver').forEach(el=>el.textContent='v'+d.version)}).catch(()=>{});
+</script>
+</body>
+</html>
