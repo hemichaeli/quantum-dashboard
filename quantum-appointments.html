@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html class="dark" dir="rtl" lang="he">
+<head>
+<meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>QUANTUM | פגישות ויומן</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>tailwind.config={darkMode:"class",theme:{extend:{colors:{"primary":"#137fec","background-dark":"#101922","surface":"#1a2530","border-dark":"#2d3a4b","alert-rose":"#f43f5e","success-green":"#10b981"},fontFamily:{"display":["Manrope","sans-serif"]}}}}</script>
+<style>body{font-family:'Manrope',sans-serif;}.glass-panel{background:rgba(26,37,48,0.7);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.05);}.custom-scrollbar::-webkit-scrollbar{width:6px;}.custom-scrollbar::-webkit-scrollbar-track{background:transparent;}.custom-scrollbar::-webkit-scrollbar-thumb{background:#2d3a4b;border-radius:10px;}.status-badge{padding:2px 10px;border-radius:999px;font-size:11px;font-weight:700;}.cal-day{min-height:80px;}.cal-day.has-event{border-color:rgba(19,127,236,0.4);}</style>
+</head>
+<body class="bg-background-dark text-slate-200 min-h-screen flex">
+<aside class="w-64 flex-shrink-0 border-l border-white/5 bg-surface/50 h-screen sticky top-0 hidden lg:flex flex-col">
+<div class="p-5 flex items-center gap-3">
+<img src="quantum-logo.png" alt="QUANTUM" class="h-12 w-auto object-contain" style="filter:drop-shadow(0 0 8px rgba(19,127,236,0.4));"/>
+<div><h1 class="text-xl font-extrabold tracking-tight text-white uppercase">QUANTUM</h1>
+<p class="text-[10px] text-primary font-bold tracking-widest leading-none">UNIFIED ANALYTICS</p></div>
+</div>
+<nav class="flex-1 px-4 space-y-1 mt-2 overflow-y-auto custom-scrollbar">
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-dashboard.html"><span class="material-symbols-outlined">dashboard</span><span>לוח בקרה</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-opportunities.html"><span class="material-symbols-outlined">diamond</span><span>הזדמנויות</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-complexes.html"><span class="material-symbols-outlined">location_city</span><span>מתחמים</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-map-view.html"><span class="material-symbols-outlined">map</span><span>מפת פרויקטים</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-market-analysis.html"><span class="material-symbols-outlined">monitoring</span><span>ניתוח שוק</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-properties.html"><span class="material-symbols-outlined">apartment</span><span>נכסים</span></a>
+<div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">CRM ולידים</p></div>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-leads.html"><span class="material-symbols-outlined">people</span><span>לידים ו-CRM</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-campaigns.html"><span class="material-symbols-outlined">campaign</span><span>קמפיינים</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary text-white font-semibold transition-all" href="quantum-appointments.html"><span class="material-symbols-outlined">calendar_month</span><span>פגישות ויומן</span></a>
+<div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">תקשורת</p></div>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-messaging.html"><span class="material-symbols-outlined">mail</span><span>הודעות ו-WA</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-bot-settings.html"><span class="material-symbols-outlined">smart_toy</span><span>הגדרות בוט</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-alerts.html"><span class="material-symbols-outlined">notifications</span><span>התראות</span></a>
+<div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">מערכת</p></div>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-scans.html"><span class="material-symbols-outlined">radar</span><span>סריקות</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-reports.html"><span class="material-symbols-outlined">description</span><span>דוחות</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-settings.html"><span class="material-symbols-outlined">settings</span><span>הגדרות</span></a>
+</nav>
+<div class="p-4 mt-auto">
+<div class="flex items-center gap-3 px-2">
+<div class="size-10 rounded-full bg-primary/20 flex items-center justify-center"><span class="material-symbols-outlined text-primary">person</span></div>
+<div class="flex-1 min-w-0"><p class="text-sm font-bold text-white truncate">QUANTUM Admin</p><p class="text-xs text-slate-500 truncate"><span class="q-ver">v...</span></p></div>
+</div></div>
+</aside>
+<main class="flex-1 min-w-0 h-screen overflow-y-auto overflow-x-hidden flex flex-col">
+<header class="flex items-center justify-between px-8 py-5 border-b border-white/5 glass-panel sticky top-0 z-10">
+<div><h2 class="text-2xl font-bold text-white leading-tight">פגישות ויומן</h2><p class="text-sm text-slate-400">ניהול פגישות, תזמון ומעקב אחר לקוחות</p></div>
+<div class="flex items-center gap-3">
+<button class="flex items-center gap-2 bg-white/5 hover:bg-white/10 px-4 py-2.5 rounded-xl text-sm font-bold text-slate-300 transition-all" onclick="loadAppointments()"><span class="material-symbols-outlined text-lg">refresh</span>רענן</button>
+<button class="flex items-center gap-2 bg-primary hover:brightness-110 px-5 py-2.5 rounded-xl text-sm font-bold text-white transition-all" onclick="openNewAppt()"><span class="material-symbols-outlined text-lg">add</span>פגישה חדשה</button>
+</div>
+</header>
+<div class="p-8 space-y-6">
+<!-- Stats -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="glass-panel rounded-2xl p-5"><p class="text-slate-400 text-xs font-medium">פגישות היום</p><h3 class="text-2xl font-bold text-white mt-1" id="stat-today">-</h3></div>
+<div class="glass-panel rounded-2xl p-5"><p class="text-slate-400 text-xs font-medium">השבוע</p><h3 class="text-2xl font-bold text-primary mt-1" id="stat-week">-</h3></div>
+<div class="glass-panel rounded-2xl p-5"><p class="text-slate-400 text-xs font-medium">ממתינות לאישור</p><h3 class="text-2xl font-bold text-amber-400 mt-1" id="stat-pending">-</h3></div>
+<div class="glass-panel rounded-2xl p-5"><p class="text-slate-400 text-xs font-medium">הושלמו החודש</p><h3 class="text-2xl font-bold text-success-green mt-1" id="stat-completed">-</h3></div>
+</div>
+<!-- Calendar + Upcoming -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Mini Calendar -->
+<div class="glass-panel rounded-2xl lg:col-span-1">
+<div class="p-5 border-b border-white/5 flex items-center justify-between">
+<h3 class="font-bold text-white" id="cal-month-title">יומן</h3>
+<div class="flex gap-2">
+<button onclick="prevMonth()" class="p-1 hover:bg-white/10 rounded-lg transition-all"><span class="material-symbols-outlined text-slate-400">chevron_right</span></button>
+<button onclick="nextMonth()" class="p-1 hover:bg-white/10 rounded-lg transition-all"><span class="material-symbols-outlined text-slate-400">chevron_left</span></button>
+</div>
+</div>
+<div class="p-4">
+<div class="grid grid-cols-7 text-center text-[10px] text-slate-500 font-bold mb-2">
+<div>א</div><div>ב</div><div>ג</div><div>ד</div><div>ה</div><div>ו</div><div>ש</div>
+</div>
+<div class="grid grid-cols-7 gap-1" id="cal-grid"></div>
+</div>
+</div>
+<!-- Upcoming Appointments -->
+<div class="glass-panel rounded-2xl lg:col-span-2">
+<div class="p-5 border-b border-white/5 flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">event_upcoming</span>
+<div><h3 class="font-bold text-white">פגישות קרובות</h3><p class="text-xs text-slate-400" id="upcoming-count">טוען...</p></div>
+</div>
+<div class="p-5 space-y-3" id="upcoming-list">
+<div class="text-center py-8 text-slate-500">טוען...</div>
+</div>
+</div>
+</div>
+<!-- All Appointments Table -->
+<div class="glass-panel rounded-2xl">
+<div class="p-5 border-b border-white/5 flex items-center justify-between">
+<div class="flex items-center gap-3"><span class="material-symbols-outlined text-amber-400">calendar_month</span><div><h3 class="font-bold text-white">כל הפגישות</h3></div></div>
+<select class="bg-surface border border-white/10 rounded-xl text-sm px-4 py-2 text-slate-300" id="filter-appt-status" onchange="loadAppointments()">
+<option value="">כל הסטטוסים</option>
+<option value="scheduled">מתוכנן</option>
+<option value="confirmed">אושר</option>
+<option value="completed">הושלם</option>
+<option value="cancelled">בוטל</option>
+</select>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-sm">
+<thead><tr class="border-b border-white/5 text-slate-500 text-xs uppercase tracking-widest">
+<th class="text-right px-5 py-3">לקוח</th>
+<th class="text-right px-5 py-3">טלפון</th>
+<th class="text-right px-5 py-3">סוג</th>
+<th class="text-right px-5 py-3">תאריך ושעה</th>
+<th class="text-right px-5 py-3">מיקום</th>
+<th class="text-right px-5 py-3">סטטוס</th>
+<th class="text-right px-5 py-3">פעולות</th>
+</tr></thead>
+<tbody id="appt-tbody"><tr><td colspan="7" class="text-center py-12 text-slate-500">טוען...</td></tr></tbody>
+</table>
+</div>
+</div>
+</div>
+<footer class="mt-auto px-8 py-6 border-t border-white/5 text-center text-slate-500 text-[11px] font-medium tracking-widest uppercase">&copy; 2026 QUANTUM Unified Analytics | <span class="q-ver">v...</span></footer>
+</main>
+<!-- New Appointment Modal -->
+<div class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center" id="appt-modal">
+<div class="glass-panel rounded-2xl w-full max-w-lg mx-4">
+<div class="p-5 border-b border-white/5 flex items-center justify-between">
+<h3 class="font-bold text-white">פגישה חדשה</h3>
+<button onclick="closeModal()" class="text-slate-400 hover:text-white"><span class="material-symbols-outlined">close</span></button>
+</div>
+<div class="p-6 space-y-4">
+<div class="grid grid-cols-2 gap-4">
+<div><label class="text-xs text-slate-400 block mb-1">שם לקוח</label><input id="appt-name" type="text" class="w-full bg-surface border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm" placeholder="שם מלא"/></div>
+<div><label class="text-xs text-slate-400 block mb-1">טלפון</label><input id="appt-phone" type="tel" class="w-full bg-surface border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm" placeholder="05X-XXXXXXX" dir="ltr"/></div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div><label class="text-xs text-slate-400 block mb-1">תאריך</label><input id="appt-date" type="date" class="w-full bg-surface border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm"/></div>
+<div><label class="text-xs text-slate-400 block mb-1">שעה</label><input id="appt-time" type="time" class="w-full bg-surface border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm"/></div>
+</div>
+<div><label class="text-xs text-slate-400 block mb-1">סוג פגישה</label>
+<select id="appt-type" class="w-full bg-surface border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm">
+<option value="property_showing">הצגת נכס</option>
+<option value="consultation">ייעוץ</option>
+<option value="contract_signing">חתימת חוזה</option>
+<option value="follow_up">מעקב</option>
+</select></div>
+<div><label class="text-xs text-slate-400 block mb-1">מיקום</label><input id="appt-location" type="text" class="w-full bg-surface border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm" placeholder="כתובת / Zoom / טלפון"/></div>
+<div><label class="text-xs text-slate-400 block mb-1">הערות</label><textarea id="appt-notes" rows="2" class="w-full bg-surface border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm resize-none"></textarea></div>
+<div class="flex gap-3 pt-2">
+<button onclick="saveAppointment()" class="flex-1 bg-primary hover:brightness-110 py-2.5 rounded-xl text-sm font-bold text-white">שמור פגישה</button>
+<button onclick="closeModal()" class="flex-1 bg-white/5 hover:bg-white/10 py-2.5 rounded-xl text-sm font-bold text-slate-400">ביטול</button>
+</div>
+</div>
+</div>
+</div>
+<script>
+const API='https://pinuy-binuy-analyzer-production.up.railway.app';
+let currentMonth=new Date().getMonth();let currentYear=new Date().getFullYear();let apptDates=new Set();
+const statusColors={scheduled:'bg-primary/20 text-primary',confirmed:'bg-success-green/20 text-success-green',completed:'bg-slate-700/50 text-slate-400',cancelled:'bg-alert-rose/20 text-alert-rose'};
+const statusLabels={scheduled:'מתוכנן',confirmed:'אושר',completed:'הושלם',cancelled:'בוטל'};
+const typeLabels={property_showing:'הצגת נכס',consultation:'ייעוץ',contract_signing:'חתימת חוזה',follow_up:'מעקב'};
+
+async function loadAppointments(){
+  const status=document.getElementById('filter-appt-status').value;
+  try{
+    const r=await fetch(API+'/api/appointments'+(status?'?status='+status:''));
+    const d=await r.json();
+    const appts=d.appointments||d||[];
+    const today=new Date().toDateString();
+    const weekEnd=new Date();weekEnd.setDate(weekEnd.getDate()+7);
+    const todayAppts=appts.filter(a=>new Date(a.date||a.scheduled_at).toDateString()===today);
+    const weekAppts=appts.filter(a=>{const dt=new Date(a.date||a.scheduled_at);return dt>=new Date()&&dt<=weekEnd;});
+    const pending=appts.filter(a=>a.status==='scheduled');
+    const completed=appts.filter(a=>a.status==='completed');
+    document.getElementById('stat-today').textContent=todayAppts.length;
+    document.getElementById('stat-week').textContent=weekAppts.length;
+    document.getElementById('stat-pending').textContent=pending.length;
+    document.getElementById('stat-completed').textContent=completed.length;
+    // Upcoming
+    const upcoming=appts.filter(a=>new Date(a.date||a.scheduled_at)>=new Date()).sort((a,b)=>new Date(a.date||a.scheduled_at)-new Date(b.date||b.scheduled_at)).slice(0,5);
+    document.getElementById('upcoming-count').textContent=upcoming.length+' פגישות קרובות';
+    const ul=document.getElementById('upcoming-list');
+    if(!upcoming.length){ul.innerHTML='<div class="text-center py-8 text-slate-500">אין פגישות קרובות</div>';}
+    else{ul.innerHTML=upcoming.map(a=>{const dt=new Date(a.date||a.scheduled_at);return`<div class="flex items-center gap-4 bg-surface/50 border border-white/5 rounded-xl p-4">
+      <div class="text-center bg-primary/20 rounded-xl p-3 flex-shrink-0">
+        <p class="text-lg font-bold text-primary">${dt.getDate()}</p>
+        <p class="text-[10px] text-slate-400">${dt.toLocaleString('he-IL',{month:'short'})}</p>
+      </div>
+      <div class="flex-1">
+        <p class="font-bold text-white text-sm">${a.client_name||a.name||'לקוח'}</p>
+        <p class="text-xs text-slate-400 mt-1">${typeLabels[a.type]||a.type||''} • ${dt.toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'})}</p>
+        <p class="text-xs text-slate-500 mt-1">${a.location||''}</p>
+      </div>
+      <span class="status-badge ${statusColors[a.status]||'bg-slate-700/50 text-slate-400'}">${statusLabels[a.status]||a.status||'-'}</span>
+    </div>`}).join('');}
+    // Table
+    const tbody=document.getElementById('appt-tbody');
+    if(!appts.length){tbody.innerHTML='<tr><td colspan="7" class="text-center py-12 text-slate-500">אין פגישות</td></tr>';return;}
+    tbody.innerHTML=appts.map(a=>{const dt=new Date(a.date||a.scheduled_at);return`<tr class="border-b border-white/5 hover:bg-white/5 transition-all">
+      <td class="px-5 py-3 font-semibold text-white">${a.client_name||a.name||'-'}</td>
+      <td class="px-5 py-3 text-slate-300 font-mono text-xs" dir="ltr">${a.phone||'-'}</td>
+      <td class="px-5 py-3 text-xs text-slate-400">${typeLabels[a.type]||a.type||'-'}</td>
+      <td class="px-5 py-3 text-slate-300 text-xs">${dt.toLocaleString('he-IL',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})}</td>
+      <td class="px-5 py-3 text-slate-400 text-xs">${a.location||'-'}</td>
+      <td class="px-5 py-3"><span class="status-badge ${statusColors[a.status]||'bg-slate-700/50 text-slate-400'}">${statusLabels[a.status]||a.status||'-'}</span></td>
+      <td class="px-5 py-3 flex gap-2">
+        ${a.status==='scheduled'?`<button onclick="confirmAppt(${a.id})" class="text-success-green hover:text-white text-xs transition-all" title="אשר"><span class="material-symbols-outlined text-base">check_circle</span></button>`:''}
+        <button onclick="cancelAppt(${a.id})" class="text-alert-rose hover:text-white text-xs transition-all" title="בטל"><span class="material-symbols-outlined text-base">cancel</span></button>
+      </td>
+    </tr>`}).join('');
+    apptDates=new Set(appts.map(a=>new Date(a.date||a.scheduled_at).toDateString()));
+    renderCalendar();
+  }catch(e){document.getElementById('appt-tbody').innerHTML='<tr><td colspan="7" class="text-center py-8 text-alert-rose">שגיאה בטעינת פגישות</td></tr>';}
+}
+
+function renderCalendar(){
+  const months=['ינואר','פברואר','מרץ','אפריל','מאי','יוני','יולי','אוגוסט','ספטמבר','אוקטובר','נובמבר','דצמבר'];
+  document.getElementById('cal-month-title').textContent=months[currentMonth]+' '+currentYear;
+  const firstDay=new Date(currentYear,currentMonth,1).getDay();
+  const daysInMonth=new Date(currentYear,currentMonth+1,0).getDate();
+  const today=new Date();
+  let html='';
+  for(let i=0;i<firstDay;i++)html+='<div></div>';
+  for(let d=1;d<=daysInMonth;d++){
+    const dt=new Date(currentYear,currentMonth,d).toDateString();
+    const isToday=today.getDate()===d&&today.getMonth()===currentMonth&&today.getFullYear()===currentYear;
+    const hasEvent=apptDates.has(dt);
+    html+=`<div class="text-center py-1.5 text-xs rounded-lg cursor-pointer transition-all ${isToday?'bg-primary text-white font-bold':hasEvent?'bg-primary/20 text-primary font-semibold':'text-slate-400 hover:bg-white/5'}">${d}${hasEvent&&!isToday?'<div class="size-1 bg-primary rounded-full mx-auto mt-0.5"></div>':''}</div>`;
+  }
+  document.getElementById('cal-grid').innerHTML=html;
+}
+
+function prevMonth(){currentMonth--;if(currentMonth<0){currentMonth=11;currentYear--;}renderCalendar();}
+function nextMonth(){currentMonth++;if(currentMonth>11){currentMonth=0;currentYear++;}renderCalendar();}
+
+function openNewAppt(){
+  const today=new Date();
+  document.getElementById('appt-date').value=today.toISOString().split('T')[0];
+  document.getElementById('appt-modal').classList.remove('hidden');
+}
+function closeModal(){document.getElementById('appt-modal').classList.add('hidden');}
+
+async function saveAppointment(){
+  const data={client_name:document.getElementById('appt-name').value,phone:document.getElementById('appt-phone').value,date:document.getElementById('appt-date').value+'T'+document.getElementById('appt-time').value,type:document.getElementById('appt-type').value,location:document.getElementById('appt-location').value,notes:document.getElementById('appt-notes').value,status:'scheduled'};
+  try{
+    await fetch(API+'/api/appointments',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
+    closeModal();loadAppointments();
+  }catch(e){alert('שגיאה בשמירת פגישה');}
+}
+
+async function confirmAppt(id){
+  try{await fetch(API+'/api/appointments/'+id,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({status:'confirmed'})});loadAppointments();}catch(e){alert('שגיאה');}
+}
+async function cancelAppt(id){
+  if(!confirm('לבטל פגישה זו?'))return;
+  try{await fetch(API+'/api/appointments/'+id,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({status:'cancelled'})});loadAppointments();}catch(e){alert('שגיאה');}
+}
+
+async function loadVersion(){try{const r=await fetch(API+'/api/version');const d=await r.json();document.querySelectorAll('.q-ver').forEach(el=>el.textContent=d.version||'v1');}catch(e){}}
+
+renderCalendar();loadAppointments();loadVersion();
+</script>
+</body>
+</html>
