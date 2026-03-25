@@ -14,6 +14,8 @@ body{font-family:'Manrope',sans-serif;}
 .custom-scrollbar::-webkit-scrollbar-track{background:transparent;}
 .custom-scrollbar::-webkit-scrollbar-thumb{background:#2d3a4b;border-radius:10px;}
 tr.data-row:hover{background:rgba(255,255,255,0.04);}
+.pulse-dot{animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
 </style>
 </head>
 <body class="bg-background-dark text-slate-200 min-h-screen flex">
@@ -55,99 +57,318 @@ tr.data-row:hover{background:rgba(255,255,255,0.04);}
 <main class="flex-1 min-w-0 h-screen overflow-y-auto overflow-x-hidden flex flex-col">
 <header class="flex items-center justify-between px-8 py-5 border-b border-white/5 glass-panel sticky top-0 z-10">
 <div>
-<h2 class="text-2xl font-bold text-white leading-tight">סריקה ותזמון</h2>
-<p class="text-sm text-slate-400">ניהול סריקות אוטומטיות וידניות של מתחמי פינוי-בינוי</p>
+<h2 class="text-2xl font-bold text-white leading-tight">סריקות, DB וגיבויים</h2>
+<p class="text-sm text-slate-400">ניהול סריקות אוטומטיות, מצב מסד הנתונים וגיבויים</p>
 </div>
+<div class="flex items-center gap-3">
+<button onclick="loadAll()" class="flex items-center gap-2 bg-white/5 hover:bg-white/10 text-slate-300 font-semibold px-4 py-2.5 rounded-xl transition-all text-sm border border-white/10">
+<span class="material-symbols-outlined text-lg">refresh</span><span>רענן</span>
+</button>
 <button id="scan-btn" onclick="triggerScan()" class="flex items-center gap-2 bg-success-green hover:bg-success-green/80 text-white font-semibold px-5 py-2.5 rounded-xl transition-all text-sm">
 <span class="material-symbols-outlined text-lg">radar</span><span>הפעל סריקה ידנית</span>
 </button>
+</div>
 </header>
 <div class="p-8 flex-1 custom-scrollbar overflow-y-auto space-y-6">
-<!-- Scheduler status -->
-<div class="glass-panel rounded-2xl p-6">
-<h3 class="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4">סטטוס מערכת</h3>
-<div class="grid grid-cols-2 md:grid-cols-5 gap-4" id="sched-status">
-<div class="text-center py-4 text-slate-500">טוען...</div>
-</div>
-</div>
+
 <!-- Scan message -->
 <div id="scan-message" class="hidden rounded-xl p-4 text-sm font-semibold"></div>
-<!-- Scan history -->
-<div class="glass-panel rounded-2xl overflow-hidden">
-<div class="px-6 py-4 border-b border-white/5 flex items-center justify-between">
-<h3 class="font-semibold text-white">היסטוריית סריקות</h3>
-<button onclick="loadScans()" class="text-xs text-slate-400 hover:text-white flex items-center gap-1"><span class="material-symbols-outlined text-sm">refresh</span>רענן</button>
+
+<!-- System Health Row -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+  <div class="glass-panel rounded-2xl p-5 flex flex-col gap-2">
+    <div class="flex items-center gap-2 text-slate-400 text-xs font-semibold uppercase tracking-wider"><span class="material-symbols-outlined text-base">database</span>מסד נתונים</div>
+    <div id="db-status" class="text-lg font-bold text-slate-400">טוען...</div>
+    <div id="db-complexes" class="text-xs text-slate-500"></div>
+  </div>
+  <div class="glass-panel rounded-2xl p-5 flex flex-col gap-2">
+    <div class="flex items-center gap-2 text-slate-400 text-xs font-semibold uppercase tracking-wider"><span class="material-symbols-outlined text-base">radar</span>סריקה אחרונה</div>
+    <div id="last-scan-status" class="text-lg font-bold text-slate-400">טוען...</div>
+    <div id="last-scan-time" class="text-xs text-slate-500"></div>
+  </div>
+  <div class="glass-panel rounded-2xl p-5 flex flex-col gap-2">
+    <div class="flex items-center gap-2 text-slate-400 text-xs font-semibold uppercase tracking-wider"><span class="material-symbols-outlined text-base">backup</span>גיבוי אחרון</div>
+    <div id="last-backup-status" class="text-lg font-bold text-slate-400">טוען...</div>
+    <div id="last-backup-time" class="text-xs text-slate-500"></div>
+  </div>
+  <div class="glass-panel rounded-2xl p-5 flex flex-col gap-2">
+    <div class="flex items-center gap-2 text-slate-400 text-xs font-semibold uppercase tracking-wider"><span class="material-symbols-outlined text-base">smart_toy</span>שירותי AI</div>
+    <div id="ai-status" class="text-lg font-bold text-slate-400">טוען...</div>
+    <div id="ai-details" class="text-xs text-slate-500"></div>
+  </div>
 </div>
-<table class="w-full text-sm">
-<thead><tr class="border-b border-white/5">
-<th class="px-4 py-3 text-right text-xs text-slate-400 font-semibold uppercase tracking-wider">#</th>
-<th class="px-4 py-3 text-right text-xs text-slate-400 font-semibold uppercase tracking-wider">סוג</th>
-<th class="px-4 py-3 text-right text-xs text-slate-400 font-semibold uppercase tracking-wider">סטטוס</th>
-<th class="px-4 py-3 text-right text-xs text-slate-400 font-semibold uppercase tracking-wider">נסרקו</th>
-<th class="px-4 py-3 text-right text-xs text-slate-400 font-semibold uppercase tracking-wider">עסקאות</th>
-<th class="px-4 py-3 text-right text-xs text-slate-400 font-semibold uppercase tracking-wider">מודעות</th>
-<th class="px-4 py-3 text-right text-xs text-slate-400 font-semibold uppercase tracking-wider">התראות</th>
-<th class="px-4 py-3 text-right text-xs text-slate-400 font-semibold uppercase tracking-wider">תאריך</th>
-</tr></thead>
-<tbody id="scans-body">
-<tr><td colspan="8" class="px-4 py-8 text-center text-slate-500">טוען...</td></tr>
-</tbody>
-</table>
+
+<!-- DB Stats -->
+<div class="glass-panel rounded-2xl p-6">
+  <div class="flex items-center justify-between mb-5">
+    <h3 class="font-semibold text-white flex items-center gap-2"><span class="material-symbols-outlined text-primary">storage</span>סטטיסטיקות מסד נתונים</h3>
+    <span id="db-health-badge" class="px-2 py-0.5 rounded-full text-xs font-bold bg-slate-700 text-slate-400">טוען...</span>
+  </div>
+  <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4" id="db-stats-grid">
+    <div class="text-center py-4 text-slate-500 col-span-full">טוען נתוני DB...</div>
+  </div>
 </div>
+
+<!-- Scan System Status -->
+<div class="glass-panel rounded-2xl p-6">
+  <h3 class="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4">סטטוס מערכת סריקות</h3>
+  <div class="grid grid-cols-2 md:grid-cols-5 gap-4" id="sched-status">
+    <div class="text-center py-4 text-slate-500 col-span-full">טוען...</div>
+  </div>
+</div>
+
+<!-- Scan History + Backup side by side -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+  <!-- Scan History (2/3 width) -->
+  <div class="lg:col-span-2 glass-panel rounded-2xl overflow-hidden">
+    <div class="px-6 py-4 border-b border-white/5 flex items-center justify-between">
+      <h3 class="font-semibold text-white flex items-center gap-2"><span class="material-symbols-outlined text-primary text-base">history</span>היסטוריית סריקות</h3>
+      <span id="scan-total-badge" class="text-xs text-slate-500"></span>
+    </div>
+    <table class="w-full text-sm">
+    <thead><tr class="border-b border-white/5">
+      <th class="px-4 py-3 text-right text-xs text-slate-400 font-semibold uppercase tracking-wider">#</th>
+      <th class="px-4 py-3 text-right text-xs text-slate-400 font-semibold uppercase tracking-wider">סוג</th>
+      <th class="px-4 py-3 text-right text-xs text-slate-400 font-semibold uppercase tracking-wider">סטטוס</th>
+      <th class="px-4 py-3 text-right text-xs text-slate-400 font-semibold uppercase tracking-wider">נסרקו</th>
+      <th class="px-4 py-3 text-right text-xs text-slate-400 font-semibold uppercase tracking-wider">עסקאות</th>
+      <th class="px-4 py-3 text-right text-xs text-slate-400 font-semibold uppercase tracking-wider">מודעות</th>
+      <th class="px-4 py-3 text-right text-xs text-slate-400 font-semibold uppercase tracking-wider">תאריך</th>
+    </tr></thead>
+    <tbody id="scans-body">
+      <tr><td colspan="7" class="px-4 py-8 text-center text-slate-500">טוען...</td></tr>
+    </tbody>
+    </table>
+  </div>
+
+  <!-- Backup Panel (1/3 width) -->
+  <div class="glass-panel rounded-2xl overflow-hidden flex flex-col">
+    <div class="px-6 py-4 border-b border-white/5 flex items-center justify-between">
+      <h3 class="font-semibold text-white flex items-center gap-2"><span class="material-symbols-outlined text-primary text-base">backup</span>גיבויים</h3>
+      <button onclick="triggerBackup()" id="backup-btn" class="text-xs bg-primary/20 hover:bg-primary/30 text-primary border border-primary/30 px-3 py-1.5 rounded-lg transition-all flex items-center gap-1">
+        <span class="material-symbols-outlined text-sm">add</span>גיבוי עכשיו
+      </button>
+    </div>
+    <div class="p-4 space-y-2" id="backup-stats">
+      <div class="text-center py-4 text-slate-500">טוען גיבויים...</div>
+    </div>
+    <div class="px-4 pb-4 flex-1 overflow-y-auto max-h-64 custom-scrollbar">
+      <div class="text-xs text-slate-500 font-semibold uppercase tracking-wider mb-2">גיבויים אחרונים</div>
+      <div id="backup-list" class="space-y-1.5">
+        <div class="text-center py-2 text-slate-500 text-xs">טוען...</div>
+      </div>
+    </div>
+    <div class="px-4 pb-4">
+      <div class="text-xs text-slate-500 font-semibold uppercase tracking-wider mb-2">גיבויי GitHub</div>
+      <div id="github-backup-info" class="glass-panel rounded-xl p-3 text-xs text-slate-400">טוען...</div>
+    </div>
+  </div>
+</div>
+
 </div>
 </main>
 <script>
 const API='https://pinuy-binuy-analyzer-production.up.railway.app';
-let schedData=null;
-async function loadScheduler(){
+
+async function loadHealth(){
   try{
-    const r=await fetch(`${API}/api/scheduler`);
-    schedData=await r.json();
-    document.getElementById('sched-status').innerHTML=[
-      ['סריקה אוטומטית',schedData.enabled?'✅ פעיל':'❌ כבוי',schedData.enabled?'#10b981':'#ef4444'],
-      ['תזמון','כל יום ב-08:00','#94a3b8'],
-      ['Perplexity AI',schedData.perplexityConfigured?'✅ מוגדר':'❌ לא מוגדר',schedData.perplexityConfigured?'#10b981':'#ef4444'],
-      ['Claude AI',schedData.claudeConfigured?'✅ מוגדר':'⚠️ לא מוגדר',schedData.claudeConfigured?'#10b981':'#f59e0b'],
-      ['התראות מייל',schedData.notificationsConfigured?'✅ פעיל':'❌ לא מוגדר',schedData.notificationsConfigured?'#10b981':'#ef4444'],
-    ].map(([label,val,color])=>`<div class="glass-panel rounded-xl p-4"><div class="text-xs text-slate-500 mb-2">${label}</div><div style="color:${color}" class="text-sm font-semibold">${val}</div></div>`).join('');
-    const btn=document.getElementById('scan-btn');
-    if(schedData.isRunning){btn.disabled=true;btn.innerHTML='<span class="material-symbols-outlined text-lg animate-spin">radar</span><span>סורק...</span>';}
+    const r=await fetch(`${API}/api/scan/health`);
+    const d=await r.json();
+    // DB status
+    const dbEl=document.getElementById('db-status');
+    const dbBadge=document.getElementById('db-health-badge');
+    if(d.database==='healthy'){
+      dbEl.innerHTML='<span class="text-success-green">✅ מחובר</span>';
+      if(dbBadge){dbBadge.className='px-2 py-0.5 rounded-full text-xs font-bold bg-success-green/20 text-success-green border border-success-green/30';dbBadge.textContent='תקין';}
+    } else {
+      dbEl.innerHTML='<span class="text-alert-rose">❌ מנותק</span>';
+      if(dbBadge){dbBadge.className='px-2 py-0.5 rounded-full text-xs font-bold bg-alert-rose/20 text-alert-rose border border-alert-rose/30';dbBadge.textContent='שגיאה';}
+    }
+    // AI services
+    const aiEl=document.getElementById('ai-status');
+    const aiDet=document.getElementById('ai-details');
+    const ai=d.ai_services||{};
+    const aiOk=(ai.claude==='configured'?1:0)+(ai.perplexity==='configured'?1:0);
+    aiEl.innerHTML=aiOk===2?'<span class="text-success-green">✅ פעיל (2/2)</span>':aiOk===1?'<span class="text-warning-amber">⚠️ חלקי (1/2)</span>':'<span class="text-alert-rose">❌ לא מוגדר</span>';
+    if(aiDet) aiDet.textContent=`Claude: ${ai.claude==='configured'?'✓':'✗'} | Perplexity: ${ai.perplexity==='configured'?'✓':'✗'}`;
   }catch(e){}
 }
+
+async function loadMorningReport(){
+  try{
+    const r=await fetch(`${API}/api/scan/morning-report`);
+    const d=await r.json();
+    const p=d.portfolio||{};
+    const n=d.new_data_24h||{};
+    // DB complexes count
+    const dbComp=document.getElementById('db-complexes');
+    if(dbComp) dbComp.textContent=`${p.total_complexes||0} מתחמים | ${p.total_listings||0} מודעות`;
+    // DB stats grid
+    const grid=document.getElementById('db-stats-grid');
+    if(grid){
+      const stats=[
+        {icon:'location_city',label:'מתחמים',val:p.total_complexes||0,color:'text-primary'},
+        {icon:'apartment',label:'מודעות פעילות',val:p.total_listings||0,color:'text-indigo-400'},
+        {icon:'diamond',label:'הזדמנויות IAI גבוה',val:p.high_iai_opportunities||0,color:'text-warning-amber'},
+        {icon:'analytics',label:'ממוצע IAI',val:(p.avg_iai||0)+'%',color:'text-success-green'},
+        {icon:'swap_horiz',label:'עסקאות 24ש',val:n.transactions||0,color:'text-cyan-400'},
+        {icon:'add_circle',label:'מודעות חדשות 24ש',val:n.listings||0,color:'text-violet-400'},
+        {icon:'notifications',label:'התראות 24ש',val:n.alerts||0,color:'text-alert-rose'},
+      ];
+      grid.innerHTML=stats.map(s=>`
+        <div class="glass-panel rounded-xl p-4 text-center">
+          <span class="material-symbols-outlined ${s.color} text-2xl">${s.icon}</span>
+          <div class="${s.color} text-xl font-bold mt-1">${s.val}</div>
+          <div class="text-xs text-slate-500 mt-1">${s.label}</div>
+        </div>`).join('');
+    }
+  }catch(e){
+    const grid=document.getElementById('db-stats-grid');
+    if(grid) grid.innerHTML='<div class="col-span-full text-center text-alert-rose text-sm py-4">שגיאה בטעינת נתוני DB</div>';
+  }
+}
+
+async function loadScanStatus(){
+  try{
+    const r=await fetch(`${API}/api/scan/status`);
+    const d=await r.json();
+    // Last scan card
+    const ls=d.lastScan;
+    const lsEl=document.getElementById('last-scan-status');
+    const lstEl=document.getElementById('last-scan-time');
+    if(ls){
+      const isRunning=ls.status==='running';
+      const isOk=ls.status==='completed';
+      lsEl.innerHTML=isRunning?'<span class="text-warning-amber flex items-center gap-1"><span class="pulse-dot inline-block w-2 h-2 rounded-full bg-warning-amber"></span>רץ עכשיו</span>':isOk?'<span class="text-success-green">✅ הושלם</span>':'<span class="text-alert-rose">❌ נכשל</span>';
+      if(lstEl) lstEl.textContent=new Date(ls.started_at).toLocaleString('he-IL');
+    }
+    // Scan total badge
+    const badge=document.getElementById('scan-total-badge');
+    if(badge) badge.textContent=`סה"כ ${d.totalScans||0} | הצליחו ${d.completed||0} | נכשלו ${d.failed||0}`;
+    // Sched status grid
+    const grid=document.getElementById('sched-status');
+    if(grid){
+      const items=[
+        ['סריקות כולל',d.totalScans||0,'#94a3b8'],
+        ['רצות עכשיו',d.running||0,d.running>0?'#f59e0b':'#10b981'],
+        ['הצליחו',d.completed||0,'#10b981'],
+        ['נכשלו',d.failed||0,d.failed>0?'#f43f5e':'#94a3b8'],
+        ['ב-24 שעות',d.last24h||0,'#137fec'],
+        ['ב-7 ימים',d.last7d||0,'#8b5cf6'],
+      ];
+      grid.innerHTML=items.map(([label,val,color])=>`
+        <div class="glass-panel rounded-xl p-4 text-center">
+          <div class="text-xs text-slate-500 mb-2">${label}</div>
+          <div style="color:${color}" class="text-2xl font-bold">${val}</div>
+        </div>`).join('');
+    }
+    // Scan btn state
+    const btn=document.getElementById('scan-btn');
+    if(btn && d.running>0){
+      btn.disabled=true;
+      btn.innerHTML='<span class="material-symbols-outlined text-lg animate-spin">radar</span><span>סורק...</span>';
+    }
+  }catch(e){}
+}
+
 async function loadScans(){
   try{
     const r=await fetch(`${API}/api/scan/results?limit=20`);
     const d=await r.json();
     const scans=d.scans||[];
     const tbody=document.getElementById('scans-body');
-    if(!scans.length){tbody.innerHTML=`<tr><td colspan="8" class="px-4 py-8 text-center text-slate-500">אין סריקות עדיין</td></tr>`;return;}
-    tbody.innerHTML=scans.map(s=>`
-      <tr class="data-row border-b border-white/5">
-        <td class="px-4 py-3 text-slate-500">${s.id}</td>
-        <td class="px-4 py-3"><span class="px-2 py-0.5 rounded-md text-xs font-bold bg-indigo-500/20 text-indigo-400 border border-indigo-500/30">${s.scan_type}</span></td>
-        <td class="px-4 py-3">${s.status==='completed'?`<span class="px-2 py-0.5 rounded-md text-xs font-bold bg-success-green/20 text-success-green border border-success-green/30">הושלם</span>`:s.status==='running'?`<span class="px-2 py-0.5 rounded-md text-xs font-bold bg-warning-amber/20 text-warning-amber border border-warning-amber/30">רץ</span>`:`<span class="px-2 py-0.5 rounded-md text-xs font-bold bg-alert-rose/20 text-alert-rose border border-alert-rose/30">נכשל</span>`}</td>
+    if(!scans.length){tbody.innerHTML=`<tr><td colspan="7" class="px-4 py-8 text-center text-slate-500">אין סריקות עדיין</td></tr>`;return;}
+    tbody.innerHTML=scans.map(s=>{
+      const statusBadge=s.status==='completed'
+        ?`<span class="px-2 py-0.5 rounded-md text-xs font-bold bg-success-green/20 text-success-green border border-success-green/30">הושלם</span>`
+        :s.status==='running'
+        ?`<span class="px-2 py-0.5 rounded-md text-xs font-bold bg-warning-amber/20 text-warning-amber border border-warning-amber/30 flex items-center gap-1"><span class="pulse-dot inline-block w-1.5 h-1.5 rounded-full bg-warning-amber"></span>רץ</span>`
+        :`<span class="px-2 py-0.5 rounded-md text-xs font-bold bg-alert-rose/20 text-alert-rose border border-alert-rose/30">נכשל</span>`;
+      const typeLabel={'daily_direct_api':'יומי API','master_pipeline':'Pipeline','manual':'ידני','weekly':'שבועי'}[s.scan_type]||s.scan_type;
+      return `<tr class="data-row border-b border-white/5">
+        <td class="px-4 py-3 text-slate-500 text-xs">${s.id}</td>
+        <td class="px-4 py-3"><span class="px-2 py-0.5 rounded-md text-xs font-bold bg-indigo-500/20 text-indigo-400 border border-indigo-500/30">${typeLabel}</span></td>
+        <td class="px-4 py-3">${statusBadge}</td>
         <td class="px-4 py-3 text-slate-400">${s.complexes_scanned||0}</td>
         <td class="px-4 py-3 text-slate-400">${s.new_transactions||0}</td>
         <td class="px-4 py-3 text-slate-400">${s.new_listings||0}</td>
-        <td class="px-4 py-3 text-slate-400">${s.alerts_sent||0}</td>
         <td class="px-4 py-3 text-slate-500 text-xs">${new Date(s.started_at).toLocaleString('he-IL')}</td>
-      </tr>`).join('');
-  }catch(e){document.getElementById('scans-body').innerHTML=`<tr><td colspan="8" class="px-4 py-8 text-center text-alert-rose">שגיאה בטעינת סריקות</td></tr>`;}
+      </tr>`;
+    }).join('');
+  }catch(e){document.getElementById('scans-body').innerHTML=`<tr><td colspan="7" class="px-4 py-8 text-center text-alert-rose">שגיאה בטעינת סריקות</td></tr>`;}
 }
+
+async function loadBackups(){
+  try{
+    const [r1,r2]=await Promise.all([
+      fetch(`${API}/api/backup/list`),
+      fetch(`${API}/api/backup/github/list`)
+    ]);
+    const local=await r1.json();
+    const github=await r2.json();
+    const stats=local.stats||{};
+    // Last backup card
+    const lbEl=document.getElementById('last-backup-status');
+    const lbtEl=document.getElementById('last-backup-time');
+    if(stats.newestBackup){
+      if(lbEl) lbEl.innerHTML='<span class="text-success-green">✅ תקין</span>';
+      if(lbtEl) lbtEl.textContent=new Date(stats.newestBackup).toLocaleString('he-IL');
+    } else {
+      if(lbEl) lbEl.innerHTML='<span class="text-alert-rose">❌ אין גיבויים</span>';
+    }
+    // Backup stats panel
+    const statsEl=document.getElementById('backup-stats');
+    if(statsEl){
+      statsEl.innerHTML=`
+        <div class="grid grid-cols-2 gap-2">
+          <div class="glass-panel rounded-xl p-3 text-center">
+            <div class="text-success-green text-xl font-bold">${stats.totalBackups||0}</div>
+            <div class="text-xs text-slate-500">גיבויים מקומיים</div>
+          </div>
+          <div class="glass-panel rounded-xl p-3 text-center">
+            <div class="text-primary text-xl font-bold">${github.count||0}</div>
+            <div class="text-xs text-slate-500">גיבויי GitHub</div>
+          </div>
+        </div>`;
+    }
+    // Backup list
+    const listEl=document.getElementById('backup-list');
+    const backups=(stats.backups||[]).slice(0,8);
+    if(listEl){
+      if(!backups.length){listEl.innerHTML='<div class="text-center text-slate-500 text-xs py-2">אין גיבויים מקומיים</div>';return;}
+      listEl.innerHTML=backups.map(b=>`
+        <div class="flex items-center justify-between py-1.5 border-b border-white/5">
+          <span class="text-xs text-slate-400">${new Date(b.created).toLocaleString('he-IL',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})}</span>
+          <span class="text-xs text-slate-500">${b.sizeMB||'<1'} MB</span>
+        </div>`).join('');
+    }
+    // GitHub backup info
+    const ghEl=document.getElementById('github-backup-info');
+    if(ghEl){
+      const ghBackups=github.backups||[];
+      const latest=ghBackups[0]||'';
+      ghEl.innerHTML=`<div class="flex items-center justify-between"><span>${github.count||0} גיבויים</span><span class="text-success-green">✅ פעיל</span></div>${latest?`<div class="text-slate-600 mt-1">אחרון: ${latest}</div>`:''}`;
+    }
+  }catch(e){
+    const lbEl=document.getElementById('last-backup-status');
+    if(lbEl) lbEl.innerHTML='<span class="text-alert-rose">שגיאה</span>';
+  }
+}
+
 async function triggerScan(){
   const btn=document.getElementById('scan-btn');
   const msg=document.getElementById('scan-message');
   btn.disabled=true;btn.innerHTML='<span class="material-symbols-outlined text-lg animate-spin">radar</span><span>מפעיל...</span>';
   try{
-    const r=await fetch(`${API}/api/scheduler/run`,{method:'POST'});
+    const r=await fetch(`${API}/api/scan/run`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type:'manual'})});
     const d=await r.json();
     if(r.ok){
       msg.className='rounded-xl p-4 text-sm font-semibold bg-success-green/20 text-success-green border border-success-green/30';
       msg.textContent='✅ הסריקה הופעלה! הדוח יישלח למייל בסיום.';
-      setTimeout(()=>{loadScheduler();loadScans();msg.classList.add('hidden');btn.disabled=false;btn.innerHTML='<span class="material-symbols-outlined text-lg">radar</span><span>הפעל סריקה ידנית</span>';},10000);
+      setTimeout(()=>{loadAll();msg.classList.add('hidden');},15000);
     }else{
       msg.className='rounded-xl p-4 text-sm font-semibold bg-alert-rose/20 text-alert-rose border border-alert-rose/30';
-      msg.textContent='❌ שגיאה: '+(d.error||'לא ידוע');
+      msg.textContent='❌ שגיאה: '+(d.error||d.message||'לא ידוע');
       btn.disabled=false;btn.innerHTML='<span class="material-symbols-outlined text-lg">radar</span><span>הפעל סריקה ידנית</span>';
     }
     msg.classList.remove('hidden');
@@ -158,9 +379,37 @@ async function triggerScan(){
     btn.disabled=false;btn.innerHTML='<span class="material-symbols-outlined text-lg">radar</span><span>הפעל סריקה ידנית</span>';
   }
 }
-loadScheduler();loadScans();
+
+async function triggerBackup(){
+  const btn=document.getElementById('backup-btn');
+  btn.disabled=true;btn.innerHTML='<span class="material-symbols-outlined text-sm animate-spin">refresh</span>מגבה...';
+  try{
+    const r=await fetch(`${API}/api/backup/create`,{method:'POST'});
+    const d=await r.json();
+    if(r.ok){
+      btn.innerHTML='<span class="material-symbols-outlined text-sm">check</span>הצליח!';
+      setTimeout(()=>{loadBackups();btn.disabled=false;btn.innerHTML='<span class="material-symbols-outlined text-sm">add</span>גיבוי עכשיו';},3000);
+    } else {
+      btn.disabled=false;btn.innerHTML='<span class="material-symbols-outlined text-sm">add</span>גיבוי עכשיו';
+    }
+  }catch(e){btn.disabled=false;btn.innerHTML='<span class="material-symbols-outlined text-sm">add</span>גיבוי עכשיו';}
+}
+
+async function loadAll(){
+  await Promise.all([loadHealth(),loadMorningReport(),loadScanStatus(),loadScans(),loadBackups()]);
+}
+
+loadAll();
 fetch(`${API}/api/alerts?limit=500`).then(r=>r.json()).then(d=>{const u=(d.alerts||[]).filter(a=>!a.is_read).length;const b=document.getElementById('nav-alert-badge');if(b&&u>0){b.textContent=u>99?'99+':u;b.classList.remove('hidden')}}).catch(()=>{});
 fetch(`${API}/health`).then(r=>r.json()).then(d=>{document.querySelectorAll('.q-ver').forEach(el=>el.textContent='v'+d.version)}).catch(()=>{});
+// Auto-refresh every 30 seconds if a scan is running
+setInterval(async()=>{
+  try{
+    const r=await fetch(`${API}/api/scan/status`);
+    const d=await r.json();
+    if(d.running>0) loadAll();
+  }catch(e){}
+},30000);
 </script>
 </body>
 </html>

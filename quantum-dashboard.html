@@ -187,6 +187,23 @@ tr.data-row:hover{background:rgba(255,255,255,0.04);}
 </div>
 </div>
 
+<!-- System Health Widget -->
+<div class="bg-surface/40 border border-white/5 rounded-2xl p-6 fade-in" style="animation-delay:0.4s">
+<div class="flex justify-between items-center mb-4">
+<h4 class="font-bold text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">monitor_heart</span>
+מצב מערכת
+</h4>
+<a href="quantum-scans.html" class="text-xs text-primary hover:text-white transition-all flex items-center gap-1"><span class="material-symbols-outlined text-sm">open_in_new</span>פרטים מלאים</a>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="sys-health-grid">
+<div class="glass-panel rounded-xl p-4 text-center"><div class="text-xs text-slate-500 mb-1">מסד נתונים</div><div id="sys-db" class="text-sm font-bold text-slate-400">טוען...</div></div>
+<div class="glass-panel rounded-xl p-4 text-center"><div class="text-xs text-slate-500 mb-1">סריקה אחרונה</div><div id="sys-scan" class="text-sm font-bold text-slate-400">טוען...</div></div>
+<div class="glass-panel rounded-xl p-4 text-center"><div class="text-xs text-slate-500 mb-1">גיבוי אחרון</div><div id="sys-backup" class="text-sm font-bold text-slate-400">טוען...</div></div>
+<div class="glass-panel rounded-xl p-4 text-center"><div class="text-xs text-slate-500 mb-1">שירותי AI</div><div id="sys-ai" class="text-sm font-bold text-slate-400">טוען...</div></div>
+</div>
+</div>
+
 </div>
 
 <footer class="mt-auto px-8 py-6 border-t border-white/5 text-center text-slate-500 text-[11px] font-medium tracking-widest uppercase">
@@ -417,6 +434,38 @@ document.querySelectorAll('[data-go-filter]').forEach(function(card) {
 });
 
 loadAllData();
+
+// System Health Widget
+(async function loadSysHealth(){
+  const API='https://pinuy-binuy-analyzer-production.up.railway.app';
+  try{
+    const [h,s,b]=await Promise.all([
+      fetch(`${API}/api/scan/health`).then(r=>r.json()).catch(()=>({})),
+      fetch(`${API}/api/scan/status`).then(r=>r.json()).catch(()=>({})),
+      fetch(`${API}/api/backup/list`).then(r=>r.json()).catch(()=>({}))
+    ]);
+    // DB
+    var dbEl=document.getElementById('sys-db');
+    if(dbEl) dbEl.innerHTML=h.database==='healthy'?'<span style="color:#10b981">✅ מחובר</span>':'<span style="color:#f43f5e">❌ מנותק</span>';
+    // Last scan
+    var scanEl=document.getElementById('sys-scan');
+    if(scanEl && s.lastScan){
+      var ls=s.lastScan;
+      scanEl.innerHTML=ls.status==='running'?'<span style="color:#f59e0b">⏳ רץ עכשיו</span>':ls.status==='completed'?'<span style="color:#10b981">✅ הושלם</span>':'<span style="color:#f43f5e">❌ נכשל</span>';
+    }
+    // Backup
+    var bkEl=document.getElementById('sys-backup');
+    var stats=b.stats||{};
+    if(bkEl) bkEl.innerHTML=stats.newestBackup?'<span style="color:#10b981">✅ '+new Date(stats.newestBackup).toLocaleDateString('he-IL')+'</span>':'<span style="color:#f43f5e">❌ אין גיבוי</span>';
+    // AI
+    var aiEl=document.getElementById('sys-ai');
+    if(aiEl){
+      var ai=h.ai_services||{};
+      var cnt=(ai.claude==='configured'?1:0)+(ai.perplexity==='configured'?1:0);
+      aiEl.innerHTML=cnt===2?'<span style="color:#10b981">✅ Claude + Perplexity</span>':cnt===1?'<span style="color:#f59e0b">⚠️ חלקי (1/2)</span>':'<span style="color:#f43f5e">❌ לא מוגדר</span>';
+    }
+  }catch(e){}
+})();
 </script>
 <script>fetch('https://pinuy-binuy-analyzer-production.up.railway.app/api/alerts?limit=500').then(function(r){return r.json()}).then(function(d){var u=(d.alerts||[]).filter(function(a){return !a.is_read}).length;var b=document.getElementById('nav-alert-badge');if(b&&u>0){b.textContent=u>99?'99+':u;b.classList.remove('hidden')}}).catch(function(){});
 </script>
