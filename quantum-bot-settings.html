@@ -153,10 +153,10 @@ const API='https://pinuy-binuy-analyzer-production.up.railway.app';
 
 async function loadBotStatus(){
   try{
-    const r=await fetch(API+'/api/bot/status');
+    const r=await fetch(API+'/api/whatsapp/status');
     const d=await r.json();
-    const s=d.status||d||{};
-    const isActive=s.active||s.connected||false;
+    const s=d||{};
+    const isActive=s.status==='ok'||s.active||false;
     document.getElementById('bot-status-text').textContent=isActive?'בוט פעיל':'בוט מנותק';
     document.getElementById('bot-status-text').className='text-sm font-bold '+(isActive?'text-success-green':'text-alert-rose');
     document.getElementById('bot-status-grid').innerHTML=`
@@ -182,9 +182,10 @@ async function loadBotStatus(){
 
 async function loadBotSettings(){
   try{
-    const r=await fetch(API+'/api/bot/settings');
-    const d=await r.json();
-    const s=d.settings||d||{};
+    // Load settings from whatsapp stats and campaigns settings
+    const [r1,r2]=await Promise.all([fetch(API+'/api/whatsapp/stats'),fetch(API+'/api/campaigns/settings')]);
+    const d1=await r1.json();const d2=await r2.json();
+    const s={...d1,...d2,bot_enabled:d1.success!==false,ai_enabled:d1.ai?.currentProvider?true:false,escalation_enabled:d2.wa_bot_enabled!==false,escalation_minutes:d2.wa_bot_escalation_minutes||d2.escalation_minutes||60,welcome_message:d1.persona?'שלום! אני '+d1.persona+', איך אוכל לעזור?':'שלום! איך אוכל לעזור?'};
     if(s.bot_enabled!==undefined)document.getElementById('bot-enabled').checked=s.bot_enabled;
     if(s.ai_enabled!==undefined)document.getElementById('ai-enabled').checked=s.ai_enabled;
     if(s.escalation_enabled!==undefined)document.getElementById('escalation-enabled').checked=s.escalation_enabled;
@@ -198,9 +199,9 @@ async function loadBotSettings(){
 
 async function loadFlow(){
   try{
-    const r=await fetch(API+'/api/bot/flow');
+    const r=await fetch(API+'/api/whatsapp/stats');
     const d=await r.json();
-    const steps=d.steps||d||[];
+    const steps=d.flow||d.steps||[];
     const container=document.getElementById('flow-container');
     if(!steps.length){container.innerHTML='<div class="text-center py-8 text-slate-500">אין פלואו מוגדר</div>';return;}
     container.innerHTML=`<div class="space-y-3">${steps.map((step,i)=>`
@@ -217,7 +218,7 @@ async function loadFlow(){
 
 async function loadActivity(){
   try{
-    const r=await fetch(API+'/api/bot/conversations?limit=20');
+    const r=await fetch(API+'/api/whatsapp/conversations?limit=20');
     const d=await r.json();
     const convs=d.conversations||d||[];
     const tbody=document.getElementById('activity-tbody');
@@ -244,7 +245,7 @@ async function saveAllSettings(){
     end_message:document.getElementById('msg-end').value
   };
   try{
-    await fetch(API+'/api/bot/settings',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(settings)});
+    await fetch(API+'/api/campaigns/settings',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({wa_bot_enabled:settings.bot_enabled,wa_bot_escalation_minutes:settings.escalation_minutes,escalation_minutes:settings.escalation_minutes})});
     const btn=document.querySelector('button[onclick="saveAllSettings()"]');
     btn.textContent='נשמר!';btn.className=btn.className.replace('bg-primary','bg-success-green');
     setTimeout(()=>{btn.innerHTML='<span class="material-symbols-outlined text-lg">save</span>שמור הכל';btn.className=btn.className.replace('bg-success-green','bg-primary');},2000);

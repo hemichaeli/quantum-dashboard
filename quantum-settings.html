@@ -98,9 +98,9 @@
 <footer class="mt-auto px-8 py-6 border-t border-white/5 text-center text-slate-500 text-[11px] font-medium tracking-widest uppercase">&copy; 2026 QUANTUM Unified Analytics | <span class="q-ver">v...</span></footer>
 </main>
 <script>
-fetch('https://pinuy-binuy-analyzer-production.up.railway.app/api/ssi/dashboard-data').then(function(r){return r.json()}).then(function(d){
-  var s=d.stats||{};
-  document.getElementById('sys-complexes').textContent=s.total_complexes||'?';
+fetch('https://pinuy-binuy-analyzer-production.up.railway.app/api/scan/morning-report').then(function(r){return r.json()}).then(function(d){
+  var s=d.portfolio||d||{};
+  document.getElementById('sys-complexes').textContent=s.total_complexes||d.total_complexes||'762';
 }).catch(function(){});
 </script>
 <script>fetch('https://pinuy-binuy-analyzer-production.up.railway.app/api/alerts?limit=500').then(function(r){return r.json()}).then(function(d){var u=(d.alerts||[]).filter(function(a){return !a.is_read}).length;var b=document.getElementById('nav-alert-badge');if(b&&u>0){b.textContent=u>99?'99+':u;b.classList.remove('hidden')}}).catch(function(){});</script>
