@@ -98,6 +98,100 @@ tr.data-row:hover{background:rgba(255,255,255,0.04);}
   </div>
 </div>
 
+<!-- AI Credits Widget -->
+<div class="glass-panel rounded-2xl p-6">
+  <div class="flex items-center justify-between mb-5">
+    <h3 class="font-semibold text-white flex items-center gap-2"><span class="material-symbols-outlined text-primary">credit_card</span>סטטוס שימוש AI</h3>
+    <span class="text-xs text-slate-500">מתעדכן בזמן אמת מכל קריאה</span>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+    <!-- Claude -->
+    <div id="sc-claude-card" class="bg-white/5 rounded-2xl p-5 border border-white/5 transition-all duration-300">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-indigo-500/20 flex items-center justify-center text-xl">🤖</div>
+          <div>
+            <div class="font-bold text-white text-sm">Claude</div>
+            <div class="text-xs text-slate-500">Anthropic</div>
+          </div>
+          <span id="sc-claude-badge" class="px-2.5 py-1 rounded-full text-[11px] font-bold">טוען...</span>
+        </div>
+        <a href="https://console.anthropic.com/settings/billing" target="_blank"
+           class="flex items-center gap-1.5 text-xs font-bold px-4 py-2 rounded-xl border transition-all hover:opacity-80"
+           style="background:rgba(99,102,241,0.2);border-color:rgba(99,102,241,0.4);color:#818cf8">
+          <span class="material-symbols-outlined text-sm">add_card</span>רכישת קרדיטים
+        </a>
+      </div>
+      <div class="mb-3">
+        <div class="flex justify-between text-xs mb-1.5">
+          <span class="text-slate-400">שימוש חודשי (טוקנים)</span>
+          <span id="sc-claude-pct" class="font-bold text-slate-300">0%</span>
+        </div>
+        <div class="w-full bg-white/5 rounded-full h-3 overflow-hidden">
+          <div id="sc-claude-bar" class="h-3 rounded-full transition-all duration-700" style="width:0%;background:#10b981"></div>
+        </div>
+      </div>
+      <div class="grid grid-cols-3 gap-3 mt-3">
+        <div class="text-center">
+          <div id="sc-claude-tokens" class="text-sm font-bold text-white">0</div>
+          <div class="text-[10px] text-slate-500">שומשו</div>
+        </div>
+        <div class="text-center">
+          <div id="sc-claude-calls" class="text-sm font-bold text-white">0</div>
+          <div class="text-[10px] text-slate-500">קריאות API</div>
+        </div>
+        <div class="text-center">
+          <div id="sc-claude-cost" class="text-sm font-bold text-white">$0</div>
+          <div class="text-[10px] text-slate-500">עלות משוערת</div>
+        </div>
+      </div>
+      <div id="sc-claude-last" class="text-[10px] text-slate-600 mt-2 text-center"></div>
+    </div>
+    <!-- Perplexity -->
+    <div id="sc-pplx-card" class="bg-white/5 rounded-2xl p-5 border border-white/5 transition-all duration-300">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-cyan-500/20 flex items-center justify-center text-xl">🔍</div>
+          <div>
+            <div class="font-bold text-white text-sm">Perplexity</div>
+            <div class="text-xs text-slate-500">sonar-pro</div>
+          </div>
+          <span id="sc-pplx-badge" class="px-2.5 py-1 rounded-full text-[11px] font-bold">טוען...</span>
+        </div>
+        <a href="https://www.perplexity.ai/settings/api" target="_blank"
+           class="flex items-center gap-1.5 text-xs font-bold px-4 py-2 rounded-xl border transition-all hover:opacity-80"
+           style="background:rgba(6,182,212,0.2);border-color:rgba(6,182,212,0.4);color:#22d3ee">
+          <span class="material-symbols-outlined text-sm">add_card</span>רכישת קרדיטים
+        </a>
+      </div>
+      <div class="mb-3">
+        <div class="flex justify-between text-xs mb-1.5">
+          <span class="text-slate-400">שימוש חודשי (טוקנים)</span>
+          <span id="sc-pplx-pct" class="font-bold text-slate-300">0%</span>
+        </div>
+        <div class="w-full bg-white/5 rounded-full h-3 overflow-hidden">
+          <div id="sc-pplx-bar" class="h-3 rounded-full transition-all duration-700" style="width:0%;background:#10b981"></div>
+        </div>
+      </div>
+      <div class="grid grid-cols-3 gap-3 mt-3">
+        <div class="text-center">
+          <div id="sc-pplx-tokens" class="text-sm font-bold text-white">0</div>
+          <div class="text-[10px] text-slate-500">שומשו</div>
+        </div>
+        <div class="text-center">
+          <div id="sc-pplx-calls" class="text-sm font-bold text-white">0</div>
+          <div class="text-[10px] text-slate-500">קריאות API</div>
+        </div>
+        <div class="text-center">
+          <div id="sc-pplx-cost" class="text-sm font-bold text-white">$0</div>
+          <div class="text-[10px] text-slate-500">עלות משוערת</div>
+        </div>
+      </div>
+      <div id="sc-pplx-last" class="text-[10px] text-slate-600 mt-2 text-center"></div>
+    </div>
+  </div>
+</div>
+
 <!-- DB Stats -->
 <div class="glass-panel rounded-2xl p-6">
   <div class="flex items-center justify-between mb-5">
@@ -395,8 +489,44 @@ async function triggerBackup(){
   }catch(e){btn.disabled=false;btn.innerHTML='<span class="material-symbols-outlined text-sm">add</span>גיבוי עכשיו';}
 }
 
+async function loadAiCredits(){
+  try{
+    const cr=await fetch(`${API}/api/scan/ai-credits`).then(r=>r.json()).catch(()=>null);
+    if(!cr) return;
+    function applyScCredits(prefix, data){
+      const pct=data.usage_pct||0;
+      const status=data.status||'ok';
+      const barColor=status==='critical'?'#f43f5e':status==='warning'?'#f59e0b':'#10b981';
+      const badgeBg=status==='critical'?'rgba(244,63,94,0.2)':status==='warning'?'rgba(245,158,11,0.2)':'rgba(16,185,129,0.2)';
+      const badgeColor=status==='critical'?'#f43f5e':status==='warning'?'#f59e0b':'#10b981';
+      const badgeBorder=status==='critical'?'rgba(244,63,94,0.4)':status==='warning'?'rgba(245,158,11,0.4)':'rgba(16,185,129,0.4)';
+      const badgeText=status==='critical'?'⚠️ קריטי':status==='warning'?'⚠️ נמוך':'✅ תקין';
+      const card=document.getElementById('sc-'+prefix+'-card');
+      const badge=document.getElementById('sc-'+prefix+'-badge');
+      const bar=document.getElementById('sc-'+prefix+'-bar');
+      if(badge){badge.textContent=badgeText;badge.style.background=badgeBg;badge.style.color=badgeColor;badge.style.border='1px solid '+badgeBorder;}
+      if(bar){bar.style.width=Math.min(pct,100)+'%';bar.style.background=barColor;}
+      const pctEl=document.getElementById('sc-'+prefix+'-pct');
+      if(pctEl){pctEl.textContent=pct+'%';pctEl.style.color=barColor;}
+      const tokEl=document.getElementById('sc-'+prefix+'-tokens');
+      if(tokEl) tokEl.textContent=(data.tokens_used||0).toLocaleString();
+      const callsEl=document.getElementById('sc-'+prefix+'-calls');
+      if(callsEl) callsEl.textContent=(data.api_calls||0).toLocaleString();
+      const costEl=document.getElementById('sc-'+prefix+'-cost');
+      if(costEl) costEl.textContent='$'+(data.estimated_cost_usd||0);
+      const lastEl=document.getElementById('sc-'+prefix+'-last');
+      if(lastEl && data.last_call) lastEl.textContent='קריאה אחרונה: '+new Date(data.last_call).toLocaleString('he-IL');
+      if(card && status==='critical') card.style.borderColor='rgba(244,63,94,0.4)';
+      else if(card && status==='warning') card.style.borderColor='rgba(245,158,11,0.4)';
+      else if(card) card.style.borderColor='rgba(255,255,255,0.05)';
+    }
+    applyScCredits('claude', cr.claude||{});
+    applyScCredits('pplx', cr.perplexity||{});
+  }catch(e){}
+}
+
 async function loadAll(){
-  await Promise.all([loadHealth(),loadMorningReport(),loadScanStatus(),loadScans(),loadBackups()]);
+  await Promise.all([loadHealth(),loadMorningReport(),loadScanStatus(),loadScans(),loadBackups(),loadAiCredits()]);
 }
 
 loadAll();
