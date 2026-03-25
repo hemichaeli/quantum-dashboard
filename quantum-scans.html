@@ -101,7 +101,7 @@ tr.data-row:hover{background:rgba(255,255,255,0.04);}
 <!-- AI Credits Widget -->
 <div class="glass-panel rounded-2xl p-6">
   <div class="flex items-center justify-between mb-5">
-    <h3 class="font-semibold text-white flex items-center gap-2"><span class="material-symbols-outlined text-primary">credit_card</span>סטטוס שימוש AI</h3>
+    <h3 class="font-semibold text-white flex items-center gap-2"><span class="material-symbols-outlined text-primary">credit_card</span>יתרת טוקנים AI</h3>
     <span class="text-xs text-slate-500">מתעדכן בזמן אמת מכל קריאה</span>
   </div>
   <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -124,17 +124,17 @@ tr.data-row:hover{background:rgba(255,255,255,0.04);}
       </div>
       <div class="mb-3">
         <div class="flex justify-between text-xs mb-1.5">
-          <span class="text-slate-400">שימוש חודשי (טוקנים)</span>
-          <span id="sc-claude-pct" class="font-bold text-slate-300">0%</span>
+          <span class="text-slate-400">נותרו מהתקציב החודשי</span>
+          <span id="sc-claude-pct" class="font-bold text-slate-300">100%</span>
         </div>
         <div class="w-full bg-white/5 rounded-full h-3 overflow-hidden">
-          <div id="sc-claude-bar" class="h-3 rounded-full transition-all duration-700" style="width:0%;background:#10b981"></div>
+          <div id="sc-claude-bar" class="h-3 rounded-full transition-all duration-700" style="width:100%;background:#10b981"></div>
         </div>
       </div>
       <div class="grid grid-cols-3 gap-3 mt-3">
         <div class="text-center">
-          <div id="sc-claude-tokens" class="text-sm font-bold text-white">0</div>
-          <div class="text-[10px] text-slate-500">שומשו</div>
+          <div id="sc-claude-tokens" class="text-sm font-bold text-white">—</div>
+          <div class="text-[10px] text-slate-500">טוקנים נותרו</div>
         </div>
         <div class="text-center">
           <div id="sc-claude-calls" class="text-sm font-bold text-white">0</div>
@@ -166,17 +166,17 @@ tr.data-row:hover{background:rgba(255,255,255,0.04);}
       </div>
       <div class="mb-3">
         <div class="flex justify-between text-xs mb-1.5">
-          <span class="text-slate-400">שימוש חודשי (טוקנים)</span>
-          <span id="sc-pplx-pct" class="font-bold text-slate-300">0%</span>
+          <span class="text-slate-400">נותרו מהתקציב החודשי</span>
+          <span id="sc-pplx-pct" class="font-bold text-slate-300">100%</span>
         </div>
         <div class="w-full bg-white/5 rounded-full h-3 overflow-hidden">
-          <div id="sc-pplx-bar" class="h-3 rounded-full transition-all duration-700" style="width:0%;background:#10b981"></div>
+          <div id="sc-pplx-bar" class="h-3 rounded-full transition-all duration-700" style="width:100%;background:#10b981"></div>
         </div>
       </div>
       <div class="grid grid-cols-3 gap-3 mt-3">
         <div class="text-center">
-          <div id="sc-pplx-tokens" class="text-sm font-bold text-white">0</div>
-          <div class="text-[10px] text-slate-500">שומשו</div>
+          <div id="sc-pplx-tokens" class="text-sm font-bold text-white">—</div>
+          <div class="text-[10px] text-slate-500">טוקנים נותרו</div>
         </div>
         <div class="text-center">
           <div id="sc-pplx-calls" class="text-sm font-bold text-white">0</div>
@@ -494,22 +494,24 @@ async function loadAiCredits(){
     const cr=await fetch(`${API}/api/scan/ai-credits`).then(r=>r.json()).catch(()=>null);
     if(!cr) return;
     function applyScCredits(prefix, data){
-      const pct=data.usage_pct||0;
+      const remainPct = data.remaining_pct !== undefined ? data.remaining_pct : 100;
       const status=data.status||'ok';
+      // Bar color: green when plenty left, orange when low, red when critical
       const barColor=status==='critical'?'#f43f5e':status==='warning'?'#f59e0b':'#10b981';
       const badgeBg=status==='critical'?'rgba(244,63,94,0.2)':status==='warning'?'rgba(245,158,11,0.2)':'rgba(16,185,129,0.2)';
       const badgeColor=status==='critical'?'#f43f5e':status==='warning'?'#f59e0b':'#10b981';
       const badgeBorder=status==='critical'?'rgba(244,63,94,0.4)':status==='warning'?'rgba(245,158,11,0.4)':'rgba(16,185,129,0.4)';
-      const badgeText=status==='critical'?'⚠️ קריטי':status==='warning'?'⚠️ נמוך':'✅ תקין';
+      const badgeText=status==='critical'?'🔴 קריטי':status==='warning'?'🟠 נמוך':'🟢 תקין';
       const card=document.getElementById('sc-'+prefix+'-card');
       const badge=document.getElementById('sc-'+prefix+'-badge');
       const bar=document.getElementById('sc-'+prefix+'-bar');
       if(badge){badge.textContent=badgeText;badge.style.background=badgeBg;badge.style.color=badgeColor;badge.style.border='1px solid '+badgeBorder;}
-      if(bar){bar.style.width=Math.min(pct,100)+'%';bar.style.background=barColor;}
+      // Bar shows remaining (full bar = all remaining, empty = none left)
+      if(bar){bar.style.width=Math.min(remainPct,100)+'%';bar.style.background=barColor;}
       const pctEl=document.getElementById('sc-'+prefix+'-pct');
-      if(pctEl){pctEl.textContent=pct+'%';pctEl.style.color=barColor;}
+      if(pctEl){pctEl.textContent=remainPct+'%';pctEl.style.color=barColor;}
       const tokEl=document.getElementById('sc-'+prefix+'-tokens');
-      if(tokEl) tokEl.textContent=(data.tokens_used||0).toLocaleString();
+      if(tokEl) tokEl.textContent=(data.tokens_remaining||0).toLocaleString();
       const callsEl=document.getElementById('sc-'+prefix+'-calls');
       if(callsEl) callsEl.textContent=(data.api_calls||0).toLocaleString();
       const costEl=document.getElementById('sc-'+prefix+'-cost');
