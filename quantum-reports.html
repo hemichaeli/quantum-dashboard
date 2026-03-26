@@ -56,9 +56,9 @@ body{font-family:'Manrope',sans-serif;background:#101922;color:#e2e8f0;overflow:
 </div></div>
 </aside>
 <main class="flex-1 min-w-0 h-screen overflow-y-auto overflow-x-hidden flex flex-col">
-<header class="flex items-center justify-between px-8 py-5 border-b border-white/5 glass-panel sticky top-0 z-10">
+<header class="flex flex-wrap items-center justify-between gap-2 px-4 md:px-8 py-3 md:py-5 border-b border-white/5 glass-panel sticky top-0 z-10">
 <div>
-<h2 class="text-2xl font-bold text-white leading-tight">דוחות וניתוח שוק</h2>
+<h2 class="text-base md:text-2xl font-bold text-white leading-tight">דוחות וניתוח שוק</h2>
 <p class="text-sm text-slate-400">ניתוח חי של <span id="headerComplexCount" class="text-primary font-bold">--</span> מתחמי פינוי-בינוי ב-<span id="headerCityCount" class="text-primary font-bold">--</span> ערים</p>
 </div>
 <div class="flex items-center gap-3">
@@ -199,12 +199,13 @@ function fmt(n){return n==null||n==='--'?'--':Number(n).toLocaleString('he-IL')}
 function iC(s){return s>=80?'text-success-green':s>=60?'text-warning-amber':'text-alert-rose'}
 
 async function loadAllData(){
-const[morningReport,opportunities,stressed,kones,scanStatus]=await Promise.all([
+const[morningReport,opportunities,stressed,kones,scanStatus,ssiData]=await Promise.all([
 fetchJSON(`${API_BASE}/api/scan/morning-report`),fetchJSON(`${API_BASE}/api/opportunities`),
 fetchJSON(`${API_BASE}/api/stressed-sellers`),fetchJSON(`${API_BASE}/api/kones/listings`),
-fetchJSON(`${API_BASE}/api/scan/status`)]);
-// Build a dashboard-like object from morning-report data
-const dashboard={stats:{total_complexes:morningReport?.portfolio?.total_complexes||morningReport?.total_complexes||0,opportunities:morningReport?.portfolio?.high_iai_count||morningReport?.high_iai_opportunities||0,stressed_sellers:morningReport?.portfolio?.stressed_sellers||0,avg_iai:morningReport?.portfolio?.avg_iai_score||morningReport?.avg_iai||0,cities:morningReport?.portfolio?.cities_count||0},cityBreakdown:morningReport?.city_breakdown||[],ssiDistribution:morningReport?.ssi_distribution||null};
+fetchJSON(`${API_BASE}/api/scan/status`),fetchJSON(`${API_BASE}/api/ssi/dashboard-data`)]);
+// Build a dashboard-like object from morning-report + SSI data
+const cityBreakdown=ssiData?.cityBreakdown||morningReport?.city_breakdown||[];
+const dashboard={stats:{total_complexes:morningReport?.portfolio?.total_complexes||morningReport?.total_complexes||0,opportunities:morningReport?.portfolio?.high_iai_count||morningReport?.high_iai_opportunities||0,stressed_sellers:morningReport?.portfolio?.stressed_sellers||0,avg_iai:morningReport?.portfolio?.avg_iai_score||morningReport?.avg_iai||0,cities:cityBreakdown.length||morningReport?.portfolio?.cities_count||0},cityBreakdown:cityBreakdown,ssiDistribution:ssiData?.ssiDistribution||morningReport?.ssi_distribution||null};
 const signatures=null;const enrichment=null;
 
 if(dashboard&&dashboard.stats){const s=dashboard.stats;

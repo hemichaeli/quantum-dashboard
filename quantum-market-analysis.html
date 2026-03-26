@@ -44,8 +44,8 @@
 </div></div>
 </aside>
 <main class="flex-1 min-w-0 h-screen overflow-y-auto overflow-x-hidden flex flex-col">
-<header class="flex items-center justify-between px-8 py-5 border-b border-white/5 glass-panel sticky top-0 z-10">
-<div class="flex flex-col"><h2 class="text-2xl font-bold text-white leading-tight">ניתוח שוק</h2><p class="text-sm text-slate-400">נתוני שוק, מגמות מחירים וניתוח ביקוש-היצע ברמת עיר</p></div>
+<header class="flex flex-wrap items-center justify-between gap-2 px-4 md:px-8 py-3 md:py-5 border-b border-white/5 glass-panel sticky top-0 z-10">
+<div class="flex flex-col"><h2 class="text-base md:text-2xl font-bold text-white leading-tight">ניתוח שוק</h2><p class="text-sm text-slate-400">נתוני שוק, מגמות מחירים וניתוח ביקוש-היצע ברמת עיר</p></div>
 <div class="flex items-center gap-3">
 <select id="city-select" class="bg-surface/50 border border-white/10 rounded-xl px-4 py-2.5 text-sm focus:ring-primary focus:border-primary"><option value="all">כל הערים</option></select>
 <button class="flex items-center gap-2 bg-primary hover:brightness-110 px-6 py-2.5 rounded-xl text-sm font-bold text-white transition-all shadow-lg shadow-primary/20"><span class="material-symbols-outlined text-xl">ios_share</span><span>ייצוא דוח</span></button>
@@ -87,13 +87,14 @@ function filterCityTable(){renderCityTable()}
 function renderCityTable(){var search=(document.getElementById('city-search')?document.getElementById('city-search').value:'').toLowerCase();var data=cityData.slice();if(search)data=data.filter(function(c){return(c.city||'').toLowerCase().includes(search)});data.sort(function(a,b){var va=a[citySortCol],vb=b[citySortCol];if(citySortCol==='city')return citySortDir==='asc'?(va||'').localeCompare(vb||''):(vb||'').localeCompare(va||'');va=parseFloat(va)||0;vb=parseFloat(vb)||0;return citySortDir==='asc'?va-vb:vb-va});var tbody=document.getElementById('city-tbody');tbody.innerHTML=data.map(function(c){var iaiClass=c.avg_iai>=50?'text-success-green':c.avg_iai>=30?'text-amber-400':'text-alert-rose';var premClass=c.avg_premium>0?'text-alert-rose':'text-success-green';return '<tr class="hover:bg-white/5 transition-colors cursor-pointer"><td class="px-6 py-4 text-sm font-bold text-white">'+(c.city||'-')+'</td><td class="px-6 py-4 text-sm text-center text-slate-300">'+(c.complexes||0)+'</td><td class="px-6 py-4 text-sm text-center font-bold text-primary">'+(c.opportunities||0)+'</td><td class="px-6 py-4 text-sm text-center font-bold '+iaiClass+'">'+(c.avg_iai?c.avg_iai.toFixed(1):'-')+'</td><td class="px-6 py-4 text-sm text-center font-bold '+premClass+'">'+(c.avg_premium?c.avg_premium.toFixed(1)+'%':'-')+'</td><td class="px-6 py-4 text-sm text-center"><span class="px-2 py-1 rounded-lg bg-alert-rose/10 text-alert-rose text-xs font-bold">'+(c.stressed||0)+'</span></td></tr>'}).join('');var th=document.querySelector('[data-col="'+citySortCol+'"] .sort-arrow');if(th)th.textContent=citySortDir==='asc'?' \u25B2':' \u25BC'}
 
 function loadDashboard(){
-fetch(API+'/api/scan/morning-report').then(function(r){return r.json()}).then(function(d){
-  var s=d.portfolio||d||{};
-  document.getElementById('kpi-total').textContent=s.total_complexes||d.total_complexes||0;
-  document.getElementById('kpi-opps').textContent=s.high_iai_count||s.opportunities||d.high_iai_opportunities||0;
-  document.getElementById('kpi-stressed').textContent=s.stressed_sellers||0;
-  document.getElementById('kpi-avg-iai').textContent=s.avg_iai_score?Math.round(s.avg_iai_score)+'%':d.avg_iai||'-';
-  var cities=d.city_breakdown||d.cityBreakdown||[];
+// Load KPIs from SSI dashboard-data (has all the correct fields)
+fetch(API+'/api/ssi/dashboard-data').then(function(r){return r.json()}).then(function(d){
+  var s=d.stats||{};
+  document.getElementById('kpi-total').textContent=parseInt(s.total_complexes)||0;
+  document.getElementById('kpi-opps').textContent=parseInt(s.opportunities)||0;
+  document.getElementById('kpi-stressed').textContent=parseInt(s.stressed_sellers)||0;
+  document.getElementById('kpi-avg-iai').textContent=s.avg_iai?parseFloat(s.avg_iai).toFixed(1)+'%':'-';
+  var cities=d.cityBreakdown||[];
   cityData=cities.map(function(c){return{city:c.city,complexes:parseInt(c.total)||0,opportunities:parseInt(c.opportunities)||0,avg_iai:parseFloat(c.avg_iai)||0,avg_premium:parseFloat(c.avg_premium)||0,stressed:parseInt(c.stressed)||0}});
   renderCityTable();
   var sel=document.getElementById('city-select');

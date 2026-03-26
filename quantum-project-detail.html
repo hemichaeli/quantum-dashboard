@@ -84,6 +84,28 @@ else{sb.className='px-3 py-1 rounded-lg bg-amber-500/20 text-amber-500 text-xs f
 var iai=c.iai_score||0;var iaiColor=iai>=70?'success-green':iai>=50?'primary':'amber-500';
 var ssi=c.enhanced_ssi_score||0;var ssiColor=ssi>=60?'alert-rose':ssi>=40?'amber-500':'white';
 document.getElementById('kpi-grid').innerHTML=renderKPI('IAI Score',iai,iai>=70?'\u05DE\u05E6\u05D5\u05D9\u05DF':iai>=50?'\u05D8\u05D5\u05D1':'\u05D1\u05D9\u05E0\u05D5\u05E0\u05D9',iaiColor)+renderKPI('SSI',ssi,ssi>=60?'\u05E7\u05E8\u05D9\u05D8\u05D9':ssi>=40?'\u05D2\u05D1\u05D5\u05D4':'\u05E0\u05DE\u05D5\u05DA',ssiColor)+renderKPI('\u05E4\u05E8\u05DE\u05D9\u05D4',(c.actual_premium?c.actual_premium+'%':'-'),'\u05D1\u05E4\u05D5\u05E2\u05DC','primary')+renderKPI('\u05DE\u05D7\u05D9\u05E8/\u05DE"\u05E8',(c.price_per_sqm?Math.round(c.price_per_sqm/1000)+'K':'-'),'&#8362;','white')+renderKPI('\u05D1\u05E0\u05D9\u05D9\u05E0\u05D9\u05DD',c.num_buildings||'?','\u05D1\u05DE\u05EA\u05D7\u05DD','white')+renderKPI('\u05D7\u05EA\u05D9\u05DE\u05D5\u05EA',(c.signature_percent?c.signature_percent+'%':'-'),'\u05D3\u05D9\u05D9\u05E8\u05D9\u05DD','white');
+// Render planning timeline
+var tc=document.getElementById('timeline-container');
+var STAGE_ORDER=['declared','planning','pre_deposit','deposited','approved','permit','construction'];
+var STAGE_HE={declared:'\u05D4\u05DB\u05E8\u05D6\u05D4',planning:'\u05EA\u05DB\u05E0\u05D5\u05DF',pre_deposit:'\u05DC\u05E4\u05E0\u05D9 \u05D4\u05E4\u05E7\u05D3\u05D4',deposited:'\u05D4\u05D5\u05E4\u05E7\u05D3',approved:'\u05D0\u05D5\u05E9\u05E8',permit:'\u05D4\u05D9\u05EA\u05E8',construction:'\u05D1\u05E0\u05D9\u05D9\u05D4'};
+var STAGE_ICON={declared:'campaign',planning:'architecture',pre_deposit:'pending',deposited:'upload_file',approved:'verified',permit:'badge',construction:'construction'};
+var curStatus=c.status||'';
+var curIdx=STAGE_ORDER.indexOf(curStatus);
+if(curIdx===-1){curIdx=0;}
+var planText=c.plan_stage||'';
+var timelineHtml=STAGE_ORDER.map(function(s,i){
+  var done=i<curIdx;
+  var active=i===curIdx;
+  var bgColor=done?'bg-success-green':active?'bg-primary':'bg-slate-700';
+  var textColor=done?'text-success-green':active?'text-primary':'text-slate-500';
+  var label=STAGE_HE[s]||s;
+  var icon=STAGE_ICON[s]||'radio_button_unchecked';
+  var extra='';
+  if(active&&planText){extra='<p class="text-[11px] text-slate-400 mt-1 leading-relaxed">'+planText+'</p>';}
+  var connector=(i<STAGE_ORDER.length-1)?'<div class="absolute right-[9px] top-6 w-0.5 h-full '+(done?'bg-success-green':'bg-slate-700')+'/40"></div>':'';
+  return '<div class="flex items-start gap-3 relative">'+connector+'<div class="size-5 rounded-full '+bgColor+' flex items-center justify-center flex-shrink-0 mt-0.5 z-10"><span class="material-symbols-outlined text-white" style="font-size:12px">'+(done?'check':icon)+'</span></div><div class="flex-1 pb-4"><p class="text-sm font-bold '+textColor+'">'+label+(active?' <span class="text-[9px] bg-primary/20 text-primary px-1.5 py-0.5 rounded font-bold">\u05E0\u05D5\u05DB\u05D7\u05D9</span>':'')+'</p>'+extra+'</div></div>';
+}).join('');
+tc.innerHTML=timelineHtml||'<p class="text-slate-500 text-sm">\u05D0\u05D9\u05DF \u05E0\u05EA\u05D5\u05E0\u05D9 \u05EA\u05DB\u05E0\u05D5\u05DF</p>';
 }).catch(function(e){document.getElementById('complex-name').textContent='\u05E9\u05D2\u05D9\u05D0\u05D4 \u05D1\u05D8\u05E2\u05D9\u05E0\u05D4';console.error(e);});}
 loadComplex();
 </script>

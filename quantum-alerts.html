@@ -59,18 +59,18 @@ body { font-family: 'Manrope', sans-serif; }
 </div></div>
 </aside>
 <main class="flex-1 min-w-0 h-screen overflow-y-auto overflow-x-hidden flex flex-col">
-    <header class="flex items-center justify-between px-8 py-5 border-b border-white/5 glass-panel sticky top-0 z-10">
-        <div><div class="flex items-center gap-3"><h2 class="text-2xl font-bold text-white leading-tight">התראות</h2><span id="header-unread-badge" class="hidden px-2.5 py-1 bg-alert-rose/20 text-alert-rose text-[11px] font-bold rounded-lg border border-alert-rose/30"></span></div><p class="text-sm text-slate-400">מודעות חדשות, ירידות מחיר, אישורי ועדות, זינוקי SSI</p></div>
+    <header class="flex flex-wrap items-center justify-between gap-2 px-4 md:px-8 py-3 md:py-5 border-b border-white/5 glass-panel sticky top-0 z-10">
+        <div><div class="flex items-center gap-3"><h2 class="text-base md:text-2xl font-bold text-white leading-tight">התראות</h2><span id="header-unread-badge" class="hidden px-2.5 py-1 bg-alert-rose/20 text-alert-rose text-[11px] font-bold rounded-lg border border-alert-rose/30"></span></div><p class="text-sm text-slate-400">מודעות חדשות, ירידות מחיר, אישורי ועדות, זינוקי SSI</p></div>
         <div class="flex items-center gap-3"><button onclick="markAllRead()" class="flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all"><span class="material-symbols-outlined text-lg">done_all</span><span>סמן הכל כנקרא</span></button><button class="flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all"><span class="material-symbols-outlined text-lg">tune</span><span>העדפות התראה</span></button></div>
     </header>
     <div class="p-8 space-y-4">
         <div class="flex items-center gap-2 overflow-x-auto pb-2" id="filter-buttons">
             <button onclick="filterAlerts('all')" data-filter="all" class="filter-btn flex items-center gap-2 px-4 py-2 bg-primary text-white text-sm font-bold rounded-xl whitespace-nowrap"><span class="material-symbols-outlined text-lg">select_all</span>הכל (<span class="count">0</span>)</button>
-            <button onclick="filterAlerts('price_drop')" data-filter="price_drop" class="filter-btn flex items-center gap-2 px-4 py-2 bg-white/5 text-slate-400 border border-white/10 text-sm font-semibold rounded-xl hover:bg-white/10 transition-all whitespace-nowrap"><span class="material-symbols-outlined text-lg text-alert-rose">trending_down</span>ירידות מחיר (<span class="count">0</span>)</button>
+            <button onclick="filterAlerts('stressed_seller')" data-filter="stressed_seller" class="filter-btn flex items-center gap-2 px-4 py-2 bg-white/5 text-slate-400 border border-white/10 text-sm font-semibold rounded-xl hover:bg-white/10 transition-all whitespace-nowrap"><span class="material-symbols-outlined text-lg text-alert-rose">warning</span>מוכר לחוץ (<span class="count">0</span>)</button>
+            <button onclick="filterAlerts('price_drop')" data-filter="price_drop" class="filter-btn flex items-center gap-2 px-4 py-2 bg-white/5 text-slate-400 border border-white/10 text-sm font-semibold rounded-xl hover:bg-white/10 transition-all whitespace-nowrap"><span class="material-symbols-outlined text-lg text-amber-400">trending_down</span>ירידות מחיר (<span class="count">0</span>)</button>
+            <button onclick="filterAlerts('opportunity')" data-filter="opportunity" class="filter-btn flex items-center gap-2 px-4 py-2 bg-white/5 text-slate-400 border border-white/10 text-sm font-semibold rounded-xl hover:bg-white/10 transition-all whitespace-nowrap"><span class="material-symbols-outlined text-lg text-indigo-400">diamond</span>הזדמנויות (<span class="count">0</span>)</button>
             <button onclick="filterAlerts('new_complex')" data-filter="new_complex" class="filter-btn flex items-center gap-2 px-4 py-2 bg-white/5 text-slate-400 border border-white/10 text-sm font-semibold rounded-xl hover:bg-white/10 transition-all whitespace-nowrap"><span class="material-symbols-outlined text-lg text-success-green">add_home</span>מתחמים חדשים (<span class="count">0</span>)</button>
             <button onclick="filterAlerts('committee')" data-filter="committee" class="filter-btn flex items-center gap-2 px-4 py-2 bg-white/5 text-slate-400 border border-white/10 text-sm font-semibold rounded-xl hover:bg-white/10 transition-all whitespace-nowrap"><span class="material-symbols-outlined text-lg text-primary">gavel</span>אישורי ועדות (<span class="count">0</span>)</button>
-            <button onclick="filterAlerts('ssi_high')" data-filter="ssi_high" class="filter-btn flex items-center gap-2 px-4 py-2 bg-white/5 text-slate-400 border border-white/10 text-sm font-semibold rounded-xl hover:bg-white/10 transition-all whitespace-nowrap"><span class="material-symbols-outlined text-lg text-amber-400">warning</span>SSI קריטי (<span class="count">0</span>)</button>
-            <button onclick="filterAlerts('opportunity')" data-filter="opportunity" class="filter-btn flex items-center gap-2 px-4 py-2 bg-white/5 text-slate-400 border border-white/10 text-sm font-semibold rounded-xl hover:bg-white/10 transition-all whitespace-nowrap"><span class="material-symbols-outlined text-lg text-indigo-400">diamond</span>הזדמנויות (<span class="count">0</span>)</button>
         </div>
         <div class="flex items-center gap-3">
             <div class="flex-1 relative">
@@ -106,10 +106,11 @@ let currentFilter = 'all';
 let displayedCount = 0;
 const PAGE_SIZE = 20;
 const ALERT_CONFIG = {
-    new_complex: { icon: 'add_home', color: 'success-green', label: 'מתחם חדש', bgClass: 'bg-success-green/5 border-success-green/10 hover:bg-success-green/10' },
+    stressed_seller: { icon: 'warning', color: 'alert-rose', label: 'מוכר לחוץ', bgClass: 'bg-alert-rose/5 border-alert-rose/15 hover:bg-alert-rose/10' },
     price_drop: { icon: 'trending_down', color: 'amber-400', label: 'ירידת מחיר', bgClass: 'bg-amber-500/5 border-amber-500/10 hover:bg-amber-500/10' },
-    ssi_high: { icon: 'warning', color: 'alert-rose', label: 'SSI קריטי', bgClass: 'bg-alert-rose/5 border-alert-rose/15 hover:bg-alert-rose/10' },
+    new_complex: { icon: 'add_home', color: 'success-green', label: 'מתחם חדש', bgClass: 'bg-success-green/5 border-success-green/10 hover:bg-success-green/10' },
     committee: { icon: 'gavel', color: 'primary', label: 'אישור ועדה', bgClass: 'bg-primary/5 border-primary/15 hover:bg-primary/10' },
+    ssi_high: { icon: 'bolt', color: 'amber-400', label: 'SSI קריטי', bgClass: 'bg-amber-500/5 border-amber-500/10 hover:bg-amber-500/10' },
     opportunity: { icon: 'diamond', color: 'indigo-400', label: 'הזדמנות', bgClass: 'bg-indigo-500/5 border-indigo-500/10 hover:bg-indigo-500/10' },
     default: { icon: 'notifications', color: 'slate-400', label: 'התראה', bgClass: 'bg-surface/20 border-white/5 hover:bg-surface/40' }
 };
@@ -188,9 +189,11 @@ function updateCounts() {
     var headerBadge = document.getElementById('header-unread-badge');
     if (unread > 0) { headerBadge.textContent = unread + ' לא נקראו'; headerBadge.classList.remove('hidden'); }
     else { headerBadge.classList.add('hidden'); }
-    var sidebarBadge = document.getElementById('sidebar-badge');
-    if (unread > 0) { sidebarBadge.textContent = unread > 99 ? '99+' : unread; sidebarBadge.classList.remove('hidden'); }
-    else { sidebarBadge.classList.add('hidden'); }
+    var sidebarBadge = document.getElementById('nav-alert-badge');
+    if (sidebarBadge) {
+      if (unread > 0) { sidebarBadge.textContent = unread > 99 ? '99+' : unread; sidebarBadge.classList.remove('hidden'); }
+      else { sidebarBadge.classList.add('hidden'); }
+    }
     var typeCounts = { all: allAlerts.length };
     allAlerts.forEach(function(a) { typeCounts[a.alert_type] = (typeCounts[a.alert_type] || 0) + 1; });
     document.querySelectorAll('.filter-btn').forEach(function(btn) {
