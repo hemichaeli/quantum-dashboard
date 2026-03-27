@@ -231,6 +231,7 @@ if(dashboard&&dashboard.ssiDistribution)renderSSI(dashboard.ssiDistribution);
 
 if(opportunities){allOpportunities=Array.isArray(opportunities)?opportunities:(opportunities.opportunities||opportunities.data||[]);
 renderTopOpp(allOpportunities.slice(0,8));populateComplexDD(allOpportunities);renderIAI()}
+else{document.getElementById('topOpportunities').innerHTML='<div class="text-center py-4 text-alert-rose text-sm">שגיאה בטעינת הזדמנויות</div>'}
 
 if(signatures)renderSig(signatures);
 if(kones&&kones.data)renderKones(kones.data);
@@ -347,7 +348,7 @@ opt.value=c.city;opt.textContent=`${esc(c.city)} (${c.total} מתחמים)`;sel.
 function generateReport(){
 const p=document.getElementById('reportPreview');
 if(selType==='complex'){const id=document.getElementById('complexDropdown').value;
-if(!id){alert('בחר מתחם');return}const o=allOpportunities.find(x=>String(x.id)===id);if(!o)return;
+if(!id){if(typeof showToast==='function')showToast('בחר מתחם מהרשימה','warning');else alert('בחר מתחם');return}const o=allOpportunities.find(x=>String(x.id)===id);if(!o)return;
 p.innerHTML=`<div class="border-b border-white/5 pb-4 mb-4"><h3 class="text-xl font-extrabold text-white">דוח ניתוח: ${esc(o.name)}</h3>
 <p class="text-sm text-slate-400 mt-1">${esc(o.city)} | ${new Date().toLocaleDateString('he-IL')}</p></div>
 <div class="grid grid-cols-3 gap-4 mb-6">
@@ -364,7 +365,7 @@ p.innerHTML=`<div class="border-b border-white/5 pb-4 mb-4"><h3 class="text-xl f
 <div class="mt-4 p-3 bg-primary/5 border border-primary/10 rounded-xl"><p class="text-xs text-primary font-bold mb-1">המלצת QUANTUM</p>
 <p class="text-sm text-slate-300">${o.iai_score>=80?'מתחם עם פוטנציאל השקעה גבוה. פער הפרמיה מצביע על הזדמנות משמעותית.':o.iai_score>=60?'מתחם בינוני. מומלץ לעקוב אחר התפתחויות.':'מתחם בשלב מוקדם. נדרש מעקב נוסף.'}</p></div>`}
 else if(selType==='city'){const city=document.getElementById('cityDropdown').value;
-if(!city){alert('בחר עיר');return}const ci=cityData.find(c=>c.city===city);
+if(!city){if(typeof showToast==='function')showToast('בחר עיר מהרשימה','warning');else alert('בחר עיר');return}const ci=cityData.find(c=>c.city===city);
 const cc=allOpportunities.filter(o=>o.city===city);
 p.innerHTML=`<div class="border-b border-white/5 pb-4 mb-4"><h3 class="text-xl font-extrabold text-white">סקירת שוק: ${city}</h3>
 <p class="text-sm text-slate-400 mt-1">${new Date().toLocaleDateString('he-IL')}</p></div>
