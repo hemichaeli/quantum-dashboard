@@ -6,6 +6,7 @@
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js"></script>
 <script>tailwind.config={darkMode:"class",theme:{extend:{colors:{"primary":"#137fec","background-dark":"#101922","surface":"#1a2530","border-dark":"#2d3a4b","alert-rose":"#f43f5e","success-green":"#10b981","warning-amber":"#f59e0b"},fontFamily:{"display":["Manrope","sans-serif"]}}}}</script>
 <style>
 body{font-family:'Manrope',sans-serif;}
@@ -271,8 +272,12 @@ tr.data-row:hover{background:rgba(255,255,255,0.04);}
 </footer>
 </main>
 
+<script src="shared/toast.js"></script>
+<script src="shared/state-store.js"></script>
+<script src="shared/api-client.js"></script>
 <script>
-const API_BASE = 'https://pinuy-binuy-analyzer-production.up.railway.app';
+const API_BASE=(typeof QuantumAPI!=='undefined')?QuantumAPI.API_BASE:'https://pinuy-binuy-analyzer-production.up.railway.app';
+function esc(s){return typeof DOMPurify!=='undefined'?DOMPurify.sanitize(String(s||'-'),{ALLOWED_TAGS:[]}):String(s||'-').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 let allData = [];
 let filteredData = [];
 let currentPage = 0;
@@ -389,12 +394,12 @@ function renderTable() {
     const statusLabel = statusMap[d.status] || d.status || '-';
     const listings = parseInt(d.active_listings) || 0;
     return `<tr class="data-row border-b border-white/5 transition-colors cursor-pointer fade-in" style="animation-delay:${i * 0.02}s" onclick="openDetail(${d.id})">
-      <td class="px-4 py-3.5 font-semibold text-white text-sm max-w-[200px] truncate" title="${d.name || ''}">${d.name || '-'}</td>
-      <td class="px-4 py-3.5 text-slate-400 text-sm">${d.city || '-'}</td>
+      <td class="px-4 py-3.5 font-semibold text-white text-sm max-w-[200px] truncate" title="${esc(d.name)}">${esc(d.name)}</td>
+      <td class="px-4 py-3.5 text-slate-400 text-sm">${esc(d.city)}</td>
       <td class="px-4 py-3.5 text-center"><span class="px-2 py-0.5 rounded-lg text-[11px] font-bold ${iaiClass}">${iaiLabel} (${iai})</span></td>
       <td class="px-4 py-3.5 text-center ${ssiColor} font-bold text-sm">${ssi.toFixed(1)}</td>
       <td class="px-4 py-3.5 text-slate-400 text-sm">${statusLabel}</td>
-      <td class="px-4 py-3.5 text-slate-400 text-xs max-w-[150px] truncate" title="${d.developer || ''}">${d.developer || '-'}</td>
+      <td class="px-4 py-3.5 text-slate-400 text-xs max-w-[150px] truncate" title="${esc(d.developer)}">${esc(d.developer)}</td>
       <td class="px-4 py-3.5 text-center">${premHtml}</td>
       <td class="px-4 py-3.5 text-center">${sigHtml}</td>
       <td class="px-4 py-3.5 text-center">${listings > 0 ? `<div class="inline-flex items-center justify-center size-8 rounded-full bg-primary/10 text-primary text-xs font-bold">${listings}</div>` : '<span class="text-slate-600">0</span>'}</td>
@@ -453,7 +458,7 @@ function openDetail(id) { window.location.href = `quantum-project-detail.html?id
 
 function exportCSV() {
   const headers = ['שם,עיר,IAI,SSI,שלב,יזם,פרמיום,חתימות,מודעות'];
-  const rows = filteredData.map(d => `"${d.name || ''}","${d.city || ''}",${d.iai_score || 0},${parseFloat(d.avg_ssi) || 0},"${d.status || ''}","${d.developer || ''}",${d.actual_premium || ''},${d.signature_percent || ''},${d.active_listings || 0}`);
+  const rows = filteredData.map(d => `"${esc(d.name)}","${esc(d.city)}",${d.iai_score || 0},${parseFloat(d.avg_ssi) || 0},"${d.status || ''}","${esc(d.developer)}",${d.actual_premium || ''},${d.signature_percent || ''},${d.active_listings || 0}`);
   const csv = '\uFEFF' + headers.concat(rows).join('\n');
   const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
   const url = URL.createObjectURL(blob);
@@ -497,7 +502,8 @@ loadAllData();
 
 // System Health Widget + AI Credits
 (async function loadSysHealth(){
-  const API='https://pinuy-binuy-analyzer-production.up.railway.app';
+  const API=(typeof QuantumAPI!=='undefined')?QuantumAPI.API_BASE:'https://pinuy-binuy-analyzer-production.up.railway.app';
+function esc(s){return typeof DOMPurify!=='undefined'?DOMPurify.sanitize(String(s||'-'),{ALLOWED_TAGS:[]}):String(s||'-').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
   try{
     const [h,s,b]=await Promise.all([
       fetch(`${API}/api/scan/health`).then(r=>r.json()).catch(()=>({})),

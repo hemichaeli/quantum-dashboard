@@ -6,6 +6,7 @@
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js"></script>
 <script>tailwind.config={darkMode:"class",theme:{extend:{colors:{"primary":"#137fec","background-dark":"#101922","surface":"#1a2530","border-dark":"#2d3a4b","alert-rose":"#f43f5e","success-green":"#10b981"},fontFamily:{"display":["Manrope","sans-serif"]}}}}</script>
 <style>body{font-family:'Manrope',sans-serif;}.glass-panel{background:rgba(26,37,48,0.7);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.05);}.custom-scrollbar::-webkit-scrollbar{width:6px;}.custom-scrollbar::-webkit-scrollbar-track{background:transparent;}.custom-scrollbar::-webkit-scrollbar-thumb{background:#2d3a4b;border-radius:10px;}.status-badge{padding:2px 10px;border-radius:999px;font-size:11px;font-weight:700;}.toggle{position:relative;display:inline-block;width:44px;height:24px;}.toggle input{opacity:0;width:0;height:0;}.slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background-color:#2d3a4b;transition:.3s;border-radius:24px;}.slider:before{position:absolute;content:"";height:18px;width:18px;left:3px;bottom:3px;background-color:white;transition:.3s;border-radius:50%;}.toggle input:checked+.slider{background-color:#137fec;}.toggle input:checked+.slider:before{transform:translateX(20px);}</style>
 </head>
@@ -148,8 +149,12 @@
 </div>
 <footer class="mt-auto px-8 py-6 border-t border-white/5 text-center text-slate-500 text-[11px] font-medium tracking-widest uppercase">&copy; 2026 QUANTUM Unified Analytics | <span class="q-ver">v...</span></footer>
 </main>
+<script src="shared/toast.js"></script>
+<script src="shared/state-store.js"></script>
+<script src="shared/api-client.js"></script>
 <script>
-const API='https://pinuy-binuy-analyzer-production.up.railway.app';
+const API=(typeof QuantumAPI!=='undefined')?QuantumAPI.API_BASE:'https://pinuy-binuy-analyzer-production.up.railway.app';
+function esc(s){return typeof DOMPurify!=='undefined'?DOMPurify.sanitize(String(s||'-'),{ALLOWED_TAGS:[]}):String(s||'-').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 
 async function loadBotStatus(){
   try{
@@ -224,7 +229,7 @@ async function loadActivity(){
     const tbody=document.getElementById('activity-tbody');
     if(!convs.length){tbody.innerHTML='<tr><td colspan="5" class="text-center py-12 text-slate-500">אין פעילות</td></tr>';return;}
     tbody.innerHTML=convs.map(c=>`<tr class="border-b border-white/5 hover:bg-white/5 transition-all">
-      <td class="px-5 py-3 font-mono text-xs text-slate-300" dir="ltr">${c.phone||c.from||'-'}</td>
+      <td class="px-5 py-3 font-mono text-xs text-slate-300" dir="ltr">${esc(c.phone||c.from)}</td>
       <td class="px-5 py-3 text-center font-bold text-white">${c.message_count||0}</td>
       <td class="px-5 py-3 text-xs text-slate-400">${c.current_step||c.stage||'-'}</td>
       <td class="px-5 py-3">${c.escalated?'<span class="status-badge bg-amber-400/20 text-amber-400">כן</span>':'<span class="status-badge bg-slate-700/50 text-slate-400">לא</span>'}</td>

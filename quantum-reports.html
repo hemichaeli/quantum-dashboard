@@ -6,6 +6,7 @@
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js"></script>
 <script>tailwind.config={darkMode:"class",theme:{extend:{colors:{"primary":"#137fec","background-dark":"#101922","surface":"#1a2530","border-dark":"#2d3a4b","alert-rose":"#f43f5e","success-green":"#10b981","warning-amber":"#f59e0b"},fontFamily:{"display":["Manrope","sans-serif"]}}}}</script>
 <style>
 body{font-family:'Manrope',sans-serif;background:#101922;color:#e2e8f0;overflow:hidden;height:100vh}
@@ -191,8 +192,12 @@ body{font-family:'Manrope',sans-serif;background:#101922;color:#e2e8f0;overflow:
 <footer class="mt-auto px-8 py-6 border-t border-white/5 text-center text-slate-500 text-[11px] font-medium tracking-widest uppercase">&copy; 2026 QUANTUM Unified Analytics | <span class="q-ver">v...</span></footer>
 </main>
 </div>
+<script src="shared/toast.js"></script>
+<script src="shared/state-store.js"></script>
+<script src="shared/api-client.js"></script>
 <script>
-const API_BASE='https://pinuy-binuy-analyzer-production.up.railway.app';
+const API_BASE=(typeof QuantumAPI!=='undefined')?QuantumAPI.API_BASE:'https://pinuy-binuy-analyzer-production.up.railway.app';
+function esc(s){return typeof DOMPurify!=='undefined'?DOMPurify.sanitize(String(s||'-'),{ALLOWED_TAGS:[]}):String(s||'-').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 let allOpportunities=[],cityData=[],currentSort={field:'total',dir:'desc'};
 async function fetchJSON(u){try{const r=await fetch(u);if(!r.ok)throw new Error(r.status);return await r.json()}catch(e){console.error('Fetch:',u,e);return null}}
 function fmt(n){return n==null||n==='--'?'--':Number(n).toLocaleString('he-IL')}
@@ -237,7 +242,7 @@ const s=[...d].sort((a,b)=>{const dir=currentSort.dir==='desc'?-1:1;const f=curr
 if(f==='city')return dir*(a.city||'').localeCompare(b.city||'','he');return dir*((a[f]||0)-(b[f]||0))});
 document.getElementById('cityTableBody').innerHTML=s.map(c=>`
 <tr class="city-row border-b border-white/[0.03] transition-all">
-<td class="py-3 pr-3 font-bold text-white">${c.city}</td>
+<td class="py-3 pr-3 font-bold text-white">${esc(c.city)}</td>
 <td class="py-3 text-center">${c.total}</td>
 <td class="py-3 text-center"><span class="text-success-green font-bold">${c.opportunities||0}</span></td>
 <td class="py-3 text-center"><span class="${(c.stressed||0)>0?'text-alert-rose font-bold':'text-slate-500'}">${c.stressed||0}</span></td>
@@ -289,9 +294,9 @@ const el=document.getElementById('topOpportunities');
 if(!items.length){el.innerHTML='<div class="text-center py-4 text-slate-500 text-sm">אין נתונים</div>';return}
 el.innerHTML=items.map(o=>`
 <a href="quantum-project-detail.html?id=${o.id}" class="block p-3 bg-white/[0.02] border border-white/5 rounded-xl hover:bg-white/5 transition-all">
-<div class="flex items-center justify-between mb-1"><span class="text-sm font-bold text-white truncate">${o.name}</span>
+<div class="flex items-center justify-between mb-1"><span class="text-sm font-bold text-white truncate">${esc(o.name)}</span>
 <span class="px-2 py-0.5 rounded-md text-xs font-bold ${iC(o.iai_score)} bg-white/5">${o.iai_score}</span></div>
-<div class="flex items-center gap-2 text-xs text-slate-500"><span>${o.city}</span>
+<div class="flex items-center gap-2 text-xs text-slate-500"><span>${esc(o.city)}</span>
 ${o.premium_gap?`<span class="text-success-green">פער: ${Math.round(o.premium_gap)}%</span>`:''}</div></a>`).join('')}
 
 function renderKones(items){
@@ -299,9 +304,9 @@ const el=document.getElementById('konesListings');
 if(!items.length){el.innerHTML='<div class="text-center py-4 text-slate-500 text-sm">אין כינוסים</div>';return}
 el.innerHTML=items.slice(0,6).map(k=>`
 <div class="p-3 bg-white/[0.02] border border-white/5 rounded-xl">
-<div class="flex items-center justify-between mb-1"><span class="text-sm font-bold text-white">${k.city}</span>
+<div class="flex items-center justify-between mb-1"><span class="text-sm font-bold text-white">${esc(k.city)}</span>
 <span class="text-[10px] font-bold text-warning-amber bg-warning-amber/10 px-2 py-0.5 rounded">${k.propertyType||'נכס'}</span></div>
-<p class="text-xs text-slate-400 truncate">${k.address||'--'}</p>
+<p class="text-xs text-slate-400 truncate">${esc(k.address||'--')}</p>
 <div class="flex items-center gap-2 mt-1 text-xs text-slate-500"><span>${k.source||''}</span>
 ${k.contactPerson?`<span>| ${k.contactPerson}</span>`:''}</div></div>`).join('')}
 
@@ -332,25 +337,25 @@ document.getElementById('citySelector').classList.toggle('hidden',type!=='city')
 function populateComplexDD(data){const sel=document.getElementById('complexDropdown');
 sel.innerHTML='<option value="">-- בחר מתחם --</option>';
 data.sort((a,b)=>(b.iai_score||0)-(a.iai_score||0)).forEach(o=>{const opt=document.createElement('option');
-opt.value=o.id;opt.textContent=`${o.name} (${o.city}) - IAI ${o.iai_score||'?'}`;sel.appendChild(opt)})}
+opt.value=o.id;opt.textContent=`${esc(o.name)} (${esc(o.city)}) - IAI ${o.iai_score||'?'}`;sel.appendChild(opt)})}
 
 function populateCityDD(data){const sel=document.getElementById('cityDropdown');
 sel.innerHTML='<option value="">-- בחר עיר --</option>';
 data.sort((a,b)=>(b.total||0)-(a.total||0)).forEach(c=>{const opt=document.createElement('option');
-opt.value=c.city;opt.textContent=`${c.city} (${c.total} מתחמים)`;sel.appendChild(opt)})}
+opt.value=c.city;opt.textContent=`${esc(c.city)} (${c.total} מתחמים)`;sel.appendChild(opt)})}
 
 function generateReport(){
 const p=document.getElementById('reportPreview');
 if(selType==='complex'){const id=document.getElementById('complexDropdown').value;
 if(!id){alert('בחר מתחם');return}const o=allOpportunities.find(x=>String(x.id)===id);if(!o)return;
-p.innerHTML=`<div class="border-b border-white/5 pb-4 mb-4"><h3 class="text-xl font-extrabold text-white">דוח ניתוח: ${o.name}</h3>
-<p class="text-sm text-slate-400 mt-1">${o.city} | ${new Date().toLocaleDateString('he-IL')}</p></div>
+p.innerHTML=`<div class="border-b border-white/5 pb-4 mb-4"><h3 class="text-xl font-extrabold text-white">דוח ניתוח: ${esc(o.name)}</h3>
+<p class="text-sm text-slate-400 mt-1">${esc(o.city)} | ${new Date().toLocaleDateString('he-IL')}</p></div>
 <div class="grid grid-cols-3 gap-4 mb-6">
 <div class="bg-white/5 rounded-xl p-3 text-center"><p class="text-2xl font-extrabold ${iC(o.iai_score)}">${o.iai_score}</p><p class="text-[10px] text-slate-500 font-bold">IAI</p></div>
 <div class="bg-white/5 rounded-xl p-3 text-center"><p class="text-2xl font-extrabold text-white">${o.actual_premium||'--'}%</p><p class="text-[10px] text-slate-500 font-bold">פרמיה</p></div>
 <div class="bg-white/5 rounded-xl p-3 text-center"><p class="text-2xl font-extrabold text-success-green">${o.premium_gap?Math.round(o.premium_gap)+'%':'--'}</p><p class="text-[10px] text-slate-500 font-bold">פער</p></div></div>
 <div class="space-y-2 text-sm">
-<div class="flex justify-between py-2 border-b border-white/[0.03]"><span class="text-slate-400">יזם</span><span class="text-white font-bold">${o.developer||'--'}</span></div>
+<div class="flex justify-between py-2 border-b border-white/[0.03]"><span class="text-slate-400">יזם</span><span class="text-white font-bold">${esc(o.developer||'--')}</span></div>
 <div class="flex justify-between py-2 border-b border-white/[0.03]"><span class="text-slate-400">חוזק יזם</span><span class="text-white font-bold">${o.developer_strength||'--'}</span></div>
 <div class="flex justify-between py-2 border-b border-white/[0.03]"><span class="text-slate-400">יח' קיימות</span><span class="text-white font-bold">${fmt(o.existing_units)}</span></div>
 <div class="flex justify-between py-2 border-b border-white/[0.03]"><span class="text-slate-400">יח' מתוכננות</span><span class="text-white font-bold">${fmt(o.planned_units)}</span></div>
@@ -369,14 +374,14 @@ p.innerHTML=`<div class="border-b border-white/5 pb-4 mb-4"><h3 class="text-xl f
 <div class="bg-white/5 rounded-xl p-3 text-center"><p class="text-2xl font-extrabold ${iC(ci?ci.avg_iai:0)}">${ci?ci.avg_iai||'--':'--'}</p><p class="text-[10px] text-slate-500 font-bold">IAI ממוצע</p></div></div>
 <h4 class="text-sm font-bold text-white mb-3">מתחמים מובילים:</h4>
 <div class="space-y-2">${cc.sort((a,b)=>(b.iai_score||0)-(a.iai_score||0)).slice(0,5).map(o=>`
-<div class="flex items-center justify-between py-2 border-b border-white/[0.03]"><span class="text-sm text-white">${o.name}</span>
+<div class="flex items-center justify-between py-2 border-b border-white/[0.03]"><span class="text-sm text-white">${esc(o.name)}</span>
 <span class="text-sm font-bold ${iC(o.iai_score)}">${o.iai_score}</span></div>`).join('')}</div>`}
 else{const top=allOpportunities.slice(0,10);
 p.innerHTML=`<div class="border-b border-white/5 pb-4 mb-4"><h3 class="text-xl font-extrabold text-white">דוח משקיע - טופ הזדמנויות</h3>
 <p class="text-sm text-slate-400 mt-1">${new Date().toLocaleDateString('he-IL')} | QUANTUM Intelligence</p></div>
 <div class="space-y-2">${top.map((o,i)=>`
 <div class="flex items-center gap-3 py-2 border-b border-white/[0.03]"><span class="text-xs text-slate-500 w-6">#${i+1}</span>
-<div class="flex-1"><span class="text-sm font-bold text-white">${o.name}</span><span class="text-xs text-slate-500 mr-2">${o.city}</span></div>
+<div class="flex-1"><span class="text-sm font-bold text-white">${esc(o.name)}</span><span class="text-xs text-slate-500 mr-2">${esc(o.city)}</span></div>
 <span class="text-sm font-bold ${iC(o.iai_score)}">${o.iai_score}</span>
 <span class="text-xs text-success-green">${o.premium_gap?'+'+Math.round(o.premium_gap)+'%':''}</span></div>`).join('')}</div>`}}
 
@@ -384,6 +389,9 @@ loadAllData();
 fetch(`${API_BASE}/api/alerts?limit=500`).then(r=>r.json()).then(d=>{const u=(d.alerts||[]).filter(a=>!a.is_read).length;
 const b=document.getElementById('nav-alert-badge');if(b&&u>0){b.textContent=u>99?'99+':u;b.classList.remove('hidden')}}).catch(()=>{});
 </script>
+<script src="shared/toast.js"></script>
+<script src="shared/state-store.js"></script>
+<script src="shared/api-client.js"></script>
 <script>
 (function(){
   var base="https://pinuy-binuy-analyzer-production.up.railway.app";

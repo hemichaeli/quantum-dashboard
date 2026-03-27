@@ -6,6 +6,7 @@
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js"></script>
 <script>tailwind.config={darkMode:"class",theme:{extend:{colors:{"primary":"#137fec","background-dark":"#101922","surface":"#1a2530","border-dark":"#2d3a4b","alert-rose":"#f43f5e","success-green":"#10b981","warning-amber":"#f59e0b"},fontFamily:{"display":["Manrope","sans-serif"]}}}}</script>
 <style>
 body{font-family:'Manrope',sans-serif;}
@@ -87,8 +88,12 @@ tr.data-row:hover{background:rgba(255,255,255,0.04);}
 </div>
 </div>
 </main>
+<script src="shared/toast.js"></script>
+<script src="shared/state-store.js"></script>
+<script src="shared/api-client.js"></script>
 <script>
-const API='https://pinuy-binuy-analyzer-production.up.railway.app';
+const API=(typeof QuantumAPI!=='undefined')?QuantumAPI.API_BASE:'https://pinuy-binuy-analyzer-production.up.railway.app';
+function esc(s){return typeof DOMPurify!=='undefined'?DOMPurify.sanitize(String(s||'-'),{ALLOWED_TAGS:[]}):String(s||'-').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 const STATUS_HE={declared:'הכרזה',planning:'תכנון',pre_deposit:'לפני הפקדה',deposited:'הופקד',approved:'אושר',permit:'היתר',construction:'בנייה'};
 const IAI_COLORS={excellent:'#10b981',good:'#137fec',moderate:'#f59e0b',low:'#f43f5e'};
 function iaiCat(s){return s>=70?'excellent':s>=50?'good':s>=30?'moderate':'low';}
@@ -131,10 +136,10 @@ function applyFilters(){
   if(!filtered.length){tbody.innerHTML=`<tr><td colspan="7" class="px-4 py-8 text-center text-slate-500">אין תוצאות</td></tr>`;return;}
   tbody.innerHTML=filtered.map(p=>`
     <tr class="data-row border-b border-white/5 cursor-pointer" onclick="window.location='quantum-complex-detail.html?id=${p.id}'">
-      <td class="px-4 py-3 font-semibold text-white">${p.name||'-'}</td>
-      <td class="px-4 py-3 text-slate-400">${p.city||'-'}</td>
+      <td class="px-4 py-3 font-semibold text-white">${esc(p.name)}</td>
+      <td class="px-4 py-3 text-slate-400">${esc(p.city)}</td>
       <td class="px-4 py-3">${statusPill(p.status)}</td>
-      <td class="px-4 py-3 text-slate-400">${p.developer||'-'}</td>
+      <td class="px-4 py-3 text-slate-400">${esc(p.developer)}</td>
       <td class="px-4 py-3 text-slate-400">${p.planned_units?p.planned_units.toLocaleString():'-'}</td>
       <td class="px-4 py-3">${parseInt(p.active_listings)>0?`<span class="px-2 py-0.5 rounded-md text-xs font-bold bg-success-green/20 text-success-green border border-success-green/30">${p.active_listings}</span>`:`<span class="text-slate-600">0</span>`}</td>
       <td class="px-4 py-3">${p.iai_score?iaiBar(p.iai_score):`<span class="text-slate-600">-</span>`}</td>

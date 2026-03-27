@@ -6,6 +6,7 @@
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js"></script>
 <script>tailwind.config={darkMode:"class",theme:{extend:{colors:{"primary":"#137fec","background-dark":"#101922","surface":"#1a2530","border-dark":"#2d3a4b","alert-rose":"#f43f5e","success-green":"#10b981"},fontFamily:{"display":["Manrope","sans-serif"]}}}}</script>
 <style>body{font-family:'Manrope',sans-serif;}.glass-panel{background:rgba(26,37,48,0.7);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.05);}.custom-scrollbar::-webkit-scrollbar{width:6px;}.custom-scrollbar::-webkit-scrollbar-track{background:transparent;}.custom-scrollbar::-webkit-scrollbar-thumb{background:#2d3a4b;border-radius:10px;}.status-badge{padding:2px 10px;border-radius:999px;font-size:11px;font-weight:700;}.cal-day{min-height:80px;}.cal-day.has-event{border-color:rgba(19,127,236,0.4);}</style>
 </head>
@@ -149,8 +150,12 @@
 </div>
 </div>
 </div>
+<script src="shared/toast.js"></script>
+<script src="shared/state-store.js"></script>
+<script src="shared/api-client.js"></script>
 <script>
-const API='https://pinuy-binuy-analyzer-production.up.railway.app';
+const API=(typeof QuantumAPI!=='undefined')?QuantumAPI.API_BASE:'https://pinuy-binuy-analyzer-production.up.railway.app';
+function esc(s){return typeof DOMPurify!=='undefined'?DOMPurify.sanitize(String(s||'-'),{ALLOWED_TAGS:[]}):String(s||'-').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 let currentMonth=new Date().getMonth();let currentYear=new Date().getFullYear();let apptDates=new Set();
 const statusColors={scheduled:'bg-primary/20 text-primary',confirmed:'bg-success-green/20 text-success-green',completed:'bg-slate-700/50 text-slate-400',cancelled:'bg-alert-rose/20 text-alert-rose'};
 const statusLabels={scheduled:'מתוכנן',confirmed:'אושר',completed:'הושלם',cancelled:'בוטל'};
@@ -194,7 +199,7 @@ async function loadAppointments(){
     if(!appts.length){tbody.innerHTML='<tr><td colspan="7" class="text-center py-12 text-slate-500">אין פגישות</td></tr>';return;}
     tbody.innerHTML=appts.map(a=>{const dt=new Date(a.date||a.scheduled_at);return`<tr class="border-b border-white/5 hover:bg-white/5 transition-all">
       <td class="px-5 py-3 font-semibold text-white">${a.client_name||a.name||'-'}</td>
-      <td class="px-5 py-3 text-slate-300 font-mono text-xs" dir="ltr">${a.phone||'-'}</td>
+      <td class="px-5 py-3 text-slate-300 font-mono text-xs" dir="ltr">${esc(a.phone)}</td>
       <td class="px-5 py-3 text-xs text-slate-400">${typeLabels[a.type]||a.type||'-'}</td>
       <td class="px-5 py-3 text-slate-300 text-xs">${dt.toLocaleString('he-IL',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})}</td>
       <td class="px-5 py-3 text-slate-400 text-xs">${a.location||'-'}</td>

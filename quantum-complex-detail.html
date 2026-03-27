@@ -6,6 +6,7 @@
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet"/>
 <script>tailwind.config={darkMode:"class",theme:{extend:{colors:{"primary":"#137fec","background-dark":"#101922","surface":"#1a2530","border-dark":"#2d3a4b","alert-rose":"#f43f5e","success-green":"#10b981","warning-amber":"#f59e0b"},fontFamily:{"display":["Manrope","sans-serif"],"mono":["JetBrains Mono","monospace"]}}}}</script>
 <style>
@@ -66,8 +67,12 @@ tr.data-row:hover{background:rgba(255,255,255,0.04);}
 <div class="text-center py-16 text-slate-500">טוען נתונים...</div>
 </div>
 </main>
+<script src="shared/toast.js"></script>
+<script src="shared/state-store.js"></script>
+<script src="shared/api-client.js"></script>
 <script>
-const API='https://pinuy-binuy-analyzer-production.up.railway.app';
+const API=(typeof QuantumAPI!=='undefined')?QuantumAPI.API_BASE:'https://pinuy-binuy-analyzer-production.up.railway.app';
+function esc(s){return typeof DOMPurify!=='undefined'?DOMPurify.sanitize(String(s||'-'),{ALLOWED_TAGS:[]}):String(s||'-').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 const STATUS_HE={declared:'הכרזה',planning:'תכנון',pre_deposit:'לפני הפקדה',deposited:'הופקד',approved:'אושר',permit:'היתר',construction:'בנייה'};
 const STATUS_FLOW=['declared','planning','pre_deposit','deposited','approved','permit','construction'];
 const IAI_COLORS={excellent:'#10b981',good:'#137fec',moderate:'#f59e0b',low:'#f43f5e'};
@@ -110,7 +115,7 @@ async function loadComplex(){
           </tr></thead>
           <tbody>${listings.map(l=>`
             <tr class="data-row border-b border-white/5">
-              <td class="px-4 py-3 text-white">${l.address||'-'}</td>
+              <td class="px-4 py-3 text-white">${esc(l.address)}</td>
               <td class="px-4 py-3 text-slate-400">${l.rooms||'-'}</td>
               <td class="px-4 py-3 text-slate-400">${l.area_sqm||'-'}</td>
               <td class="px-4 py-3 font-semibold text-white">${fmtPrice(l.asking_price)}</td>
