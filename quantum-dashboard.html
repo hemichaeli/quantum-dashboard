@@ -50,6 +50,13 @@ tr.data-row:hover{background:rgba(255,255,255,0.04);}
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-messaging.html"><span class="material-symbols-outlined">mail</span><span>הודעות ו-WA</span></a>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-bot-settings.html"><span class="material-symbols-outlined">smart_toy</span><span>הגדרות בוט</span></a>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-alerts.html"><span class="material-symbols-outlined">notifications</span><span>התראות</span><span id="nav-alert-badge" class="hidden mr-auto px-1.5 py-0.5 bg-alert-rose text-white text-[9px] font-bold rounded-full min-w-[18px] text-center"></span></a>
+<div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">נוסף</p></div>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-kones.html"><span class="material-symbols-outlined">gavel</span><span>כינוסי נכסים</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-news.html"><span class="material-symbols-outlined">newspaper</span><span>חדשות שוק</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-tasks.html"><span class="material-symbols-outlined">task_alt</span><span>משימות</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-sellers.html"><span class="material-symbols-outlined">home</span><span>מוכרים</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-buyers.html"><span class="material-symbols-outlined">groups</span><span>קונים</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-publish.html"><span class="material-symbols-outlined">publish</span><span>פרסום מודעות</span></a>
 <div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">מערכת</p></div>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-scans.html"><span class="material-symbols-outlined">radar</span><span>סריקות</span></a>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-reports.html"><span class="material-symbols-outlined">description</span><span>דוחות</span></a>
@@ -186,6 +193,35 @@ tr.data-row:hover{background:rgba(255,255,255,0.04);}
 <button onclick="nextPage()" class="px-3 py-1.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-xs font-semibold transition-all" id="next-btn">הבא</button>
 </div>
 </div>
+</div>
+
+<!-- Operational Status Widgets -->
+<div class="grid grid-cols-2 md:grid-cols-5 gap-4 fade-in" style="animation-delay:0.38s">
+  <div class="glass-panel rounded-2xl p-4 text-center">
+    <div class="text-xs text-slate-500 mb-1">🎙️ Vapi היום</div>
+    <div id="widget-vapi" class="text-xl font-bold text-white">...</div>
+    <div class="text-[10px] text-slate-500">שיחות</div>
+  </div>
+  <div class="glass-panel rounded-2xl p-4 text-center">
+    <div class="text-xs text-slate-500 mb-1">📨 InforU היום</div>
+    <div id="widget-inforu" class="text-xl font-bold text-white">...</div>
+    <div class="text-[10px] text-slate-500">הודעות</div>
+  </div>
+  <div class="glass-panel rounded-2xl p-4 text-center">
+    <div class="text-xs text-slate-500 mb-1">⚡ Pipeline</div>
+    <div id="widget-pipeline" class="text-sm font-bold text-white leading-tight">...</div>
+    <div class="text-[10px] text-slate-500">ריצה אחרונה</div>
+  </div>
+  <div class="glass-panel rounded-2xl p-4 text-center">
+    <div class="text-xs text-slate-500 mb-1">🔔 תזכורות</div>
+    <div id="widget-reminders" class="text-xl font-bold text-white">...</div>
+    <div class="text-[10px] text-slate-500">ממתינות</div>
+  </div>
+  <div class="glass-panel rounded-2xl p-4 text-center">
+    <div class="text-xs text-slate-500 mb-1">🔥 לידים חמים</div>
+    <div id="widget-hot-leads" class="text-xl font-bold text-alert-rose">...</div>
+    <div class="text-[10px] text-slate-500">לא טופלו</div>
+  </div>
 </div>
 
 <!-- System Health Widget -->
@@ -563,5 +599,42 @@ function esc(s){return typeof DOMPurify!=='undefined'?DOMPurify.sanitize(String(
 <script>fetch('https://pinuy-binuy-analyzer-production.up.railway.app/api/alerts?limit=500').then(function(r){return r.json()}).then(function(d){var u=(d.alerts||[]).filter(function(a){return !a.is_read}).length;var b=document.getElementById('nav-alert-badge');if(b&&u>0){b.textContent=u>99?'99+':u;b.classList.remove('hidden')}}).catch(function(){});
 </script>
 <script>fetch("https://pinuy-binuy-analyzer-production.up.railway.app/health").then(function(r){return r.json()}).then(function(d){var v="v"+d.version;document.querySelectorAll(".q-ver").forEach(function(el){el.textContent=v})}).catch(function(){});</script>
+<script>
+(function loadOperationalWidgets(){
+  var API='https://pinuy-binuy-analyzer-production.up.railway.app';
+  var today=new Date().toISOString().slice(0,10);
+  // Vapi calls today
+  fetch(API+'/api/vapi/stats?date='+today).then(r=>r.json()).then(d=>{
+    var el=document.getElementById('widget-vapi');
+    if(el) el.textContent=(d.calls_today||d.total||0);
+  }).catch(()=>{ var el=document.getElementById('widget-vapi'); if(el) el.textContent='—'; });
+  // InforU messages today
+  fetch(API+'/api/messages/stats?date='+today).then(r=>r.json()).then(d=>{
+    var el=document.getElementById('widget-inforu');
+    if(el) el.textContent=(d.sent_today||d.total||0);
+  }).catch(()=>{ var el=document.getElementById('widget-inforu'); if(el) el.textContent='—'; });
+  // Pipeline last run
+  fetch(API+'/api/scan/logs?limit=1').then(r=>r.json()).then(d=>{
+    var el=document.getElementById('widget-pipeline');
+    if(!el) return;
+    var logs=d.logs||d.data||[];
+    if(logs.length){
+      var t=new Date(logs[0].created_at||logs[0].started_at);
+      var diff=Math.round((Date.now()-t)/60000);
+      el.textContent=diff<60?(diff+' דק\' '):(Math.round(diff/60)+' שע\' ');
+    } else { el.textContent='—'; }
+  }).catch(()=>{ var el=document.getElementById('widget-pipeline'); if(el) el.textContent='—'; });
+  // Pending reminders
+  fetch(API+'/api/reminders?status=pending').then(r=>r.json()).then(d=>{
+    var el=document.getElementById('widget-reminders');
+    if(el) el.textContent=((d.reminders||d.data||[]).length||0);
+  }).catch(()=>{ var el=document.getElementById('widget-reminders'); if(el) el.textContent='—'; });
+  // Hot leads (score >= 70, not contacted)
+  fetch(API+'/api/leads?hot=true&contacted=false').then(r=>r.json()).then(d=>{
+    var el=document.getElementById('widget-hot-leads');
+    if(el) el.textContent=((d.leads||d.data||[]).length||0);
+  }).catch(()=>{ var el=document.getElementById('widget-hot-leads'); if(el) el.textContent='—'; });
+})();
+</script>
 </body>
 </html>
