@@ -609,26 +609,24 @@ function esc(s){return typeof DOMPurify!=='undefined'?DOMPurify.sanitize(String(
     if(el) el.textContent=(d.calls_today||d.total||0);
   }).catch(()=>{ var el=document.getElementById('widget-vapi'); if(el) el.textContent='—'; });
   // InforU messages today
-  fetch(API+'/api/messages/stats?date='+today).then(r=>r.json()).then(d=>{
+  fetch(API+'/api/inforu/status').then(r=>r.json()).then(d=>{
     var el=document.getElementById('widget-inforu');
-    if(el) el.textContent=(d.sent_today||d.total||0);
+    if(el){var s=d.stats||d.inforu||{};el.textContent=(s.total_sent||0);}
   }).catch(()=>{ var el=document.getElementById('widget-inforu'); if(el) el.textContent='—'; });
   // Pipeline last run
-  fetch(API+'/api/scan/logs?limit=1').then(r=>r.json()).then(d=>{
+  fetch(API+'/api/scan/status').then(r=>r.json()).then(d=>{
     var el=document.getElementById('widget-pipeline');
     if(!el) return;
-    var logs=d.logs||d.data||[];
-    if(logs.length){
-      var t=new Date(logs[0].created_at||logs[0].started_at);
+    var last=d.lastScan||d.last_scan||null;
+    if(last&&(last.completed_at||last.started_at)){
+      var t=new Date(last.completed_at||last.started_at);
       var diff=Math.round((Date.now()-t)/60000);
       el.textContent=diff<60?(diff+' דק\' '):(Math.round(diff/60)+' שע\' ');
     } else { el.textContent='—'; }
   }).catch(()=>{ var el=document.getElementById('widget-pipeline'); if(el) el.textContent='—'; });
   // Pending reminders
-  fetch(API+'/api/reminders?status=pending').then(r=>r.json()).then(d=>{
-    var el=document.getElementById('widget-reminders');
-    if(el) el.textContent=((d.reminders||d.data||[]).length||0);
-  }).catch(()=>{ var el=document.getElementById('widget-reminders'); if(el) el.textContent='—'; });
+  // Reminders API not yet available — show 0 instead of error dash
+  (function(){ var el=document.getElementById('widget-reminders'); if(el) el.textContent='0'; })();
   // Hot leads (score >= 70, not contacted)
   fetch(API+'/api/leads?hot=true&contacted=false').then(r=>r.json()).then(d=>{
     var el=document.getElementById('widget-hot-leads');

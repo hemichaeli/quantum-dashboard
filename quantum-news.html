@@ -30,7 +30,7 @@
 <div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">תקשורת</p></div>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-messaging.html"><span class="material-symbols-outlined">mail</span><span>הודעות ו-WA</span></a>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-bot-settings.html"><span class="material-symbols-outlined">smart_toy</span><span>הגדרות בוט</span></a>
-<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-alerts.html"><span class="material-symbols-outlined">notifications</span><span>התראות</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-alerts.html"><span class="material-symbols-outlined">notifications</span><span>התראות</span><span id="nav-alert-badge" class="hidden mr-auto px-1.5 py-0.5 bg-alert-rose text-white text-[9px] font-bold rounded-full min-w-[18px] text-center"></span></a>
 <div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">נוסף</p></div>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-kones.html"><span class="material-symbols-outlined">gavel</span><span>כינוסי נכסים</span></a>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary text-white font-semibold transition-all" href="quantum-news.html"><span class="material-symbols-outlined">newspaper</span><span>חדשות שוק</span></a>
@@ -63,18 +63,19 @@
 </div>
 </main>
 <script>
-const API = '';
+const API = (typeof QuantumAPI!=='undefined')?QuantumAPI.API_BASE:'https://pinuy-binuy-analyzer-production.up.railway.app';
 
 async function loadNews() {
   const grid = document.getElementById('news-grid');
-  grid.innerHTML = '<div class="glass-panel rounded-2xl p-8 col-span-full text-center text-slate-500">טוען חדשות...</div>';
+  grid.innerHTML = '<div class="glass-panel rounded-2xl p-8 col-span-full text-center text-slate-500"><span class="material-symbols-outlined text-3xl animate-spin mb-2 block">refresh</span>טוען חדשות...</div>';
   try {
     const r = await fetch(API + '/api/news');
+    if (!r.ok) throw new Error('API returned ' + r.status);
     const d = await r.json();
     if (!d.success) throw new Error(d.error);
     const items = d.data || [];
     if (!items.length) {
-      grid.innerHTML = '<div class="glass-panel rounded-2xl p-8 col-span-full text-center text-slate-500">אין חדשות כרגע</div>';
+      grid.innerHTML = '<div class="glass-panel rounded-2xl p-8 col-span-full text-center text-slate-500"><span class="material-symbols-outlined text-4xl mb-3 block">newspaper</span>אין חדשות כרגע<p class="text-xs mt-2 text-slate-600">מקור החדשות עדיין לא הוגדר. החדשות יופיעו כאן כשהשירות יהיה פעיל.</p></div>';
       return;
     }
     grid.innerHTML = items.map(item => {
@@ -93,11 +94,12 @@ async function loadNews() {
       </a>`;
     }).join('');
   } catch(e) {
-    grid.innerHTML = `<div class="glass-panel rounded-2xl p-8 col-span-full text-center text-alert-rose">שגיאה: ${e.message}</div>`;
+    grid.innerHTML = '<div class="glass-panel rounded-2xl p-8 col-span-full text-center text-slate-500"><span class="material-symbols-outlined text-4xl mb-3 block">newspaper</span>שירות החדשות אינו זמין כרגע<p class="text-xs mt-2 text-slate-600">חדשות שוק הנדל"ן יופיעו כאן כשהשירות יהיה פעיל.</p></div>';
   }
 }
 
-fetch(API+'/api/version').then(r=>r.json()).then(d=>{ document.querySelectorAll('.q-ver').forEach(el=>el.textContent='v'+(d.version||'?')); }).catch(()=>{});
+fetch(API+'/health').then(r=>r.json()).then(d=>{ document.querySelectorAll('.q-ver').forEach(el=>el.textContent='v'+(d.version||'?')); }).catch(()=>{});
+fetch(API+'/api/alerts?limit=500').then(function(r){return r.json()}).then(function(d){var u=(d.alerts||[]).filter(function(a){return !a.is_read}).length;var b=document.getElementById('nav-alert-badge');if(b&&u>0){b.textContent=u>99?'99+':u;b.classList.remove('hidden')}}).catch(function(){});
 loadNews();
 </script>
 </body>
