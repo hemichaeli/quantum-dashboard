@@ -204,14 +204,15 @@ function fmt(n){return n==null||n==='--'?'--':Number(n).toLocaleString('he-IL')}
 function iC(s){return s>=80?'text-success-green':s>=60?'text-warning-amber':'text-alert-rose'}
 
 async function loadAllData(){
-const[morningReport,opportunities,stressed,kones,scanStatus,ssiData]=await Promise.all([
+const[morningReport,opportunities,stressed,kones,scanStatus,ssiData,sigData,enrichData]=await Promise.all([
 fetchJSON(`${API_BASE}/api/scan/morning-report`),fetchJSON(`${API_BASE}/api/opportunities`),
 fetchJSON(`${API_BASE}/api/stressed-sellers`),fetchJSON(`${API_BASE}/api/kones/listings`),
-fetchJSON(`${API_BASE}/api/scan/status`),fetchJSON(`${API_BASE}/api/ssi/dashboard-data`)]);
+fetchJSON(`${API_BASE}/api/scan/status`),fetchJSON(`${API_BASE}/api/ssi/dashboard-data`),
+fetchJSON(`${API_BASE}/api/signatures/stats`),fetchJSON(`${API_BASE}/api/enrichment/status`)]);
 // Build a dashboard-like object from morning-report + SSI data
 const cityBreakdown=ssiData?.cityBreakdown||morningReport?.city_breakdown||[];
 const dashboard={stats:{total_complexes:morningReport?.portfolio?.total_complexes||morningReport?.total_complexes||0,opportunities:morningReport?.portfolio?.high_iai_count||morningReport?.high_iai_opportunities||0,stressed_sellers:morningReport?.portfolio?.stressed_sellers||0,avg_iai:morningReport?.portfolio?.avg_iai_score||morningReport?.avg_iai||0,cities:cityBreakdown.length||morningReport?.portfolio?.cities_count||0},cityBreakdown:cityBreakdown,ssiDistribution:ssiData?.ssiDistribution||morningReport?.ssi_distribution||null};
-const signatures=null;const enrichment=null;
+const signatures=sigData||null;const enrichment=enrichData||null;
 
 if(dashboard&&dashboard.stats){const s=dashboard.stats;
 document.getElementById('statComplexes').textContent=fmt(s.total_complexes);

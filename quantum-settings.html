@@ -99,7 +99,7 @@
 <div id="system-info" class="grid grid-cols-2 md:grid-cols-4 gap-4">
 <div class="p-3 bg-white/5 rounded-xl text-center"><p class="text-[10px] text-slate-500 font-bold uppercase mb-1">גרסה</p><p class="text-sm font-bold text-white q-ver">v...</p></div>
 <div class="p-3 bg-white/5 rounded-xl text-center"><p class="text-[10px] text-slate-500 font-bold uppercase mb-1">מתחמים</p><p id="sys-complexes" class="text-sm font-bold text-white">...</p></div>
-<div class="p-3 bg-white/5 rounded-xl text-center"><p class="text-[10px] text-slate-500 font-bold uppercase mb-1">סריקה אחרונה</p><p class="text-sm font-bold text-success-green">טוען...</p></div>
+<div class="p-3 bg-white/5 rounded-xl text-center"><p class="text-[10px] text-slate-500 font-bold uppercase mb-1">סריקה אחרונה</p><p id="sys-last-scan" class="text-sm font-bold text-success-green">טוען...</p></div>
 <div class="p-3 bg-white/5 rounded-xl text-center"><p class="text-[10px] text-slate-500 font-bold uppercase mb-1">שרת</p><p class="text-sm font-bold text-success-green">Railway</p></div>
 </div></div>
 </div>
@@ -113,6 +113,16 @@ fetch('https://pinuy-binuy-analyzer-production.up.railway.app/api/scan/morning-r
   var s=d.portfolio||d||{};
   document.getElementById('sys-complexes').textContent=s.total_complexes||d.total_complexes||'762';
 }).catch(function(){});
+fetch('https://pinuy-binuy-analyzer-production.up.railway.app/api/scan/status').then(function(r){return r.json()}).then(function(d){
+  var el=document.getElementById('sys-last-scan');if(!el)return;
+  var last=d.lastScan||d.last_scan;
+  if(last&&(last.completed_at||last.started_at)){
+    var t=new Date(last.completed_at||last.started_at);
+    var diff=Math.round((Date.now()-t)/60000);
+    el.textContent=diff<60?'לפני '+diff+' דק\'':diff<1440?'לפני '+Math.round(diff/60)+' שע\'':'לפני '+Math.round(diff/1440)+' ימים';
+    el.className=el.className.replace('text-success-green',last.status==='completed'?'text-success-green':'text-amber-400');
+  } else { el.textContent='אין נתונים'; }
+}).catch(function(){ var el=document.getElementById('sys-last-scan');if(el)el.textContent='לא זמין'; });
 </script>
 <script>fetch('https://pinuy-binuy-analyzer-production.up.railway.app/api/alerts?limit=500').then(function(r){return r.json()}).then(function(d){var u=(d.alerts||[]).filter(function(a){return !a.is_read}).length;var b=document.getElementById('nav-alert-badge');if(b&&u>0){b.textContent=u>99?'99+':u;b.classList.remove('hidden')}}).catch(function(){});</script>
 <script>fetch("https://pinuy-binuy-analyzer-production.up.railway.app/health").then(function(r){return r.json()}).then(function(d){var v="v"+d.version;document.querySelectorAll(".q-ver").forEach(function(el){el.textContent=v})}).catch(function(){});</script>

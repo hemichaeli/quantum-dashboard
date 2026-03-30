@@ -110,9 +110,6 @@ body { font-family: 'Manrope', sans-serif; }
     </div>
     <footer class="mt-auto px-8 py-6 border-t border-white/5 text-center text-slate-500 text-[11px] font-medium tracking-widest uppercase">&copy; 2026 Quantum Unified Analytics</footer>
 </main>
-<script src="shared/toast.js"></script>
-<script src="shared/state-store.js"></script>
-<script src="shared/api-client.js"></script>
 <script>
 const API_BASE=(typeof QuantumAPI!=='undefined')?QuantumAPI.API_BASE:'https://pinuy-binuy-analyzer-production.up.railway.app';
 function esc(s){return typeof DOMPurify!=='undefined'?DOMPurify.sanitize(String(s||'-'),{ALLOWED_TAGS:[]}):String(s||'-').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
