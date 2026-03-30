@@ -132,7 +132,7 @@ async function loadSellers() {
       const lastMsg = s.last_message ? s.last_message.substring(0,40)+'...' : '';
       const time = s.last_message_at ? new Date(s.last_message_at).toLocaleDateString('he-IL') : '';
       const active = _activeSellerId === s.id;
-      return `<div onclick="openConv(${s.id},'${(s.phone||'').replace(/'/g,"\\'")}','${(s.name||'').replace(/'/g,"\\'")}'))" class="p-4 border-b border-white/5 cursor-pointer hover:bg-white/5 transition-all ${active?'bg-primary/10 border-r-2 border-r-primary':''}">
+      return `<div onclick="openConv(${s.id},'${(s.phone||'').replace(/'/g,"\\'")}','${(s.name||'').replace(/'/g,"\\'")}')" class="p-4 border-b border-white/5 cursor-pointer hover:bg-white/5 transition-all ${active?'bg-primary/10 border-r-2 border-r-primary':''}">
         <div class="flex items-center justify-between mb-1">
           <span class="font-semibold text-sm text-white">${s.name||s.phone||'—'}</span>
           <span class="text-[10px] text-slate-500">${time}</span>

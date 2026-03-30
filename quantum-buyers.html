@@ -120,7 +120,7 @@ async function loadBuyers() {
       const stClass = STATUS_COLORS[b.status] || 'text-slate-400 bg-slate-400/10';
       const stLabel = STATUS_LABELS[b.status] || b.status || '';
       const time = b.last_message_at ? new Date(b.last_message_at).toLocaleDateString('he-IL') : '';
-      return `<div onclick="openConv(${b.id},'${(b.phone||'').replace(/'/g,"\\'")}','${(b.name||'').replace(/'/g,"\\'")}'))" class="p-4 border-b border-white/5 cursor-pointer hover:bg-white/5 transition-all ${active?'bg-primary/10 border-r-2 border-r-primary':''}">
+      return `<div onclick="openConv(${b.id},'${(b.phone||'').replace(/'/g,"\\'")}','${(b.name||'').replace(/'/g,"\\'")}')" class="p-4 border-b border-white/5 cursor-pointer hover:bg-white/5 transition-all ${active?'bg-primary/10 border-r-2 border-r-primary':''}">
         <div class="flex items-center justify-between mb-1">
           <span class="font-semibold text-sm text-white">${b.name||b.phone||'—'}</span>
           <span class="text-[10px] text-slate-500">${time}</span>
