@@ -121,9 +121,6 @@ fetch(API+'/api/ssi/dashboard-data').then(function(r){return r.json()}).then(fun
 loadDashboard();
 document.querySelectorAll('[data-go]').forEach(function(card){card.addEventListener('click',function(){window.location.href=this.getAttribute('data-go')})});
 </script>
-<script src="shared/toast.js"></script>
-<script src="shared/state-store.js"></script>
-<script src="shared/api-client.js"></script>
 <script>
 (function(){
   var base="https://pinuy-binuy-analyzer-production.up.railway.app";
