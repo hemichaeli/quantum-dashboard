@@ -91,9 +91,25 @@
 <th class="px-4 py-3 text-[10px] font-bold text-slate-500 uppercase tracking-widest text-center sortable" data-sort="ssi">SSI <span class="sort-icon material-symbols-outlined text-xs align-middle">unfold_more</span></th>
 <th class="px-4 py-3 text-[10px] font-bold text-slate-500 uppercase tracking-widest text-center sortable" data-sort="days">ימים בשוק <span class="sort-icon material-symbols-outlined text-xs align-middle">unfold_more</span></th>
 <th class="px-4 py-3 text-[10px] font-bold text-slate-500 uppercase tracking-widest text-center sortable" data-sort="source">מקור <span class="sort-icon material-symbols-outlined text-xs align-middle">unfold_more</span></th>
-<th class="px-4 py-3 text-[10px] font-bold text-slate-500 uppercase tracking-widest text-center sortable" data-sort="premium">פרמיה לרוכש <span class="sort-icon material-symbols-outlined text-xs align-middle">unfold_more</span></th>
+<th class="px-4 py-3 text-[10px] font-bold text-slate-500 uppercase tracking-widest text-center sortable" data-sort="premium_market">פרמיה שוק <span class="sort-icon material-symbols-outlined text-xs align-middle">unfold_more</span></th>
+<th class="px-4 py-3 text-[10px] font-bold text-slate-500 uppercase tracking-widest text-center sortable" data-sort="premium_city">פרמיה עיר <span class="sort-icon material-symbols-outlined text-xs align-middle">unfold_more</span></th>
 <th class="px-4 py-3 text-[10px] font-bold text-slate-500 uppercase tracking-widest text-center">טלפון</th>
 <th class="px-4 py-3 text-[10px] font-bold text-slate-500 uppercase tracking-widest text-center">פעולות</th>
+</tr>
+<tr id="filter-row" class="bg-white/[0.02]">
+<td></td>
+<td class="px-2 py-1"><input id="filter-address" type="text" placeholder="חיפוש..." class="w-full bg-white/5 border border-white/10 rounded-lg text-xs px-2 py-1 text-slate-300" oninput="applyColumnFilters()"/></td>
+<td class="px-2 py-1"><input id="filter-city" type="text" placeholder="עיר..." class="w-full bg-white/5 border border-white/10 rounded-lg text-xs px-2 py-1 text-slate-300" oninput="applyColumnFilters()"/></td>
+<td class="px-2 py-1"><input id="filter-price-max" type="number" placeholder="מקס ₪" class="w-full bg-white/5 border border-white/10 rounded-lg text-xs px-2 py-1 text-slate-300" oninput="applyColumnFilters()"/></td>
+<td class="px-2 py-1"><select id="filter-rooms" class="w-full bg-white/5 border border-white/10 rounded-lg text-xs px-2 py-1 text-slate-300" onchange="applyColumnFilters()"><option value="">הכל</option><option>1</option><option>1.5</option><option>2</option><option>2.5</option><option>3</option><option>3.5</option><option>4</option><option>4.5</option><option>5</option></select></td>
+<td></td>
+<td class="px-2 py-1"><input id="filter-ssi-min" type="number" placeholder="מינ'" class="w-full bg-white/5 border border-white/10 rounded-lg text-xs px-2 py-1 text-slate-300" oninput="applyColumnFilters()"/></td>
+<td></td>
+<td class="px-2 py-1"><select id="filter-source" class="w-full bg-white/5 border border-white/10 rounded-lg text-xs px-2 py-1 text-slate-300" onchange="applyColumnFilters()"><option value="">הכל</option><option value="yad2">yad2</option><option value="komo">komo</option><option value="homeless">homeless</option><option value="dira">dira</option></select></td>
+<td class="px-2 py-1"><input id="filter-premium-min" type="number" placeholder="מינ'%" class="w-full bg-white/5 border border-white/10 rounded-lg text-xs px-2 py-1 text-slate-300" oninput="applyColumnFilters()"/></td>
+<td></td>
+<td class="px-2 py-1"><select id="filter-phone" class="w-full bg-white/5 border border-white/10 rounded-lg text-xs px-2 py-1 text-slate-300" onchange="applyColumnFilters()"><option value="">הכל</option><option value="yes">יש טלפון</option></select></td>
+<td class="px-2 py-1"><button onclick="clearColumnFilters()" class="text-xs text-primary hover:text-white">נקה</button></td>
 </tr></thead>
 <tbody class="divide-y divide-white/5" id="properties-body"></tbody>
 </table>
@@ -132,7 +148,8 @@ function getValue(item, field) {
         case 'ssi': return parseFloat(item.enhanced_ssi_score || item.ssi_score || 0);
         case 'days': return parseInt(item.days_on_market || 0);
         case 'source': return (item.source || '').toString();
-        case 'premium': return parseFloat(item.actual_premium || 0);
+        case 'premium_market': return parseFloat(item.premium_market_pct || 0);
+        case 'premium_city': return parseFloat(item.premium_city_pct || 0);
         default: return '';
     }
 }
@@ -169,7 +186,7 @@ function renderTable(data) {
     var tbody = document.getElementById('properties-body');
     document.getElementById('count-display').textContent = data.length + (totalItems > pageSize ? ' מתוך ' + totalItems : '');
     if (data.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="12" class="text-center py-12 text-slate-500">אין נכסים להצגה</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="13" class="text-center py-12 text-slate-500">אין נכסים להצגה</td></tr>';
         return;
     }
     tbody.innerHTML = data.map(function(p) {
@@ -193,12 +210,18 @@ function renderTable(data) {
             '<td class="px-4 py-3 text-center text-sm text-slate-400">' + days + '</td>' +
             '<td class="px-4 py-3 text-center">' + srcBadge(p.source) + '</td>' +
             '<td class="px-4 py-3 text-center">' + (function(){
-                var prem = parseFloat(p.actual_premium || 0);
-                var pct = parseFloat(p.premium_pct || 0);
-                if (!prem) return '<span class="text-slate-600 text-xs">—</span>';
-                var color = pct >= 20 ? 'text-success-green' : pct >= 10 ? 'text-warning-amber' : 'text-primary';
-                return '<div class="text-xs font-bold ' + color + '">' + prem.toLocaleString('he-IL') + ' ₪</div>' +
-                       '<div class="text-[10px] text-slate-400">' + pct + '%</div>';
+                var pct = parseFloat(p.premium_market_pct || 0);
+                var amt = parseFloat(p.premium_market_amount || 0);
+                if (!amt && !pct) return '<span class="text-slate-600 text-xs">—</span>';
+                var c = pct > 15 ? 'text-success-green' : pct > 5 ? 'text-amber-400' : 'text-alert-rose';
+                return '<div class="text-xs font-bold ' + c + '">' + pct + '%</div><div class="text-[10px] text-slate-500">₪' + Math.round(amt).toLocaleString('he-IL') + '</div>';
+            })() + '</td>' +
+            '<td class="px-4 py-3 text-center">' + (function(){
+                var pct = parseFloat(p.premium_city_pct || 0);
+                var amt = parseFloat(p.premium_city_amount || 0);
+                if (!amt && !pct) return '<span class="text-slate-600 text-xs">—</span>';
+                var c = pct > 15 ? 'text-success-green' : pct > 5 ? 'text-amber-400' : 'text-alert-rose';
+                return '<div class="text-xs font-bold ' + c + '">' + pct + '%</div><div class="text-[10px] text-slate-500">₪' + Math.round(amt).toLocaleString('he-IL') + '</div>';
             })() + '</td>' +
             '<td class="px-4 py-3 text-center">' + (function(){
                 var phone = p.phone || p.contact_phone || '';
@@ -215,6 +238,37 @@ function refreshDisplay() {
     var filtered = filterData(allListings);
     var sorted = sortData(filtered, currentSort.field, currentSort.dir);
     renderTable(sorted);
+}
+
+function applyColumnFilters() {
+    var filters = {
+        address: (document.getElementById('filter-address')?.value||'').toLowerCase(),
+        city: (document.getElementById('filter-city')?.value||'').toLowerCase(),
+        priceMax: document.getElementById('filter-price-max')?.value||'',
+        rooms: document.getElementById('filter-rooms')?.value||'',
+        ssiMin: document.getElementById('filter-ssi-min')?.value||'',
+        source: document.getElementById('filter-source')?.value||'',
+        premiumMin: document.getElementById('filter-premium-min')?.value||'',
+        phone: document.getElementById('filter-phone')?.value||''
+    };
+    var filtered = allListings.filter(function(p){
+        if(filters.address && !(p.address||'').toLowerCase().includes(filters.address)) return false;
+        if(filters.city && !(p.city||'').toLowerCase().includes(filters.city)) return false;
+        if(filters.priceMax && parseFloat(p.asking_price||0) > parseFloat(filters.priceMax)) return false;
+        if(filters.rooms && parseFloat(p.rooms||0) != parseFloat(filters.rooms)) return false;
+        if(filters.ssiMin && parseFloat(p.ssi_score||0) < parseFloat(filters.ssiMin)) return false;
+        if(filters.source && (p.source||'') !== filters.source) return false;
+        if(filters.premiumMin && parseFloat(p.premium_market_pct||0) < parseFloat(filters.premiumMin)) return false;
+        if(filters.phone === 'yes' && !(p.phone||p.contact_phone)) return false;
+        return true;
+    });
+    var sorted = sortData(filtered, currentSort.field, currentSort.dir);
+    renderTable(sorted);
+}
+function clearColumnFilters() {
+    ['filter-address','filter-city','filter-price-max','filter-ssi-min','filter-premium-min'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+    ['filter-rooms','filter-source','filter-phone'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+    refreshDisplay();
 }
 
 // Column sorting
@@ -297,7 +351,7 @@ async function loadProperties(offset) {
         refreshDisplay();
         renderPagination();
     } catch(err) {
-        document.getElementById('properties-body').innerHTML = '<tr><td colspan="12" class="text-center py-12 text-slate-500">שגיאה בטעינת נכסים: ' + err.message + '</td></tr>';
+        document.getElementById('properties-body').innerHTML = '<tr><td colspan="13" class="text-center py-12 text-slate-500">שגיאה בטעינת נכסים: ' + err.message + '</td></tr>';
     }
 }
 

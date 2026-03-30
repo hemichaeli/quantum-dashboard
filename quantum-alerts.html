@@ -163,9 +163,17 @@ function renderAlert(alert) {
                 '</div>' +
                 '<h5 class="text-sm font-bold ' + titleClass + ' mb-1">' + title + '</h5>' +
                 (message ? '<p class="text-xs ' + msgClass + ' leading-relaxed" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">' + message + '</p>' : '') +
-                '<div class="flex items-center gap-4 mt-3">' +
-                    (alert.complex_id ? '<a href="quantum-project-detail.html?id=' + alert.complex_id + '" class="text-xs text-primary font-bold hover:underline">צפה במתחם</a>' : '') +
+                '<div class="flex items-center gap-4 mt-3 flex-wrap">' +
+                    (alert.complex_id ? '<a href="quantum-project-detail.html?id=' + alert.complex_id + '" class="text-xs text-primary font-bold hover:underline" onclick="event.stopPropagation()">צפה במתחם</a>' : '') +
+                    (alert.listing_url ? '<a href="' + alert.listing_url + '" target="_blank" class="text-xs text-slate-400 hover:text-primary flex items-center gap-1" onclick="event.stopPropagation()"><span class="material-symbols-outlined text-xs">open_in_new</span>מודעה</a>' : '') +
+                    (alert.premium_market_pct != null ? '<span class="text-xs font-bold ' + (parseFloat(alert.premium_market_pct)>15?'text-success-green':parseFloat(alert.premium_market_pct)>5?'text-amber-400':'text-alert-rose') + '">פרמיה: ' + alert.premium_market_pct + '%</span>' : '') +
                 '</div>' +
+                (alert.listing_price ? '<div class="mt-2 p-2 bg-white/5 rounded-lg text-xs text-slate-400 grid grid-cols-2 gap-x-4 gap-y-1">' +
+                    '<span>מחיר: ₪' + parseInt(alert.listing_price).toLocaleString('he-IL') + '</span>' +
+                    (alert.listing_size_sqm ? '<span>שטח: ' + alert.listing_size_sqm + ' מ"ר</span>' : '') +
+                    (alert.listing_address ? '<span>כתובת: ' + alert.listing_address + '</span>' : '') +
+                    (alert.complex_name ? '<span>מתחם: ' + alert.complex_name + '</span>' : '') +
+                '</div>' : '') +
             '</div>' + dotHtml +
         '</div></div>';
 }

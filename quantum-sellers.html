@@ -135,13 +135,14 @@ async function loadSellers() {
       const lastMsg = s.last_message ? s.last_message.substring(0,40)+'...' : '';
       const time = s.last_message_at ? new Date(s.last_message_at).toLocaleDateString('he-IL') : '';
       const active = _activeSellerId === s.id;
+      const title = (s.listing_title||'').substring(0,30);
       return `<div onclick="openConv(${s.id},'${(s.phone||'').replace(/'/g,"\\'")}','${(s.name||'').replace(/'/g,"\\'")}')" class="p-4 border-b border-white/5 cursor-pointer hover:bg-white/5 transition-all ${active?'bg-primary/10 border-r-2 border-r-primary':''}">
+        ${title?`<p class="text-xs text-primary truncate mb-1">${title}${s.listing_url?` <a href="${s.listing_url}" target="_blank" onclick="event.stopPropagation()" class="inline-block"><span class="material-symbols-outlined text-xs align-middle">open_in_new</span></a>`:''}</p>`:''}
         <div class="flex items-center justify-between mb-1">
           <span class="font-semibold text-sm text-white">${s.name||s.phone||'—'}</span>
           <span class="text-[10px] text-slate-500">${time}</span>
         </div>
         <p class="text-xs text-slate-500 truncate">${s.address||lastMsg||'—'}</p>
-        ${s.unread_count ? `<span class="text-[10px] font-bold text-primary">${s.unread_count} חדשות</span>` : ''}
       </div>`;
     }).join('');
   } catch(e) {

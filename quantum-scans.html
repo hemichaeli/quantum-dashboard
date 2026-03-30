@@ -533,6 +533,16 @@ async function loadAiCredits(){
       if(costEl) costEl.textContent='$'+(data.estimated_cost_usd||0);
       const lastEl=document.getElementById('sc-'+prefix+'-last');
       if(lastEl && data.last_call) lastEl.textContent='קריאה אחרונה: '+new Date(data.last_call).toLocaleString('he-IL');
+      // Show note when no usage tracked
+      if(data.api_calls===0 && data.tokens_used===0 && data.purchase_url){
+        const noteEl=document.getElementById('sc-'+prefix+'-note');
+        if(!noteEl && lastEl){
+          const note=document.createElement('p');
+          note.className='text-[10px] text-slate-500 mt-2';
+          note.innerHTML='💡 יתרה בפועל: <a href="'+data.purchase_url+'" target="_blank" class="text-primary hover:underline">בדוק כאן</a>';
+          lastEl.parentElement.appendChild(note);
+        }
+      }
       if(card && status==='critical') card.style.borderColor='rgba(244,63,94,0.4)';
       else if(card && status==='warning') card.style.borderColor='rgba(245,158,11,0.4)';
       else if(card) card.style.borderColor='rgba(255,255,255,0.05)';

@@ -2,12 +2,12 @@
 <html class="dark" dir="rtl" lang="he">
 <head>
 <meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>QUANTUM | חדשות שוק</title>
+<title>QUANTUM | מודעות שפורסמו</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <script>tailwind.config={darkMode:"class",theme:{extend:{colors:{"primary":"#137fec","background-dark":"#101922","surface":"#1a2530","border-dark":"#2d3a4b","alert-rose":"#f43f5e","success-green":"#10b981"},fontFamily:{"display":["Manrope","sans-serif"]}}}}</script>
-<style>body{font-family:'Manrope',sans-serif;}.glass-panel{background:rgba(26,37,48,0.7);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.05);}.custom-scrollbar::-webkit-scrollbar{width:6px;}.custom-scrollbar::-webkit-scrollbar-track{background:transparent;}.custom-scrollbar::-webkit-scrollbar-thumb{background:#2d3a4b;border-radius:10px;}</style>
+<style>body{font-family:'Manrope',sans-serif;}.glass-panel{background:rgba(26,37,48,0.7);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.05);}.custom-scrollbar::-webkit-scrollbar{width:6px;}.custom-scrollbar::-webkit-scrollbar-track{background:transparent;}.custom-scrollbar::-webkit-scrollbar-thumb{background:#2d3a4b;border-radius:10px;}.status-badge{padding:2px 10px;border-radius:999px;font-size:11px;font-weight:700;}</style>
 </head>
 <body class="bg-background-dark text-slate-200 min-h-screen flex">
 <button id="mobile-menu-btn" onclick="document.getElementById('mobile-sidebar').classList.toggle('hidden');document.getElementById('mobile-overlay').classList.toggle('hidden')" class="lg:hidden fixed top-3 right-3 z-50 p-2.5 bg-surface/90 border border-white/10 rounded-xl backdrop-blur-sm shadow-xl"><span class="material-symbols-outlined text-white text-2xl">menu</span></button>
@@ -36,11 +36,11 @@
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-alerts.html"><span class="material-symbols-outlined">notifications</span><span>התראות</span><span id="nav-alert-badge" class="hidden mr-auto px-1.5 py-0.5 bg-alert-rose text-white text-[9px] font-bold rounded-full min-w-[18px] text-center"></span></a>
 <div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">נוסף</p></div>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-kones.html"><span class="material-symbols-outlined">gavel</span><span>כינוסי נכסים</span></a>
-<a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary text-white font-semibold transition-all" href="quantum-news.html"><span class="material-symbols-outlined">newspaper</span><span>חדשות שוק</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-news.html"><span class="material-symbols-outlined">newspaper</span><span>חדשות שוק</span></a>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-tasks.html"><span class="material-symbols-outlined">task_alt</span><span>משימות</span></a>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-sellers.html"><span class="material-symbols-outlined">home</span><span>מוכרים</span></a>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-buyers.html"><span class="material-symbols-outlined">groups</span><span>קונים</span></a>
-<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-publish.html"><span class="material-symbols-outlined">publish</span><span>פרסום מודעות</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary text-white font-semibold transition-all" href="quantum-publish.html"><span class="material-symbols-outlined">publish</span><span>פרסום מודעות</span></a>
 <div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">מערכת</p></div>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-scans.html"><span class="material-symbols-outlined">radar</span><span>סריקות</span></a>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-reports.html"><span class="material-symbols-outlined">description</span><span>דוחות</span></a>
@@ -54,81 +54,59 @@
 </aside>
 <main class="flex-1 min-w-0 h-screen overflow-y-auto overflow-x-hidden flex flex-col">
 <header class="flex flex-wrap items-center justify-between gap-2 px-4 md:px-8 py-3 md:py-5 border-b border-white/5 glass-panel sticky top-0 z-10">
-<div><h2 class="text-base md:text-2xl font-bold text-white leading-tight">📰 חדשות שוק הנדל"ן</h2><p class="text-sm text-slate-400">חדשות, מאמרים ועדכוני שוק רלוונטיים לפינוי-בינוי</p></div>
+<div><h2 class="text-base md:text-2xl font-bold text-white leading-tight">📋 מודעות שפורסמו</h2><p class="text-sm text-slate-400">היסטוריית פרסום מודעות לפלטפורמות חיצוניות</p></div>
 <div class="flex items-center gap-3">
-<button class="flex items-center gap-2 bg-primary hover:brightness-110 px-5 py-2.5 rounded-xl text-sm font-bold text-white transition-all" onclick="loadNews(true)"><span class="material-symbols-outlined text-lg">refresh</span>רענן</button>
-</div>
-</header>
+<select id="filter-platform" class="bg-surface/50 border-white/10 rounded-xl px-4 py-2.5 text-sm" onchange="loadHistory()">
+<option value="">כל הפלטפורמות</option><option value="yad2">Yad2</option><option value="facebook">Facebook</option><option value="homeless">Homeless</option><option value="madlan">Madlan</option>
+</select>
+<button onclick="loadHistory()" class="flex items-center gap-2 bg-primary hover:brightness-110 px-5 py-2.5 rounded-xl text-sm font-bold text-white transition-all"><span class="material-symbols-outlined text-lg">refresh</span>רענן</button>
+</div></header>
 <div class="p-4 md:p-8">
-<div id="category-tabs" class="flex flex-wrap gap-2 mb-5">
-<button class="cat-tab px-4 py-2 rounded-full text-xs font-bold bg-primary text-white" onclick="filterCategory('all',this)">הכל</button>
-<button class="cat-tab px-4 py-2 rounded-full text-xs font-bold bg-white/5 text-slate-400 hover:bg-white/10" onclick="filterCategory('ועדות',this)">ועדות</button>
-<button class="cat-tab px-4 py-2 rounded-full text-xs font-bold bg-white/5 text-slate-400 hover:bg-white/10" onclick="filterCategory('מחירים',this)">מחירים</button>
-<button class="cat-tab px-4 py-2 rounded-full text-xs font-bold bg-white/5 text-slate-400 hover:bg-white/10" onclick="filterCategory('פינוי-בינוי',this)">פינוי-בינוי</button>
-<button class="cat-tab px-4 py-2 rounded-full text-xs font-bold bg-white/5 text-slate-400 hover:bg-white/10" onclick="filterCategory('כללי',this)">כללי</button>
-</div>
-<div id="news-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
-<div class="glass-panel rounded-2xl p-8 col-span-full text-center text-slate-500">טוען חדשות...</div>
-</div>
-</div>
+<div class="glass-panel rounded-2xl overflow-x-auto">
+<table class="w-full"><thead><tr class="border-b border-white/5">
+<th class="px-4 py-3 text-[10px] font-bold text-slate-500 uppercase text-right">תאריך</th>
+<th class="px-4 py-3 text-[10px] font-bold text-slate-500 uppercase text-right">כותרת</th>
+<th class="px-4 py-3 text-[10px] font-bold text-slate-500 uppercase text-center">פלטפורמה</th>
+<th class="px-4 py-3 text-[10px] font-bold text-slate-500 uppercase text-center">סטטוס</th>
+<th class="px-4 py-3 text-[10px] font-bold text-slate-500 uppercase text-center">פעולות</th>
+</tr></thead>
+<tbody id="history-tbody"><tr><td colspan="5" class="text-center py-12 text-slate-500">טוען...</td></tr></tbody>
+</table></div></div>
+<footer class="mt-auto px-8 py-6 border-t border-white/5 text-center text-slate-500 text-[11px] font-medium tracking-widest uppercase">&copy; 2026 QUANTUM Unified Analytics | <span class="q-ver">v...</span></footer>
 </main>
 <script>
 const API = (typeof QuantumAPI!=='undefined')?QuantumAPI.API_BASE:'https://pinuy-binuy-analyzer-production.up.railway.app';
 
-let _allNews = [];
-let _currentCategory = 'all';
-
-async function loadNews(refresh) {
-  const grid = document.getElementById('news-grid');
-  grid.innerHTML = '<div class="glass-panel rounded-2xl p-8 col-span-full text-center text-slate-500"><span class="material-symbols-outlined text-3xl animate-spin mb-2 block">refresh</span>טוען חדשות...</div>';
+async function loadHistory() {
+  const tbody = document.getElementById('history-tbody');
+  tbody.innerHTML = '<tr><td colspan="5" class="text-center py-12 text-slate-500">טוען...</td></tr>';
   try {
-    const r = await fetch(API + '/api/news' + (refresh ? '?refresh=true' : ''));
-    if (!r.ok) throw new Error('API returned ' + r.status);
+    const platform = document.getElementById('filter-platform').value;
+    const r = await fetch(API + '/api/publish/history' + (platform ? '?platform='+platform : ''));
     const d = await r.json();
-    if (!d.success) throw new Error(d.error);
-    _allNews = d.data || [];
-    const items = _currentCategory === 'all' ? _allNews : _allNews.filter(i => (i.category||'').includes(_currentCategory));
-    if (!items.length) {
-      grid.innerHTML = '<div class="glass-panel rounded-2xl p-8 col-span-full text-center text-slate-500"><span class="material-symbols-outlined text-4xl mb-3 block">newspaper</span>אין חדשות כרגע<p class="text-xs mt-2 text-slate-600">מקור החדשות עדיין לא הוגדר. החדשות יופיעו כאן כשהשירות יהיה פעיל.</p></div>';
-      return;
-    }
-    grid.innerHTML = items.map(item => {
-      const date = item.published_at ? new Date(item.published_at).toLocaleDateString('he-IL') : '';
-      const src = item.source || '';
-      const tag = item.category || 'נדל"ן';
-      const srcType = item.source_type === 'committee' ? 'מעקב QUANTUM' : item.source_type === 'rss' ? 'RSS' : '';
-      return `<a href="${item.url||'#'}" target="${item.url?'_blank':'_self'}" class="glass-panel rounded-2xl p-5 flex flex-col gap-3 hover:border-primary/40 hover:bg-white/5 transition-all group cursor-pointer no-underline" data-category="${tag}">
-        <div class="flex items-center gap-2 flex-wrap">
-          <span class="text-[10px] font-bold px-2 py-1 rounded-full bg-primary/15 text-primary">${tag}</span>
-          ${srcType ? `<span class="text-[10px] font-bold px-2 py-1 rounded-full bg-white/5 text-slate-500">${srcType}</span>` : ''}
-          ${src ? `<span class="text-[10px] text-slate-500">${src}</span>` : ''}
-          ${date ? `<span class="text-[10px] text-slate-600 mr-auto">${date}</span>` : ''}
-        </div>
-        <h3 class="text-sm font-bold text-white leading-snug group-hover:text-primary transition-all">${item.title||''}</h3>
-        ${item.summary ? `<p class="text-xs text-slate-400 leading-relaxed line-clamp-3">${item.summary}</p>` : ''}
-      </a>`;
+    const items = d.data || [];
+    if (!items.length) { tbody.innerHTML = '<tr><td colspan="5" class="text-center py-12 text-slate-500">אין היסטוריית פרסום</td></tr>'; return; }
+    const statusMap = { queued:'בתור', success:'פורסם', failed:'נכשל' };
+    const statusColor = { queued:'bg-amber-400/20 text-amber-400', success:'bg-success-green/20 text-success-green', failed:'bg-alert-rose/20 text-alert-rose' };
+    const platColor = { yad2:'bg-blue-500/20 text-blue-400', facebook:'bg-sky-500/20 text-sky-400', homeless:'bg-purple-500/20 text-purple-400', madlan:'bg-green-500/20 text-green-400' };
+    tbody.innerHTML = items.map(h => {
+      const date = h.created_at ? new Date(h.created_at).toLocaleDateString('he-IL') : '';
+      const title = h.title || h.address || '—';
+      const st = h.status || 'queued';
+      const pc = platColor[h.platform] || 'bg-white/5 text-slate-400';
+      return '<tr class="border-b border-white/5 hover:bg-white/5">' +
+        '<td class="px-4 py-3 text-xs text-slate-400">' + date + '</td>' +
+        '<td class="px-4 py-3 text-sm text-white">' + title + '</td>' +
+        '<td class="px-4 py-3 text-center"><span class="px-2 py-1 rounded text-[10px] font-bold ' + pc + '">' + (h.platform||'—') + '</span></td>' +
+        '<td class="px-4 py-3 text-center"><span class="px-2 py-1 rounded text-[10px] font-bold ' + (statusColor[st]||'') + '">' + (statusMap[st]||st) + '</span></td>' +
+        '<td class="px-4 py-3 text-center">' + (h.result?.url ? '<a href="'+h.result.url+'" target="_blank" class="text-xs text-primary hover:underline">פתח</a>' : '—') + '</td></tr>';
     }).join('');
-  } catch(e) {
-    grid.innerHTML = '<div class="glass-panel rounded-2xl p-8 col-span-full text-center text-slate-500"><span class="material-symbols-outlined text-4xl mb-3 block">newspaper</span>שירות החדשות אינו זמין כרגע<p class="text-xs mt-2 text-slate-600">חדשות שוק הנדל"ן יופיעו כאן כשהשירות יהיה פעיל.</p></div>';
-  }
+  } catch(e) { tbody.innerHTML = '<tr><td colspan="5" class="text-center py-12 text-alert-rose">שגיאה: '+e.message+'</td></tr>'; }
 }
 
-function filterCategory(cat, btn) {
-  _currentCategory = cat;
-  document.querySelectorAll('.cat-tab').forEach(b => { b.className = 'cat-tab px-4 py-2 rounded-full text-xs font-bold bg-white/5 text-slate-400 hover:bg-white/10'; });
-  if (btn) btn.className = 'cat-tab px-4 py-2 rounded-full text-xs font-bold bg-primary text-white';
-  if (_allNews.length) {
-    const grid = document.getElementById('news-grid');
-    const items = cat === 'all' ? _allNews : _allNews.filter(i => (i.category||'').includes(cat));
-    if (!items.length) { grid.innerHTML = '<div class="glass-panel rounded-2xl p-8 col-span-full text-center text-slate-500">אין כתבות בקטגוריה זו</div>'; return; }
-    // Re-render with filtered items
-    loadNews();
-  }
-}
-
-fetch(API+'/health').then(r=>r.json()).then(d=>{ document.querySelectorAll('.q-ver').forEach(el=>el.textContent='v'+(d.version||'?')); }).catch(()=>{});
+fetch(API+'/api/version').then(r=>r.json()).then(d=>{ document.querySelectorAll('.q-ver').forEach(el=>el.textContent='v'+(d.version||'?')); }).catch(()=>{});
 fetch(API+'/api/alerts?limit=500').then(function(r){return r.json()}).then(function(d){var u=(d.alerts||[]).filter(function(a){return !a.is_read}).length;var b=document.getElementById('nav-alert-badge');if(b&&u>0){b.textContent=u>99?'99+':u;b.classList.remove('hidden')}}).catch(function(){});
-loadNews();
+loadHistory();
 </script>
 </body>
 </html>
