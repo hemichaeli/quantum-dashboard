@@ -11,7 +11,10 @@
 <style>body{font-family:'Manrope',sans-serif;}.glass-panel{background:rgba(26,37,48,0.7);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.05);}</style>
 </head>
 <body class="bg-background-dark text-slate-200 min-h-screen flex">
-<aside class="w-64 flex-shrink-0 border-l border-white/5 bg-surface/50 h-screen sticky top-0 hidden lg:flex flex-col">
+<button id="mobile-menu-btn" onclick="document.getElementById('mobile-sidebar').classList.toggle('hidden');document.getElementById('mobile-overlay').classList.toggle('hidden')" class="lg:hidden fixed top-3 right-3 z-50 p-2.5 bg-surface/90 border border-white/10 rounded-xl backdrop-blur-sm shadow-xl"><span class="material-symbols-outlined text-white text-2xl">menu</span></button>
+<div id="mobile-overlay" class="hidden lg:hidden fixed inset-0 bg-black/60 z-30 backdrop-blur-sm" onclick="document.getElementById('mobile-sidebar').classList.add('hidden');this.classList.add('hidden')"></div>
+
+<aside id="mobile-sidebar" class="w-64 flex-shrink-0 border-l border-white/5 bg-surface/50 h-screen fixed lg:sticky top-0 hidden lg:flex flex-col z-40 transition-all">
 <div class="p-5 flex items-center gap-3">
 <img src="quantum-logo.png" alt="QUANTUM" class="h-12 w-auto object-contain" style="filter:drop-shadow(0 0 8px rgba(19,127,236,0.4));"/>
 <div><h1 class="text-xl font-extrabold tracking-tight text-white uppercase">QUANTUM</h1>
@@ -53,16 +56,16 @@
 <main class="flex-1 min-w-0 h-screen overflow-y-auto overflow-x-hidden flex flex-col">
 <header class="flex flex-wrap items-center justify-between gap-2 px-4 md:px-8 py-3 md:py-5 border-b border-white/5 glass-panel sticky top-0 z-10">
 <div><h2 class="text-base md:text-2xl font-bold text-white leading-tight">הגדרות</h2><p class="text-sm text-slate-400">תצורת סריקה, התראות, ממשקי API, וניהול משתמשים</p></div>
-<button class="flex items-center gap-2 bg-primary hover:brightness-110 px-6 py-2.5 rounded-xl text-sm font-bold text-white transition-all shadow-lg shadow-primary/20"><span class="material-symbols-outlined text-xl">save</span><span>שמור שינויים</span></button>
+<button onclick="saveSettings()" class="flex items-center gap-2 bg-primary hover:brightness-110 px-6 py-2.5 rounded-xl text-sm font-bold text-white transition-all shadow-lg shadow-primary/20"><span class="material-symbols-outlined text-xl">save</span><span>שמור שינויים</span></button>
 </header>
 <div class="p-8 space-y-8 max-w-5xl">
 <div class="bg-surface/40 border border-white/5 rounded-2xl p-6">
 <h4 class="font-bold text-white mb-6 flex items-center gap-2"><span class="material-symbols-outlined text-primary">person</span>פרופיל משתמש</h4>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-<div><label class="text-[10px] text-slate-500 font-bold uppercase tracking-widest block mb-2">שם מלא</label><input type="text" value="אלון כהן" class="w-full bg-white/5 border border-white/10 rounded-xl text-sm py-2.5 px-4 focus:ring-primary focus:border-primary"/></div>
-<div><label class="text-[10px] text-slate-500 font-bold uppercase tracking-widest block mb-2">תפקיד</label><input type="text" value="מנהל השקעות" class="w-full bg-white/5 border border-white/10 rounded-xl text-sm py-2.5 px-4 focus:ring-primary focus:border-primary"/></div>
-<div><label class="text-[10px] text-slate-500 font-bold uppercase tracking-widest block mb-2">אימייל</label><input type="email" value="alon@u-r-quantum.com" class="w-full bg-white/5 border border-white/10 rounded-xl text-sm py-2.5 px-4 focus:ring-primary focus:border-primary"/></div>
-<div><label class="text-[10px] text-slate-500 font-bold uppercase tracking-widest block mb-2">טלפון</label><input type="tel" value="054-123-4567" class="w-full bg-white/5 border border-white/10 rounded-xl text-sm py-2.5 px-4 focus:ring-primary focus:border-primary"/></div>
+<div><label class="text-[10px] text-slate-500 font-bold uppercase tracking-widest block mb-2">שם מלא</label><input id="set-name" type="text" value="אלון כהן" class="w-full bg-white/5 border border-white/10 rounded-xl text-sm py-2.5 px-4 focus:ring-primary focus:border-primary"/></div>
+<div><label class="text-[10px] text-slate-500 font-bold uppercase tracking-widest block mb-2">תפקיד</label><input id="set-role" type="text" value="מנהל השקעות" class="w-full bg-white/5 border border-white/10 rounded-xl text-sm py-2.5 px-4 focus:ring-primary focus:border-primary"/></div>
+<div><label class="text-[10px] text-slate-500 font-bold uppercase tracking-widest block mb-2">אימייל</label><input id="set-email" type="email" value="alon@u-r-quantum.com" class="w-full bg-white/5 border border-white/10 rounded-xl text-sm py-2.5 px-4 focus:ring-primary focus:border-primary"/></div>
+<div><label class="text-[10px] text-slate-500 font-bold uppercase tracking-widest block mb-2">טלפון</label><input id="set-phone" type="tel" value="054-123-4567" class="w-full bg-white/5 border border-white/10 rounded-xl text-sm py-2.5 px-4 focus:ring-primary focus:border-primary"/></div>
 </div></div>
 <div class="bg-surface/40 border border-white/5 rounded-2xl p-6">
 <h4 class="font-bold text-white mb-6 flex items-center gap-2"><span class="material-symbols-outlined text-primary">radar</span>תצורת סריקה</h4>
@@ -126,5 +129,34 @@ fetch('https://pinuy-binuy-analyzer-production.up.railway.app/api/scan/status').
 </script>
 <script>fetch('https://pinuy-binuy-analyzer-production.up.railway.app/api/alerts?limit=500').then(function(r){return r.json()}).then(function(d){var u=(d.alerts||[]).filter(function(a){return !a.is_read}).length;var b=document.getElementById('nav-alert-badge');if(b&&u>0){b.textContent=u>99?'99+':u;b.classList.remove('hidden')}}).catch(function(){});</script>
 <script>fetch("https://pinuy-binuy-analyzer-production.up.railway.app/health").then(function(r){return r.json()}).then(function(d){var v="v"+d.version;document.querySelectorAll(".q-ver").forEach(function(el){el.textContent=v})}).catch(function(){});</script>
+<script>
+var SETTINGS_API='https://pinuy-binuy-analyzer-production.up.railway.app/api/settings';
+function loadSettings(){
+  fetch(SETTINGS_API).then(function(r){return r.json()}).then(function(d){
+    var s=d.settings||{};
+    if(s.profile_name){var el=document.getElementById('set-name');if(el)el.value=s.profile_name;}
+    if(s.profile_role){var el=document.getElementById('set-role');if(el)el.value=s.profile_role;}
+    if(s.profile_email){var el=document.getElementById('set-email');if(el)el.value=s.profile_email;}
+    if(s.profile_phone){var el=document.getElementById('set-phone');if(el)el.value=s.profile_phone;}
+  }).catch(function(){});
+}
+function saveSettings(){
+  var body={
+    profile_name:document.getElementById('set-name')?.value||'',
+    profile_role:document.getElementById('set-role')?.value||'',
+    profile_email:document.getElementById('set-email')?.value||'',
+    profile_phone:document.getElementById('set-phone')?.value||''
+  };
+  fetch(SETTINGS_API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)})
+    .then(function(r){return r.json()})
+    .then(function(d){
+      if(d.success){
+        var btn=document.querySelector('[onclick="saveSettings()"]');
+        if(btn){btn.innerHTML='<span class="material-symbols-outlined text-xl">check</span><span>נשמר!</span>';setTimeout(function(){btn.innerHTML='<span class="material-symbols-outlined text-xl">save</span><span>שמור שינויים</span>';},2000);}
+      } else { alert('שגיאה בשמירה: '+(d.error||'')); }
+    }).catch(function(e){alert('שגיאת רשת: '+e.message);});
+}
+loadSettings();
+</script>
 </body>
 </html>

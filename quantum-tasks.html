@@ -12,11 +12,15 @@ body{font-family:'Manrope',sans-serif;}
 .glass-panel{background:rgba(26,37,48,0.7);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.05);}
 .custom-scrollbar::-webkit-scrollbar{width:6px;}.custom-scrollbar::-webkit-scrollbar-track{background:transparent;}.custom-scrollbar::-webkit-scrollbar-thumb{background:#2d3a4b;border-radius:10px;}
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);display:flex;align-items:center;justify-content:center;z-index:50;}
-.kanban-col{min-height:200px;}
+.kanban-col{min-height:200px;transition:box-shadow 0.2s,border-color 0.2s;}
+.kanban-col.drag-over{border:1px solid rgba(19,127,236,0.5);box-shadow:0 0 0 1px rgba(19,127,236,0.3);border-radius:12px;}
 </style>
 </head>
 <body class="bg-background-dark text-slate-200 min-h-screen flex">
-<aside class="w-64 flex-shrink-0 border-l border-white/5 bg-surface/50 h-screen sticky top-0 hidden lg:flex flex-col">
+<button id="mobile-menu-btn" onclick="document.getElementById('mobile-sidebar').classList.toggle('hidden');document.getElementById('mobile-overlay').classList.toggle('hidden')" class="lg:hidden fixed top-3 right-3 z-50 p-2.5 bg-surface/90 border border-white/10 rounded-xl backdrop-blur-sm shadow-xl"><span class="material-symbols-outlined text-white text-2xl">menu</span></button>
+<div id="mobile-overlay" class="hidden lg:hidden fixed inset-0 bg-black/60 z-30 backdrop-blur-sm" onclick="document.getElementById('mobile-sidebar').classList.add('hidden');this.classList.add('hidden')"></div>
+
+<aside id="mobile-sidebar" class="w-64 flex-shrink-0 border-l border-white/5 bg-surface/50 h-screen fixed lg:sticky top-0 hidden lg:flex flex-col z-40 transition-all">
 <div class="p-5 flex items-center gap-3">
 <img src="quantum-logo.png" alt="QUANTUM" class="h-12 w-auto object-contain" style="filter:drop-shadow(0 0 8px rgba(19,127,236,0.4));"/>
 <div><h1 class="text-xl font-extrabold tracking-tight text-white uppercase">QUANTUM</h1>
@@ -145,8 +149,28 @@ function renderKanban(tasks) {
   tasks.forEach(t => { if (cols[t.status]) cols[t.status].push(t); });
   ['todo','doing','done'].forEach(s => {
     document.getElementById('count-'+s).textContent = cols[s].length;
-    document.getElementById('col-'+s).innerHTML = cols[s].length ? cols[s].map(t => taskCard(t)).join('') : '<p class="text-xs text-slate-600 text-center py-4">אין משימות</p>';
+    const col = document.getElementById('col-'+s);
+    col.innerHTML = cols[s].length ? cols[s].map(t => taskCard(t)).join('') : '<p class="text-xs text-slate-600 text-center py-4">אין משימות</p>';
+    col.setAttribute('data-status', s);
+    col.ondragover = function(e) { e.preventDefault(); this.classList.add('drag-over'); };
+    col.ondragleave = function(e) { this.classList.remove('drag-over'); };
+    col.ondrop = function(e) { e.preventDefault(); this.classList.remove('drag-over'); handleTaskDrop(e, s); };
   });
+}
+
+async function handleTaskDrop(e, newStatus) {
+  const taskId = e.dataTransfer.getData('text/plain');
+  if (!taskId) return;
+  try {
+    const r = await fetch(API + '/dashboard/api/tasks/' + taskId, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status: newStatus })
+    });
+    const d = await r.json();
+    if (!d.success) throw new Error(d.error);
+    loadTasks();
+  } catch(e) { alert('שגיאה בעדכון משימה: ' + e.message); }
 }
 
 function taskCard(t) {
@@ -154,7 +178,7 @@ function taskCard(t) {
   const overdue = t.due_date && new Date(t.due_date) < new Date() && t.status !== 'done';
   const pClass = PRIORITY_COLORS[t.priority] || 'text-slate-400';
   const pLabel = PRIORITY_LABELS[t.priority] || t.priority;
-  return `<div class="bg-surface/60 border border-white/5 rounded-xl p-3 space-y-2 hover:border-primary/30 transition-all">
+  return `<div draggable="true" ondragstart="event.dataTransfer.setData('text/plain','${t.id}')" class="bg-surface/60 border border-white/5 rounded-xl p-3 space-y-2 hover:border-primary/30 transition-all cursor-grab">
     <div class="flex items-start justify-between gap-2">
       <p class="text-sm font-semibold text-white leading-snug flex-1">${t.title}</p>
       <button onclick="editTask(${t.id})" class="text-slate-600 hover:text-primary transition-all flex-shrink-0"><span class="material-symbols-outlined text-base">edit</span></button>

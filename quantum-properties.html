@@ -11,7 +11,10 @@
 <style>body{font-family:'Manrope',sans-serif;}.glass-panel{background:rgba(26,37,48,0.7);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.05);}.custom-scrollbar::-webkit-scrollbar{width:6px;}.custom-scrollbar::-webkit-scrollbar-track{background:transparent;}.custom-scrollbar::-webkit-scrollbar-thumb{background:#2d3a4b;border-radius:10px;}th.sortable{cursor:pointer;user-select:none;}th.sortable:hover{color:#137fec;}th.sortable .sort-icon{opacity:0;transition:opacity 0.2s;}th.sortable:hover .sort-icon,th.sortable.asc .sort-icon,th.sortable.desc .sort-icon{opacity:1;}</style>
 </head>
 <body class="bg-background-dark text-slate-200 min-h-screen flex">
-<aside class="w-64 flex-shrink-0 border-l border-white/5 bg-surface/50 h-screen sticky top-0 hidden lg:flex flex-col">
+<button id="mobile-menu-btn" onclick="document.getElementById('mobile-sidebar').classList.toggle('hidden');document.getElementById('mobile-overlay').classList.toggle('hidden')" class="lg:hidden fixed top-3 right-3 z-50 p-2.5 bg-surface/90 border border-white/10 rounded-xl backdrop-blur-sm shadow-xl"><span class="material-symbols-outlined text-white text-2xl">menu</span></button>
+<div id="mobile-overlay" class="hidden lg:hidden fixed inset-0 bg-black/60 z-30 backdrop-blur-sm" onclick="document.getElementById('mobile-sidebar').classList.add('hidden');this.classList.add('hidden')"></div>
+
+<aside id="mobile-sidebar" class="w-64 flex-shrink-0 border-l border-white/5 bg-surface/50 h-screen fixed lg:sticky top-0 hidden lg:flex flex-col z-40 transition-all">
 <div class="p-5 flex items-center gap-3">
 <img src="quantum-logo.png" alt="QUANTUM" class="h-12 w-auto object-contain" style="filter:drop-shadow(0 0 8px rgba(19,127,236,0.4));"/>
 <div><h1 class="text-xl font-extrabold tracking-tight text-white uppercase">QUANTUM</h1>
@@ -95,9 +98,9 @@
 <tbody class="divide-y divide-white/5" id="properties-body"></tbody>
 </table>
 </div>
-<div class="px-8 py-4 border-t border-white/5 flex items-center justify-between">
-<span class="text-xs text-slate-500" id="page-info">עמוד 1</span>
-<div class="flex gap-1" id="pagination"></div>
+<div class="px-8 py-4 border-t border-white/5 glass-panel flex items-center justify-between">
+<span class="text-sm text-slate-400 font-medium" id="page-info">עמוד 1</span>
+<div class="flex items-center gap-3" id="pagination"></div>
 </div>
 <footer class="mt-auto px-8 py-6 border-t border-white/5 text-center text-slate-500 text-[11px] font-medium tracking-widest uppercase">&copy; 2026 QUANTUM Unified Analytics | <span class="q-ver">v...</span></footer>
 </main>
@@ -110,6 +113,9 @@ function esc(s){return typeof DOMPurify!=='undefined'?DOMPurify.sanitize(String(
 let allListings = [];
 let currentSort = { field: 'ssi', dir: 'desc' };
 let currentFilters = {};
+let currentOffset = 0;
+let totalItems = 0;
+let pageSize = 200;
 
 function ssiClass(s){return s>=80?'bg-alert-rose/20 text-alert-rose border-alert-rose/30':s>=60?'bg-amber-500/20 text-amber-500 border-amber-500/30':s>=40?'bg-primary/20 text-primary border-primary/30':'bg-white/5 text-slate-400 border-white/10';}
 function ssiLabel(s){return s>=80?'קריטי':s>=60?'גבוה':s>=40?'בינוני':'נמוך';}
@@ -161,7 +167,7 @@ function filterData(data) {
 
 function renderTable(data) {
     var tbody = document.getElementById('properties-body');
-    document.getElementById('count-display').textContent = data.length;
+    document.getElementById('count-display').textContent = data.length + (totalItems > pageSize ? ' מתוך ' + totalItems : '');
     if (data.length === 0) {
         tbody.innerHTML = '<tr><td colspan="12" class="text-center py-12 text-slate-500">אין נכסים להצגה</td></tr>';
         return;
@@ -262,32 +268,77 @@ document.getElementById('search-input').addEventListener('input', function() {
 });
 
 // Load data
-async function loadProperties() {
+async function loadProperties(offset) {
+    if (typeof offset === 'number') currentOffset = offset;
     try {
         // Use listings/search which returns phone, premium_pct, and all enriched fields
-        var resp = await fetch(API_BASE + '/api/listings/search?limit=500&sort_by=ssi&sort_order=desc');
+        var resp = await fetch(API_BASE + '/api/listings/search?limit=' + pageSize + '&offset=' + currentOffset + '&sort_by=ssi&sort_order=desc');
         if (!resp.ok) throw new Error('HTTP ' + resp.status);
         var data = await resp.json();
         allListings = data.listings || data.data || data || [];
-        
+        totalItems = data.total || allListings.length;
+
         document.getElementById('last-update').textContent = 'עדכון: ' + new Date().toLocaleTimeString('he-IL', {hour:'2-digit',minute:'2-digit'});
-        
-        // Populate city filter dynamically
-        var cities = {};
-        allListings.forEach(function(p) { if (p.city) cities[p.city] = true; });
-        var citySelect = document.getElementById('filter-city');
-        Object.keys(cities).sort().forEach(function(c) {
-            var opt = document.createElement('option');
-            opt.value = c; opt.textContent = c;
-            citySelect.appendChild(opt);
-        });
-        
+
+        // Populate city filter dynamically (only on first load)
+        if (currentOffset === 0) {
+            var cities = {};
+            allListings.forEach(function(p) { if (p.city) cities[p.city] = true; });
+            var citySelect = document.getElementById('filter-city');
+            // Clear existing options except first
+            while (citySelect.options.length > 1) citySelect.remove(1);
+            Object.keys(cities).sort().forEach(function(c) {
+                var opt = document.createElement('option');
+                opt.value = c; opt.textContent = c;
+                citySelect.appendChild(opt);
+            });
+        }
+
         refreshDisplay();
+        renderPagination();
     } catch(err) {
         document.getElementById('properties-body').innerHTML = '<tr><td colspan="12" class="text-center py-12 text-slate-500">שגיאה בטעינת נכסים: ' + err.message + '</td></tr>';
     }
 }
-loadProperties();
+
+function renderPagination() {
+    var totalPages = Math.ceil(totalItems / pageSize);
+    var currentPage = Math.floor(currentOffset / pageSize) + 1;
+    var pageInfo = document.getElementById('page-info');
+    var paginationDiv = document.getElementById('pagination');
+
+    pageInfo.textContent = 'עמוד ' + currentPage + ' מתוך ' + totalPages + ' (' + totalItems + ' נכסים)';
+
+    var prevDisabled = currentOffset <= 0;
+    var nextDisabled = currentOffset + pageSize >= totalItems;
+
+    paginationDiv.innerHTML =
+        '<button id="btn-prev" class="px-4 py-2 rounded-xl text-sm font-semibold transition-all ' +
+        (prevDisabled ? 'bg-white/5 text-slate-600 cursor-not-allowed' : 'bg-white/5 hover:bg-primary/20 text-slate-300 hover:text-primary border border-white/10') +
+        '"' + (prevDisabled ? ' disabled' : '') + '>הקודם</button>' +
+        '<span class="px-4 py-2 text-sm text-slate-400">עמוד ' + currentPage + ' מתוך ' + totalPages + '</span>' +
+        '<button id="btn-next" class="px-4 py-2 rounded-xl text-sm font-semibold transition-all ' +
+        (nextDisabled ? 'bg-white/5 text-slate-600 cursor-not-allowed' : 'bg-white/5 hover:bg-primary/20 text-slate-300 hover:text-primary border border-white/10') +
+        '"' + (nextDisabled ? ' disabled' : '') + '>הבא</button>';
+
+    var btnPrev = document.getElementById('btn-prev');
+    var btnNext = document.getElementById('btn-next');
+
+    btnPrev.addEventListener('click', function() {
+        if (currentOffset > 0) {
+            loadProperties(currentOffset - pageSize);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    });
+    btnNext.addEventListener('click', function() {
+        if (currentOffset + pageSize < totalItems) {
+            loadProperties(currentOffset + pageSize);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    });
+}
+
+loadProperties(0);
 
 // Alert badge
 fetch(API_BASE + '/api/alerts?limit=500').then(function(r){return r.json()}).then(function(d){var u=(d.alerts||[]).filter(function(a){return !a.is_read}).length;var b=document.getElementById('nav-alert-badge');if(b&&u>0){b.textContent=u>99?'99+':u;b.classList.remove('hidden')}}).catch(function(){});

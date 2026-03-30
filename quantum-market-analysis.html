@@ -12,7 +12,10 @@
 <style>body{font-family:'Manrope',sans-serif;}.glass-panel{background:rgba(26,37,48,0.7);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.05);}.custom-scrollbar::-webkit-scrollbar{width:6px;}.custom-scrollbar::-webkit-scrollbar-track{background:transparent;}.custom-scrollbar::-webkit-scrollbar-thumb{background:#2d3a4b;border-radius:10px;}</style>
 </head>
 <body class="bg-background-dark text-slate-200 min-h-screen flex">
-<aside class="w-64 flex-shrink-0 border-l border-white/5 bg-surface/50 h-screen sticky top-0 hidden lg:flex flex-col">
+<button id="mobile-menu-btn" onclick="document.getElementById('mobile-sidebar').classList.toggle('hidden');document.getElementById('mobile-overlay').classList.toggle('hidden')" class="lg:hidden fixed top-3 right-3 z-50 p-2.5 bg-surface/90 border border-white/10 rounded-xl backdrop-blur-sm shadow-xl"><span class="material-symbols-outlined text-white text-2xl">menu</span></button>
+<div id="mobile-overlay" class="hidden lg:hidden fixed inset-0 bg-black/60 z-30 backdrop-blur-sm" onclick="document.getElementById('mobile-sidebar').classList.add('hidden');this.classList.add('hidden')"></div>
+
+<aside id="mobile-sidebar" class="w-64 flex-shrink-0 border-l border-white/5 bg-surface/50 h-screen fixed lg:sticky top-0 hidden lg:flex flex-col z-40 transition-all">
 <div class="p-5 flex items-center gap-3">
 <img src="quantum-logo.png" alt="QUANTUM" class="h-12 w-auto object-contain" style="filter:drop-shadow(0 0 8px rgba(19,127,236,0.4));"/>
 <div><h1 class="text-xl font-extrabold tracking-tight text-white uppercase">QUANTUM</h1>
@@ -55,8 +58,8 @@
 <header class="flex flex-wrap items-center justify-between gap-2 px-4 md:px-8 py-3 md:py-5 border-b border-white/5 glass-panel sticky top-0 z-10">
 <div class="flex flex-col"><h2 class="text-base md:text-2xl font-bold text-white leading-tight">ניתוח שוק</h2><p class="text-sm text-slate-400">נתוני שוק, מגמות מחירים וניתוח ביקוש-היצע ברמת עיר</p></div>
 <div class="flex items-center gap-3">
-<select id="city-select" class="bg-surface/50 border border-white/10 rounded-xl px-4 py-2.5 text-sm focus:ring-primary focus:border-primary"><option value="all">כל הערים</option></select>
-<button class="flex items-center gap-2 bg-primary hover:brightness-110 px-6 py-2.5 rounded-xl text-sm font-bold text-white transition-all shadow-lg shadow-primary/20"><span class="material-symbols-outlined text-xl">ios_share</span><span>ייצוא דוח</span></button>
+<select id="city-select" onchange="applyCityFilter()" class="bg-surface/50 border border-white/10 rounded-xl px-4 py-2.5 text-sm focus:ring-primary focus:border-primary"><option value="all">כל הערים</option></select>
+<button onclick="exportReport()" class="flex items-center gap-2 bg-primary hover:brightness-110 px-6 py-2.5 rounded-xl text-sm font-bold text-white transition-all shadow-lg shadow-primary/20"><span class="material-symbols-outlined text-xl">ios_share</span><span>ייצוא דוח</span></button>
 </div>
 </header>
 <div class="p-8 space-y-8">
@@ -91,12 +94,42 @@
 Chart.defaults.color='#64748b';Chart.defaults.borderColor='rgba(255,255,255,0.05)';Chart.defaults.font.family='Manrope';
 var API='https://pinuy-binuy-analyzer-production.up.railway.app';
 var cityChartInstance=null,ssiChartInstance=null;
-var cityData=[],citySortCol='complexes',citySortDir='desc';
+var cityData=[],cityDataFull=[],citySortCol='complexes',citySortDir='desc';
 
 function sortCityTable(col){if(citySortCol===col)citySortDir=citySortDir==='asc'?'desc':'asc';else{citySortCol=col;citySortDir='desc'}document.querySelectorAll('[data-col] .sort-arrow').forEach(function(el){el.textContent=''});var th=document.querySelector('[data-col="'+col+'"] .sort-arrow');if(th)th.textContent=citySortDir==='asc'?' \u25B2':' \u25BC';renderCityTable()}
 function filterCityTable(){renderCityTable()}
 function renderCityTable(){var search=(document.getElementById('city-search')?document.getElementById('city-search').value:'').toLowerCase();var data=cityData.slice();if(search)data=data.filter(function(c){return(c.city||'').toLowerCase().includes(search)});data.sort(function(a,b){var va=a[citySortCol],vb=b[citySortCol];if(citySortCol==='city')return citySortDir==='asc'?(va||'').localeCompare(vb||''):(vb||'').localeCompare(va||'');va=parseFloat(va)||0;vb=parseFloat(vb)||0;return citySortDir==='asc'?va-vb:vb-va});var tbody=document.getElementById('city-tbody');tbody.innerHTML=data.map(function(c){var iaiClass=c.avg_iai>=50?'text-success-green':c.avg_iai>=30?'text-amber-400':'text-alert-rose';var premClass=c.avg_premium>0?'text-alert-rose':'text-success-green';return '<tr class="hover:bg-white/5 transition-colors cursor-pointer"><td class="px-6 py-4 text-sm font-bold text-white">'+(c.city||'-')+'</td><td class="px-6 py-4 text-sm text-center text-slate-300">'+(c.complexes||0)+'</td><td class="px-6 py-4 text-sm text-center font-bold text-primary">'+(c.opportunities||0)+'</td><td class="px-6 py-4 text-sm text-center font-bold '+iaiClass+'">'+(c.avg_iai?c.avg_iai.toFixed(1):'-')+'</td><td class="px-6 py-4 text-sm text-center font-bold '+premClass+'">'+(c.avg_premium?c.avg_premium.toFixed(1)+'%':'-')+'</td><td class="px-6 py-4 text-sm text-center"><span class="px-2 py-1 rounded-lg bg-alert-rose/10 text-alert-rose text-xs font-bold">'+(c.stressed||0)+'</span></td></tr>'}).join('');var th=document.querySelector('[data-col="'+citySortCol+'"] .sort-arrow');if(th)th.textContent=citySortDir==='asc'?' \u25B2':' \u25BC'}
 
+function applyCityFilter(){
+  var sel=document.getElementById('city-select');
+  var val=sel.value;
+  if(val==='all'){cityData=cityDataFull.slice()}else{cityData=cityDataFull.filter(function(c){return c.city===val})}
+  // Update KPIs based on filtered data
+  var totalComplexes=0,totalOpps=0,totalStressed=0,iaiSum=0,iaiCount=0;
+  cityData.forEach(function(c){totalComplexes+=c.complexes;totalOpps+=c.opportunities;totalStressed+=c.stressed;if(c.avg_iai){iaiSum+=c.avg_iai;iaiCount++}});
+  document.getElementById('kpi-total').textContent=totalComplexes;
+  document.getElementById('kpi-opps').textContent=totalOpps;
+  document.getElementById('kpi-stressed').textContent=totalStressed;
+  document.getElementById('kpi-avg-iai').textContent=iaiCount?((iaiSum/iaiCount).toFixed(1)+'%'):'-';
+  renderCityTable();
+  // Update city chart
+  var chartData=cityData.slice(0,10);
+  if(cityChartInstance)cityChartInstance.destroy();
+  cityChartInstance=new Chart(document.getElementById('cityChart'),{type:'bar',data:{labels:chartData.map(function(c){return c.city}),datasets:[{label:'\u05D4\u05D6\u05D3\u05DE\u05E0\u05D5\u05D9\u05D5\u05EA',data:chartData.map(function(c){return c.opportunities}),backgroundColor:'#137fec',borderRadius:6},{label:'\u05DE\u05D5\u05DB\u05E8\u05D9\u05DD \u05DC\u05D7\u05D5\u05E6\u05D9\u05DD',data:chartData.map(function(c){return c.stressed||0}),backgroundColor:'#f43f5e',borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{usePointStyle:true,padding:20}}},scales:{y:{beginAtZero:true}}}});
+}
+function exportReport(){
+  var headers=['city','opportunities','stressed','avg_iai','avg_ssi','complexes'];
+  var headerLabels=['\u05E2\u05D9\u05E8','\u05D4\u05D6\u05D3\u05DE\u05E0\u05D5\u05D9\u05D5\u05EA','\u05DE\u05D5\u05DB\u05E8\u05D9\u05DD \u05DC\u05D7\u05D5\u05E6\u05D9\u05DD','IAI \u05DE\u05DE\u05D5\u05E6\u05E2','SSI \u05DE\u05DE\u05D5\u05E6\u05E2','\u05DE\u05EA\u05D7\u05DE\u05D9\u05DD'];
+  var rows=[headerLabels.join(',')];
+  cityData.forEach(function(c){rows.push(['"'+(c.city||'')+'"',c.opportunities||0,c.stressed||0,c.avg_iai?c.avg_iai.toFixed(1):'',c.avg_premium?c.avg_premium.toFixed(1):'',c.complexes||0].join(','))});
+  var csvString=rows.join('\n');
+  var blob=new Blob(['\uFEFF'+csvString],{type:'text/csv;charset=utf-8;'});
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement('a');
+  var d=new Date();var dateStr=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+  a.href=url;a.download='quantum-report-'+dateStr+'.csv';
+  document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
+}
 function loadDashboard(){
 // Load KPIs from SSI dashboard-data (has all the correct fields)
 fetch(API+'/api/ssi/dashboard-data').then(function(r){return r.json()}).then(function(d){
@@ -107,6 +140,7 @@ fetch(API+'/api/ssi/dashboard-data').then(function(r){return r.json()}).then(fun
   document.getElementById('kpi-avg-iai').textContent=s.avg_iai?parseFloat(s.avg_iai).toFixed(1)+'%':'-';
   var cities=d.cityBreakdown||[];
   cityData=cities.map(function(c){return{city:c.city,complexes:parseInt(c.total)||0,opportunities:parseInt(c.opportunities)||0,avg_iai:parseFloat(c.avg_iai)||0,avg_premium:parseFloat(c.avg_premium)||0,stressed:parseInt(c.stressed)||0}});
+  cityDataFull=cityData.slice();
   renderCityTable();
   var sel=document.getElementById('city-select');
   cities.forEach(function(c){var o=document.createElement('option');o.value=c.city;o.textContent=c.city+' ('+c.total+')';sel.appendChild(o);});
