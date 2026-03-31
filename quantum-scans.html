@@ -416,12 +416,27 @@ async function loadBackups(){
     const local=await r1.json();
     const github=await r2.json();
     const stats=local.stats||{};
-    // Last backup card
+    // Last backup card — prefer GitHub backup (local is ephemeral on Railway)
     const lbEl=document.getElementById('last-backup-status');
     const lbtEl=document.getElementById('last-backup-time');
-    if(stats.newestBackup){
+    const ghBackups=github.backups||[];
+    const latestGh=ghBackups[0]||'';
+    const hasBackup=stats.newestBackup||latestGh;
+    if(hasBackup){
       if(lbEl) lbEl.innerHTML='<span class="text-success-green">✅ תקין</span>';
-      if(lbtEl) lbtEl.textContent=new Date(stats.newestBackup).toLocaleString('he-IL');
+      if(lbtEl){
+        if(stats.newestBackup) lbtEl.textContent=new Date(stats.newestBackup).toLocaleString('he-IL');
+        else if(latestGh) lbtEl.textContent=latestGh.replace('backups/','').replace(/\//g,' ');
+      }
+      // Check if backup is stale (>25 hours)
+      if(latestGh){
+        const parts=latestGh.replace('backups/','').split('/');
+        if(parts[0]){
+          const backupDate=new Date(parts[0]+'T'+(parts[1]||'00:00:00').replace(/-/g,':'));
+          const hoursAgo=(Date.now()-backupDate.getTime())/3600000;
+          if(hoursAgo>25 && lbEl) lbEl.innerHTML='<span class="text-amber-400">⚠️ גיבוי ישן ('+Math.round(hoursAgo)+' שעות)</span>';
+        }
+      }
     } else {
       if(lbEl) lbEl.innerHTML='<span class="text-alert-rose">❌ אין גיבויים</span>';
     }
