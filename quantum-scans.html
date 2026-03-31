@@ -409,63 +409,71 @@ async function loadScans(){
 
 async function loadBackups(){
   try{
-    const [r1,r2]=await Promise.all([
-      fetch(`${API}/api/backup/list`),
-      fetch(`${API}/api/backup/github/list`)
+    const [r1,r2,r3]=await Promise.all([
+      fetch(`${API}/api/backup/list`).then(r=>r.json()).catch(()=>({stats:{}})),
+      fetch(`${API}/api/backup/github/list`).then(r=>r.json()).catch(()=>({backups:[],count:0})),
+      fetch(`${API}/api/scan/backups`).then(r=>r.json()).catch(()=>({backups:[]}))
     ]);
-    const local=await r1.json();
-    const github=await r2.json();
+    const local=r1; const github=r2; const tracked=r3;
     const stats=local.stats||{};
-    // Last backup card — prefer GitHub backup (local is ephemeral on Railway)
-    const lbEl=document.getElementById('last-backup-status');
-    const lbtEl=document.getElementById('last-backup-time');
+    const trackedBackups=tracked.backups||[];
     const ghBackups=github.backups||[];
     const latestGh=ghBackups[0]||'';
-    const hasBackup=stats.newestBackup||latestGh;
-    if(hasBackup){
-      if(lbEl) lbEl.innerHTML='<span class="text-success-green">✅ תקין</span>';
-      if(lbtEl){
-        if(stats.newestBackup) lbtEl.textContent=new Date(stats.newestBackup).toLocaleString('he-IL');
-        else if(latestGh) lbtEl.textContent=latestGh.replace('backups/','').replace(/\//g,' ');
+
+    // Last backup card
+    const lbEl=document.getElementById('last-backup-status');
+    const lbtEl=document.getElementById('last-backup-time');
+    const lastTracked=trackedBackups.find(b=>b.status==='completed');
+    const lastFailed=trackedBackups.find(b=>b.status==='failed');
+
+    if(lastTracked){
+      const backupDate=new Date(lastTracked.created_at);
+      const hoursAgo=(Date.now()-backupDate.getTime())/3600000;
+      if(hoursAgo>25){
+        if(lbEl) lbEl.innerHTML='<span class="text-amber-400">⚠️ גיבוי ישן ('+Math.round(hoursAgo)+' שע\')</span>';
+      } else {
+        if(lbEl) lbEl.innerHTML='<span class="text-success-green">✅ תקין</span>';
       }
-      // Check if backup is stale (>25 hours)
-      if(latestGh){
-        const parts=latestGh.replace('backups/','').split('/');
-        if(parts[0]){
-          const backupDate=new Date(parts[0]+'T'+(parts[1]||'00:00:00').replace(/-/g,':'));
-          const hoursAgo=(Date.now()-backupDate.getTime())/3600000;
-          if(hoursAgo>25 && lbEl) lbEl.innerHTML='<span class="text-amber-400">⚠️ גיבוי ישן ('+Math.round(hoursAgo)+' שעות)</span>';
-        }
-      }
+      if(lbtEl) lbtEl.textContent=backupDate.toLocaleString('he-IL');
+    } else if(latestGh){
+      if(lbEl) lbEl.innerHTML='<span class="text-success-green">✅ GitHub</span>';
+      if(lbtEl) lbtEl.textContent=latestGh.replace('backups/','').replace(/\//g,' ');
     } else {
       if(lbEl) lbEl.innerHTML='<span class="text-alert-rose">❌ אין גיבויים</span>';
     }
+    // Show failure banner
+    if(lastFailed && (!lastTracked || new Date(lastFailed.created_at)>new Date(lastTracked.created_at))){
+      if(lbEl) lbEl.innerHTML='<span class="text-alert-rose">❌ נכשל: '+(lastFailed.error||'').substring(0,40)+'</span>';
+    }
+
     // Backup stats panel
     const statsEl=document.getElementById('backup-stats');
     if(statsEl){
       statsEl.innerHTML=`
         <div class="grid grid-cols-2 gap-2">
           <div class="glass-panel rounded-xl p-3 text-center">
-            <div class="text-success-green text-xl font-bold">${stats.totalBackups||0}</div>
-            <div class="text-xs text-slate-500">גיבויים מקומיים</div>
-          </div>
-          <div class="glass-panel rounded-xl p-3 text-center">
             <div class="text-primary text-xl font-bold">${github.count||0}</div>
             <div class="text-xs text-slate-500">גיבויי GitHub</div>
           </div>
+          <div class="glass-panel rounded-xl p-3 text-center">
+            <div class="text-success-green text-xl font-bold">${trackedBackups.filter(b=>b.status==='completed').length}</div>
+            <div class="text-xs text-slate-500">גיבויים מעוקבים</div>
+          </div>
         </div>`;
     }
-    // Backup list
+
+    // Backup list — show tracked backups + GitHub fallback
     const listEl=document.getElementById('backup-list');
-    const backups=(stats.backups||[]).slice(0,8);
     if(listEl){
-      if(!backups.length){listEl.innerHTML='<div class="text-center text-slate-500 text-xs py-2">אין גיבויים מקומיים</div>';return;}
-      listEl.innerHTML=backups.map(b=>`
-        <div class="flex items-center justify-between py-1.5 border-b border-white/5">
-          <span class="text-xs text-slate-400">${new Date(b.created).toLocaleString('he-IL',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})}</span>
-          <span class="text-xs text-slate-500">${b.sizeMB||'<1'} MB</span>
-        </div>`).join('');
+      const displayList=trackedBackups.length?trackedBackups.slice(0,8):ghBackups.slice(0,8).map(p=>({filename:p,status:'completed',created_at:p}));
+      if(!displayList.length){listEl.innerHTML='<div class="text-center text-slate-500 text-xs py-2">אין גיבויים</div>';}
+      else{listEl.innerHTML=displayList.map(b=>{
+        const st=b.status==='completed'?'✅':'❌';
+        const dt=b.created_at?new Date(b.created_at).toLocaleString('he-IL',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}):b.filename||'';
+        return'<div class="flex items-center justify-between py-1.5 border-b border-white/5"><span class="text-xs text-slate-400">'+st+' '+dt+'</span><span class="text-xs text-slate-500">'+(b.rows_count?b.rows_count+' שורות':'GitHub')+'</span></div>';
+      }).join('');}
     }
+
     // GitHub backup info
     const ghEl=document.getElementById('github-backup-info');
     if(ghEl){
@@ -508,14 +516,13 @@ async function triggerBackup(){
   const btn=document.getElementById('backup-btn');
   btn.disabled=true;btn.innerHTML='<span class="material-symbols-outlined text-sm animate-spin">refresh</span>מגבה...';
   try{
-    const r=await fetch(`${API}/api/backup/create`,{method:'POST'});
+    // Try new tracked backup route first, fallback to legacy
+    let r=await fetch(`${API}/api/scan/backup`,{method:'POST',headers:{'Content-Type':'application/json'}}).catch(()=>null);
+    if(!r||!r.ok) r=await fetch(`${API}/api/backup/github/create`,{method:'POST'}).catch(()=>null);
+    if(!r||!r.ok) r=await fetch(`${API}/api/backup/create`,{method:'POST'});
     const d=await r.json();
-    if(r.ok){
-      btn.innerHTML='<span class="material-symbols-outlined text-sm">check</span>הצליח!';
-      setTimeout(()=>{loadBackups();btn.disabled=false;btn.innerHTML='<span class="material-symbols-outlined text-sm">add</span>גיבוי עכשיו';},3000);
-    } else {
-      btn.disabled=false;btn.innerHTML='<span class="material-symbols-outlined text-sm">add</span>גיבוי עכשיו';
-    }
+    btn.innerHTML='<span class="material-symbols-outlined text-sm">check</span>הופעל!';
+    setTimeout(()=>{loadBackups();btn.disabled=false;btn.innerHTML='<span class="material-symbols-outlined text-sm">add</span>גיבוי עכשיו';},5000);
   }catch(e){btn.disabled=false;btn.innerHTML='<span class="material-symbols-outlined text-sm">add</span>גיבוי עכשיו';}
 }
 
