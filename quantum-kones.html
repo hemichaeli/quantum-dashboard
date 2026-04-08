@@ -175,6 +175,7 @@ function renderTable(rows) {
     const stClass = STATUS_COLORS[st]||'text-slate-400 bg-slate-400/10';
     const stLabel = STATUS_LABELS[st]||st;
     const price = k.price ? '&#x20AA;'+parseInt(k.price).toLocaleString() : '—';
+    const price = k.price ? '₪'+parseInt(k.price).toLocaleString() : '—';
     const phone = k.phone ? '<a href="tel:'+esc(k.phone)+'" class="text-primary hover:underline">'+esc(k.phone)+'</a>' : '—';
     const title = esc((k.title||k.address||'כינוס').substring(0,30));
     return `<tr class="border-b border-white/5 hover:bg-white/3 transition-all">

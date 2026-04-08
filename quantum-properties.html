@@ -398,5 +398,6 @@ loadProperties(0);
 fetch(API_BASE + '/api/alerts?limit=500').then(function(r){return r.json()}).then(function(d){var u=(d.alerts||[]).filter(function(a){return !a.is_read}).length;var b=document.getElementById('nav-alert-badge');if(b&&u>0){b.textContent=u>99?'99+':u;b.classList.remove('hidden')}}).catch(function(){});
 </script>
 <script>fetch("https://pinuy-binuy-analyzer-production.up.railway.app/health").then(function(r){return r.json()}).then(function(d){var v="v"+d.version;document.querySelectorAll(".q-ver").forEach(function(el){el.textContent=v})}).catch(function(){});</script>
+<script src="shared/mobile-nav.js"></script>
 </body>
 </html>

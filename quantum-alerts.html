@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html class="dark" dir="rtl" lang="he">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>QUANTUM | התראות</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js"></script>
+<script src="shared/toast.js"></script>
+<script src="shared/state-store.js"></script>
+<script src="shared/api-client.js"></script>
+<script>
+tailwind.config = {
+    darkMode: "class",
+    theme: { extend: { colors: { "primary": "#137fec", "background-dark": "#101922", "surface": "#1a2530", "border-dark": "#2d3a4b", "alert-rose": "#f43f5e", "success-green": "#10b981" }, fontFamily: { "display": ["Manrope", "sans-serif"] } } },
+}
+</script>
+<style>
+body { font-family: 'Manrope', sans-serif; }
+.glass-panel { background: rgba(26, 37, 48, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.05); }
+.custom-scrollbar::-webkit-scrollbar { width: 4px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: #2d3a4b; border-radius: 10px; }
+@keyframes pulse-dot { 0%,100% { opacity:1; } 50% { opacity:0.4; } }
+.pulse-dot { animation: pulse-dot 2s ease-in-out infinite; }
+.skeleton { background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.06) 50%, rgba(255,255,255,0.03) 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; }
+@keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+</style>
+</head>
+<body class="bg-background-dark text-slate-200 min-h-screen flex">
+<aside class="w-64 flex-shrink-0 border-l border-white/5 bg-surface/50 h-screen sticky top-0 hidden lg:flex flex-col">
+<div class="p-5 flex items-center gap-3">
+<img src="quantum-logo.png" alt="QUANTUM" class="h-12 w-auto object-contain" style="filter:drop-shadow(0 0 8px rgba(19,127,236,0.4));"/>
+<div><h1 class="text-xl font-extrabold tracking-tight text-white uppercase">QUANTUM</h1>
+<p class="text-[10px] text-primary font-bold tracking-widest leading-none">UNIFIED ANALYTICS</p></div>
+</div>
+<nav class="flex-1 px-4 space-y-1 mt-2 overflow-y-auto custom-scrollbar">
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-dashboard.html"><span class="material-symbols-outlined">dashboard</span><span>לוח בקרה</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-opportunities.html"><span class="material-symbols-outlined">diamond</span><span>הזדמנויות</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-complexes.html"><span class="material-symbols-outlined">location_city</span><span>מתחמים</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-map-view.html"><span class="material-symbols-outlined">map</span><span>מפת פרויקטים</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-market-analysis.html"><span class="material-symbols-outlined">monitoring</span><span>ניתוח שוק</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-properties.html"><span class="material-symbols-outlined">apartment</span><span>נכסים</span></a>
+<div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">CRM ולידים</p></div>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-leads.html"><span class="material-symbols-outlined">people</span><span>לידים ו-CRM</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-campaigns.html"><span class="material-symbols-outlined">campaign</span><span>קמפיינים</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-appointments.html"><span class="material-symbols-outlined">calendar_month</span><span>פגישות ויומן</span></a>
+<div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">תקשורת</p></div>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-messaging.html"><span class="material-symbols-outlined">mail</span><span>הודעות ו-WA</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-bot-settings.html"><span class="material-symbols-outlined">smart_toy</span><span>הגדרות בוט</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary text-white font-semibold transition-all" href="quantum-alerts.html"><span class="material-symbols-outlined">notifications</span><span>התראות</span><span id="nav-alert-badge" class="hidden mr-auto px-1.5 py-0.5 bg-alert-rose text-white text-[9px] font-bold rounded-full min-w-[18px] text-center"></span></a>
+<div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">מערכת</p></div>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-scans.html"><span class="material-symbols-outlined">radar</span><span>סריקות</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-reports.html"><span class="material-symbols-outlined">description</span><span>דוחות</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-settings.html"><span class="material-symbols-outlined">settings</span><span>הגדרות</span></a>
+</nav>
+<div class="p-4 mt-auto">
+<div class="flex items-center gap-3 px-2">
+<div class="size-10 rounded-full bg-primary/20 flex items-center justify-center"><span class="material-symbols-outlined text-primary">person</span></div>
+<div class="flex-1 min-w-0"><p class="text-sm font-bold text-white truncate">QUANTUM Admin</p><p class="text-xs text-slate-500 truncate"><span class="q-ver">v...</span></p></div>
+</div></div>
+</aside>
+<main class="flex-1 min-w-0 h-screen overflow-y-auto overflow-x-hidden flex flex-col">
+    <header class="flex flex-wrap items-center justify-between gap-2 px-4 md:px-8 py-3 md:py-5 border-b border-white/5 glass-panel sticky top-0 z-10">
+        <div><div class="flex items-center gap-3"><h2 class="text-base md:text-2xl font-bold text-white leading-tight">התראות</h2><span id="header-unread-badge" class="hidden px-2.5 py-1 bg-alert-rose/20 text-alert-rose text-[11px] font-bold rounded-lg border border-alert-rose/30"></span></div><p class="text-sm text-slate-400">מודעות חדשות, ירידות מחיר, אישורי ועדות, זינוקי SSI</p></div>
+        <div class="flex items-center gap-3"><button onclick="markAllRead()" class="flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all"><span class="material-symbols-outlined text-lg">done_all</span><span>סמן הכל כנקרא</span></button><button class="flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all"><span class="material-symbols-outlined text-lg">tune</span><span>העדפות התראה</span></button></div>
+    </header>
+    <div class="p-8 space-y-4">
+        <div class="flex items-center gap-2 overflow-x-auto pb-2" id="filter-buttons">
+            <button onclick="filterAlerts('all')" data-filter="all" class="filter-btn flex items-center gap-2 px-4 py-2 bg-primary text-white text-sm font-bold rounded-xl whitespace-nowrap"><span class="material-symbols-outlined text-lg">select_all</span>הכל (<span class="count">0</span>)</button>
+            <button onclick="filterAlerts('stressed_seller')" data-filter="stressed_seller" class="filter-btn flex items-center gap-2 px-4 py-2 bg-white/5 text-slate-400 border border-white/10 text-sm font-semibold rounded-xl hover:bg-white/10 transition-all whitespace-nowrap"><span class="material-symbols-outlined text-lg text-alert-rose">warning</span>מוכר לחוץ (<span class="count">0</span>)</button>
+            <button onclick="filterAlerts('price_drop')" data-filter="price_drop" class="filter-btn flex items-center gap-2 px-4 py-2 bg-white/5 text-slate-400 border border-white/10 text-sm font-semibold rounded-xl hover:bg-white/10 transition-all whitespace-nowrap"><span class="material-symbols-outlined text-lg text-amber-400">trending_down</span>ירידות מחיר (<span class="count">0</span>)</button>
+            <button onclick="filterAlerts('opportunity')" data-filter="opportunity" class="filter-btn flex items-center gap-2 px-4 py-2 bg-white/5 text-slate-400 border border-white/10 text-sm font-semibold rounded-xl hover:bg-white/10 transition-all whitespace-nowrap"><span class="material-symbols-outlined text-lg text-indigo-400">diamond</span>הזדמנויות (<span class="count">0</span>)</button>
+            <button onclick="filterAlerts('new_complex')" data-filter="new_complex" class="filter-btn flex items-center gap-2 px-4 py-2 bg-white/5 text-slate-400 border border-white/10 text-sm font-semibold rounded-xl hover:bg-white/10 transition-all whitespace-nowrap"><span class="material-symbols-outlined text-lg text-success-green">add_home</span>מתחמים חדשים (<span class="count">0</span>)</button>
+            <button onclick="filterAlerts('committee')" data-filter="committee" class="filter-btn flex items-center gap-2 px-4 py-2 bg-white/5 text-slate-400 border border-white/10 text-sm font-semibold rounded-xl hover:bg-white/10 transition-all whitespace-nowrap"><span class="material-symbols-outlined text-lg text-primary">gavel</span>אישורי ועדות (<span class="count">0</span>)</button>
+        </div>
+        <div class="flex items-center gap-3">
+            <div class="flex-1 relative">
+                <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 text-lg">search</span>
+                <input type="text" id="alert-search" placeholder="חיפוש התראות..." oninput="applyFilters()" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 pr-10 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/20">
+            </div>
+            <select id="alert-sort" onchange="applyFilters()" class="bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-slate-300 focus:outline-none focus:border-primary/50 appearance-none cursor-pointer" style="min-width:140px">
+                <option value="newest">חדשות לישנות</option>
+                <option value="oldest">ישנות לחדשות</option>
+                <option value="unread">לא נקראו קודם</option>
+                <option value="type">לפי סוג</option>
+            </select>
+        </div>
+        <div id="alerts-container" class="space-y-3">
+            <div class="skeleton rounded-2xl h-24"></div>
+            <div class="skeleton rounded-2xl h-24"></div>
+            <div class="skeleton rounded-2xl h-24"></div>
+        </div>
+        <div id="load-more-container" class="text-center py-4 hidden">
+            <button onclick="loadMore()" class="px-8 py-3 bg-white/5 text-slate-400 border border-white/10 rounded-xl text-sm font-bold hover:bg-white/10 transition-all" id="load-more-btn">טען עוד התראות</button>
+        </div>
+        <div id="empty-state" class="hidden text-center py-16">
+            <span class="material-symbols-outlined text-5xl text-slate-600 mb-4">notifications_off</span>
+            <p class="text-slate-500 text-sm">אין התראות בקטגוריה זו</p>
+        </div>
+    </div>
+    <footer class="mt-auto px-8 py-6 border-t border-white/5 text-center text-slate-500 text-[11px] font-medium tracking-widest uppercase">&copy; 2026 Quantum Unified Analytics</footer>
+</main>
+<script src="shared/toast.js"></script>
+<script src="shared/state-store.js"></script>
+<script src="shared/api-client.js"></script>
+<script>
+const API_BASE=(typeof QuantumAPI!=='undefined')?QuantumAPI.API_BASE:'https://pinuy-binuy-analyzer-production.up.railway.app';
+function esc(s){return typeof DOMPurify!=='undefined'?DOMPurify.sanitize(String(s||'-'),{ALLOWED_TAGS:[]}):String(s||'-').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+let allAlerts = [];
+let currentFilter = 'all';
+let displayedCount = 0;
+const PAGE_SIZE = 20;
+const ALERT_CONFIG = {
+    stressed_seller: { icon: 'warning', color: 'alert-rose', label: 'מוכר לחוץ', bgClass: 'bg-alert-rose/5 border-alert-rose/15 hover:bg-alert-rose/10' },
+    price_drop: { icon: 'trending_down', color: 'amber-400', label: 'ירידת מחיר', bgClass: 'bg-amber-500/5 border-amber-500/10 hover:bg-amber-500/10' },
+    new_complex: { icon: 'add_home', color: 'success-green', label: 'מתחם חדש', bgClass: 'bg-success-green/5 border-success-green/10 hover:bg-success-green/10' },
+    committee: { icon: 'gavel', color: 'primary', label: 'אישור ועדה', bgClass: 'bg-primary/5 border-primary/15 hover:bg-primary/10' },
+    ssi_high: { icon: 'bolt', color: 'amber-400', label: 'SSI קריטי', bgClass: 'bg-amber-500/5 border-amber-500/10 hover:bg-amber-500/10' },
+    opportunity: { icon: 'diamond', color: 'indigo-400', label: 'הזדמנות', bgClass: 'bg-indigo-500/5 border-indigo-500/10 hover:bg-indigo-500/10' },
+    default: { icon: 'notifications', color: 'slate-400', label: 'התראה', bgClass: 'bg-surface/20 border-white/5 hover:bg-surface/40' }
+};
+function getConfig(type) { return ALERT_CONFIG[type] || ALERT_CONFIG.default; }
+function timeAgo(dateStr) {
+    var diff = Date.now() - new Date(dateStr).getTime();
+    var mins = Math.floor(diff / 60000);
+    if (mins < 1) return 'עכשיו';
+    if (mins < 60) return 'לפני ' + mins + ' דקות';
+    var hours = Math.floor(mins / 60);
+    if (hours < 24) return 'לפני ' + hours + ' שעות';
+    var days = Math.floor(hours / 24);
+    if (days < 7) return 'לפני ' + days + ' ימים';
+    return new Date(dateStr).toLocaleDateString('he-IL');
+}
+function renderAlert(alert) {
+    var cfg = getConfig(alert.alert_type);
+    var isRead = alert.is_read;
+    var readClass = isRead ? 'opacity-60 hover:opacity-100' : '';
+    var dotHtml = isRead ? '' : '<span class="size-2.5 rounded-full bg-' + cfg.color + ' flex-shrink-0 mt-2 pulse-dot"></span>';
+    var titleClass = isRead ? 'text-slate-400' : 'text-white';
+    var msgClass = isRead ? 'text-slate-500' : 'text-slate-400';
+    var badgeBg = isRead ? 'bg-white/5 text-slate-500' : 'bg-' + cfg.color + '/20 text-' + cfg.color;
+    var title = (alert.title || '').replace(/^[\u{1F195}\u{1F514}\u{26A0}\u{FE0F}\u{1F4CA}\u{1F4B0}\u{1F3E0}]+\s*/gu, '');
+    var message = alert.message || '';
+    var city = alert.city || '';
+    return '<div class="' + cfg.bgClass + ' ' + readClass + ' border rounded-2xl p-5 transition-all cursor-pointer" data-type="' + alert.alert_type + '" data-id="' + alert.id + '">' +
+        '<div class="flex items-start gap-4">' +
+            '<div class="size-10 rounded-xl bg-' + cfg.color + '/20 flex items-center justify-center flex-shrink-0 mt-0.5"><span class="material-symbols-outlined text-' + cfg.color + '">' + cfg.icon + '</span></div>' +
+            '<div class="flex-1 min-w-0">' +
+                '<div class="flex items-center gap-3 mb-1.5">' +
+                    '<span class="px-2 py-0.5 ' + badgeBg + ' text-[10px] font-bold rounded uppercase">' + cfg.label + '</span>' +
+                    (city ? '<span class="px-2 py-0.5 bg-white/5 text-slate-500 text-[10px] font-bold rounded">' + city + '</span>' : '') +
+                    '<span class="text-[10px] text-slate-500">' + timeAgo(alert.created_at) + '</span>' +
+                '</div>' +
+                '<h5 class="text-sm font-bold ' + titleClass + ' mb-1">' + title + '</h5>' +
+                (message ? '<p class="text-xs ' + msgClass + ' leading-relaxed" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">' + message + '</p>' : '') +
+                '<div class="flex items-center gap-4 mt-3">' +
+                    (alert.complex_id ? '<a href="quantum-project-detail.html?id=' + alert.complex_id + '" class="text-xs text-primary font-bold hover:underline">צפה במתחם</a>' : '') +
+                '</div>' +
+            '</div>' + dotHtml +
+        '</div></div>';
+}
+function getFilteredAlerts() {
+    if (currentFilter === 'all') return allAlerts.slice();
+    return allAlerts.filter(function(a) { return a.alert_type === currentFilter; });
+}
+function applyFilters() {
+    var search = (document.getElementById('alert-search').value || '').toLowerCase();
+    var sort = document.getElementById('alert-sort').value;
+    var filtered = getFilteredAlerts();
+    if (search) {
+        filtered = filtered.filter(function(a) {
+            return (a.title || '').toLowerCase().includes(search) || 
+                   (a.message || '').toLowerCase().includes(search) ||
+                   (a.complex_name || '').toLowerCase().includes(search) ||
+                   (a.city || '').toLowerCase().includes(search);
+        });
+    }
+    if (sort === 'newest') filtered.sort(function(a,b) { return new Date(b.created_at) - new Date(a.created_at); });
+    else if (sort === 'oldest') filtered.sort(function(a,b) { return new Date(a.created_at) - new Date(b.created_at); });
+    else if (sort === 'unread') filtered.sort(function(a,b) { return (a.is_read === b.is_read) ? (new Date(b.created_at) - new Date(a.created_at)) : (a.is_read ? 1 : -1); });
+    else if (sort === 'type') filtered.sort(function(a,b) { return (a.alert_type || '').localeCompare(b.alert_type || ''); });
+    var container = document.getElementById('alerts-container');
+    var toShow = filtered.slice(0, displayedCount);
+    container.innerHTML = toShow.map(renderAlert).join('');
+    var remaining = filtered.length - displayedCount;
+    var loadMoreC = document.getElementById('load-more-container');
+    var emptyState = document.getElementById('empty-state');
+    if (remaining > 0) { loadMoreC.classList.remove('hidden'); document.getElementById('load-more-btn').textContent = 'טען עוד ' + Math.min(20, remaining) + ' התראות'; }
+    else { loadMoreC.classList.add('hidden'); }
+    if (toShow.length === 0) emptyState.classList.remove('hidden'); else emptyState.classList.add('hidden');
+}
+function updateCounts() {
+    var unread = allAlerts.filter(function(a) { return !a.is_read; }).length;
+    var headerBadge = document.getElementById('header-unread-badge');
+    if (unread > 0) { headerBadge.textContent = unread + ' לא נקראו'; headerBadge.classList.remove('hidden'); }
+    else { headerBadge.classList.add('hidden'); }
+    var sidebarBadge = document.getElementById('nav-alert-badge');
+    if (sidebarBadge) {
+      if (unread > 0) { sidebarBadge.textContent = unread > 99 ? '99+' : unread; sidebarBadge.classList.remove('hidden'); }
+      else { sidebarBadge.classList.add('hidden'); }
+    }
+    var typeCounts = { all: allAlerts.length };
+    allAlerts.forEach(function(a) { typeCounts[a.alert_type] = (typeCounts[a.alert_type] || 0) + 1; });
+    document.querySelectorAll('.filter-btn').forEach(function(btn) {
+        var filter = btn.dataset.filter;
+        var countEl = btn.querySelector('.count');
+        if (countEl) countEl.textContent = typeCounts[filter] || 0;
+    });
+}
+function filterAlerts(type) {
+    document.getElementById('alert-search').value = '';
+    currentFilter = type;
+    displayedCount = PAGE_SIZE;
+    document.querySelectorAll('.filter-btn').forEach(function(btn) {
+        if (btn.dataset.filter === type) {
+            btn.className = btn.className.replace('bg-white/5 text-slate-400 border border-white/10', 'bg-primary text-white');
+        } else {
+            btn.className = btn.className.replace('bg-primary text-white', 'bg-white/5 text-slate-400 border border-white/10');
+            if (btn.className.indexOf('border') === -1) btn.className += ' border border-white/10';
+        }
+    });
+    applyFilters();
+}
+function loadMore() { displayedCount += PAGE_SIZE; applyFilters(); }
+function markAllRead() {
+    allAlerts.forEach(function(a) { a.is_read = true; });
+    updateCounts();
+    applyFilters();
+    try { fetch(API_BASE + '/api/alerts/mark-all-read', { method: 'POST' }); } catch(e) {}
+}
+function loadAlerts() {
+    fetch(API_BASE + '/api/alerts?limit=500')
+        .then(function(resp) { if (!resp.ok) throw new Error('HTTP ' + resp.status); return resp.json(); })
+        .then(function(data) {
+            allAlerts = data.alerts || [];
+            displayedCount = PAGE_SIZE;
+            updateCounts();
+            applyFilters();
+        })
+        .catch(function(err) {
+            document.getElementById('alerts-container').innerHTML =
+                '<div class="text-center py-16"><span class="material-symbols-outlined text-5xl text-alert-rose/50 mb-4">cloud_off</span>' +
+                '<p class="text-slate-500 text-sm mb-2">שגיאה בטעינת התראות</p>' +
+                '<p class="text-slate-600 text-xs">' + err.message + '</p>' +
+                '<button onclick="loadAlerts()" class="mt-4 px-6 py-2 bg-primary text-white text-sm rounded-xl">נסה שוב</button></div>';
+        });
+}
+loadAlerts();
+</script>
+<script>fetch("https://pinuy-binuy-analyzer-production.up.railway.app/health").then(function(r){return r.json()}).then(function(d){var v="v"+d.version;document.querySelectorAll(".q-ver").forEach(function(el){el.textContent=v})}).catch(function(){});</script>
+<script src="shared/mobile-nav.js"></script>
+</body>
+</html>
