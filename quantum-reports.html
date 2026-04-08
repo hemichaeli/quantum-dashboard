@@ -394,9 +394,6 @@ loadAllData();
 fetch(`${API_BASE}/api/alerts?limit=500`).then(r=>r.json()).then(d=>{const u=(d.alerts||[]).filter(a=>!a.is_read).length;
 const b=document.getElementById('nav-alert-badge');if(b&&u>0){b.textContent=u>99?'99+':u;b.classList.remove('hidden')}}).catch(()=>{});
 </script>
-<script src="shared/toast.js"></script>
-<script src="shared/state-store.js"></script>
-<script src="shared/api-client.js"></script>
 <script>
 (function(){
   var base="https://pinuy-binuy-analyzer-production.up.railway.app";
