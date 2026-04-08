@@ -12,15 +12,11 @@ body{font-family:'Manrope',sans-serif;}
 .glass-panel{background:rgba(26,37,48,0.7);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.05);}
 .custom-scrollbar::-webkit-scrollbar{width:6px;}.custom-scrollbar::-webkit-scrollbar-track{background:transparent;}.custom-scrollbar::-webkit-scrollbar-thumb{background:#2d3a4b;border-radius:10px;}
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);display:flex;align-items:center;justify-content:center;z-index:50;}
-.kanban-col{min-height:200px;transition:box-shadow 0.2s,border-color 0.2s;}
-.kanban-col.drag-over{border:1px solid rgba(19,127,236,0.5);box-shadow:0 0 0 1px rgba(19,127,236,0.3);border-radius:12px;}
+.kanban-col{min-height:200px;}
 </style>
 </head>
 <body class="bg-background-dark text-slate-200 min-h-screen flex">
-<button id="mobile-menu-btn" onclick="document.getElementById('mobile-sidebar').classList.toggle('hidden');document.getElementById('mobile-overlay').classList.toggle('hidden')" class="lg:hidden fixed top-3 right-3 z-50 p-2.5 bg-surface/90 border border-white/10 rounded-xl backdrop-blur-sm shadow-xl"><span class="material-symbols-outlined text-white text-2xl">menu</span></button>
-<div id="mobile-overlay" class="hidden lg:hidden fixed inset-0 bg-black/60 z-30 backdrop-blur-sm" onclick="document.getElementById('mobile-sidebar').classList.add('hidden');this.classList.add('hidden')"></div>
-
-<aside id="mobile-sidebar" class="w-64 flex-shrink-0 border-l border-white/5 bg-surface/50 h-screen fixed lg:sticky top-0 hidden lg:flex flex-col z-40 transition-all">
+<aside class="w-64 flex-shrink-0 border-l border-white/5 bg-surface/50 h-screen sticky top-0 hidden lg:flex flex-col">
 <div class="p-5 flex items-center gap-3">
 <img src="quantum-logo.png" alt="QUANTUM" class="h-12 w-auto object-contain" style="filter:drop-shadow(0 0 8px rgba(19,127,236,0.4));"/>
 <div><h1 class="text-xl font-extrabold tracking-tight text-white uppercase">QUANTUM</h1>
@@ -40,7 +36,7 @@ body{font-family:'Manrope',sans-serif;}
 <div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">תקשורת</p></div>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-messaging.html"><span class="material-symbols-outlined">mail</span><span>הודעות ו-WA</span></a>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-bot-settings.html"><span class="material-symbols-outlined">smart_toy</span><span>הגדרות בוט</span></a>
-<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-alerts.html"><span class="material-symbols-outlined">notifications</span><span>התראות</span><span id="nav-alert-badge" class="hidden mr-auto px-1.5 py-0.5 bg-alert-rose text-white text-[9px] font-bold rounded-full min-w-[18px] text-center"></span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-alerts.html"><span class="material-symbols-outlined">notifications</span><span>התראות</span></a>
 <div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">נוסף</p></div>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-kones.html"><span class="material-symbols-outlined">gavel</span><span>כינוסי נכסים</span></a>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-news.html"><span class="material-symbols-outlined">newspaper</span><span>חדשות שוק</span></a>
@@ -115,8 +111,12 @@ body{font-family:'Manrope',sans-serif;}
 </div>
 </div>
 
+<script src="shared/api-client.js"></script>
+<script src="shared/toast.js"></script>
+<script src="shared/state-store.js"></script>
+<script src="sidebar-alerts.js"></script>
 <script>
-const API = (typeof QuantumAPI!=='undefined')?QuantumAPI.API_BASE:'https://pinuy-binuy-analyzer-production.up.railway.app';
+const API = QuantumAPI.API_BASE;
 let _currentFilter = 'all';
 const PRIORITY_COLORS = { low:'text-slate-400', normal:'text-primary', high:'text-amber-400', urgent:'text-alert-rose' };
 const PRIORITY_LABELS = { low:'נמוכה', normal:'רגילה', high:'גבוהה', urgent:'דחוף' };
@@ -131,7 +131,7 @@ async function loadTasks(filter) {
   if (activeBtn) activeBtn.className = activeBtn.className.replace('text-slate-400 hover:bg-white/5 hover:text-white','bg-primary text-white');
 
   try {
-    const r = await fetch(API + '/dashboard/api/tasks');
+    const r = await fetch(API + '/api/tasks');
     const d = await r.json();
     if (!d.success) throw new Error(d.error);
     let tasks = d.tasks || [];
@@ -149,43 +149,25 @@ function renderKanban(tasks) {
   tasks.forEach(t => { if (cols[t.status]) cols[t.status].push(t); });
   ['todo','doing','done'].forEach(s => {
     document.getElementById('count-'+s).textContent = cols[s].length;
-    const col = document.getElementById('col-'+s);
-    col.innerHTML = cols[s].length ? cols[s].map(t => taskCard(t)).join('') : '<p class="text-xs text-slate-600 text-center py-4">אין משימות</p>';
-    col.setAttribute('data-status', s);
-    col.ondragover = function(e) { e.preventDefault(); this.classList.add('drag-over'); };
-    col.ondragleave = function(e) { this.classList.remove('drag-over'); };
-    col.ondrop = function(e) { e.preventDefault(); this.classList.remove('drag-over'); handleTaskDrop(e, s); };
+    document.getElementById('col-'+s).innerHTML = cols[s].length ? cols[s].map(t => taskCard(t)).join('') : '<p class="text-xs text-slate-600 text-center py-4">אין משימות</p>';
   });
 }
 
-async function handleTaskDrop(e, newStatus) {
-  const taskId = e.dataTransfer.getData('text/plain');
-  if (!taskId) return;
-  try {
-    const r = await fetch(API + '/dashboard/api/tasks/' + taskId, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ status: newStatus })
-    });
-    const d = await r.json();
-    if (!d.success) throw new Error(d.error);
-    loadTasks();
-  } catch(e) { alert('שגיאה בעדכון משימה: ' + e.message); }
-}
+function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
 function taskCard(t) {
   const due = t.due_date ? new Date(t.due_date).toLocaleDateString('he-IL') : '';
   const overdue = t.due_date && new Date(t.due_date) < new Date() && t.status !== 'done';
   const pClass = PRIORITY_COLORS[t.priority] || 'text-slate-400';
   const pLabel = PRIORITY_LABELS[t.priority] || t.priority;
-  return `<div draggable="true" ondragstart="event.dataTransfer.setData('text/plain','${t.id}')" class="bg-surface/60 border border-white/5 rounded-xl p-3 space-y-2 hover:border-primary/30 transition-all cursor-grab">
+  return `<div class="bg-surface/60 border border-white/5 rounded-xl p-3 space-y-2 hover:border-primary/30 transition-all">
     <div class="flex items-start justify-between gap-2">
-      <p class="text-sm font-semibold text-white leading-snug flex-1">${t.title}</p>
+      <p class="text-sm font-semibold text-white leading-snug flex-1">${esc(t.title)}</p>
       <button onclick="editTask(${t.id})" class="text-slate-600 hover:text-primary transition-all flex-shrink-0"><span class="material-symbols-outlined text-base">edit</span></button>
     </div>
-    ${t.description ? `<p class="text-xs text-slate-500 line-clamp-2">${t.description}</p>` : ''}
+    ${t.description ? `<p class="text-xs text-slate-500 line-clamp-2">${esc(t.description)}</p>` : ''}
     <div class="flex items-center gap-2 flex-wrap">
-      <span class="text-[10px] font-bold ${pClass}">${pLabel}</span>
+      <span class="text-[10px] font-bold ${pClass}">${esc(pLabel)}</span>
       ${due ? `<span class="text-[10px] ${overdue?'text-alert-rose font-bold':'text-slate-500'}">${overdue?'⚠️ ':''}${due}</span>` : ''}
       ${t.reminder_at ? '<span class="material-symbols-outlined text-xs text-amber-400" title="יש תזכורת">alarm</span>' : ''}
     </div>
@@ -206,7 +188,7 @@ function openNewTaskModal() {
 
 async function editTask(id) {
   try {
-    const d = await fetch(API+'/dashboard/api/tasks').then(r=>r.json());
+    const d = await fetch(API+'/api/tasks').then(r=>r.json());
     const t = d.tasks.find(x=>x.id===id);
     if (!t) return;
     document.getElementById('form-id').value = t.id;
@@ -218,7 +200,7 @@ async function editTask(id) {
     document.getElementById('form-reminder').value = t.reminder_at ? new Date(t.reminder_at).toISOString().slice(0,16) : '';
     document.getElementById('modal-title').textContent = '✏️ עריכת משימה';
     document.getElementById('task-modal').classList.remove('hidden');
-  } catch(e) { alert('שגיאה: '+e.message); }
+  } catch(e) { QuantumToast.error('שגיאה: '+e.message); }
 }
 
 function closeModal() { document.getElementById('task-modal').classList.add('hidden'); }
@@ -226,7 +208,7 @@ function closeModal() { document.getElementById('task-modal').classList.add('hid
 async function saveTask() {
   const id = document.getElementById('form-id').value;
   const title = document.getElementById('form-title').value.trim();
-  if (!title) { alert('נא הזן כותרת'); return; }
+  if (!title) { QuantumToast.warning('נא הזן כותרת'); return; }
   const body = {
     title, description: document.getElementById('form-desc').value.trim()||null,
     status: document.getElementById('form-status').value,
@@ -235,19 +217,19 @@ async function saveTask() {
     reminder_at: document.getElementById('form-reminder').value||null
   };
   try {
-    const url = id ? API+'/dashboard/api/tasks/'+id : API+'/dashboard/api/tasks';
+    const url = id ? API+'/api/tasks/'+id : API+'/api/tasks';
     const method = id ? 'PUT' : 'POST';
     const d = await fetch(url, {method, headers:{'Content-Type':'application/json'}, body:JSON.stringify(body)}).then(r=>r.json());
     if (!d.success) throw new Error(d.error);
     closeModal();
     loadTasks();
-  } catch(e) { alert('שגיאה: '+e.message); }
+  } catch(e) { QuantumToast.error('שגיאה: '+e.message); }
 }
 
 fetch(API+'/api/version').then(r=>r.json()).then(d=>{ document.querySelectorAll('.q-ver').forEach(el=>el.textContent='v'+(d.version||'?')); }).catch(()=>{});
-fetch(API+'/api/alerts?limit=500').then(function(r){return r.json()}).then(function(d){var u=(d.alerts||[]).filter(function(a){return !a.is_read}).length;var b=document.getElementById('nav-alert-badge');if(b&&u>0){b.textContent=u>99?'99+':u;b.classList.remove('hidden')}}).catch(function(){});
 loadTasks('all');
 setInterval(()=>loadTasks(), 60000);
 </script>
+<script src="shared/mobile-nav.js"></script>
 </body>
 </html>
