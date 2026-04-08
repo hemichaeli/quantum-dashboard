@@ -10,10 +10,7 @@
 <style>body{font-family:'Manrope',sans-serif;}.glass-panel{background:rgba(26,37,48,0.7);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.05);}.custom-scrollbar::-webkit-scrollbar{width:6px;}.custom-scrollbar::-webkit-scrollbar-track{background:transparent;}.custom-scrollbar::-webkit-scrollbar-thumb{background:#2d3a4b;border-radius:10px;}.status-badge{padding:2px 10px;border-radius:999px;font-size:11px;font-weight:700;}</style>
 </head>
 <body class="bg-background-dark text-slate-200 min-h-screen flex">
-<button id="mobile-menu-btn" onclick="document.getElementById('mobile-sidebar').classList.toggle('hidden');document.getElementById('mobile-overlay').classList.toggle('hidden')" class="lg:hidden fixed top-3 right-3 z-50 p-2.5 bg-surface/90 border border-white/10 rounded-xl backdrop-blur-sm shadow-xl"><span class="material-symbols-outlined text-white text-2xl">menu</span></button>
-<div id="mobile-overlay" class="hidden lg:hidden fixed inset-0 bg-black/60 z-30 backdrop-blur-sm" onclick="document.getElementById('mobile-sidebar').classList.add('hidden');this.classList.add('hidden')"></div>
-
-<aside id="mobile-sidebar" class="w-64 flex-shrink-0 border-l border-white/5 bg-surface/50 h-screen fixed lg:sticky top-0 hidden lg:flex flex-col z-40 transition-all">
+<aside class="w-64 flex-shrink-0 border-l border-white/5 bg-surface/50 h-screen sticky top-0 hidden lg:flex flex-col">
 <div class="p-5 flex items-center gap-3">
 <img src="quantum-logo.png" alt="QUANTUM" class="h-12 w-auto object-contain" style="filter:drop-shadow(0 0 8px rgba(19,127,236,0.4));"/>
 <div><h1 class="text-xl font-extrabold tracking-tight text-white uppercase">QUANTUM</h1>
@@ -33,7 +30,7 @@
 <div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">תקשורת</p></div>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-messaging.html"><span class="material-symbols-outlined">mail</span><span>הודעות ו-WA</span></a>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-bot-settings.html"><span class="material-symbols-outlined">smart_toy</span><span>הגדרות בוט</span></a>
-<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-alerts.html"><span class="material-symbols-outlined">notifications</span><span>התראות</span><span id="nav-alert-badge" class="hidden mr-auto px-1.5 py-0.5 bg-alert-rose text-white text-[9px] font-bold rounded-full min-w-[18px] text-center"></span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-alerts.html"><span class="material-symbols-outlined">notifications</span><span>התראות</span></a>
 <div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">נוסף</p></div>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary text-white font-semibold transition-all" href="quantum-kones.html"><span class="material-symbols-outlined">gavel</span><span>כינוסי נכסים</span></a>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-news.html"><span class="material-symbols-outlined">newspaper</span><span>חדשות שוק</span></a>
@@ -54,9 +51,8 @@
 </aside>
 <main class="flex-1 min-w-0 h-screen overflow-y-auto overflow-x-hidden flex flex-col">
 <header class="flex flex-wrap items-center justify-between gap-2 px-4 md:px-8 py-3 md:py-5 border-b border-white/5 glass-panel sticky top-0 z-10">
-<div><h2 class="text-base md:text-2xl font-bold text-white leading-tight">🏗️ כינוסי נכסים</h2><p class="text-sm text-slate-400">נכסים בהליך כינוס — הזדמנויות רכישה מתחת לשוק</p></div>
+<div><h2 class="text-base md:text-2xl font-bold text-white leading-tight">&#x1F3D7;&#xFE0F; כינוסי נכסים</h2><p class="text-sm text-slate-400">נכסים בהליך כינוס — הזדמנויות רכישה מתחת לשוק</p></div>
 <div class="flex items-center gap-3">
-<button class="flex items-center gap-2 bg-primary hover:brightness-110 px-4 py-2 rounded-xl text-xs font-bold text-white transition-all" onclick="enrichKones()"><span class="material-symbols-outlined text-base">auto_fix_high</span>העשר נכסים</button>
 <button class="flex items-center gap-2 bg-amber-500 hover:brightness-110 px-5 py-2.5 rounded-xl text-sm font-bold text-white transition-all" onclick="runKonesAutoContact()"><span class="material-symbols-outlined text-lg">phone_in_talk</span>Auto Contact</button>
 <button class="flex items-center gap-2 bg-primary hover:brightness-110 px-5 py-2.5 rounded-xl text-sm font-bold text-white transition-all" onclick="loadKones()"><span class="material-symbols-outlined text-lg">refresh</span>רענן</button>
 </div>
@@ -72,15 +68,15 @@
 </div>
 <!-- Filters -->
 <div class="glass-panel rounded-2xl p-4 flex flex-wrap gap-3 items-center">
-<input type="text" id="filter-city" placeholder="🏙️ עיר..." class="bg-surface border border-white/10 rounded-xl text-sm px-4 py-2.5 text-slate-300 focus:ring-primary w-36" oninput="applyFilters()"/>
-<input type="text" id="filter-search" placeholder="🔍 חיפוש חופשי..." class="bg-surface border border-white/10 rounded-xl text-sm px-4 py-2.5 text-slate-300 focus:ring-primary w-48" oninput="applyFilters()"/>
+<input type="text" id="filter-city" placeholder="&#x1F3D9;&#xFE0F; עיר..." class="bg-surface border border-white/10 rounded-xl text-sm px-4 py-2.5 text-slate-300 focus:ring-primary w-36" oninput="applyFilters()"/>
+<input type="text" id="filter-search" placeholder="&#x1F50D; חיפוש חופשי..." class="bg-surface border border-white/10 rounded-xl text-sm px-4 py-2.5 text-slate-300 focus:ring-primary w-48" oninput="applyFilters()"/>
 <select id="filter-status" class="bg-surface border border-white/10 rounded-xl text-sm px-4 py-2.5 text-slate-300 focus:ring-primary" onchange="applyFilters()">
 <option value="">כל הסטטוסים</option>
-<option value="pending">⏳ ממתין לפנייה</option>
-<option value="contacted">✅ נוצר קשר</option>
-<option value="landline">📞 קו ארץ</option>
-<option value="no_phone">❌ אין טלפון</option>
-<option value="failed">⚠️ נכשל</option>
+<option value="pending">&#x23F3; ממתין לפנייה</option>
+<option value="contacted">&#x2705; נוצר קשר</option>
+<option value="landline">&#x1F4DE; קו ארץ</option>
+<option value="no_phone">&#x274C; אין טלפון</option>
+<option value="failed">&#x26A0;&#xFE0F; נכשל</option>
 </select>
 <button class="flex items-center gap-1 text-xs text-slate-400 hover:text-white px-3 py-2 rounded-lg hover:bg-white/5 transition-all" onclick="exportCSV()"><span class="material-symbols-outlined text-sm">download</span>ייצוא CSV</button>
 </div>
@@ -106,8 +102,13 @@
 </div>
 </div>
 </main>
+<script src="shared/api-client.js"></script>
+<script src="shared/toast.js"></script>
+<script src="shared/state-store.js"></script>
+<script src="sidebar-alerts.js"></script>
 <script>
-const API = (typeof QuantumAPI!=='undefined')?QuantumAPI.API_BASE:'https://pinuy-binuy-analyzer-production.up.railway.app';
+const API = QuantumAPI.API_BASE;
+function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 let _allKones = [];
 let _sortField = 'title', _sortDir = 'asc';
 
@@ -118,7 +119,7 @@ async function loadKones() {
   const tbody = document.getElementById('kones-tbody');
   tbody.innerHTML = '<tr><td colspan="10" class="text-center py-12 text-slate-500">טוען...</td></tr>';
   try {
-    const r = await fetch(API + '/api/kones/listings');
+    const r = await fetch(API + '/api/kones');
     const d = await r.json();
     _allKones = d.data || d || [];
     updateStats();
@@ -173,20 +174,20 @@ function renderTable(rows) {
     const st = k.contact_status||'pending';
     const stClass = STATUS_COLORS[st]||'text-slate-400 bg-slate-400/10';
     const stLabel = STATUS_LABELS[st]||st;
-    const price = k.price ? '₪'+parseInt(k.price).toLocaleString() : '—';
-    const phone = k.phone ? '<a href="tel:'+k.phone+'" class="text-primary hover:underline">'+k.phone+'</a>' : '—';
-    const title = (k.title||k.address||'כינוס').substring(0,30);
+    const price = k.price ? '&#x20AA;'+parseInt(k.price).toLocaleString() : '—';
+    const phone = k.phone ? '<a href="tel:'+esc(k.phone)+'" class="text-primary hover:underline">'+esc(k.phone)+'</a>' : '—';
+    const title = esc((k.title||k.address||'כינוס').substring(0,30));
     return `<tr class="border-b border-white/5 hover:bg-white/3 transition-all">
-      <td class="px-4 py-3 font-medium text-white max-w-[160px] truncate" title="${k.title||''}">${title}</td>
-      <td class="px-4 py-3 text-slate-400 text-xs max-w-[130px] truncate">${k.address||'—'}</td>
-      <td class="px-4 py-3 text-slate-300">${k.city||'—'}</td>
+      <td class="px-4 py-3 font-medium text-white max-w-[160px] truncate" title="${esc(k.title)}">${title}</td>
+      <td class="px-4 py-3 text-slate-400 text-xs max-w-[130px] truncate">${esc(k.address||'—')}</td>
+      <td class="px-4 py-3 text-slate-300">${esc(k.city||'—')}</td>
       <td class="px-4 py-3">${phone}</td>
       <td class="px-4 py-3 text-amber-400 font-semibold">${price}</td>
-      <td class="px-4 py-3"><span class="status-badge ${stClass}">${stLabel}</span></td>
-      <td class="px-4 py-3 text-slate-400 text-xs">${k.contact_person||'—'}</td>
+      <td class="px-4 py-3"><span class="status-badge ${stClass}">${esc(stLabel)}</span></td>
+      <td class="px-4 py-3 text-slate-400 text-xs">${esc(k.contact_person||'—')}</td>
       <td class="px-4 py-3 text-center text-slate-400">${k.contact_attempts||0}</td>
-      <td class="px-4 py-3 text-slate-400 text-xs">${k.gush_helka||'—'}</td>
-      <td class="px-4 py-3 text-center">${k.url?'<a href="'+k.url+'" target="_blank" class="text-xs text-primary hover:underline">פתח</a>':'—'}</td>
+      <td class="px-4 py-3 text-slate-400 text-xs">${esc(k.gush_helka||'—')}</td>
+      <td class="px-4 py-3 text-center">${k.url?'<a href="'+esc(k.url)+'" target="_blank" class="text-xs text-primary hover:underline">פתח</a>':'—'}</td>
     </tr>`;
   }).join('');
 }
@@ -197,9 +198,9 @@ async function runKonesAutoContact() {
     const r = await fetch(API+'/api/auto-contact/run-kones', {method:'POST',headers:{'Content-Type':'application/json'}});
     const d = await r.json();
     const res = d.result||{};
-    alert('✅ Auto Contact הופעל!\nנוצר קשר: '+(res.contacted||0)+'\nקו ארץ: '+(res.skipped_landline||0)+'\nללא טלפון: '+(res.skipped_no_phone||0)+'\nנכשל: '+(res.failed||0));
+    QuantumToast.success('Auto Contact הופעל! נוצר קשר: '+(res.contacted||0)+' | קו ארץ: '+(res.skipped_landline||0)+' | ללא טלפון: '+(res.skipped_no_phone||0)+' | נכשל: '+(res.failed||0));
     loadKones();
-  } catch(e) { alert('❌ נכשל: '+e.message); }
+  } catch(e) { QuantumToast.error('נכשל: '+e.message); }
 }
 
 function exportCSV() {
@@ -209,18 +210,10 @@ function exportCSV() {
   const a=document.createElement('a');a.href='data:text/csv;charset=utf-8,\uFEFF'+encodeURIComponent(csv);a.download='kones.csv';a.click();
 }
 
-async function enrichKones() {
-  try {
-    await fetch(API+'/api/kones/enrich', {method:'POST', headers:{'Content-Type':'application/json'}});
-    alert('העשרה התחילה! הנתונים יתעדכנו בדקות הקרובות.');
-  } catch(e) { alert('שגיאה: '+e.message); }
-}
-
 // Load version
 fetch(API+'/api/version').then(r=>r.json()).then(d=>{ document.querySelectorAll('.q-ver').forEach(el=>el.textContent='v'+(d.version||'?')); }).catch(()=>{});
-// Load alert badge
-fetch(API+'/api/alerts?limit=500').then(function(r){return r.json()}).then(function(d){var u=(d.alerts||[]).filter(function(a){return !a.is_read}).length;var b=document.getElementById('nav-alert-badge');if(b&&u>0){b.textContent=u>99?'99+':u;b.classList.remove('hidden')}}).catch(function(){});
 loadKones();
 </script>
+<script src="shared/mobile-nav.js"></script>
 </body>
 </html>
