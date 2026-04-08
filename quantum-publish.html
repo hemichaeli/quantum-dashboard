@@ -17,10 +17,7 @@ body{font-family:'Manrope',sans-serif;}
 </style>
 </head>
 <body class="bg-background-dark text-slate-200 min-h-screen flex">
-<button id="mobile-menu-btn" onclick="document.getElementById('mobile-sidebar').classList.toggle('hidden');document.getElementById('mobile-overlay').classList.toggle('hidden')" class="lg:hidden fixed top-3 right-3 z-50 p-2.5 bg-surface/90 border border-white/10 rounded-xl backdrop-blur-sm shadow-xl"><span class="material-symbols-outlined text-white text-2xl">menu</span></button>
-<div id="mobile-overlay" class="hidden lg:hidden fixed inset-0 bg-black/60 z-30 backdrop-blur-sm" onclick="document.getElementById('mobile-sidebar').classList.add('hidden');this.classList.add('hidden')"></div>
-
-<aside id="mobile-sidebar" class="w-64 flex-shrink-0 border-l border-white/5 bg-surface/50 h-screen fixed lg:sticky top-0 hidden lg:flex flex-col z-40 transition-all">
+<aside class="w-64 flex-shrink-0 border-l border-white/5 bg-surface/50 h-screen sticky top-0 hidden lg:flex flex-col">
 <div class="p-5 flex items-center gap-3">
 <img src="quantum-logo.png" alt="QUANTUM" class="h-12 w-auto object-contain" style="filter:drop-shadow(0 0 8px rgba(19,127,236,0.4));"/>
 <div><h1 class="text-xl font-extrabold tracking-tight text-white uppercase">QUANTUM</h1>
@@ -40,7 +37,7 @@ body{font-family:'Manrope',sans-serif;}
 <div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">תקשורת</p></div>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-messaging.html"><span class="material-symbols-outlined">mail</span><span>הודעות ו-WA</span></a>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-bot-settings.html"><span class="material-symbols-outlined">smart_toy</span><span>הגדרות בוט</span></a>
-<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-alerts.html"><span class="material-symbols-outlined">notifications</span><span>התראות</span><span id="nav-alert-badge" class="hidden mr-auto px-1.5 py-0.5 bg-alert-rose text-white text-[9px] font-bold rounded-full min-w-[18px] text-center"></span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-alerts.html"><span class="material-symbols-outlined">notifications</span><span>התראות</span></a>
 <div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">נוסף</p></div>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-kones.html"><span class="material-symbols-outlined">gavel</span><span>כינוסי נכסים</span></a>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-news.html"><span class="material-symbols-outlined">newspaper</span><span>חדשות שוק</span></a>
@@ -130,8 +127,13 @@ body{font-family:'Manrope',sans-serif;}
 </div>
 </div>
 </main>
+<script src="shared/api-client.js"></script>
+<script src="shared/toast.js"></script>
+<script src="shared/state-store.js"></script>
+<script src="sidebar-alerts.js"></script>
 <script>
-const API = (typeof QuantumAPI!=='undefined')?QuantumAPI.API_BASE:'https://pinuy-binuy-analyzer-production.up.railway.app';
+const API = QuantumAPI.API_BASE;
+function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 let _selectedPlatforms = new Set();
 
 function togglePlatform(p) {
@@ -147,7 +149,7 @@ function togglePlatform(p) {
 
 function generateQR() {
   const url = document.getElementById('qr-url').value.trim();
-  if (!url) { alert('הזן URL'); return; }
+  if (!url) { QuantumToast.warning('הזן URL'); return; }
   const encoded = encodeURIComponent(url);
   const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=256x256&data=${encoded}&bgcolor=101922&color=ffffff&format=png`;
   const img = document.getElementById('qr-img');
@@ -157,11 +159,11 @@ function generateQR() {
 }
 
 async function publishAd() {
-  if (!_selectedPlatforms.size) { alert('בחר לפחות פלטפורמה אחת'); return; }
+  if (!_selectedPlatforms.size) { QuantumToast.warning('בחר לפחות פלטפורמה אחת'); return; }
   const title = document.getElementById('pub-title').value.trim();
   const address = document.getElementById('pub-address').value.trim();
   const desc = document.getElementById('pub-desc').value.trim();
-  if (!title || !address || !desc) { alert('כותרת, כתובת ותיאור הם שדות חובה'); return; }
+  if (!title || !address || !desc) { QuantumToast.warning('כותרת, כתובת ותיאור הם שדות חובה'); return; }
 
   const body = {
     platforms: Array.from(_selectedPlatforms),
@@ -191,9 +193,9 @@ async function publishAd() {
       const el = document.getElementById('status-'+p);
       const res = results[p];
       if (res?.success) {
-        el.innerHTML = `<span class="text-success-green material-symbols-outlined">check_circle</span><span class="text-sm text-success-green">${p} — פורסם בהצלחה ${res.url ? `<a href="${res.url}" target="_blank" class="underline text-primary">צפה</a>` : ''}</span>`;
+        el.innerHTML = `<span class="text-success-green material-symbols-outlined">check_circle</span><span class="text-sm text-success-green">${esc(p)} — פורסם בהצלחה ${res.url ? `<a href="${esc(res.url)}" target="_blank" class="underline text-primary">צפה</a>` : ''}</span>`;
       } else {
-        el.innerHTML = `<span class="text-alert-rose material-symbols-outlined">error</span><span class="text-sm text-alert-rose">${p} — שגיאה: ${res?.error||'לא ידוע'}</span>`;
+        el.innerHTML = `<span class="text-alert-rose material-symbols-outlined">error</span><span class="text-sm text-alert-rose">${esc(p)} — שגיאה: ${esc(res?.error||'לא ידוע')}</span>`;
       }
     });
   } catch(e) {
@@ -208,15 +210,13 @@ async function loadHistory() {
   if (sec.classList.contains('hidden')) return;
   list.innerHTML = '<p class="text-slate-500 text-sm">טוען...</p>';
   try {
-    const resp = await fetch(API+'/api/publish/history');
-    if (!resp.ok) { list.innerHTML = '<p class="text-slate-500 text-sm">שירות היסטוריית פרסום אינו זמין כרגע</p>'; return; }
-    const d = await resp.json();
+    const d = await fetch(API+'/api/publish/history').then(r=>r.json());
     const items = d.data || [];
     if (!items.length) { list.innerHTML = '<p class="text-slate-500 text-sm">אין היסטוריה</p>'; return; }
     list.innerHTML = items.map(h => {
       const date = h.created_at ? new Date(h.created_at).toLocaleDateString('he-IL') : '';
       return `<div class="glass-panel rounded-xl p-4 flex items-center justify-between gap-3">
-        <div><p class="font-semibold text-sm text-white">${h.title||'—'}</p><p class="text-xs text-slate-500">${h.address||''} · ${h.platforms?.join(', ')||''} · ${date}</p></div>
+        <div><p class="font-semibold text-sm text-white">${esc(h.title||'—')}</p><p class="text-xs text-slate-500">${esc(h.address||'')} · ${esc(h.platforms?.join(', ')||'')} · ${date}</p></div>
         <span class="text-[10px] font-bold px-2 py-1 rounded-full ${h.status==='success'?'bg-success-green/10 text-success-green':'bg-alert-rose/10 text-alert-rose'}">${h.status==='success'?'פורסם':'נכשל'}</span>
       </div>`;
     }).join('');
@@ -224,7 +224,7 @@ async function loadHistory() {
 }
 
 fetch(API+'/api/version').then(r=>r.json()).then(d=>{ document.querySelectorAll('.q-ver').forEach(el=>el.textContent='v'+(d.version||'?')); }).catch(()=>{});
-fetch(API+'/api/alerts?limit=500').then(function(r){return r.json()}).then(function(d){var u=(d.alerts||[]).filter(function(a){return !a.is_read}).length;var b=document.getElementById('nav-alert-badge');if(b&&u>0){b.textContent=u>99?'99+':u;b.classList.remove('hidden')}}).catch(function(){});
 </script>
+<script src="shared/mobile-nav.js"></script>
 </body>
 </html>
