@@ -17,10 +17,7 @@ body{font-family:'Manrope',sans-serif;}
 </style>
 </head>
 <body class="bg-background-dark text-slate-200 min-h-screen flex">
-<button id="mobile-menu-btn" onclick="document.getElementById('mobile-sidebar').classList.toggle('hidden');document.getElementById('mobile-overlay').classList.toggle('hidden')" class="lg:hidden fixed top-3 right-3 z-50 p-2.5 bg-surface/90 border border-white/10 rounded-xl backdrop-blur-sm shadow-xl"><span class="material-symbols-outlined text-white text-2xl">menu</span></button>
-<div id="mobile-overlay" class="hidden lg:hidden fixed inset-0 bg-black/60 z-30 backdrop-blur-sm" onclick="document.getElementById('mobile-sidebar').classList.add('hidden');this.classList.add('hidden')"></div>
-
-<aside id="mobile-sidebar" class="w-64 flex-shrink-0 border-l border-white/5 bg-surface/50 h-screen fixed lg:sticky top-0 hidden lg:flex flex-col z-40 transition-all">
+<aside class="w-64 flex-shrink-0 border-l border-white/5 bg-surface/50 h-screen sticky top-0 hidden lg:flex flex-col">
 <div class="p-5 flex items-center gap-3">
 <img src="quantum-logo.png" alt="QUANTUM" class="h-12 w-auto object-contain" style="filter:drop-shadow(0 0 8px rgba(19,127,236,0.4));"/>
 <div><h1 class="text-xl font-extrabold tracking-tight text-white uppercase">QUANTUM</h1>
@@ -40,7 +37,7 @@ body{font-family:'Manrope',sans-serif;}
 <div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">תקשורת</p></div>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-messaging.html"><span class="material-symbols-outlined">mail</span><span>הודעות ו-WA</span></a>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-bot-settings.html"><span class="material-symbols-outlined">smart_toy</span><span>הגדרות בוט</span></a>
-<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-alerts.html"><span class="material-symbols-outlined">notifications</span><span>התראות</span><span id="nav-alert-badge" class="hidden mr-auto px-1.5 py-0.5 bg-alert-rose text-white text-[9px] font-bold rounded-full min-w-[18px] text-center"></span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-alerts.html"><span class="material-symbols-outlined">notifications</span><span>התראות</span></a>
 <div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">נוסף</p></div>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-kones.html"><span class="material-symbols-outlined">gavel</span><span>כינוסי נכסים</span></a>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-news.html"><span class="material-symbols-outlined">newspaper</span><span>חדשות שוק</span></a>
@@ -103,8 +100,13 @@ body{font-family:'Manrope',sans-serif;}
 </div>
 </div>
 
+<script src="shared/api-client.js"></script>
+<script src="shared/toast.js"></script>
+<script src="shared/state-store.js"></script>
+<script src="sidebar-alerts.js"></script>
 <script>
-const API = (typeof QuantumAPI!=='undefined')?QuantumAPI.API_BASE:'https://pinuy-binuy-analyzer-production.up.railway.app';
+const API = QuantumAPI.API_BASE;
+function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 let _view = 'outreach';
 let _activeSellerId = null;
 
@@ -123,26 +125,24 @@ async function loadSellers() {
     const params = new URLSearchParams({ view: _view });
     if (search) params.append('search', search);
     const r = await fetch(API+'/api/comms/sellers?'+params);
-    if (!r.ok) throw new Error('שגיאת שרת (' + r.status + ')');
     const d = await r.json();
-    if (!d.success) throw new Error(d.error || 'שגיאה בטעינת נתונים');
+    if (!d.success) throw new Error(d.error);
     const items = d.data || [];
     if (!items.length) {
       list.innerHTML = '<div class="p-6 text-center text-slate-500 text-sm">אין מוכרים</div>';
       return;
     }
     list.innerHTML = items.map(s => {
-      const lastMsg = s.last_message ? s.last_message.substring(0,40)+'...' : '';
+      const lastMsg = s.last_message ? (s.last_message.length > 40 ? s.last_message.substring(0,40)+'...' : s.last_message) : '';
       const time = s.last_message_at ? new Date(s.last_message_at).toLocaleDateString('he-IL') : '';
       const active = _activeSellerId === s.id;
-      const title = (s.listing_title||'').substring(0,30);
       return `<div onclick="openConv(${s.id},'${(s.phone||'').replace(/'/g,"\\'")}','${(s.name||'').replace(/'/g,"\\'")}')" class="p-4 border-b border-white/5 cursor-pointer hover:bg-white/5 transition-all ${active?'bg-primary/10 border-r-2 border-r-primary':''}">
-        ${title?`<p class="text-xs text-primary truncate mb-1">${title}${s.listing_url?` <a href="${s.listing_url}" target="_blank" onclick="event.stopPropagation()" class="inline-block"><span class="material-symbols-outlined text-xs align-middle">open_in_new</span></a>`:''}</p>`:''}
         <div class="flex items-center justify-between mb-1">
-          <span class="font-semibold text-sm text-white">${s.name||s.phone||'—'}</span>
+          <span class="font-semibold text-sm text-white">${esc(s.name||s.phone||'—')}</span>
           <span class="text-[10px] text-slate-500">${time}</span>
         </div>
-        <p class="text-xs text-slate-500 truncate">${s.address||lastMsg||'—'}</p>
+        <p class="text-xs text-slate-500 truncate">${esc(s.address||lastMsg||'—')}</p>
+        ${s.unread_count ? `<span class="text-[10px] font-bold text-primary">${s.unread_count} חדשות</span>` : ''}
       </div>`;
     }).join('');
   } catch(e) {
@@ -150,9 +150,14 @@ async function loadSellers() {
   }
 }
 
+let _activeSellerName = '';
 async function openConv(id, phone, name) {
   _activeSellerId = id;
-  loadSellers();
+  _activeSellerName = name || _activeSellerName;
+  // Re-highlight active seller in list without re-fetching
+  document.querySelectorAll('#sellers-list > div[onclick]').forEach(el => {
+    el.classList.toggle('bg-primary/10', el.getAttribute('onclick')?.includes('openConv('+id+','));
+  });
   const thread = document.getElementById('sellers-thread');
   thread.innerHTML = '<div class="flex-1 flex items-center justify-center text-slate-500 text-sm">טוען שיחה...</div>';
   try {
@@ -161,7 +166,7 @@ async function openConv(id, phone, name) {
     const msgs = d.messages || [];
     let html = `<div class="flex items-center gap-3 px-6 py-4 border-b border-white/5 flex-shrink-0">
       <div class="size-10 rounded-full bg-primary/20 flex items-center justify-center"><span class="material-symbols-outlined text-primary">person</span></div>
-      <div><p class="font-bold text-white text-sm">${name||phone}</p><p class="text-xs text-slate-500">${phone}</p></div>
+      <div><p class="font-bold text-white text-sm">${esc(name||phone)}</p><p class="text-xs text-slate-500">${esc(phone)}</p></div>
     </div>
     <div class="flex-1 overflow-y-auto custom-scrollbar p-4 space-y-3" id="msg-container">`;
     if (!msgs.length) html += '<p class="text-center text-slate-500 text-sm py-8">אין הודעות עדיין</p>';
@@ -170,7 +175,7 @@ async function openConv(id, phone, name) {
       const time = m.created_at ? new Date(m.created_at).toLocaleString('he-IL',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}) : '';
       html += `<div class="flex ${isOut?'justify-start':'justify-end'}">
         <div class="${isOut?'bubble-out':'bubble-in'}">
-          <p>${(m.message||'').replace(/\n/g,'<br>')}</p>
+          <p>${esc(m.message).replace(/\n/g,'<br>')}</p>
           <p class="text-[10px] text-slate-500 mt-1 ${isOut?'text-right':'text-left'}">${time}</p>
         </div>
       </div>`;
@@ -195,8 +200,8 @@ async function sendMsg(id, phone) {
     const d = await fetch(API+'/api/comms/sellers/'+id+'/send', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:text,phone})}).then(r=>r.json());
     if (!d.success) throw new Error(d.error);
     document.getElementById('reply-text').value = '';
-    openConv(id, phone, '');
-  } catch(e) { alert('שגיאה בשליחה: '+e.message); }
+    openConv(id, phone, _activeSellerName);
+  } catch(e) { QuantumToast.error('שגיאה בשליחה: '+e.message); }
 }
 
 function openAddModal() { document.getElementById('add-modal').classList.remove('hidden'); }
@@ -205,18 +210,18 @@ function closeAddModal() { document.getElementById('add-modal').classList.add('h
 async function submitAddSeller() {
   const name = document.getElementById('as-name').value.trim();
   const phone = document.getElementById('as-phone').value.trim();
-  if (!name||!phone) { alert('שם וטלפון הם שדות חובה'); return; }
+  if (!name||!phone) { QuantumToast.warning('שם וטלפון הם שדות חובה'); return; }
   try {
     const d = await fetch(API+'/api/comms/sellers/inbound', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,phone,address:document.getElementById('as-address').value.trim(),source:document.getElementById('as-source').value,initial_message:document.getElementById('as-message').value.trim()})}).then(r=>r.json());
     if (!d.success) throw new Error(d.error);
     closeAddModal();
     loadSellers();
-  } catch(e) { alert('שגיאה: '+e.message); }
+  } catch(e) { QuantumToast.error('שגיאה: '+e.message); }
 }
 
 fetch(API+'/api/version').then(r=>r.json()).then(d=>{ document.querySelectorAll('.q-ver').forEach(el=>el.textContent='v'+(d.version||'?')); }).catch(()=>{});
-fetch(API+'/api/alerts?limit=500').then(function(r){return r.json()}).then(function(d){var u=(d.alerts||[]).filter(function(a){return !a.is_read}).length;var b=document.getElementById('nav-alert-badge');if(b&&u>0){b.textContent=u>99?'99+':u;b.classList.remove('hidden')}}).catch(function(){});
 loadSellers();
 </script>
+<script src="shared/mobile-nav.js"></script>
 </body>
 </html>
