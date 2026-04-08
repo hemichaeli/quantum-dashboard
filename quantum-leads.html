@@ -8,22 +8,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js"></script>
 <script>tailwind.config={darkMode:"class",theme:{extend:{colors:{"primary":"#137fec","background-dark":"#101922","surface":"#1a2530","border-dark":"#2d3a4b","alert-rose":"#f43f5e","success-green":"#10b981"},fontFamily:{"display":["Manrope","sans-serif"]}}}}</script>
-<style>body{font-family:'Manrope',sans-serif;}.glass-panel{background:rgba(26,37,48,0.7);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.05);}.custom-scrollbar::-webkit-scrollbar{width:6px;}.custom-scrollbar::-webkit-scrollbar-track{background:transparent;}.custom-scrollbar::-webkit-scrollbar-thumb{background:#2d3a4b;border-radius:10px;}.status-badge{padding:2px 10px;border-radius:999px;font-size:11px;font-weight:700;}
-.modal-overlay{display:none;position:fixed;inset:0;z-index:50;background:rgba(0,0,0,0.6);backdrop-filter:blur(6px);align-items:center;justify-content:center;}
-.modal-overlay.active{display:flex;}
-.modal-box{background:rgba(26,37,48,0.95);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.08);border-radius:1rem;padding:1.5rem;width:100%;max-width:28rem;box-shadow:0 25px 50px rgba(0,0,0,0.5);}
-.lead-detail-row td{padding:0 !important;border:none !important;}
-.lead-detail-content{background:rgba(26,37,48,0.7);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.05);border-radius:0.75rem;margin:0.5rem 1.25rem 1rem;padding:1rem 1.25rem;animation:slideDown 0.2s ease-out;}
-@keyframes slideDown{from{opacity:0;max-height:0;margin-top:0;margin-bottom:0;padding-top:0;padding-bottom:0}to{opacity:1;max-height:500px}}
-.btn-send-msg{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:8px;font-size:11px;font-weight:600;background:rgba(19,127,236,0.15);color:#137fec;border:1px solid rgba(19,127,236,0.3);cursor:pointer;transition:all 0.2s;white-space:nowrap;}
-.btn-send-msg:hover{background:rgba(19,127,236,0.3);border-color:rgba(19,127,236,0.5);}
-</style>
+<style>body{font-family:'Manrope',sans-serif;}.glass-panel{background:rgba(26,37,48,0.7);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.05);}.custom-scrollbar::-webkit-scrollbar{width:6px;}.custom-scrollbar::-webkit-scrollbar-track{background:transparent;}.custom-scrollbar::-webkit-scrollbar-thumb{background:#2d3a4b;border-radius:10px;}.status-badge{padding:2px 10px;border-radius:999px;font-size:11px;font-weight:700;}</style>
 </head>
 <body class="bg-background-dark text-slate-200 min-h-screen flex">
-<button id="mobile-menu-btn" onclick="document.getElementById('mobile-sidebar').classList.toggle('hidden');document.getElementById('mobile-overlay').classList.toggle('hidden')" class="lg:hidden fixed top-3 right-3 z-50 p-2.5 bg-surface/90 border border-white/10 rounded-xl backdrop-blur-sm shadow-xl"><span class="material-symbols-outlined text-white text-2xl">menu</span></button>
-<div id="mobile-overlay" class="hidden lg:hidden fixed inset-0 bg-black/60 z-30 backdrop-blur-sm" onclick="document.getElementById('mobile-sidebar').classList.add('hidden');this.classList.add('hidden')"></div>
-
-<aside id="mobile-sidebar" class="w-64 flex-shrink-0 border-l border-white/5 bg-surface/50 h-screen fixed lg:sticky top-0 hidden lg:flex flex-col z-40 transition-all">
+<aside class="w-64 flex-shrink-0 border-l border-white/5 bg-surface/50 h-screen sticky top-0 hidden lg:flex flex-col">
 <div class="p-5 flex items-center gap-3">
 <img src="quantum-logo.png" alt="QUANTUM" class="h-12 w-auto object-contain" style="filter:drop-shadow(0 0 8px rgba(19,127,236,0.4));"/>
 <div><h1 class="text-xl font-extrabold tracking-tight text-white uppercase">QUANTUM</h1>
@@ -43,14 +31,7 @@
 <div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">תקשורת</p></div>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-messaging.html"><span class="material-symbols-outlined">mail</span><span>הודעות ו-WA</span></a>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-bot-settings.html"><span class="material-symbols-outlined">smart_toy</span><span>הגדרות בוט</span></a>
-<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-alerts.html"><span class="material-symbols-outlined">notifications</span><span>התראות</span><span id="nav-alert-badge" class="hidden mr-auto px-1.5 py-0.5 bg-alert-rose text-white text-[9px] font-bold rounded-full min-w-[18px] text-center"></span></a>
-<div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">נוסף</p></div>
-<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-kones.html"><span class="material-symbols-outlined">gavel</span><span>כינוסי נכסים</span></a>
-<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-news.html"><span class="material-symbols-outlined">newspaper</span><span>חדשות שוק</span></a>
-<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-tasks.html"><span class="material-symbols-outlined">task_alt</span><span>משימות</span></a>
-<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-sellers.html"><span class="material-symbols-outlined">home</span><span>מוכרים</span></a>
-<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-buyers.html"><span class="material-symbols-outlined">groups</span><span>קונים</span></a>
-<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-publish.html"><span class="material-symbols-outlined">publish</span><span>פרסום מודעות</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-alerts.html"><span class="material-symbols-outlined">notifications</span><span>התראות</span></a>
 <div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">מערכת</p></div>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-scans.html"><span class="material-symbols-outlined">radar</span><span>סריקות</span></a>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-reports.html"><span class="material-symbols-outlined">description</span><span>דוחות</span></a>
@@ -127,29 +108,6 @@
 <div class="p-5" id="deals-container"><div class="text-center py-8 text-slate-500">טוען עסקאות...</div></div>
 </div>
 </div>
-<!-- Send Message Modal -->
-<div class="modal-overlay" id="send-msg-modal" onclick="if(event.target===this)closeSendModal()">
-<div class="modal-box">
-<div class="flex items-center justify-between mb-4">
-<h3 class="text-lg font-bold text-white" id="send-msg-title">שליחת הודעה</h3>
-<button onclick="closeSendModal()" class="text-slate-400 hover:text-white transition-colors"><span class="material-symbols-outlined">close</span></button>
-</div>
-<div class="space-y-3">
-<div>
-<label class="text-xs text-slate-400 font-medium mb-1 block">אל</label>
-<input type="text" id="send-msg-phone" readonly class="w-full bg-surface border border-white/10 rounded-xl text-sm px-4 py-2.5 text-slate-300 font-mono" dir="ltr"/>
-</div>
-<div>
-<label class="text-xs text-slate-400 font-medium mb-1 block">הודעה</label>
-<textarea id="send-msg-text" rows="4" class="w-full bg-surface border border-white/10 rounded-xl text-sm px-4 py-2.5 text-slate-300 resize-none focus:ring-primary focus:border-primary" placeholder="כתוב הודעה..."></textarea>
-</div>
-</div>
-<div class="flex items-center gap-3 mt-5 justify-end">
-<button onclick="closeSendModal()" class="px-5 py-2.5 rounded-xl text-sm font-medium text-slate-400 hover:text-white border border-white/10 hover:border-white/20 transition-all">ביטול</button>
-<button onclick="submitSendMessage()" id="send-msg-btn" class="flex items-center gap-2 bg-primary hover:brightness-110 px-5 py-2.5 rounded-xl text-sm font-bold text-white transition-all"><span class="material-symbols-outlined text-lg">send</span>שלח</button>
-</div>
-</div>
-</div>
 <footer class="mt-auto px-8 py-6 border-t border-white/5 text-center text-slate-500 text-[11px] font-medium tracking-widest uppercase">&copy; 2026 QUANTUM Unified Analytics | <span class="q-ver">v...</span></footer>
 </main>
 <script src="shared/toast.js"></script>
@@ -217,100 +175,18 @@ async function loadDeals(){
   }catch(e){document.getElementById('deals-container').innerHTML='<div class="text-center py-8 text-slate-500">אין עסקאות</div>';}
 }
 
-let expandedLeadId=null;
-
 function renderLeads(leads){
   const tbody=document.getElementById('leads-tbody');
   if(!leads.length){tbody.innerHTML='<tr><td colspan="7" class="text-center py-12 text-slate-500">אין לידים</td></tr>';return;}
-  tbody.innerHTML=leads.map((l,i)=>{
-    const lid=l.id||i;
-    const isExpanded=expandedLeadId===lid;
-    const formData=l.form_data?(typeof l.form_data==='object'?JSON.stringify(l.form_data,null,2):l.form_data):'';
-    return `<tr class="border-b border-white/5 hover:bg-white/5 transition-all cursor-pointer" onclick="toggleLeadDetail(${JSON.stringify(lid).replace(/"/g,'&quot;')},this)">
+  tbody.innerHTML=leads.map(l=>`<tr class="border-b border-white/5 hover:bg-white/5 transition-all">
     <td class="px-5 py-3 font-semibold text-white">${esc(l.name||l.full_name)}</td>
     <td class="px-5 py-3 text-slate-300 font-mono text-xs" dir="ltr">${esc(l.phone)}</td>
     <td class="px-5 py-3"><span class="text-xs bg-surface/80 border border-white/10 rounded-lg px-2 py-1">${l.source||l.lead_source||'-'}</span></td>
     <td class="px-5 py-3 text-slate-400 text-xs">${l.complex_name||l.project||'-'}</td>
     <td class="px-5 py-3"><span class="status-badge ${statusColors[l.status]||'bg-slate-700/50 text-slate-400'}">${statusLabels[l.status]||l.status||'-'}</span></td>
     <td class="px-5 py-3 text-slate-500 text-xs">${l.created_at?new Date(l.created_at).toLocaleDateString('he-IL'):'-'}</td>
-    <td class="px-5 py-3 flex items-center gap-2">
-      <button class="btn-send-msg" onclick="event.stopPropagation();openSendModal('${esc(l.name||l.full_name)}','${esc(l.phone)}')"><span class="material-symbols-outlined text-sm">send</span>שלח הודעה</button>
-      <a href="tel:${l.phone}" onclick="event.stopPropagation()" class="text-primary hover:text-white text-xs transition-all"><span class="material-symbols-outlined text-base">call</span></a>
-    </td>
-  </tr>${isExpanded?buildDetailRow(l):''}`}).join('');
-}
-
-function buildDetailRow(l){
-  const formData=l.form_data?(typeof l.form_data==='object'?JSON.stringify(l.form_data,null,2):String(l.form_data||'-')):'-';
-  return `<tr class="lead-detail-row"><td colspan="7"><div class="lead-detail-content">
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-      <div><p class="text-slate-500 text-xs mb-1">שם</p><p class="text-white font-semibold">${esc(l.name||l.full_name)}</p></div>
-      <div><p class="text-slate-500 text-xs mb-1">אימייל</p><p class="text-slate-300">${esc(l.email)}</p></div>
-      <div><p class="text-slate-500 text-xs mb-1">טלפון</p><p class="text-slate-300 font-mono" dir="ltr">${esc(l.phone)}</p></div>
-      <div><p class="text-slate-500 text-xs mb-1">מקור</p><p class="text-slate-300">${esc(l.source||l.lead_source)}</p></div>
-      <div><p class="text-slate-500 text-xs mb-1">סטטוס</p><p><span class="status-badge ${statusColors[l.status]||'bg-slate-700/50 text-slate-400'}">${statusLabels[l.status]||l.status||'-'}</span></p></div>
-      <div><p class="text-slate-500 text-xs mb-1">תאריך יצירה</p><p class="text-slate-300">${l.created_at?new Date(l.created_at).toLocaleString('he-IL'):'-'}</p></div>
-      <div class="col-span-2"><p class="text-slate-500 text-xs mb-1">הערות</p><p class="text-slate-300">${esc(l.notes)}</p></div>
-    </div>
-    ${formData!=='-'?'<div class="mt-3"><p class="text-slate-500 text-xs mb-1">נתוני טופס</p><pre class="text-slate-300 text-xs bg-surface/50 rounded-lg p-3 overflow-x-auto" dir="ltr">'+esc(formData)+'</pre></div>':''}
-  </div></td></tr>`;
-}
-
-function toggleLeadDetail(lid,rowEl){
-  if(expandedLeadId===lid){
-    expandedLeadId=null;
-    const next=rowEl.nextElementSibling;
-    if(next&&next.classList.contains('lead-detail-row'))next.remove();
-  }else{
-    // Remove any existing expanded row
-    const old=document.querySelector('.lead-detail-row');
-    if(old)old.remove();
-    expandedLeadId=lid;
-    // Find the lead data
-    const lead=allLeads.find((l,i)=>(l.id||i)===lid);
-    if(lead){
-      const detailHtml=buildDetailRow(lead);
-      rowEl.insertAdjacentHTML('afterend',detailHtml);
-    }
-  }
-}
-
-let sendMsgLeadName='';
-
-function openSendModal(name,phone){
-  sendMsgLeadName=name;
-  document.getElementById('send-msg-title').textContent='שליחת הודעה ל-'+name;
-  document.getElementById('send-msg-phone').value=phone;
-  document.getElementById('send-msg-text').value='';
-  document.getElementById('send-msg-modal').classList.add('active');
-}
-
-function closeSendModal(){
-  document.getElementById('send-msg-modal').classList.remove('active');
-}
-
-async function submitSendMessage(){
-  const phone=document.getElementById('send-msg-phone').value;
-  const btn=document.getElementById('send-msg-btn');
-  btn.disabled=true;btn.style.opacity='0.6';
-  try{
-    const r=await fetch(API+'/api/inforu/send',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({phone:phone,template:'seller_initial',variables:{name:sendMsgLeadName}})
-    });
-    const d=await r.json();
-    if(r.ok){
-      if(typeof showToast==='function')showToast('ההודעה נשלחה בהצלחה','success');
-      closeSendModal();
-    }else{
-      if(typeof showToast==='function')showToast(d.error||'שגיאה בשליחת הודעה','error');
-    }
-  }catch(e){
-    if(typeof showToast==='function')showToast('שגיאה בשליחת הודעה','error');
-  }finally{
-    btn.disabled=false;btn.style.opacity='1';
-  }
+    <td class="px-5 py-3"><a href="tel:${l.phone}" class="text-primary hover:text-white text-xs transition-all"><span class="material-symbols-outlined text-base">call</span></a></td>
+  </tr>`).join('');
 }
 
 function filterLeads(){
@@ -328,7 +204,7 @@ async function loadVersion(){try{const r=await fetch(API+'/api/version');const d
 
 document.getElementById('filter-status').addEventListener('change',filterLeads);
 loadLeads();loadPipeline();loadDeals();loadVersion();
-fetch(API+'/api/alerts?limit=500').then(function(r){return r.json()}).then(function(d){var u=(d.alerts||[]).filter(function(a){return !a.is_read}).length;var b=document.getElementById('nav-alert-badge');if(b&&u>0){b.textContent=u>99?'99+':u;b.classList.remove('hidden')}}).catch(function(){});
 </script>
+<script src="shared/mobile-nav.js"></script>
 </body>
 </html>
