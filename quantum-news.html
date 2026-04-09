@@ -10,10 +10,7 @@
 <style>body{font-family:'Manrope',sans-serif;}.glass-panel{background:rgba(26,37,48,0.7);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.05);}.custom-scrollbar::-webkit-scrollbar{width:6px;}.custom-scrollbar::-webkit-scrollbar-track{background:transparent;}.custom-scrollbar::-webkit-scrollbar-thumb{background:#2d3a4b;border-radius:10px;}</style>
 </head>
 <body class="bg-background-dark text-slate-200 min-h-screen flex">
-<button id="mobile-menu-btn" onclick="document.getElementById('mobile-sidebar').classList.toggle('hidden');document.getElementById('mobile-overlay').classList.toggle('hidden')" class="lg:hidden fixed top-3 right-3 z-50 p-2.5 bg-surface/90 border border-white/10 rounded-xl backdrop-blur-sm shadow-xl"><span class="material-symbols-outlined text-white text-2xl">menu</span></button>
-<div id="mobile-overlay" class="hidden lg:hidden fixed inset-0 bg-black/60 z-30 backdrop-blur-sm" onclick="document.getElementById('mobile-sidebar').classList.add('hidden');this.classList.add('hidden')"></div>
-
-<aside id="mobile-sidebar" class="w-64 flex-shrink-0 border-l border-white/5 bg-surface/50 h-screen fixed lg:sticky top-0 hidden lg:flex flex-col z-40 transition-all">
+<aside class="w-64 flex-shrink-0 border-l border-white/5 bg-surface/50 h-screen sticky top-0 hidden lg:flex flex-col">
 <div class="p-5 flex items-center gap-3">
 <img src="quantum-logo.png" alt="QUANTUM" class="h-12 w-auto object-contain" style="filter:drop-shadow(0 0 8px rgba(19,127,236,0.4));"/>
 <div><h1 class="text-xl font-extrabold tracking-tight text-white uppercase">QUANTUM</h1>
@@ -33,7 +30,7 @@
 <div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">תקשורת</p></div>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-messaging.html"><span class="material-symbols-outlined">mail</span><span>הודעות ו-WA</span></a>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-bot-settings.html"><span class="material-symbols-outlined">smart_toy</span><span>הגדרות בוט</span></a>
-<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-alerts.html"><span class="material-symbols-outlined">notifications</span><span>התראות</span><span id="nav-alert-badge" class="hidden mr-auto px-1.5 py-0.5 bg-alert-rose text-white text-[9px] font-bold rounded-full min-w-[18px] text-center"></span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-alerts.html"><span class="material-symbols-outlined">notifications</span><span>התראות</span></a>
 <div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">נוסף</p></div>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-kones.html"><span class="material-symbols-outlined">gavel</span><span>כינוסי נכסים</span></a>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary text-white font-semibold transition-all" href="quantum-news.html"><span class="material-symbols-outlined">newspaper</span><span>חדשות שוק</span></a>
@@ -56,79 +53,58 @@
 <header class="flex flex-wrap items-center justify-between gap-2 px-4 md:px-8 py-3 md:py-5 border-b border-white/5 glass-panel sticky top-0 z-10">
 <div><h2 class="text-base md:text-2xl font-bold text-white leading-tight">📰 חדשות שוק הנדל"ן</h2><p class="text-sm text-slate-400">חדשות, מאמרים ועדכוני שוק רלוונטיים לפינוי-בינוי</p></div>
 <div class="flex items-center gap-3">
-<button class="flex items-center gap-2 bg-primary hover:brightness-110 px-5 py-2.5 rounded-xl text-sm font-bold text-white transition-all" onclick="loadNews(true)"><span class="material-symbols-outlined text-lg">refresh</span>רענן</button>
+<button class="flex items-center gap-2 bg-primary hover:brightness-110 px-5 py-2.5 rounded-xl text-sm font-bold text-white transition-all" onclick="loadNews()"><span class="material-symbols-outlined text-lg">refresh</span>רענן</button>
 </div>
 </header>
 <div class="p-4 md:p-8">
-<div id="category-tabs" class="flex flex-wrap gap-2 mb-5">
-<button class="cat-tab px-4 py-2 rounded-full text-xs font-bold bg-primary text-white" onclick="filterCategory('all',this)">הכל</button>
-<button class="cat-tab px-4 py-2 rounded-full text-xs font-bold bg-white/5 text-slate-400 hover:bg-white/10" onclick="filterCategory('ועדות',this)">ועדות</button>
-<button class="cat-tab px-4 py-2 rounded-full text-xs font-bold bg-white/5 text-slate-400 hover:bg-white/10" onclick="filterCategory('מחירים',this)">מחירים</button>
-<button class="cat-tab px-4 py-2 rounded-full text-xs font-bold bg-white/5 text-slate-400 hover:bg-white/10" onclick="filterCategory('פינוי-בינוי',this)">פינוי-בינוי</button>
-<button class="cat-tab px-4 py-2 rounded-full text-xs font-bold bg-white/5 text-slate-400 hover:bg-white/10" onclick="filterCategory('כללי',this)">כללי</button>
-</div>
 <div id="news-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
 <div class="glass-panel rounded-2xl p-8 col-span-full text-center text-slate-500">טוען חדשות...</div>
 </div>
 </div>
 </main>
+<script src="shared/api-client.js"></script>
+<script src="shared/toast.js"></script>
+<script src="shared/state-store.js"></script>
+<script src="sidebar-alerts.js"></script>
 <script>
-const API = (typeof QuantumAPI!=='undefined')?QuantumAPI.API_BASE:'https://pinuy-binuy-analyzer-production.up.railway.app';
+const API = QuantumAPI.API_BASE;
+function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
-let _allNews = [];
-let _currentCategory = 'all';
-
-async function loadNews(refresh) {
+async function loadNews() {
   const grid = document.getElementById('news-grid');
-  grid.innerHTML = '<div class="glass-panel rounded-2xl p-8 col-span-full text-center text-slate-500"><span class="material-symbols-outlined text-3xl animate-spin mb-2 block">refresh</span>טוען חדשות...</div>';
+  grid.innerHTML = '<div class="glass-panel rounded-2xl p-8 col-span-full text-center text-slate-500">טוען חדשות...</div>';
   try {
-    const r = await fetch(API + '/api/news' + (refresh ? '?refresh=true' : ''));
-    if (!r.ok) throw new Error('API returned ' + r.status);
+    const r = await fetch(API + '/api/news');
     const d = await r.json();
     if (!d.success) throw new Error(d.error);
-    _allNews = d.data || [];
-    const items = _currentCategory === 'all' ? _allNews : _allNews.filter(i => (i.category||'').includes(_currentCategory));
+    const items = d.data || [];
     if (!items.length) {
-      grid.innerHTML = '<div class="glass-panel rounded-2xl p-8 col-span-full text-center text-slate-500"><span class="material-symbols-outlined text-4xl mb-3 block">newspaper</span>אין חדשות כרגע<p class="text-xs mt-2 text-slate-600">מקור החדשות עדיין לא הוגדר. החדשות יופיעו כאן כשהשירות יהיה פעיל.</p></div>';
+      grid.innerHTML = '<div class="glass-panel rounded-2xl p-8 col-span-full text-center text-slate-500">אין חדשות כרגע</div>';
       return;
     }
     grid.innerHTML = items.map(item => {
       const date = item.published_at ? new Date(item.published_at).toLocaleDateString('he-IL') : '';
       const src = item.source || '';
       const tag = item.category || 'נדל"ן';
-      const srcType = item.source_type === 'committee' ? 'מעקב QUANTUM' : item.source_type === 'rss' ? 'RSS' : '';
-      return `<a href="${item.url||'#'}" target="${item.url?'_blank':'_self'}" class="glass-panel rounded-2xl p-5 flex flex-col gap-3 hover:border-primary/40 hover:bg-white/5 transition-all group cursor-pointer no-underline" data-category="${tag}">
+      return `<a href="${esc(item.url||'#')}" target="_blank" class="glass-panel rounded-2xl p-5 flex flex-col gap-3 hover:border-primary/40 hover:bg-white/5 transition-all group cursor-pointer no-underline">
+        ${item.image_url ? `<img src="${esc(item.image_url)}" alt="" class="w-full h-36 object-cover rounded-xl opacity-80 group-hover:opacity-100 transition-all"/>` : '<div class="w-full h-36 rounded-xl bg-surface flex items-center justify-center"><span class="material-symbols-outlined text-4xl text-slate-600">newspaper</span></div>'}
         <div class="flex items-center gap-2 flex-wrap">
-          <span class="text-[10px] font-bold px-2 py-1 rounded-full bg-primary/15 text-primary">${tag}</span>
-          ${srcType ? `<span class="text-[10px] font-bold px-2 py-1 rounded-full bg-white/5 text-slate-500">${srcType}</span>` : ''}
-          ${src ? `<span class="text-[10px] text-slate-500">${src}</span>` : ''}
+          <span class="text-[10px] font-bold px-2 py-1 rounded-full bg-primary/15 text-primary">${esc(tag)}</span>
+          ${src ? `<span class="text-[10px] text-slate-500">${esc(src)}</span>` : ''}
           ${date ? `<span class="text-[10px] text-slate-600 mr-auto">${date}</span>` : ''}
         </div>
-        <h3 class="text-sm font-bold text-white leading-snug group-hover:text-primary transition-all">${item.title||''}</h3>
-        ${item.summary ? `<p class="text-xs text-slate-400 leading-relaxed line-clamp-3">${item.summary}</p>` : ''}
+        <h3 class="text-sm font-bold text-white leading-snug group-hover:text-primary transition-all">${esc(item.title)}</h3>
+        ${item.summary ? `<p class="text-xs text-slate-400 leading-relaxed line-clamp-3">${esc(item.summary)}</p>` : ''}
       </a>`;
     }).join('');
   } catch(e) {
-    grid.innerHTML = '<div class="glass-panel rounded-2xl p-8 col-span-full text-center text-slate-500"><span class="material-symbols-outlined text-4xl mb-3 block">newspaper</span>שירות החדשות אינו זמין כרגע<p class="text-xs mt-2 text-slate-600">חדשות שוק הנדל"ן יופיעו כאן כשהשירות יהיה פעיל.</p></div>';
+    grid.innerHTML = `<div class="glass-panel rounded-2xl p-8 col-span-full text-center text-alert-rose">שגיאה: ${e.message}</div>`;
   }
 }
 
-function filterCategory(cat, btn) {
-  _currentCategory = cat;
-  document.querySelectorAll('.cat-tab').forEach(b => { b.className = 'cat-tab px-4 py-2 rounded-full text-xs font-bold bg-white/5 text-slate-400 hover:bg-white/10'; });
-  if (btn) btn.className = 'cat-tab px-4 py-2 rounded-full text-xs font-bold bg-primary text-white';
-  if (_allNews.length) {
-    const grid = document.getElementById('news-grid');
-    const items = cat === 'all' ? _allNews : _allNews.filter(i => (i.category||'').includes(cat));
-    if (!items.length) { grid.innerHTML = '<div class="glass-panel rounded-2xl p-8 col-span-full text-center text-slate-500">אין כתבות בקטגוריה זו</div>'; return; }
-    // Re-render with filtered items
-    loadNews();
-  }
-}
-
-fetch(API+'/health').then(r=>r.json()).then(d=>{ document.querySelectorAll('.q-ver').forEach(el=>el.textContent='v'+(d.version||'?')); }).catch(()=>{});
-fetch(API+'/api/alerts?limit=500').then(function(r){return r.json()}).then(function(d){var u=(d.alerts||[]).filter(function(a){return !a.is_read}).length;var b=document.getElementById('nav-alert-badge');if(b&&u>0){b.textContent=u>99?'99+':u;b.classList.remove('hidden')}}).catch(function(){});
+fetch(API+'/api/version').then(r=>r.json()).then(d=>{ document.querySelectorAll('.q-ver').forEach(el=>el.textContent='v'+(d.version||'?')); }).catch(()=>{});
 loadNews();
 </script>
+<script src="shared/mobile-nav.js"></script>
 </body>
 </html>

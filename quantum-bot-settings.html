@@ -11,10 +11,7 @@
 <style>body{font-family:'Manrope',sans-serif;}.glass-panel{background:rgba(26,37,48,0.7);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.05);}.custom-scrollbar::-webkit-scrollbar{width:6px;}.custom-scrollbar::-webkit-scrollbar-track{background:transparent;}.custom-scrollbar::-webkit-scrollbar-thumb{background:#2d3a4b;border-radius:10px;}.status-badge{padding:2px 10px;border-radius:999px;font-size:11px;font-weight:700;}.toggle{position:relative;display:inline-block;width:44px;height:24px;}.toggle input{opacity:0;width:0;height:0;}.slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background-color:#2d3a4b;transition:.3s;border-radius:24px;}.slider:before{position:absolute;content:"";height:18px;width:18px;left:3px;bottom:3px;background-color:white;transition:.3s;border-radius:50%;}.toggle input:checked+.slider{background-color:#137fec;}.toggle input:checked+.slider:before{transform:translateX(20px);}</style>
 </head>
 <body class="bg-background-dark text-slate-200 min-h-screen flex">
-<button id="mobile-menu-btn" onclick="document.getElementById('mobile-sidebar').classList.toggle('hidden');document.getElementById('mobile-overlay').classList.toggle('hidden')" class="lg:hidden fixed top-3 right-3 z-50 p-2.5 bg-surface/90 border border-white/10 rounded-xl backdrop-blur-sm shadow-xl"><span class="material-symbols-outlined text-white text-2xl">menu</span></button>
-<div id="mobile-overlay" class="hidden lg:hidden fixed inset-0 bg-black/60 z-30 backdrop-blur-sm" onclick="document.getElementById('mobile-sidebar').classList.add('hidden');this.classList.add('hidden')"></div>
-
-<aside id="mobile-sidebar" class="w-64 flex-shrink-0 border-l border-white/5 bg-surface/50 h-screen fixed lg:sticky top-0 hidden lg:flex flex-col z-40 transition-all">
+<aside class="w-64 flex-shrink-0 border-l border-white/5 bg-surface/50 h-screen sticky top-0 hidden lg:flex flex-col">
 <div class="p-5 flex items-center gap-3">
 <img src="quantum-logo.png" alt="QUANTUM" class="h-12 w-auto object-contain" style="filter:drop-shadow(0 0 8px rgba(19,127,236,0.4));"/>
 <div><h1 class="text-xl font-extrabold tracking-tight text-white uppercase">QUANTUM</h1>
@@ -34,14 +31,7 @@
 <div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">תקשורת</p></div>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-messaging.html"><span class="material-symbols-outlined">mail</span><span>הודעות ו-WA</span></a>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary text-white font-semibold transition-all" href="quantum-bot-settings.html"><span class="material-symbols-outlined">smart_toy</span><span>הגדרות בוט</span></a>
-<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-alerts.html"><span class="material-symbols-outlined">notifications</span><span>התראות</span><span id="nav-alert-badge" class="hidden mr-auto px-1.5 py-0.5 bg-alert-rose text-white text-[9px] font-bold rounded-full min-w-[18px] text-center"></span></a>
-<div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">נוסף</p></div>
-<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-kones.html"><span class="material-symbols-outlined">gavel</span><span>כינוסי נכסים</span></a>
-<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-news.html"><span class="material-symbols-outlined">newspaper</span><span>חדשות שוק</span></a>
-<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-tasks.html"><span class="material-symbols-outlined">task_alt</span><span>משימות</span></a>
-<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-sellers.html"><span class="material-symbols-outlined">home</span><span>מוכרים</span></a>
-<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-buyers.html"><span class="material-symbols-outlined">groups</span><span>קונים</span></a>
-<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-publish.html"><span class="material-symbols-outlined">publish</span><span>פרסום מודעות</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-alerts.html"><span class="material-symbols-outlined">notifications</span><span>התראות</span></a>
 <div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">מערכת</p></div>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-scans.html"><span class="material-symbols-outlined">radar</span><span>סריקות</span></a>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-reports.html"><span class="material-symbols-outlined">description</span><span>דוחות</span></a>
@@ -65,7 +55,6 @@
 </div>
 </header>
 <div class="p-8 space-y-6">
-<!-- Bot Status -->
 <div class="glass-panel rounded-2xl">
 <div class="p-5 border-b border-white/5 flex items-center gap-3">
 <span class="material-symbols-outlined text-success-green">smart_toy</span>
@@ -75,7 +64,6 @@
 <div class="text-center py-8 text-slate-500 col-span-4">טוען...</div>
 </div>
 </div>
-<!-- Bot Toggle & Basic Settings -->
 <div class="glass-panel rounded-2xl">
 <div class="p-5 border-b border-white/5 flex items-center gap-3">
 <span class="material-symbols-outlined text-primary">tune</span>
@@ -106,7 +94,6 @@
 </div>
 </div>
 </div>
-<!-- Auto Responses -->
 <div class="glass-panel rounded-2xl">
 <div class="p-5 border-b border-white/5 flex items-center gap-3">
 <span class="material-symbols-outlined text-amber-400">chat</span>
@@ -127,7 +114,6 @@
 </div>
 </div>
 </div>
-<!-- Conversation Flow -->
 <div class="glass-panel rounded-2xl">
 <div class="p-5 border-b border-white/5 flex items-center gap-3">
 <span class="material-symbols-outlined text-purple-400">account_tree</span>
@@ -137,7 +123,6 @@
 <div class="text-center py-8 text-slate-500">טוען פלואו...</div>
 </div>
 </div>
-<!-- Recent Bot Activity -->
 <div class="glass-panel rounded-2xl">
 <div class="p-5 border-b border-white/5 flex items-center gap-3">
 <span class="material-symbols-outlined text-slate-400">history</span>
@@ -197,7 +182,6 @@ async function loadBotStatus(){
 
 async function loadBotSettings(){
   try{
-    // Load settings from whatsapp stats and campaigns settings
     const [r1,r2]=await Promise.all([fetch(API+'/api/whatsapp/stats'),fetch(API+'/api/campaigns/settings')]);
     const d1=await r1.json();const d2=await r2.json();
     const s={...d1,...d2,bot_enabled:d1.success!==false,ai_enabled:d1.ai?.currentProvider?true:false,escalation_enabled:d2.wa_bot_enabled!==false,escalation_minutes:d2.wa_bot_escalation_minutes||d2.escalation_minutes||60,welcome_message:d1.persona?'שלום! אני '+d1.persona+', איך אוכל לעזור?':'שלום! איך אוכל לעזור?'};
@@ -260,17 +244,17 @@ async function saveAllSettings(){
     end_message:document.getElementById('msg-end').value
   };
   try{
-    await fetch(API+'/api/campaigns/settings',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({wa_bot_enabled:settings.bot_enabled,wa_bot_escalation_minutes:settings.escalation_minutes,escalation_minutes:settings.escalation_minutes})});
+    await fetch(API+'/api/campaigns/settings',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({wa_bot_enabled:settings.bot_enabled,wa_bot_ai_enabled:settings.ai_enabled,wa_bot_escalation_enabled:settings.escalation_enabled,wa_bot_escalation_minutes:settings.escalation_minutes,escalation_minutes:settings.escalation_minutes,wa_bot_max_messages:settings.max_messages,wa_bot_welcome_message:settings.welcome_message,wa_bot_escalation_message:settings.escalation_message,wa_bot_end_message:settings.end_message})});
     const btn=document.querySelector('button[onclick="saveAllSettings()"]');
     btn.textContent='נשמר!';btn.className=btn.className.replace('bg-primary','bg-success-green');
     setTimeout(()=>{btn.innerHTML='<span class="material-symbols-outlined text-lg">save</span>שמור הכל';btn.className=btn.className.replace('bg-success-green','bg-primary');},2000);
-  }catch(e){alert('שגיאה בשמירה');}
+  }catch(e){QuantumToast.error('שגיאה בשמירה');}
 }
 
 async function loadVersion(){try{const r=await fetch(API+'/api/version');const d=await r.json();document.querySelectorAll('.q-ver').forEach(el=>el.textContent=d.version||'v1');}catch(e){}}
 
 loadBotStatus();loadBotSettings();loadFlow();loadActivity();loadVersion();
-fetch(API+'/api/alerts?limit=500').then(function(r){return r.json()}).then(function(d){var u=(d.alerts||[]).filter(function(a){return !a.is_read}).length;var b=document.getElementById('nav-alert-badge');if(b&&u>0){b.textContent=u>99?'99+':u;b.classList.remove('hidden')}}).catch(function(){});
 </script>
+<script src="shared/mobile-nav.js"></script>
 </body>
 </html>

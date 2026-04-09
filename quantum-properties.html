@@ -11,10 +11,7 @@
 <style>body{font-family:'Manrope',sans-serif;}.glass-panel{background:rgba(26,37,48,0.7);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.05);}.custom-scrollbar::-webkit-scrollbar{width:6px;}.custom-scrollbar::-webkit-scrollbar-track{background:transparent;}.custom-scrollbar::-webkit-scrollbar-thumb{background:#2d3a4b;border-radius:10px;}th.sortable{cursor:pointer;user-select:none;}th.sortable:hover{color:#137fec;}th.sortable .sort-icon{opacity:0;transition:opacity 0.2s;}th.sortable:hover .sort-icon,th.sortable.asc .sort-icon,th.sortable.desc .sort-icon{opacity:1;}</style>
 </head>
 <body class="bg-background-dark text-slate-200 min-h-screen flex">
-<button id="mobile-menu-btn" onclick="document.getElementById('mobile-sidebar').classList.toggle('hidden');document.getElementById('mobile-overlay').classList.toggle('hidden')" class="lg:hidden fixed top-3 right-3 z-50 p-2.5 bg-surface/90 border border-white/10 rounded-xl backdrop-blur-sm shadow-xl"><span class="material-symbols-outlined text-white text-2xl">menu</span></button>
-<div id="mobile-overlay" class="hidden lg:hidden fixed inset-0 bg-black/60 z-30 backdrop-blur-sm" onclick="document.getElementById('mobile-sidebar').classList.add('hidden');this.classList.add('hidden')"></div>
-
-<aside id="mobile-sidebar" class="w-64 flex-shrink-0 border-l border-white/5 bg-surface/50 h-screen fixed lg:sticky top-0 hidden lg:flex flex-col z-40 transition-all">
+<aside class="w-64 flex-shrink-0 border-l border-white/5 bg-surface/50 h-screen sticky top-0 hidden lg:flex flex-col">
 <div class="p-5 flex items-center gap-3">
 <img src="quantum-logo.png" alt="QUANTUM" class="h-12 w-auto object-contain" style="filter:drop-shadow(0 0 8px rgba(19,127,236,0.4));"/>
 <div><h1 class="text-xl font-extrabold tracking-tight text-white uppercase">QUANTUM</h1>
@@ -35,13 +32,6 @@
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-messaging.html"><span class="material-symbols-outlined">mail</span><span>הודעות ו-WA</span></a>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-bot-settings.html"><span class="material-symbols-outlined">smart_toy</span><span>הגדרות בוט</span></a>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-alerts.html"><span class="material-symbols-outlined">notifications</span><span>התראות</span><span id="nav-alert-badge" class="hidden mr-auto px-1.5 py-0.5 bg-alert-rose text-white text-[9px] font-bold rounded-full min-w-[18px] text-center"></span></a>
-<div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">נוסף</p></div>
-<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-kones.html"><span class="material-symbols-outlined">gavel</span><span>כינוסי נכסים</span></a>
-<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-news.html"><span class="material-symbols-outlined">newspaper</span><span>חדשות שוק</span></a>
-<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-tasks.html"><span class="material-symbols-outlined">task_alt</span><span>משימות</span></a>
-<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-sellers.html"><span class="material-symbols-outlined">home</span><span>מוכרים</span></a>
-<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-buyers.html"><span class="material-symbols-outlined">groups</span><span>קונים</span></a>
-<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-publish.html"><span class="material-symbols-outlined">publish</span><span>פרסום מודעות</span></a>
 <div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">מערכת</p></div>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-scans.html"><span class="material-symbols-outlined">radar</span><span>סריקות</span></a>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-reports.html"><span class="material-symbols-outlined">description</span><span>דוחות</span></a>
@@ -91,32 +81,16 @@
 <th class="px-4 py-3 text-[10px] font-bold text-slate-500 uppercase tracking-widest text-center sortable" data-sort="ssi">SSI <span class="sort-icon material-symbols-outlined text-xs align-middle">unfold_more</span></th>
 <th class="px-4 py-3 text-[10px] font-bold text-slate-500 uppercase tracking-widest text-center sortable" data-sort="days">ימים בשוק <span class="sort-icon material-symbols-outlined text-xs align-middle">unfold_more</span></th>
 <th class="px-4 py-3 text-[10px] font-bold text-slate-500 uppercase tracking-widest text-center sortable" data-sort="source">מקור <span class="sort-icon material-symbols-outlined text-xs align-middle">unfold_more</span></th>
-<th class="px-4 py-3 text-[10px] font-bold text-slate-500 uppercase tracking-widest text-center sortable" data-sort="premium_market">פרמיה שוק <span class="sort-icon material-symbols-outlined text-xs align-middle">unfold_more</span></th>
-<th class="px-4 py-3 text-[10px] font-bold text-slate-500 uppercase tracking-widest text-center sortable" data-sort="premium_city">פרמיה עיר <span class="sort-icon material-symbols-outlined text-xs align-middle">unfold_more</span></th>
+<th class="px-4 py-3 text-[10px] font-bold text-slate-500 uppercase tracking-widest text-center sortable" data-sort="premium">פרמיה לרוכש <span class="sort-icon material-symbols-outlined text-xs align-middle">unfold_more</span></th>
 <th class="px-4 py-3 text-[10px] font-bold text-slate-500 uppercase tracking-widest text-center">טלפון</th>
 <th class="px-4 py-3 text-[10px] font-bold text-slate-500 uppercase tracking-widest text-center">פעולות</th>
-</tr>
-<tr id="filter-row" class="bg-white/[0.02]">
-<td></td>
-<td class="px-2 py-1"><input id="filter-address" type="text" placeholder="חיפוש..." class="w-full bg-white/5 border border-white/10 rounded-lg text-xs px-2 py-1 text-slate-300" oninput="applyColumnFilters()"/></td>
-<td class="px-2 py-1"><input id="filter-city" type="text" placeholder="עיר..." class="w-full bg-white/5 border border-white/10 rounded-lg text-xs px-2 py-1 text-slate-300" oninput="applyColumnFilters()"/></td>
-<td class="px-2 py-1"><input id="filter-price-max" type="number" placeholder="מקס ₪" class="w-full bg-white/5 border border-white/10 rounded-lg text-xs px-2 py-1 text-slate-300" oninput="applyColumnFilters()"/></td>
-<td class="px-2 py-1"><select id="filter-rooms" class="w-full bg-white/5 border border-white/10 rounded-lg text-xs px-2 py-1 text-slate-300" onchange="applyColumnFilters()"><option value="">הכל</option><option>1</option><option>1.5</option><option>2</option><option>2.5</option><option>3</option><option>3.5</option><option>4</option><option>4.5</option><option>5</option></select></td>
-<td></td>
-<td class="px-2 py-1"><input id="filter-ssi-min" type="number" placeholder="מינ'" class="w-full bg-white/5 border border-white/10 rounded-lg text-xs px-2 py-1 text-slate-300" oninput="applyColumnFilters()"/></td>
-<td></td>
-<td class="px-2 py-1"><select id="filter-source" class="w-full bg-white/5 border border-white/10 rounded-lg text-xs px-2 py-1 text-slate-300" onchange="applyColumnFilters()"><option value="">הכל</option><option value="yad2">yad2</option><option value="komo">komo</option><option value="homeless">homeless</option><option value="dira">dira</option></select></td>
-<td class="px-2 py-1"><input id="filter-premium-min" type="number" placeholder="מינ'%" class="w-full bg-white/5 border border-white/10 rounded-lg text-xs px-2 py-1 text-slate-300" oninput="applyColumnFilters()"/></td>
-<td></td>
-<td class="px-2 py-1"><select id="filter-phone" class="w-full bg-white/5 border border-white/10 rounded-lg text-xs px-2 py-1 text-slate-300" onchange="applyColumnFilters()"><option value="">הכל</option><option value="yes">יש טלפון</option></select></td>
-<td class="px-2 py-1"><button onclick="clearColumnFilters()" class="text-xs text-primary hover:text-white">נקה</button></td>
 </tr></thead>
 <tbody class="divide-y divide-white/5" id="properties-body"></tbody>
 </table>
 </div>
-<div class="px-8 py-4 border-t border-white/5 glass-panel flex items-center justify-between">
-<span class="text-sm text-slate-400 font-medium" id="page-info">עמוד 1</span>
-<div class="flex items-center gap-3" id="pagination"></div>
+<div class="px-8 py-4 border-t border-white/5 flex items-center justify-between">
+<span class="text-xs text-slate-500" id="page-info">עמוד 1</span>
+<div class="flex gap-1" id="pagination"></div>
 </div>
 <footer class="mt-auto px-8 py-6 border-t border-white/5 text-center text-slate-500 text-[11px] font-medium tracking-widest uppercase">&copy; 2026 QUANTUM Unified Analytics | <span class="q-ver">v...</span></footer>
 </main>
@@ -129,9 +103,6 @@ function esc(s){return typeof DOMPurify!=='undefined'?DOMPurify.sanitize(String(
 let allListings = [];
 let currentSort = { field: 'ssi', dir: 'desc' };
 let currentFilters = {};
-let currentOffset = 0;
-let totalItems = 0;
-let pageSize = 200;
 
 function ssiClass(s){return s>=80?'bg-alert-rose/20 text-alert-rose border-alert-rose/30':s>=60?'bg-amber-500/20 text-amber-500 border-amber-500/30':s>=40?'bg-primary/20 text-primary border-primary/30':'bg-white/5 text-slate-400 border-white/10';}
 function ssiLabel(s){return s>=80?'קריטי':s>=60?'גבוה':s>=40?'בינוני':'נמוך';}
@@ -148,8 +119,7 @@ function getValue(item, field) {
         case 'ssi': return parseFloat(item.enhanced_ssi_score || item.ssi_score || 0);
         case 'days': return parseInt(item.days_on_market || 0);
         case 'source': return (item.source || '').toString();
-        case 'premium_market': return parseFloat(item.premium_market_pct || 0);
-        case 'premium_city': return parseFloat(item.premium_city_pct || 0);
+        case 'premium': return parseFloat(item.actual_premium || 0);
         default: return '';
     }
 }
@@ -184,9 +154,9 @@ function filterData(data) {
 
 function renderTable(data) {
     var tbody = document.getElementById('properties-body');
-    document.getElementById('count-display').textContent = data.length + (totalItems > pageSize ? ' מתוך ' + totalItems : '');
+    document.getElementById('count-display').textContent = data.length;
     if (data.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="13" class="text-center py-12 text-slate-500">אין נכסים להצגה</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="12" class="text-center py-12 text-slate-500">אין נכסים להצגה</td></tr>';
         return;
     }
     tbody.innerHTML = data.map(function(p) {
@@ -210,18 +180,12 @@ function renderTable(data) {
             '<td class="px-4 py-3 text-center text-sm text-slate-400">' + days + '</td>' +
             '<td class="px-4 py-3 text-center">' + srcBadge(p.source) + '</td>' +
             '<td class="px-4 py-3 text-center">' + (function(){
-                var pct = parseFloat(p.premium_market_pct || 0);
-                var amt = parseFloat(p.premium_market_amount || 0);
-                if (!amt && !pct) return '<span class="text-slate-600 text-xs">—</span>';
-                var c = pct > 15 ? 'text-success-green' : pct > 5 ? 'text-amber-400' : 'text-alert-rose';
-                return '<div class="text-xs font-bold ' + c + '">' + pct + '%</div><div class="text-[10px] text-slate-500">₪' + Math.round(amt).toLocaleString('he-IL') + '</div>';
-            })() + '</td>' +
-            '<td class="px-4 py-3 text-center">' + (function(){
-                var pct = parseFloat(p.premium_city_pct || 0);
-                var amt = parseFloat(p.premium_city_amount || 0);
-                if (!amt && !pct) return '<span class="text-slate-600 text-xs">—</span>';
-                var c = pct > 15 ? 'text-success-green' : pct > 5 ? 'text-amber-400' : 'text-alert-rose';
-                return '<div class="text-xs font-bold ' + c + '">' + pct + '%</div><div class="text-[10px] text-slate-500">₪' + Math.round(amt).toLocaleString('he-IL') + '</div>';
+                var prem = parseFloat(p.actual_premium || 0);
+                var pct = parseFloat(p.premium_pct || 0);
+                if (!prem) return '<span class="text-slate-600 text-xs">—</span>';
+                var color = pct >= 20 ? 'text-success-green' : pct >= 10 ? 'text-warning-amber' : 'text-primary';
+                return '<div class="text-xs font-bold ' + color + '">' + prem.toLocaleString('he-IL') + ' ₪</div>' +
+                       '<div class="text-[10px] text-slate-400">' + pct + '%</div>';
             })() + '</td>' +
             '<td class="px-4 py-3 text-center">' + (function(){
                 var phone = p.phone || p.contact_phone || '';
@@ -238,37 +202,6 @@ function refreshDisplay() {
     var filtered = filterData(allListings);
     var sorted = sortData(filtered, currentSort.field, currentSort.dir);
     renderTable(sorted);
-}
-
-function applyColumnFilters() {
-    var filters = {
-        address: (document.getElementById('filter-address')?.value||'').toLowerCase(),
-        city: (document.getElementById('filter-city')?.value||'').toLowerCase(),
-        priceMax: document.getElementById('filter-price-max')?.value||'',
-        rooms: document.getElementById('filter-rooms')?.value||'',
-        ssiMin: document.getElementById('filter-ssi-min')?.value||'',
-        source: document.getElementById('filter-source')?.value||'',
-        premiumMin: document.getElementById('filter-premium-min')?.value||'',
-        phone: document.getElementById('filter-phone')?.value||''
-    };
-    var filtered = allListings.filter(function(p){
-        if(filters.address && !(p.address||'').toLowerCase().includes(filters.address)) return false;
-        if(filters.city && !(p.city||'').toLowerCase().includes(filters.city)) return false;
-        if(filters.priceMax && parseFloat(p.asking_price||0) > parseFloat(filters.priceMax)) return false;
-        if(filters.rooms && parseFloat(p.rooms||0) != parseFloat(filters.rooms)) return false;
-        if(filters.ssiMin && parseFloat(p.ssi_score||0) < parseFloat(filters.ssiMin)) return false;
-        if(filters.source && (p.source||'') !== filters.source) return false;
-        if(filters.premiumMin && parseFloat(p.premium_market_pct||0) < parseFloat(filters.premiumMin)) return false;
-        if(filters.phone === 'yes' && !(p.phone||p.contact_phone)) return false;
-        return true;
-    });
-    var sorted = sortData(filtered, currentSort.field, currentSort.dir);
-    renderTable(sorted);
-}
-function clearColumnFilters() {
-    ['filter-address','filter-city','filter-price-max','filter-ssi-min','filter-premium-min'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
-    ['filter-rooms','filter-source','filter-phone'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
-    refreshDisplay();
 }
 
 // Column sorting
@@ -322,81 +255,37 @@ document.getElementById('search-input').addEventListener('input', function() {
 });
 
 // Load data
-async function loadProperties(offset) {
-    if (typeof offset === 'number') currentOffset = offset;
+async function loadProperties() {
     try {
         // Use listings/search which returns phone, premium_pct, and all enriched fields
-        var resp = await fetch(API_BASE + '/api/listings/search?limit=' + pageSize + '&offset=' + currentOffset + '&sort_by=ssi&sort_order=desc');
+        var resp = await fetch(API_BASE + '/api/listings/search?limit=500&sort_by=ssi&sort_order=desc');
         if (!resp.ok) throw new Error('HTTP ' + resp.status);
         var data = await resp.json();
         allListings = data.listings || data.data || data || [];
-        totalItems = data.total || allListings.length;
-
+        
         document.getElementById('last-update').textContent = 'עדכון: ' + new Date().toLocaleTimeString('he-IL', {hour:'2-digit',minute:'2-digit'});
-
-        // Populate city filter dynamically (only on first load)
-        if (currentOffset === 0) {
-            var cities = {};
-            allListings.forEach(function(p) { if (p.city) cities[p.city] = true; });
-            var citySelect = document.getElementById('filter-city');
-            // Clear existing options except first
-            while (citySelect.options.length > 1) citySelect.remove(1);
-            Object.keys(cities).sort().forEach(function(c) {
-                var opt = document.createElement('option');
-                opt.value = c; opt.textContent = c;
-                citySelect.appendChild(opt);
-            });
-        }
-
+        
+        // Populate city filter dynamically
+        var cities = {};
+        allListings.forEach(function(p) { if (p.city) cities[p.city] = true; });
+        var citySelect = document.getElementById('filter-city');
+        Object.keys(cities).sort().forEach(function(c) {
+            var opt = document.createElement('option');
+            opt.value = c; opt.textContent = c;
+            citySelect.appendChild(opt);
+        });
+        
         refreshDisplay();
-        renderPagination();
     } catch(err) {
-        document.getElementById('properties-body').innerHTML = '<tr><td colspan="13" class="text-center py-12 text-slate-500">שגיאה בטעינת נכסים: ' + err.message + '</td></tr>';
+        document.getElementById('properties-body').innerHTML = '<tr><td colspan="12" class="text-center py-12 text-slate-500">שגיאה בטעינת נכסים: ' + err.message + '</td></tr>';
     }
 }
-
-function renderPagination() {
-    var totalPages = Math.ceil(totalItems / pageSize);
-    var currentPage = Math.floor(currentOffset / pageSize) + 1;
-    var pageInfo = document.getElementById('page-info');
-    var paginationDiv = document.getElementById('pagination');
-
-    pageInfo.textContent = 'עמוד ' + currentPage + ' מתוך ' + totalPages + ' (' + totalItems + ' נכסים)';
-
-    var prevDisabled = currentOffset <= 0;
-    var nextDisabled = currentOffset + pageSize >= totalItems;
-
-    paginationDiv.innerHTML =
-        '<button id="btn-prev" class="px-4 py-2 rounded-xl text-sm font-semibold transition-all ' +
-        (prevDisabled ? 'bg-white/5 text-slate-600 cursor-not-allowed' : 'bg-white/5 hover:bg-primary/20 text-slate-300 hover:text-primary border border-white/10') +
-        '"' + (prevDisabled ? ' disabled' : '') + '>הקודם</button>' +
-        '<span class="px-4 py-2 text-sm text-slate-400">עמוד ' + currentPage + ' מתוך ' + totalPages + '</span>' +
-        '<button id="btn-next" class="px-4 py-2 rounded-xl text-sm font-semibold transition-all ' +
-        (nextDisabled ? 'bg-white/5 text-slate-600 cursor-not-allowed' : 'bg-white/5 hover:bg-primary/20 text-slate-300 hover:text-primary border border-white/10') +
-        '"' + (nextDisabled ? ' disabled' : '') + '>הבא</button>';
-
-    var btnPrev = document.getElementById('btn-prev');
-    var btnNext = document.getElementById('btn-next');
-
-    btnPrev.addEventListener('click', function() {
-        if (currentOffset > 0) {
-            loadProperties(currentOffset - pageSize);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-    });
-    btnNext.addEventListener('click', function() {
-        if (currentOffset + pageSize < totalItems) {
-            loadProperties(currentOffset + pageSize);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-    });
-}
-
-loadProperties(0);
+loadProperties();
 
 // Alert badge
 fetch(API_BASE + '/api/alerts?limit=500').then(function(r){return r.json()}).then(function(d){var u=(d.alerts||[]).filter(function(a){return !a.is_read}).length;var b=document.getElementById('nav-alert-badge');if(b&&u>0){b.textContent=u>99?'99+':u;b.classList.remove('hidden')}}).catch(function(){});
 </script>
 <script>fetch("https://pinuy-binuy-analyzer-production.up.railway.app/health").then(function(r){return r.json()}).then(function(d){var v="v"+d.version;document.querySelectorAll(".q-ver").forEach(function(el){el.textContent=v})}).catch(function(){});</script>
+<script src="shared/mobile-nav.js"></script>
 </body>
 </html>

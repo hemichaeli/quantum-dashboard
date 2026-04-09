@@ -30,10 +30,7 @@ body { font-family: 'Manrope', sans-serif; }
 </style>
 </head>
 <body class="bg-background-dark text-slate-200 min-h-screen flex">
-<button id="mobile-menu-btn" onclick="document.getElementById('mobile-sidebar').classList.toggle('hidden');document.getElementById('mobile-overlay').classList.toggle('hidden')" class="lg:hidden fixed top-3 right-3 z-50 p-2.5 bg-surface/90 border border-white/10 rounded-xl backdrop-blur-sm shadow-xl"><span class="material-symbols-outlined text-white text-2xl">menu</span></button>
-<div id="mobile-overlay" class="hidden lg:hidden fixed inset-0 bg-black/60 z-30 backdrop-blur-sm" onclick="document.getElementById('mobile-sidebar').classList.add('hidden');this.classList.add('hidden')"></div>
-
-<aside id="mobile-sidebar" class="w-64 flex-shrink-0 border-l border-white/5 bg-surface/50 h-screen fixed lg:sticky top-0 hidden lg:flex flex-col z-40 transition-all">
+<aside class="w-64 flex-shrink-0 border-l border-white/5 bg-surface/50 h-screen sticky top-0 hidden lg:flex flex-col">
 <div class="p-5 flex items-center gap-3">
 <img src="quantum-logo.png" alt="QUANTUM" class="h-12 w-auto object-contain" style="filter:drop-shadow(0 0 8px rgba(19,127,236,0.4));"/>
 <div><h1 class="text-xl font-extrabold tracking-tight text-white uppercase">QUANTUM</h1>
@@ -54,13 +51,6 @@ body { font-family: 'Manrope', sans-serif; }
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-messaging.html"><span class="material-symbols-outlined">mail</span><span>הודעות ו-WA</span></a>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-bot-settings.html"><span class="material-symbols-outlined">smart_toy</span><span>הגדרות בוט</span></a>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary text-white font-semibold transition-all" href="quantum-alerts.html"><span class="material-symbols-outlined">notifications</span><span>התראות</span><span id="nav-alert-badge" class="hidden mr-auto px-1.5 py-0.5 bg-alert-rose text-white text-[9px] font-bold rounded-full min-w-[18px] text-center"></span></a>
-<div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">נוסף</p></div>
-<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-kones.html"><span class="material-symbols-outlined">gavel</span><span>כינוסי נכסים</span></a>
-<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-news.html"><span class="material-symbols-outlined">newspaper</span><span>חדשות שוק</span></a>
-<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-tasks.html"><span class="material-symbols-outlined">task_alt</span><span>משימות</span></a>
-<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-sellers.html"><span class="material-symbols-outlined">home</span><span>מוכרים</span></a>
-<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-buyers.html"><span class="material-symbols-outlined">groups</span><span>קונים</span></a>
-<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-publish.html"><span class="material-symbols-outlined">publish</span><span>פרסום מודעות</span></a>
 <div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">מערכת</p></div>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-scans.html"><span class="material-symbols-outlined">radar</span><span>סריקות</span></a>
 <a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-reports.html"><span class="material-symbols-outlined">description</span><span>דוחות</span></a>
@@ -158,22 +148,14 @@ function renderAlert(alert) {
             '<div class="flex-1 min-w-0">' +
                 '<div class="flex items-center gap-3 mb-1.5">' +
                     '<span class="px-2 py-0.5 ' + badgeBg + ' text-[10px] font-bold rounded uppercase">' + cfg.label + '</span>' +
-                    (city ? '<span class="px-2 py-0.5 bg-white/5 text-slate-500 text-[10px] font-bold rounded">' + city + '</span>' : '') +
+                    (city ? '<span class="px-2 py-0.5 bg-white/5 text-slate-500 text-[10px] font-bold rounded">' + esc(city) + '</span>' : '') +
                     '<span class="text-[10px] text-slate-500">' + timeAgo(alert.created_at) + '</span>' +
                 '</div>' +
-                '<h5 class="text-sm font-bold ' + titleClass + ' mb-1">' + title + '</h5>' +
-                (message ? '<p class="text-xs ' + msgClass + ' leading-relaxed" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">' + message + '</p>' : '') +
-                '<div class="flex items-center gap-4 mt-3 flex-wrap">' +
-                    (alert.complex_id ? '<a href="quantum-project-detail.html?id=' + alert.complex_id + '" class="text-xs text-primary font-bold hover:underline" onclick="event.stopPropagation()">צפה במתחם</a>' : '') +
-                    (alert.listing_url ? '<a href="' + alert.listing_url + '" target="_blank" class="text-xs text-slate-400 hover:text-primary flex items-center gap-1" onclick="event.stopPropagation()"><span class="material-symbols-outlined text-xs">open_in_new</span>מודעה</a>' : '') +
-                    (alert.premium_market_pct != null ? '<span class="text-xs font-bold ' + (parseFloat(alert.premium_market_pct)>15?'text-success-green':parseFloat(alert.premium_market_pct)>5?'text-amber-400':'text-alert-rose') + '">פרמיה: ' + alert.premium_market_pct + '%</span>' : '') +
+                '<h5 class="text-sm font-bold ' + titleClass + ' mb-1">' + esc(title) + '</h5>' +
+                (message ? '<p class="text-xs ' + msgClass + ' leading-relaxed" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">' + esc(message) + '</p>' : '') +
+                '<div class="flex items-center gap-4 mt-3">' +
+                    (alert.complex_id ? '<a href="quantum-project-detail.html?id=' + alert.complex_id + '" class="text-xs text-primary font-bold hover:underline">צפה במתחם</a>' : '') +
                 '</div>' +
-                (alert.listing_price ? '<div class="mt-2 p-2 bg-white/5 rounded-lg text-xs text-slate-400 grid grid-cols-2 gap-x-4 gap-y-1">' +
-                    '<span>מחיר: ₪' + parseInt(alert.listing_price).toLocaleString('he-IL') + '</span>' +
-                    (alert.listing_size_sqm ? '<span>שטח: ' + alert.listing_size_sqm + ' מ"ר</span>' : '') +
-                    (alert.listing_address ? '<span>כתובת: ' + alert.listing_address + '</span>' : '') +
-                    (alert.complex_name ? '<span>מתחם: ' + alert.complex_name + '</span>' : '') +
-                '</div>' : '') +
             '</div>' + dotHtml +
         '</div></div>';
 }
@@ -266,5 +248,6 @@ function loadAlerts() {
 loadAlerts();
 </script>
 <script>fetch("https://pinuy-binuy-analyzer-production.up.railway.app/health").then(function(r){return r.json()}).then(function(d){var v="v"+d.version;document.querySelectorAll(".q-ver").forEach(function(el){el.textContent=v})}).catch(function(){});</script>
+<script src="shared/mobile-nav.js"></script>
 </body>
 </html>
