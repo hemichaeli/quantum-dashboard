@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html class="dark" dir="rtl" lang="he">
+<head>
+<meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>QUANTUM | סריקות</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js"></script>
+<script>tailwind.config={darkMode:"class",theme:{extend:{colors:{"primary":"#137fec","background-dark":"#101922","surface":"#1a2530","border-dark":"#2d3a4b","alert-rose":"#f43f5e","success-green":"#10b981","warning-amber":"#f59e0b"},fontFamily:{"display":["Manrope","sans-serif"]}}}}</script>
+<style>
+body{font-family:'Manrope',sans-serif;}
+.glass-panel{background:rgba(26,37,48,0.7);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.05);}
+.custom-scrollbar::-webkit-scrollbar{width:6px;}
+.custom-scrollbar::-webkit-scrollbar-track{background:transparent;}
+.custom-scrollbar::-webkit-scrollbar-thumb{background:#2d3a4b;border-radius:10px;}
+tr.data-row:hover{background:rgba(255,255,255,0.04);}
+.pulse-dot{animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+</style>
+</head>
+<body class="bg-background-dark text-slate-200 min-h-screen flex">
+<button id="mobile-menu-btn" onclick="document.getElementById('mobile-sidebar').classList.toggle('hidden');document.getElementById('mobile-overlay').classList.toggle('hidden')" class="lg:hidden fixed top-3 right-3 z-50 p-2.5 bg-surface/90 border border-white/10 rounded-xl backdrop-blur-sm shadow-xl"><span class="material-symbols-outlined text-white text-2xl">menu</span></button>
+<div id="mobile-overlay" class="hidden lg:hidden fixed inset-0 bg-black/60 z-30 backdrop-blur-sm" onclick="document.getElementById('mobile-sidebar').classList.add('hidden');this.classList.add('hidden')"></div>
+
+<!-- Sidebar -->
+<aside id="mobile-sidebar" class="w-64 flex-shrink-0 border-l border-white/5 bg-surface/50 h-screen fixed lg:sticky top-0 hidden lg:flex flex-col z-40 transition-all">
+<div class="p-5 flex items-center gap-3">
+<img src="quantum-logo.png" alt="QUANTUM" class="h-12 w-auto object-contain" style="filter:drop-shadow(0 0 8px rgba(19,127,236,0.4));"/>
+<div><h1 class="text-xl font-extrabold tracking-tight text-white uppercase">QUANTUM</h1>
+<p class="text-[10px] text-primary font-bold tracking-widest leading-none">UNIFIED ANALYTICS</p></div>
+</div>
+<nav class="flex-1 px-4 space-y-1 mt-2 overflow-y-auto custom-scrollbar">
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-dashboard.html"><span class="material-symbols-outlined">dashboard</span><span>לוח בקרה</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-opportunities.html"><span class="material-symbols-outlined">diamond</span><span>הזדמנויות</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-complexes.html"><span class="material-symbols-outlined">location_city</span><span>מתחמים</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-map-view.html"><span class="material-symbols-outlined">map</span><span>מפת פרויקטים</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-market-analysis.html"><span class="material-symbols-outlined">monitoring</span><span>ניתוח שוק</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-properties.html"><span class="material-symbols-outlined">apartment</span><span>נכסים</span></a>
+<div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">CRM ולידים</p></div>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-leads.html"><span class="material-symbols-outlined">people</span><span>לידים ו-CRM</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-campaigns.html"><span class="material-symbols-outlined">campaign</span><span>קמפיינים</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-appointments.html"><span class="material-symbols-outlined">calendar_month</span><span>פגישות ויומן</span></a>
+<div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">תקשורת</p></div>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-messaging.html"><span class="material-symbols-outlined">mail</span><span>הודעות ו-WA</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-bot-settings.html"><span class="material-symbols-outlined">smart_toy</span><span>הגדרות בוט</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-alerts.html"><span class="material-symbols-outlined">notifications</span><span>התראות</span><span id="nav-alert-badge" class="hidden mr-auto px-1.5 py-0.5 bg-alert-rose text-white text-[9px] font-bold rounded-full min-w-[18px] text-center"></span></a>
+<div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">נוסף</p></div>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-kones.html"><span class="material-symbols-outlined">gavel</span><span>כינוסי נכסים</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-news.html"><span class="material-symbols-outlined">newspaper</span><span>חדשות שוק</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-tasks.html"><span class="material-symbols-outlined">task_alt</span><span>משימות</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-sellers.html"><span class="material-symbols-outlined">home</span><span>מוכרים</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-buyers.html"><span class="material-symbols-outlined">groups</span><span>קונים</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-publish.html"><span class="material-symbols-outlined">publish</span><span>פרסום מודעות</span></a>
+<div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">מערכת</p></div>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary text-white font-semibold transition-all" href="quantum-scans.html"><span class="material-symbols-outlined">radar</span><span>סריקות</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-reports.html"><span class="material-symbols-outlined">description</span><span>דוחות</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-settings.html"><span class="material-symbols-outlined">settings</span><span>הגדרות</span></a>
+</nav>
+<div class="p-4 mt-auto">
+<div class="flex items-center gap-3 px-2">
+<div class="size-10 rounded-full bg-primary/20 flex items-center justify-center"><span class="material-symbols-outlined text-primary">person</span></div>
+<div class="flex-1 min-w-0"><p class="text-sm font-bold text-white truncate">QUANTUM Admin</p><p class="text-xs text-slate-500 truncate"><span class="q-ver">v...</span></p></div>
+</div>
+</div>
+</aside>
+<!-- Main -->
+<main class="flex-1 min-w-0 h-screen overflow-y-auto overflow-x-hidden flex flex-col">
+<header class="flex flex-wrap items-center justify-between gap-2 px-4 md:px-8 py-3 md:py-5 border-b border-white/5 glass-panel sticky top-0 z-10">
+<div>
+<h2 class="text-base md:text-2xl font-bold text-white leading-tight">סריקות, DB וגיבויים</h2>
+<p class="text-sm text-slate-400">ניהול סריקות אוטומטיות, מצב מסד הנתונים וגיבויים</p>
+</div>
+<div class="flex items-center gap-3">
+<button onclick="loadAll()" class="flex items-center gap-2 bg-white/5 hover:bg-white/10 text-slate-300 font-semibold px-4 py-2.5 rounded-xl transition-all text-sm border border-white/10">
+<span class="material-symbols-outlined text-lg">refresh</span><span>רענן</span>
+</button>
+<button id="scan-btn" onclick="triggerScan()" class="flex items-center gap-2 bg-success-green hover:bg-success-green/80 text-white font-semibold px-5 py-2.5 rounded-xl transition-all text-sm">
+<span class="material-symbols-outlined text-lg">radar</span><span>הפעל סריקה ידנית</span>
+</button>
+</div>
+</header>
+<div class="p-8 flex-1 custom-scrollbar overflow-y-auto space-y-6">
+
+<!-- Scan message -->
+<div id="scan-message" class="hidden rounded-xl p-4 text-sm font-semibold"></div>
+
+<!-- System Health Row -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+  <div class="glass-panel rounded-2xl p-5 flex flex-col gap-2">
+    <div class="flex items-center gap-2 text-slate-400 text-xs font-semibold uppercase tracking-wider"><span class="material-symbols-outlined text-base">database</span>מסד נתונים</div>
+    <div id="db-status" class="text-lg font-bold text-slate-400">טוען...</div>
+    <div id="db-complexes" class="text-xs text-slate-500"></div>
+  </div>
+  <div class="glass-panel rounded-2xl p-5 flex flex-col gap-2">
+    <div class="flex items-center gap-2 text-slate-400 text-xs font-semibold uppercase tracking-wider"><span class="material-symbols-outlined text-base">radar</span>סריקה אחרונה</div>
+    <div id="last-scan-status" class="text-lg font-bold text-slate-400">טוען...</div>
+    <div id="last-scan-time" class="text-xs text-slate-500"></div>
+  </div>
+  <div class="glass-panel rounded-2xl p-5 flex flex-col gap-2">
+    <div class="flex items-center gap-2 text-slate-400 text-xs font-semibold uppercase tracking-wider"><span class="material-symbols-outlined text-base">backup</span>גיבוי אחרון</div>
+    <div id="last-backup-status" class="text-lg font-bold text-slate-400">טוען...</div>
+    <div id="last-backup-time" class="text-xs text-slate-500"></div>
+  </div>
+  <div class="glass-panel rounded-2xl p-5 flex flex-col gap-2">
+    <div class="flex items-center gap-2 text-slate-400 text-xs font-semibold uppercase tracking-wider"><span class="material-symbols-outlined text-base">smart_toy</span>שירותי AI</div>
+    <div id="ai-status" class="text-lg font-bold text-slate-400">טוען...</div>
+    <div id="ai-details" class="text-xs text-slate-500"></div>
+  </div>
+</div>
+
+<!-- AI Credits Widget -->
+<div class="glass-panel rounded-2xl p-6">
+  <div class="flex items-center justify-between mb-5">
+    <h3 class="font-semibold text-white flex items-center gap-2"><span class="material-symbols-outlined text-primary">credit_card</span>יתרת טוקנים AI</h3>
+    <span class="text-xs text-slate-500">מתעדכן בזמן אמת מכל קריאה</span>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+    <!-- Claude -->
+    <div id="sc-claude-card" class="bg-white/5 rounded-2xl p-5 border border-white/5 transition-all duration-300">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-indigo-500/20 flex items-center justify-center text-xl">🤖</div>
+          <div>
+            <div class="font-bold text-white text-sm">Claude</div>
+            <div class="text-xs text-slate-500">Anthropic</div>
+          </div>
+          <span id="sc-claude-badge" class="px-2.5 py-1 rounded-full text-[11px] font-bold">טוען...</span>
+        </div>
+        <a href="https://console.anthropic.com/settings/billing" target="_blank"
+           class="flex items-center gap-1.5 text-xs font-bold px-4 py-2 rounded-xl border transition-all hover:opacity-80"
+           style="background:rgba(99,102,241,0.2);border-color:rgba(99,102,241,0.4);color:#818cf8">
+          <span class="material-symbols-outlined text-sm">add_card</span>רכישת קרדיטים
+        </a>
+      </div>
+      <div class="mb-3">
+        <div class="flex justify-between text-xs mb-1.5">
+          <span class="text-slate-400">נותרו מהתקציב החודשי</span>
+          <span id="sc-claude-pct" class="font-bold text-slate-300">100%</span>
+        </div>
+        <div class="w-full bg-white/5 rounded-full h-3 overflow-hidden">
+          <div id="sc-claude-bar" class="h-3 rounded-full transition-all duration-700" style="width:100%;background:#10b981"></div>
+        </div>
+      </div>
+      <div class="grid grid-cols-3 gap-3 mt-3">
+        <div class="text-center">
+          <div id="sc-claude-tokens" class="text-sm font-bold text-white">—</div>
+          <div class="text-[10px] text-slate-500">טוקנים נותרו</div>
+        </div>
+        <div class="text-center">
+          <div id="sc-claude-calls" class="text-sm font-bold text-white">0</div>
+          <div class="text-[10px] text-slate-500">קריאות API</div>
+        </div>
+        <div class="text-center">
+          <div id="sc-claude-cost" class="text-sm font-bold text-white">$0</div>
+          <div class="text-[10px] text-slate-500">עלות משוערת</div>
+        </div>
+      </div>
+      <div id="sc-claude-last" class="text-[10px] text-slate-600 mt-2 text-center"></div>
+    </div>
+    <!-- Perplexity -->
+    <div id="sc-pplx-card" class="bg-white/5 rounded-2xl p-5 border border-white/5 transition-all duration-300">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-cyan-500/20 flex items-center justify-center text-xl">🔍</div>
+          <div>
+            <div class="font-bold text-white text-sm">Perplexity</div>
+            <div class="text-xs text-slate-500">sonar-pro</div>
+          </div>
+          <span id="sc-pplx-badge" class="px-2.5 py-1 rounded-full text-[11px] font-bold">טוען...</span>
+        </div>
+        <a href="https://www.perplexity.ai/settings/api" target="_blank"
+           class="flex items-center gap-1.5 text-xs font-bold px-4 py-2 rounded-xl border transition-all hover:opacity-80"
+           style="background:rgba(6,182,212,0.2);border-color:rgba(6,182,212,0.4);color:#22d3ee">
+          <span class="material-symbols-outlined text-sm">add_card</span>רכישת קרדיטים
+        </a>
+      </div>
+      <div class="mb-3">
+        <div class="flex justify-between text-xs mb-1.5">
+          <span class="text-slate-400">נותרו מהתקציב החודשי</span>
+          <span id="sc-pplx-pct" class="font-bold text-slate-300">100%</span>
+        </div>
+        <div class="w-full bg-white/5 rounded-full h-3 overflow-hidden">
+          <div id="sc-pplx-bar" class="h-3 rounded-full transition-all duration-700" style="width:100%;background:#10b981"></div>
+        </div>
+      </div>
+      <div class="grid grid-cols-3 gap-3 mt-3">
+        <div class="text-center">
+          <div id="sc-pplx-tokens" class="text-sm font-bold text-white">—</div>
+          <div class="text-[10px] text-slate-500">טוקנים נותרו</div>
+        </div>
+        <div class="text-center">
+          <div id="sc-pplx-calls" class="text-sm font-bold text-white">0</div>
+          <div class="text-[10px] text-slate-500">קריאות API</div>
+        </div>
+        <div class="text-center">
+          <div id="sc-pplx-cost" class="text-sm font-bold text-white">$0</div>
+          <div class="text-[10px] text-slate-500">עלות משוערת</div>
+        </div>
+      </div>
+      <div id="sc-pplx-last" class="text-[10px] text-slate-600 mt-2 text-center"></div>
+    </div>
+  </div>
+</div>
+
+<!-- DB Stats -->
+<div class="glass-panel rounded-2xl p-6">
+  <div class="flex items-center justify-between mb-5">
+    <h3 class="font-semibold text-white flex items-center gap-2"><span class="material-symbols-outlined text-primary">storage</span>סטטיסטיקות מסד נתונים</h3>
+    <span id="db-health-badge" class="px-2 py-0.5 rounded-full text-xs font-bold bg-slate-700 text-slate-400">טוען...</span>
+  </div>
+  <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4" id="db-stats-grid">
+    <div class="text-center py-4 text-slate-500 col-span-full">טוען נתוני DB...</div>
+  </div>
+</div>
+
+<!-- Scan System Status -->
+<div class="glass-panel rounded-2xl p-6">
+  <h3 class="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4">סטטוס מערכת סריקות</h3>
+  <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4" id="sched-status">
+    <div class="text-center py-4 text-slate-500 col-span-full">טוען...</div>
+  </div>
+</div>
+
+<!-- Scan History + Backup side by side -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+  <!-- Scan History (2/3 width) -->
+  <div class="lg:col-span-2 glass-panel rounded-2xl overflow-hidden">
+    <div class="px-6 py-4 border-b border-white/5 flex items-center justify-between">
+      <h3 class="font-semibold text-white flex items-center gap-2"><span class="material-symbols-outlined text-primary text-base">history</span>היסטוריית סריקות</h3>
+      <span id="scan-total-badge" class="text-xs text-slate-500"></span>
+    </div>
+    <table class="w-full text-sm">
+    <thead><tr class="border-b border-white/5">
+      <th class="px-4 py-3 text-right text-xs text-slate-400 font-semibold uppercase tracking-wider">#</th>
+      <th class="px-4 py-3 text-right text-xs text-slate-400 font-semibold uppercase tracking-wider">סוג</th>
+      <th class="px-4 py-3 text-right text-xs text-slate-400 font-semibold uppercase tracking-wider">סטטוס</th>
+      <th class="px-4 py-3 text-right text-xs text-slate-400 font-semibold uppercase tracking-wider">נסרקו</th>
+      <th class="px-4 py-3 text-right text-xs text-slate-400 font-semibold uppercase tracking-wider">עסקאות</th>
+      <th class="px-4 py-3 text-right text-xs text-slate-400 font-semibold uppercase tracking-wider">מודעות</th>
+      <th class="px-4 py-3 text-right text-xs text-slate-400 font-semibold uppercase tracking-wider">תאריך</th>
+    </tr></thead>
+    <tbody id="scans-body">
+      <tr><td colspan="7" class="px-4 py-8 text-center text-slate-500">טוען...</td></tr>
+    </tbody>
+    </table>
+  </div>
+
+  <!-- Backup Panel (1/3 width) -->
+  <div class="glass-panel rounded-2xl overflow-hidden flex flex-col">
+    <div class="px-6 py-4 border-b border-white/5 flex items-center justify-between">
+      <h3 class="font-semibold text-white flex items-center gap-2"><span class="material-symbols-outlined text-primary text-base">backup</span>גיבויים</h3>
+      <button onclick="triggerBackup()" id="backup-btn" class="text-xs bg-primary/20 hover:bg-primary/30 text-primary border border-primary/30 px-3 py-1.5 rounded-lg transition-all flex items-center gap-1">
+        <span class="material-symbols-outlined text-sm">add</span>גיבוי עכשיו
+      </button>
+    </div>
+    <div class="p-4 space-y-2" id="backup-stats">
+      <div class="text-center py-4 text-slate-500">טוען גיבויים...</div>
+    </div>
+    <div class="px-4 pb-4 flex-1 overflow-y-auto max-h-64 custom-scrollbar">
+      <div class="text-xs text-slate-500 font-semibold uppercase tracking-wider mb-2">גיבויים אחרונים</div>
+      <div id="backup-list" class="space-y-1.5">
+        <div class="text-center py-2 text-slate-500 text-xs">טוען...</div>
+      </div>
+    </div>
+    <div class="px-4 pb-4">
+      <div class="text-xs text-slate-500 font-semibold uppercase tracking-wider mb-2">גיבויי GitHub</div>
+      <div id="github-backup-info" class="glass-panel rounded-xl p-3 text-xs text-slate-400">טוען...</div>
+    </div>
+  </div>
+</div>
+
+</div>
+</main>
+<script src="shared/toast.js"></script>
+<script src="shared/state-store.js"></script>
+<script src="shared/api-client.js"></script>
+<script>
+const API=(typeof QuantumAPI!=='undefined')?QuantumAPI.API_BASE:'https://pinuy-binuy-analyzer-production.up.railway.app';
+function esc(s){return typeof DOMPurify!=='undefined'?DOMPurify.sanitize(String(s||'-'),{ALLOWED_TAGS:[]}):String(s||'-').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+async function loadHealth(){
+  try{
+    const r=await fetch(`${API}/api/scan/health`);
+    const d=await r.json();
+    // DB status
+    const dbEl=document.getElementById('db-status');
+    const dbBadge=document.getElementById('db-health-badge');
+    if(d.database==='healthy'){
+      dbEl.innerHTML='<span class="text-success-green">✅ מחובר</span>';
+      if(dbBadge){dbBadge.className='px-2 py-0.5 rounded-full text-xs font-bold bg-success-green/20 text-success-green border border-success-green/30';dbBadge.textContent='תקין';}
+    } else {
+      dbEl.innerHTML='<span class="text-alert-rose">❌ מנותק</span>';
+      if(dbBadge){dbBadge.className='px-2 py-0.5 rounded-full text-xs font-bold bg-alert-rose/20 text-alert-rose border border-alert-rose/30';dbBadge.textContent='שגיאה';}
+    }
+    // AI services
+    const aiEl=document.getElementById('ai-status');
+    const aiDet=document.getElementById('ai-details');
+    const ai=d.ai_services||{};
+    const aiOk=(ai.claude==='configured'?1:0)+(ai.perplexity==='configured'?1:0);
+    aiEl.innerHTML=aiOk===2?'<span class="text-success-green">✅ פעיל (2/2)</span>':aiOk===1?'<span class="text-warning-amber">⚠️ חלקי (1/2)</span>':'<span class="text-alert-rose">❌ לא מוגדר</span>';
+    if(aiDet) aiDet.textContent=`Claude: ${ai.claude==='configured'?'✓':'✗'} | Perplexity: ${ai.perplexity==='configured'?'✓':'✗'}`;
+  }catch(e){}
+}
+
+async function loadMorningReport(){
+  try{
+    const r=await fetch(`${API}/api/scan/morning-report`);
+    const d=await r.json();
+    const p=d.portfolio||{};
+    const n=d.new_data_24h||{};
+    // DB complexes count
+    const dbComp=document.getElementById('db-complexes');
+    if(dbComp) dbComp.textContent=`${p.total_complexes||0} מתחמים | ${p.total_listings||0} מודעות`;
+    // DB stats grid
+    const grid=document.getElementById('db-stats-grid');
+    if(grid){
+      const stats=[
+        {icon:'location_city',label:'מתחמים',val:p.total_complexes||0,color:'text-primary'},
+        {icon:'apartment',label:'מודעות פעילות',val:p.total_listings||0,color:'text-indigo-400'},
+        {icon:'diamond',label:'הזדמנויות IAI גבוה',val:p.high_iai_opportunities||0,color:'text-warning-amber'},
+        {icon:'analytics',label:'ממוצע IAI',val:(p.avg_iai||0)+'%',color:'text-success-green'},
+        {icon:'swap_horiz',label:'עסקאות 24ש',val:n.transactions||0,color:'text-cyan-400'},
+        {icon:'add_circle',label:'מודעות חדשות 24ש',val:n.listings||0,color:'text-violet-400'},
+        {icon:'notifications',label:'התראות 24ש',val:n.alerts||0,color:'text-alert-rose'},
+      ];
+      grid.innerHTML=stats.map(s=>`
+        <div class="glass-panel rounded-xl p-4 text-center">
+          <span class="material-symbols-outlined ${s.color} text-2xl">${s.icon}</span>
+          <div class="${s.color} text-xl font-bold mt-1">${s.val}</div>
+          <div class="text-xs text-slate-500 mt-1">${s.label}</div>
+        </div>`).join('');
+    }
+  }catch(e){
+    const grid=document.getElementById('db-stats-grid');
+    if(grid) grid.innerHTML='<div class="col-span-full text-center text-alert-rose text-sm py-4">שגיאה בטעינת נתוני DB</div>';
+  }
+}
+
+async function loadScanStatus(){
+  try{
+    const r=await fetch(`${API}/api/scan/status`);
+    const d=await r.json();
+    // Last scan card
+    const ls=d.lastScan;
+    const lsEl=document.getElementById('last-scan-status');
+    const lstEl=document.getElementById('last-scan-time');
+    if(ls){
+      const isRunning=ls.status==='running';
+      const isOk=ls.status==='completed';
+      lsEl.innerHTML=isRunning?'<span class="text-warning-amber flex items-center gap-1"><span class="pulse-dot inline-block w-2 h-2 rounded-full bg-warning-amber"></span>רץ עכשיו</span>':isOk?'<span class="text-success-green">✅ הושלם</span>':'<span class="text-alert-rose">❌ נכשל</span>';
+      if(lstEl) lstEl.textContent=new Date(ls.started_at).toLocaleString('he-IL');
+    }
+    // Scan total badge
+    const badge=document.getElementById('scan-total-badge');
+    if(badge) badge.textContent=`סה"כ ${d.totalScans||0} | הצליחו ${d.completed||0} | נכשלו ${d.failed||0}`;
+    // Sched status grid
+    const grid=document.getElementById('sched-status');
+    if(grid){
+      const items=[
+        ['סריקות כולל',d.totalScans||0,'#94a3b8'],
+        ['רצות עכשיו',d.running||0,d.running>0?'#f59e0b':'#10b981'],
+        ['הצליחו',d.completed||0,'#10b981'],
+        ['נכשלו',d.failed||0,d.failed>0?'#f43f5e':'#94a3b8'],
+        ['ב-24 שעות',d.last24h||0,'#137fec'],
+        ['ב-7 ימים',d.last7d||0,'#8b5cf6'],
+      ];
+      grid.innerHTML=items.map(([label,val,color])=>`
+        <div class="glass-panel rounded-xl p-4 text-center">
+          <div class="text-xs text-slate-500 mb-2">${label}</div>
+          <div style="color:${color}" class="text-2xl font-bold">${val}</div>
+        </div>`).join('');
+    }
+    // Scan btn state
+    const btn=document.getElementById('scan-btn');
+    if(btn && d.running>0){
+      btn.disabled=true;
+      btn.innerHTML='<span class="material-symbols-outlined text-lg animate-spin">radar</span><span>סורק...</span>';
+    }
+  }catch(e){}
+}
+
+async function loadScans(){
+  try{
+    const r=await fetch(`${API}/api/scan/results?limit=20`);
+    const d=await r.json();
+    const scans=d.scans||[];
+    const tbody=document.getElementById('scans-body');
+    if(!scans.length){tbody.innerHTML=`<tr><td colspan="7" class="px-4 py-8 text-center text-slate-500">אין סריקות עדיין</td></tr>`;return;}
+    tbody.innerHTML=scans.map(s=>{
+      const statusBadge=s.status==='completed'
+        ?`<span class="px-2 py-0.5 rounded-md text-xs font-bold bg-success-green/20 text-success-green border border-success-green/30">הושלם</span>`
+        :s.status==='running'
+        ?`<span class="px-2 py-0.5 rounded-md text-xs font-bold bg-warning-amber/20 text-warning-amber border border-warning-amber/30 flex items-center gap-1"><span class="pulse-dot inline-block w-1.5 h-1.5 rounded-full bg-warning-amber"></span>רץ</span>`
+        :`<span class="px-2 py-0.5 rounded-md text-xs font-bold bg-alert-rose/20 text-alert-rose border border-alert-rose/30">נכשל</span>`;
+      const typeLabel={'daily_direct_api':'יומי API','master_pipeline':'Pipeline','manual':'ידני','weekly':'שבועי'}[s.scan_type]||s.scan_type;
+      return `<tr class="data-row border-b border-white/5">
+        <td class="px-4 py-3 text-slate-500 text-xs">${s.id}</td>
+        <td class="px-4 py-3"><span class="px-2 py-0.5 rounded-md text-xs font-bold bg-indigo-500/20 text-indigo-400 border border-indigo-500/30">${typeLabel}</span></td>
+        <td class="px-4 py-3">${statusBadge}</td>
+        <td class="px-4 py-3 text-slate-400">${s.complexes_scanned||0}</td>
+        <td class="px-4 py-3 text-slate-400">${s.new_transactions||0}</td>
+        <td class="px-4 py-3 text-slate-400">${s.new_listings||0}</td>
+        <td class="px-4 py-3 text-slate-500 text-xs">${new Date(s.started_at).toLocaleString('he-IL')}</td>
+      </tr>`;
+    }).join('');
+  }catch(e){document.getElementById('scans-body').innerHTML=`<tr><td colspan="7" class="px-4 py-8 text-center text-alert-rose">שגיאה בטעינת סריקות</td></tr>`;}
+}
+
+async function loadBackups(){
+  try{
+    const [r1,r2,r3]=await Promise.all([
+      fetch(`${API}/api/backup/list`).then(r=>r.json()).catch(()=>({stats:{}})),
+      fetch(`${API}/api/backup/github/list`).then(r=>r.json()).catch(()=>({backups:[],count:0})),
+      fetch(`${API}/api/scan/backups`).then(r=>r.json()).catch(()=>({backups:[]}))
+    ]);
+    const local=r1; const github=r2; const tracked=r3;
+    const stats=local.stats||{};
+    const trackedBackups=tracked.backups||[];
+    const ghBackups=github.backups||[];
+    const latestGh=ghBackups[0]||'';
+
+    // Last backup card
+    const lbEl=document.getElementById('last-backup-status');
+    const lbtEl=document.getElementById('last-backup-time');
+    const lastTracked=trackedBackups.find(b=>b.status==='completed');
+    const lastFailed=trackedBackups.find(b=>b.status==='failed');
+
+    if(lastTracked){
+      const backupDate=new Date(lastTracked.created_at);
+      const hoursAgo=(Date.now()-backupDate.getTime())/3600000;
+      if(hoursAgo>25){
+        if(lbEl) lbEl.innerHTML='<span class="text-amber-400">⚠️ גיבוי ישן ('+Math.round(hoursAgo)+' שע\')</span>';
+      } else {
+        if(lbEl) lbEl.innerHTML='<span class="text-success-green">✅ תקין</span>';
+      }
+      if(lbtEl) lbtEl.textContent=backupDate.toLocaleString('he-IL');
+    } else if(latestGh){
+      if(lbEl) lbEl.innerHTML='<span class="text-success-green">✅ GitHub</span>';
+      if(lbtEl) lbtEl.textContent=latestGh.replace('backups/','').replace(/\//g,' ');
+    } else {
+      if(lbEl) lbEl.innerHTML='<span class="text-alert-rose">❌ אין גיבויים</span>';
+    }
+    // Show failure banner
+    if(lastFailed && (!lastTracked || new Date(lastFailed.created_at)>new Date(lastTracked.created_at))){
+      if(lbEl) lbEl.innerHTML='<span class="text-alert-rose">❌ נכשל: '+(lastFailed.error||'').substring(0,40)+'</span>';
+    }
+
+    // Backup stats panel
+    const statsEl=document.getElementById('backup-stats');
+    if(statsEl){
+      statsEl.innerHTML=`
+        <div class="grid grid-cols-2 gap-2">
+          <div class="glass-panel rounded-xl p-3 text-center">
+            <div class="text-primary text-xl font-bold">${github.count||0}</div>
+            <div class="text-xs text-slate-500">גיבויי GitHub</div>
+          </div>
+          <div class="glass-panel rounded-xl p-3 text-center">
+            <div class="text-success-green text-xl font-bold">${trackedBackups.filter(b=>b.status==='completed').length}</div>
+            <div class="text-xs text-slate-500">גיבויים מעוקבים</div>
+          </div>
+        </div>`;
+    }
+
+    // Backup list — show tracked backups + GitHub fallback
+    const listEl=document.getElementById('backup-list');
+    if(listEl){
+      const displayList=trackedBackups.length?trackedBackups.slice(0,8):ghBackups.slice(0,8).map(p=>({filename:p,status:'completed',created_at:p}));
+      if(!displayList.length){listEl.innerHTML='<div class="text-center text-slate-500 text-xs py-2">אין גיבויים</div>';}
+      else{listEl.innerHTML=displayList.map(b=>{
+        const st=b.status==='completed'?'✅':'❌';
+        const dt=b.created_at?new Date(b.created_at).toLocaleString('he-IL',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}):b.filename||'';
+        return'<div class="flex items-center justify-between py-1.5 border-b border-white/5"><span class="text-xs text-slate-400">'+st+' '+dt+'</span><span class="text-xs text-slate-500">'+(b.rows_count?b.rows_count+' שורות':'GitHub')+'</span></div>';
+      }).join('');}
+    }
+
+    // GitHub backup info
+    const ghEl=document.getElementById('github-backup-info');
+    if(ghEl){
+      const ghBackups=github.backups||[];
+      const latest=ghBackups[0]||'';
+      ghEl.innerHTML=`<div class="flex items-center justify-between"><span>${github.count||0} גיבויים</span><span class="text-success-green">✅ פעיל</span></div>${latest?`<div class="text-slate-600 mt-1">אחרון: ${latest}</div>`:''}`;
+    }
+  }catch(e){
+    const lbEl=document.getElementById('last-backup-status');
+    if(lbEl) lbEl.innerHTML='<span class="text-alert-rose">שגיאה</span>';
+  }
+}
+
+async function triggerScan(){
+  const btn=document.getElementById('scan-btn');
+  const msg=document.getElementById('scan-message');
+  btn.disabled=true;btn.innerHTML='<span class="material-symbols-outlined text-lg animate-spin">radar</span><span>מפעיל...</span>';
+  try{
+    const r=await fetch(`${API}/api/scan/run`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type:'manual'})});
+    const d=await r.json();
+    if(r.ok){
+      msg.className='rounded-xl p-4 text-sm font-semibold bg-success-green/20 text-success-green border border-success-green/30';
+      msg.textContent='✅ הסריקה הופעלה! הדוח יישלח למייל בסיום.';
+      setTimeout(()=>{loadAll();msg.classList.add('hidden');},15000);
+    }else{
+      msg.className='rounded-xl p-4 text-sm font-semibold bg-alert-rose/20 text-alert-rose border border-alert-rose/30';
+      msg.textContent='❌ שגיאה: '+(d.error||d.message||'לא ידוע');
+      btn.disabled=false;btn.innerHTML='<span class="material-symbols-outlined text-lg">radar</span><span>הפעל סריקה ידנית</span>';
+    }
+    msg.classList.remove('hidden');
+  }catch(e){
+    msg.className='rounded-xl p-4 text-sm font-semibold bg-alert-rose/20 text-alert-rose border border-alert-rose/30';
+    msg.textContent='❌ שגיאת רשת: '+e.message;
+    msg.classList.remove('hidden');
+    btn.disabled=false;btn.innerHTML='<span class="material-symbols-outlined text-lg">radar</span><span>הפעל סריקה ידנית</span>';
+  }
+}
+
+async function triggerBackup(){
+  const btn=document.getElementById('backup-btn');
+  btn.disabled=true;btn.innerHTML='<span class="material-symbols-outlined text-sm animate-spin">refresh</span>מגבה...';
+  try{
+    // Try new tracked backup route first, fallback to legacy
+    let r=await fetch(`${API}/api/scan/backup`,{method:'POST',headers:{'Content-Type':'application/json'}}).catch(()=>null);
+    if(!r||!r.ok) r=await fetch(`${API}/api/backup/github/create`,{method:'POST'}).catch(()=>null);
+    if(!r||!r.ok) r=await fetch(`${API}/api/backup/create`,{method:'POST'});
+    const d=await r.json();
+    btn.innerHTML='<span class="material-symbols-outlined text-sm">check</span>הופעל!';
+    setTimeout(()=>{loadBackups();btn.disabled=false;btn.innerHTML='<span class="material-symbols-outlined text-sm">add</span>גיבוי עכשיו';},5000);
+  }catch(e){btn.disabled=false;btn.innerHTML='<span class="material-symbols-outlined text-sm">add</span>גיבוי עכשיו';}
+}
+
+async function loadAiCredits(){
+  try{
+    const cr=await fetch(`${API}/api/scan/ai-credits`).then(r=>r.json()).catch(()=>null);
+    if(!cr) return;
+    function applyScCredits(prefix, data){
+      const remainPct = data.remaining_pct !== undefined ? data.remaining_pct : 100;
+      const status=data.status||'ok';
+      // Bar color: green when plenty left, orange when low, red when critical
+      const barColor=status==='critical'?'#f43f5e':status==='warning'?'#f59e0b':'#10b981';
+      const badgeBg=status==='critical'?'rgba(244,63,94,0.2)':status==='warning'?'rgba(245,158,11,0.2)':'rgba(16,185,129,0.2)';
+      const badgeColor=status==='critical'?'#f43f5e':status==='warning'?'#f59e0b':'#10b981';
+      const badgeBorder=status==='critical'?'rgba(244,63,94,0.4)':status==='warning'?'rgba(245,158,11,0.4)':'rgba(16,185,129,0.4)';
+      const badgeText=status==='critical'?'🔴 קריטי':status==='warning'?'🟠 נמוך':'🟢 תקין';
+      const card=document.getElementById('sc-'+prefix+'-card');
+      const badge=document.getElementById('sc-'+prefix+'-badge');
+      const bar=document.getElementById('sc-'+prefix+'-bar');
+      if(badge){badge.textContent=badgeText;badge.style.background=badgeBg;badge.style.color=badgeColor;badge.style.border='1px solid '+badgeBorder;}
+      // Bar shows remaining (full bar = all remaining, empty = none left)
+      if(bar){bar.style.width=Math.min(remainPct,100)+'%';bar.style.background=barColor;}
+      const pctEl=document.getElementById('sc-'+prefix+'-pct');
+      if(pctEl){pctEl.textContent=remainPct+'%';pctEl.style.color=barColor;}
+      const tokEl=document.getElementById('sc-'+prefix+'-tokens');
+      if(tokEl) tokEl.textContent=(data.tokens_remaining||0).toLocaleString();
+      const callsEl=document.getElementById('sc-'+prefix+'-calls');
+      if(callsEl) callsEl.textContent=(data.api_calls||0).toLocaleString();
+      const costEl=document.getElementById('sc-'+prefix+'-cost');
+      if(costEl) costEl.textContent='$'+(data.estimated_cost_usd||0);
+      const lastEl=document.getElementById('sc-'+prefix+'-last');
+      if(lastEl && data.last_call) lastEl.textContent='קריאה אחרונה: '+new Date(data.last_call).toLocaleString('he-IL');
+      // Show note when no usage tracked
+      if(data.api_calls===0 && data.tokens_used===0 && data.purchase_url){
+        const noteEl=document.getElementById('sc-'+prefix+'-note');
+        if(!noteEl && lastEl){
+          const note=document.createElement('p');
+          note.className='text-[10px] text-slate-500 mt-2';
+          note.innerHTML='💡 יתרה בפועל: <a href="'+data.purchase_url+'" target="_blank" class="text-primary hover:underline">בדוק כאן</a>';
+          lastEl.parentElement.appendChild(note);
+        }
+      }
+      if(card && status==='critical') card.style.borderColor='rgba(244,63,94,0.4)';
+      else if(card && status==='warning') card.style.borderColor='rgba(245,158,11,0.4)';
+      else if(card) card.style.borderColor='rgba(255,255,255,0.05)';
+    }
+    applyScCredits('claude', cr.claude||{});
+    applyScCredits('pplx', cr.perplexity||{});
+  }catch(e){}
+}
+
+async function loadAll(){
+  await Promise.all([loadHealth(),loadMorningReport(),loadScanStatus(),loadScans(),loadBackups(),loadAiCredits()]);
+}
+
+loadAll();
+fetch(`${API}/api/alerts?limit=500`).then(r=>r.json()).then(d=>{const u=(d.alerts||[]).filter(a=>!a.is_read).length;const b=document.getElementById('nav-alert-badge');if(b&&u>0){b.textContent=u>99?'99+':u;b.classList.remove('hidden')}}).catch(()=>{});
+fetch(`${API}/health`).then(r=>r.json()).then(d=>{document.querySelectorAll('.q-ver').forEach(el=>el.textContent='v'+d.version)}).catch(()=>{});
+// Auto-refresh every 30 seconds if a scan is running
+setInterval(async()=>{
+  try{
+    const r=await fetch(`${API}/api/scan/status`);
+    const d=await r.json();
+    if(d.running>0) loadAll();
+  }catch(e){}
+},30000);
+</script>
+<script src="shared/mobile-nav.js"></script>
+</body>
+</html>

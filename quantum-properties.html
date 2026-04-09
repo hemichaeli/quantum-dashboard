@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html class="dark" dir="rtl" lang="he">
+<head>
+<meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>QUANTUM | נכסים</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js"></script>
+<script>tailwind.config={darkMode:"class",theme:{extend:{colors:{"primary":"#137fec","background-dark":"#101922","surface":"#1a2530","border-dark":"#2d3a4b","alert-rose":"#f43f5e","success-green":"#10b981","warning-amber":"#f59e0b"},fontFamily:{"display":["Manrope","sans-serif"]}}}}</script>
+<style>body{font-family:'Manrope',sans-serif;}.glass-panel{background:rgba(26,37,48,0.7);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.05);}.custom-scrollbar::-webkit-scrollbar{width:6px;}.custom-scrollbar::-webkit-scrollbar-track{background:transparent;}.custom-scrollbar::-webkit-scrollbar-thumb{background:#2d3a4b;border-radius:10px;}th.sortable{cursor:pointer;user-select:none;}th.sortable:hover{color:#137fec;}th.sortable .sort-icon{opacity:0;transition:opacity 0.2s;}th.sortable:hover .sort-icon,th.sortable.asc .sort-icon,th.sortable.desc .sort-icon{opacity:1;}</style>
+</head>
+<body class="bg-background-dark text-slate-200 min-h-screen flex">
+<aside class="w-64 flex-shrink-0 border-l border-white/5 bg-surface/50 h-screen sticky top-0 hidden lg:flex flex-col">
+<div class="p-5 flex items-center gap-3">
+<img src="quantum-logo.png" alt="QUANTUM" class="h-12 w-auto object-contain" style="filter:drop-shadow(0 0 8px rgba(19,127,236,0.4));"/>
+<div><h1 class="text-xl font-extrabold tracking-tight text-white uppercase">QUANTUM</h1>
+<p class="text-[10px] text-primary font-bold tracking-widest leading-none">UNIFIED ANALYTICS</p></div>
+</div>
+<nav class="flex-1 px-4 space-y-1 mt-2 overflow-y-auto custom-scrollbar">
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-dashboard.html"><span class="material-symbols-outlined">dashboard</span><span>לוח בקרה</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-opportunities.html"><span class="material-symbols-outlined">diamond</span><span>הזדמנויות</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-complexes.html"><span class="material-symbols-outlined">location_city</span><span>מתחמים</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-map-view.html"><span class="material-symbols-outlined">map</span><span>מפת פרויקטים</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-market-analysis.html"><span class="material-symbols-outlined">monitoring</span><span>ניתוח שוק</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary text-white font-semibold transition-all" href="quantum-properties.html"><span class="material-symbols-outlined">apartment</span><span>נכסים</span></a>
+<div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">CRM ולידים</p></div>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-leads.html"><span class="material-symbols-outlined">people</span><span>לידים ו-CRM</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-campaigns.html"><span class="material-symbols-outlined">campaign</span><span>קמפיינים</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-appointments.html"><span class="material-symbols-outlined">calendar_month</span><span>פגישות ויומן</span></a>
+<div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">תקשורת</p></div>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-messaging.html"><span class="material-symbols-outlined">mail</span><span>הודעות ו-WA</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-bot-settings.html"><span class="material-symbols-outlined">smart_toy</span><span>הגדרות בוט</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-alerts.html"><span class="material-symbols-outlined">notifications</span><span>התראות</span><span id="nav-alert-badge" class="hidden mr-auto px-1.5 py-0.5 bg-alert-rose text-white text-[9px] font-bold rounded-full min-w-[18px] text-center"></span></a>
+<div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">מערכת</p></div>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-scans.html"><span class="material-symbols-outlined">radar</span><span>סריקות</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-reports.html"><span class="material-symbols-outlined">description</span><span>דוחות</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-settings.html"><span class="material-symbols-outlined">settings</span><span>הגדרות</span></a>
+</nav>
+<div class="p-4 mt-auto">
+<div class="flex items-center gap-3 px-2">
+<div class="size-10 rounded-full bg-primary/20 flex items-center justify-center"><span class="material-symbols-outlined text-primary">person</span></div>
+<div class="flex-1 min-w-0"><p class="text-sm font-bold text-white truncate">QUANTUM Admin</p><p class="text-xs text-slate-500 truncate"><span class="q-ver">v...</span></p></div>
+</div></div>
+</aside>
+<main class="flex-1 min-w-0 h-screen overflow-y-auto overflow-x-hidden flex flex-col">
+<header class="flex flex-wrap items-center justify-between gap-2 px-4 md:px-8 py-3 md:py-5 border-b border-white/5 glass-panel sticky top-0 z-10">
+<div class="flex flex-col"><h2 class="text-base md:text-2xl font-bold text-white leading-tight">דפדפן נכסים</h2><p class="text-sm text-slate-400">מודעות פעילות ממקורות מרובים - yad2, madlan, כינוסים ועוד</p></div>
+<div class="flex items-center gap-3">
+<div class="relative group"><span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors">search</span><input class="bg-surface/50 border-white/10 rounded-xl pr-10 pl-4 py-2.5 text-sm w-72 focus:ring-primary focus:border-primary transition-all" placeholder="חיפוש נכס, עיר או כתובת..." type="text" id="search-input"/></div>
+<button class="flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all" id="toggle-filters"><span class="material-symbols-outlined text-xl">filter_list</span><span>מסנן מתקדם</span></button>
+</div>
+</header>
+<div id="filters-panel" class="border-b border-white/5 bg-surface/30 px-8 py-4 hidden">
+<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+<div><label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-1">עיר</label><select class="w-full bg-surface border-white/10 rounded-lg text-sm py-2" id="filter-city"><option value="">הכל</option></select></div>
+<div><label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-1">מקור</label><select class="w-full bg-surface border-white/10 rounded-lg text-sm py-2" id="filter-source"><option value="">הכל</option><option>yad2</option><option>madlan</option><option>kones</option><option>ai_scan</option></select></div>
+<div><label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-1">מחיר מינימום</label><input class="w-full bg-surface border-white/10 rounded-lg text-sm py-2 px-3" placeholder="500,000" type="text" id="filter-price-min"/></div>
+<div><label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-1">מחיר מקסימום</label><input class="w-full bg-surface border-white/10 rounded-lg text-sm py-2 px-3" placeholder="3,000,000" type="text" id="filter-price-max"/></div>
+<div><label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-1">חדרים</label><select class="w-full bg-surface border-white/10 rounded-lg text-sm py-2" id="filter-rooms"><option value="">הכל</option><option value="2">2-2.5</option><option value="3">3-3.5</option><option value="4">4-4.5</option><option value="5">5+</option></select></div>
+<div><label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-1">SSI מינימום</label><select class="w-full bg-surface border-white/10 rounded-lg text-sm py-2" id="filter-ssi"><option value="">ללא סינון</option><option value="40">40+ (בינוני)</option><option value="60">60+ (גבוה)</option><option value="80">80+ (קריטי)</option></select></div>
+</div>
+<div class="flex gap-3 mt-4"><button class="bg-primary hover:brightness-110 px-6 py-2 rounded-xl text-xs font-bold text-white transition-all" id="apply-filters">החל מסנן</button><button class="bg-white/5 hover:bg-white/10 px-6 py-2 rounded-xl text-xs font-bold text-slate-400 transition-all" id="clear-filters">נקה הכל</button></div>
+</div>
+<div class="px-8 py-4 flex items-center justify-between border-b border-white/5">
+<div class="flex items-center gap-4"><span class="text-sm text-slate-400">מציג <span class="font-bold text-white" id="count-display">0</span> נכסים</span><span class="text-xs text-slate-500">|</span><span class="text-xs text-slate-500" id="last-update">טוען...</span></div>
+<div class="flex items-center gap-2">
+<button class="p-2 rounded-lg bg-primary/20 text-primary"><span class="material-symbols-outlined text-lg">view_list</span></button>
+<button class="p-2 rounded-lg bg-white/5 text-slate-400 hover:bg-white/10"><span class="material-symbols-outlined text-lg">grid_view</span></button>
+</div>
+</div>
+<div class="flex-1 overflow-x-auto">
+<table class="w-full text-right border-collapse" id="properties-table">
+<thead class="sticky top-0 bg-surface z-5"><tr class="bg-white/5">
+<th class="px-4 py-3 text-[10px] font-bold text-slate-500 uppercase tracking-widest w-8"><input type="checkbox" class="rounded border-white/20 bg-transparent"/></th>
+<th class="px-4 py-3 text-[10px] font-bold text-slate-500 uppercase tracking-widest sortable" data-sort="address">נכס <span class="sort-icon material-symbols-outlined text-xs align-middle">unfold_more</span></th>
+<th class="px-4 py-3 text-[10px] font-bold text-slate-500 uppercase tracking-widest sortable" data-sort="city">עיר / מתחם <span class="sort-icon material-symbols-outlined text-xs align-middle">unfold_more</span></th>
+<th class="px-4 py-3 text-[10px] font-bold text-slate-500 uppercase tracking-widest text-center sortable" data-sort="price">מחיר <span class="sort-icon material-symbols-outlined text-xs align-middle">unfold_more</span></th>
+<th class="px-4 py-3 text-[10px] font-bold text-slate-500 uppercase tracking-widest text-center sortable" data-sort="rooms">חדרים <span class="sort-icon material-symbols-outlined text-xs align-middle">unfold_more</span></th>
+<th class="px-4 py-3 text-[10px] font-bold text-slate-500 uppercase tracking-widest text-center sortable" data-sort="area">מ"ר <span class="sort-icon material-symbols-outlined text-xs align-middle">unfold_more</span></th>
+<th class="px-4 py-3 text-[10px] font-bold text-slate-500 uppercase tracking-widest text-center sortable" data-sort="ssi">SSI <span class="sort-icon material-symbols-outlined text-xs align-middle">unfold_more</span></th>
+<th class="px-4 py-3 text-[10px] font-bold text-slate-500 uppercase tracking-widest text-center sortable" data-sort="days">ימים בשוק <span class="sort-icon material-symbols-outlined text-xs align-middle">unfold_more</span></th>
+<th class="px-4 py-3 text-[10px] font-bold text-slate-500 uppercase tracking-widest text-center sortable" data-sort="source">מקור <span class="sort-icon material-symbols-outlined text-xs align-middle">unfold_more</span></th>
+<th class="px-4 py-3 text-[10px] font-bold text-slate-500 uppercase tracking-widest text-center sortable" data-sort="premium">פרמיה לרוכש <span class="sort-icon material-symbols-outlined text-xs align-middle">unfold_more</span></th>
+<th class="px-4 py-3 text-[10px] font-bold text-slate-500 uppercase tracking-widest text-center">טלפון</th>
+<th class="px-4 py-3 text-[10px] font-bold text-slate-500 uppercase tracking-widest text-center">פעולות</th>
+</tr></thead>
+<tbody class="divide-y divide-white/5" id="properties-body"></tbody>
+</table>
+</div>
+<div class="px-8 py-4 border-t border-white/5 flex items-center justify-between">
+<span class="text-xs text-slate-500" id="page-info">עמוד 1</span>
+<div class="flex gap-1" id="pagination"></div>
+</div>
+<footer class="mt-auto px-8 py-6 border-t border-white/5 text-center text-slate-500 text-[11px] font-medium tracking-widest uppercase">&copy; 2026 QUANTUM Unified Analytics | <span class="q-ver">v...</span></footer>
+</main>
+<script src="shared/toast.js"></script>
+<script src="shared/state-store.js"></script>
+<script src="shared/api-client.js"></script>
+<script>
+const API_BASE=(typeof QuantumAPI!=='undefined')?QuantumAPI.API_BASE:'https://pinuy-binuy-analyzer-production.up.railway.app';
+function esc(s){return typeof DOMPurify!=='undefined'?DOMPurify.sanitize(String(s||'-'),{ALLOWED_TAGS:[]}):String(s||'-').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+let allListings = [];
+let currentSort = { field: 'ssi', dir: 'desc' };
+let currentFilters = {};
+
+function ssiClass(s){return s>=80?'bg-alert-rose/20 text-alert-rose border-alert-rose/30':s>=60?'bg-amber-500/20 text-amber-500 border-amber-500/30':s>=40?'bg-primary/20 text-primary border-primary/30':'bg-white/5 text-slate-400 border-white/10';}
+function ssiLabel(s){return s>=80?'קריטי':s>=60?'גבוה':s>=40?'בינוני':'נמוך';}
+function srcBadge(s){var m={'yad2':['bg-blue-500/20 text-blue-400','yad2'],'madlan':['bg-purple-500/20 text-purple-400','madlan'],'kones':['bg-alert-rose/20 text-alert-rose','כינוס'],'ai_scan':['bg-success-green/20 text-success-green','AI'],'facebook':['bg-sky-500/20 text-sky-400','FB']};var d=m[s]||['bg-white/5 text-slate-400',s||'-'];return '<span class="px-2 py-0.5 rounded text-[10px] font-bold '+d[0]+'">'+d[1]+'</span>';}
+function fmtPrice(p){if(!p)return '-';var n=parseFloat(p);if(isNaN(n))return '-';if(n>=1000000)return (n/1000000).toFixed(2)+'M ₪';return n.toLocaleString('he-IL')+' ₪';}
+
+function getValue(item, field) {
+    switch(field) {
+        case 'address': return (item.address || item.addresses || item.name || '').toString();
+        case 'city': return (item.city || '').toString();
+        case 'price': return parseFloat(item.asking_price || item.price || 0);
+        case 'rooms': return parseFloat(item.rooms || 0);
+        case 'area': return parseFloat(item.area_sqm || item.area || 0);
+        case 'ssi': return parseFloat(item.enhanced_ssi_score || item.ssi_score || 0);
+        case 'days': return parseInt(item.days_on_market || 0);
+        case 'source': return (item.source || '').toString();
+        case 'premium': return parseFloat(item.actual_premium || 0);
+        default: return '';
+    }
+}
+
+function sortData(data, field, dir) {
+    return data.slice().sort(function(a, b) {
+        var va = getValue(a, field), vb = getValue(b, field);
+        if (typeof va === 'string') {
+            var cmp = va.localeCompare(vb, 'he');
+            return dir === 'asc' ? cmp : -cmp;
+        }
+        return dir === 'asc' ? va - vb : vb - va;
+    });
+}
+
+function filterData(data) {
+    return data.filter(function(item) {
+        if (currentFilters.city && (item.city || '') !== currentFilters.city) return false;
+        if (currentFilters.source && (item.source || '') !== currentFilters.source) return false;
+        if (currentFilters.priceMin && parseFloat(item.asking_price || 0) < parseFloat(currentFilters.priceMin)) return false;
+        if (currentFilters.priceMax && parseFloat(item.asking_price || 0) > parseFloat(currentFilters.priceMax)) return false;
+        if (currentFilters.rooms) {
+            var r = parseFloat(item.rooms || 0);
+            var fr = parseInt(currentFilters.rooms);
+            if (fr === 5 && r < 5) return false;
+            if (fr < 5 && (r < fr || r >= fr + 1)) return false;
+        }
+        if (currentFilters.ssi && parseFloat(item.enhanced_ssi_score || item.ssi_score || 0) < parseInt(currentFilters.ssi)) return false;
+        return true;
+    });
+}
+
+function renderTable(data) {
+    var tbody = document.getElementById('properties-body');
+    document.getElementById('count-display').textContent = data.length;
+    if (data.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="12" class="text-center py-12 text-slate-500">אין נכסים להצגה</td></tr>';
+        return;
+    }
+    tbody.innerHTML = data.map(function(p) {
+        var addr = p.address || p.addresses || p.name || 'לא ידוע';
+        var city = p.city || '';
+        var complex = p.complex_name || '';
+        var ssi = Math.round(parseFloat(p.enhanced_ssi_score || p.ssi_score || 0));
+        var price = fmtPrice(p.asking_price || p.price);
+        var rooms = p.rooms ? parseFloat(p.rooms).toFixed(1) : '-';
+        var area = p.area_sqm ? Math.round(parseFloat(p.area_sqm)) : '-';
+        var days = p.days_on_market || '-';
+        var url = p.url || '#';
+        return '<tr class="hover:bg-white/5 transition-colors">' +
+            '<td class="px-4 py-3"><input type="checkbox" class="rounded border-white/20 bg-transparent"/></td>' +
+            '<td class="px-4 py-3"><p class="font-semibold text-white text-sm">' + addr + '</p>' + (complex ? '<p class="text-xs text-slate-500">' + complex + '</p>' : '') + '</td>' +
+            '<td class="px-4 py-3 text-sm text-white">' + city + '</td>' +
+            '<td class="px-4 py-3 text-center text-sm font-semibold text-white">' + price + '</td>' +
+            '<td class="px-4 py-3 text-center text-sm">' + rooms + '</td>' +
+            '<td class="px-4 py-3 text-center text-sm">' + area + '</td>' +
+            '<td class="px-4 py-3 text-center"><span class="px-2 py-1 rounded-lg text-[11px] font-bold border ' + ssiClass(ssi) + '">' + ssi + ' ' + ssiLabel(ssi) + '</span></td>' +
+            '<td class="px-4 py-3 text-center text-sm text-slate-400">' + days + '</td>' +
+            '<td class="px-4 py-3 text-center">' + srcBadge(p.source) + '</td>' +
+            '<td class="px-4 py-3 text-center">' + (function(){
+                var prem = parseFloat(p.actual_premium || 0);
+                var pct = parseFloat(p.premium_pct || 0);
+                if (!prem) return '<span class="text-slate-600 text-xs">—</span>';
+                var color = pct >= 20 ? 'text-success-green' : pct >= 10 ? 'text-warning-amber' : 'text-primary';
+                return '<div class="text-xs font-bold ' + color + '">' + prem.toLocaleString('he-IL') + ' ₪</div>' +
+                       '<div class="text-[10px] text-slate-400">' + pct + '%</div>';
+            })() + '</td>' +
+            '<td class="px-4 py-3 text-center">' + (function(){
+                var phone = p.phone || p.contact_phone || '';
+                if (!phone) return '<span class="text-slate-600 text-xs">—</span>';
+                return '<a href="tel:' + phone + '" class="text-primary hover:text-white text-xs font-mono transition-colors">' + phone + '</a>';
+            })() + '</td>' +
+            '<td class="px-4 py-3 text-center"><div class="flex items-center justify-center gap-1">' +
+            (url !== '#' ? '<a href="' + url + '" target="_blank" class="p-1.5 rounded-lg bg-white/5 hover:bg-primary/20 hover:text-primary transition-all" title="צפה במקור"><span class="material-symbols-outlined text-sm">open_in_new</span></a>' : '') +
+            '<button class="p-1.5 rounded-lg bg-white/5 hover:bg-primary/20 hover:text-primary transition-all" title="פרטים"><span class="material-symbols-outlined text-sm">visibility</span></button></div></td></tr>';
+    }).join('');
+}
+
+function refreshDisplay() {
+    var filtered = filterData(allListings);
+    var sorted = sortData(filtered, currentSort.field, currentSort.dir);
+    renderTable(sorted);
+}
+
+// Column sorting
+document.querySelectorAll('th.sortable').forEach(function(th) {
+    th.addEventListener('click', function() {
+        var field = this.dataset.sort;
+        if (currentSort.field === field) {
+            currentSort.dir = currentSort.dir === 'asc' ? 'desc' : 'asc';
+        } else {
+            currentSort.field = field;
+            currentSort.dir = (field === 'price' || field === 'ssi' || field === 'days') ? 'desc' : 'asc';
+        }
+        document.querySelectorAll('th.sortable').forEach(function(t) { t.classList.remove('asc','desc'); });
+        this.classList.add(currentSort.dir);
+        this.querySelector('.sort-icon').textContent = currentSort.dir === 'asc' ? 'arrow_upward' : 'arrow_downward';
+        refreshDisplay();
+    });
+});
+
+// Filters
+document.getElementById('toggle-filters').addEventListener('click', function() { document.getElementById('filters-panel').classList.toggle('hidden'); });
+document.getElementById('apply-filters').addEventListener('click', function() {
+    currentFilters = {
+        city: document.getElementById('filter-city').value,
+        source: document.getElementById('filter-source').value,
+        priceMin: document.getElementById('filter-price-min').value.replace(/,/g, ''),
+        priceMax: document.getElementById('filter-price-max').value.replace(/,/g, ''),
+        rooms: document.getElementById('filter-rooms').value,
+        ssi: document.getElementById('filter-ssi').value
+    };
+    refreshDisplay();
+});
+document.getElementById('clear-filters').addEventListener('click', function() {
+    currentFilters = {};
+    document.querySelectorAll('#filters-panel select').forEach(function(s) { s.selectedIndex = 0; });
+    document.querySelectorAll('#filters-panel input[type=text]').forEach(function(i) { i.value = ''; });
+    refreshDisplay();
+});
+
+// Search
+document.getElementById('search-input').addEventListener('input', function() {
+    var q = this.value.trim().toLowerCase();
+    if (!q) { refreshDisplay(); return; }
+    var filtered = allListings.filter(function(p) {
+        return (p.address||p.addresses||p.name||'').toLowerCase().includes(q) ||
+               (p.city||'').toLowerCase().includes(q) ||
+               (p.complex_name||'').toLowerCase().includes(q);
+    });
+    renderTable(sortData(filtered, currentSort.field, currentSort.dir));
+    document.getElementById('count-display').textContent = filtered.length;
+});
+
+// Load data
+async function loadProperties() {
+    try {
+        // Use listings/search which returns phone, premium_pct, and all enriched fields
+        var resp = await fetch(API_BASE + '/api/listings/search?limit=500&sort_by=ssi&sort_order=desc');
+        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+        var data = await resp.json();
+        allListings = data.listings || data.data || data || [];
+        
+        document.getElementById('last-update').textContent = 'עדכון: ' + new Date().toLocaleTimeString('he-IL', {hour:'2-digit',minute:'2-digit'});
+        
+        // Populate city filter dynamically
+        var cities = {};
+        allListings.forEach(function(p) { if (p.city) cities[p.city] = true; });
+        var citySelect = document.getElementById('filter-city');
+        Object.keys(cities).sort().forEach(function(c) {
+            var opt = document.createElement('option');
+            opt.value = c; opt.textContent = c;
+            citySelect.appendChild(opt);
+        });
+        
+        refreshDisplay();
+    } catch(err) {
+        document.getElementById('properties-body').innerHTML = '<tr><td colspan="12" class="text-center py-12 text-slate-500">שגיאה בטעינת נכסים: ' + err.message + '</td></tr>';
+    }
+}
+loadProperties();
+
+// Alert badge
+fetch(API_BASE + '/api/alerts?limit=500').then(function(r){return r.json()}).then(function(d){var u=(d.alerts||[]).filter(function(a){return !a.is_read}).length;var b=document.getElementById('nav-alert-badge');if(b&&u>0){b.textContent=u>99?'99+':u;b.classList.remove('hidden')}}).catch(function(){});
+</script>
+<script>fetch("https://pinuy-binuy-analyzer-production.up.railway.app/health").then(function(r){return r.json()}).then(function(d){var v="v"+d.version;document.querySelectorAll(".q-ver").forEach(function(el){el.textContent=v})}).catch(function(){});</script>
+<script src="shared/mobile-nav.js"></script>
+</body>
+</html>

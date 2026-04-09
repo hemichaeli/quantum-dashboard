@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html class="dark" dir="rtl" lang="he">
+<head>
+<meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>QUANTUM | הודעות</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js"></script>
+<script>tailwind.config={darkMode:"class",theme:{extend:{colors:{"primary":"#137fec","background-dark":"#101922","surface":"#1a2530","border-dark":"#2d3a4b","alert-rose":"#f43f5e","success-green":"#10b981"},fontFamily:{"display":["Manrope","sans-serif"]}}}}</script>
+<style>body{font-family:'Manrope',sans-serif;}.glass-panel{background:rgba(26,37,48,0.7);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.05);}.custom-scrollbar::-webkit-scrollbar{width:6px;}.custom-scrollbar::-webkit-scrollbar-track{background:transparent;}.custom-scrollbar::-webkit-scrollbar-thumb{background:#2d3a4b;border-radius:10px;}</style>
+</head>
+<body class="bg-background-dark text-slate-200 min-h-screen flex">
+<button id="mobile-menu-btn" onclick="document.getElementById('mobile-sidebar').classList.toggle('hidden');document.getElementById('mobile-overlay').classList.toggle('hidden')" class="lg:hidden fixed top-3 right-3 z-50 p-2.5 bg-surface/90 border border-white/10 rounded-xl backdrop-blur-sm shadow-xl"><span class="material-symbols-outlined text-white text-2xl">menu</span></button>
+<div id="mobile-overlay" class="hidden lg:hidden fixed inset-0 bg-black/60 z-30 backdrop-blur-sm" onclick="document.getElementById('mobile-sidebar').classList.add('hidden');this.classList.add('hidden')"></div>
+
+<aside id="mobile-sidebar" class="w-64 flex-shrink-0 border-l border-white/5 bg-surface/50 h-screen fixed lg:sticky top-0 hidden lg:flex flex-col z-40 transition-all">
+<div class="p-5 flex items-center gap-3">
+<img src="quantum-logo.png" alt="QUANTUM" class="h-12 w-auto object-contain" style="filter:drop-shadow(0 0 8px rgba(19,127,236,0.4));"/>
+<div><h1 class="text-xl font-extrabold tracking-tight text-white uppercase">QUANTUM</h1>
+<p class="text-[10px] text-primary font-bold tracking-widest leading-none">UNIFIED ANALYTICS</p></div>
+</div>
+<nav class="flex-1 px-4 space-y-1 mt-2 overflow-y-auto custom-scrollbar">
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-dashboard.html"><span class="material-symbols-outlined">dashboard</span><span>לוח בקרה</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-opportunities.html"><span class="material-symbols-outlined">diamond</span><span>הזדמנויות</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-complexes.html"><span class="material-symbols-outlined">location_city</span><span>מתחמים</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-map-view.html"><span class="material-symbols-outlined">map</span><span>מפת פרויקטים</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-market-analysis.html"><span class="material-symbols-outlined">monitoring</span><span>ניתוח שוק</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-properties.html"><span class="material-symbols-outlined">apartment</span><span>נכסים</span></a>
+<div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">CRM ולידים</p></div>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-leads.html"><span class="material-symbols-outlined">people</span><span>לידים ו-CRM</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-campaigns.html"><span class="material-symbols-outlined">campaign</span><span>קמפיינים</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-appointments.html"><span class="material-symbols-outlined">calendar_month</span><span>פגישות ויומן</span></a>
+<div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">תקשורת</p></div>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary text-white font-semibold transition-all" href="quantum-messaging.html"><span class="material-symbols-outlined">mail</span><span>הודעות ו-WA</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-bot-settings.html"><span class="material-symbols-outlined">smart_toy</span><span>הגדרות בוט</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-alerts.html"><span class="material-symbols-outlined">notifications</span><span>התראות</span><span id="nav-alert-badge" class="hidden mr-auto px-1.5 py-0.5 bg-alert-rose text-white text-[9px] font-bold rounded-full min-w-[18px] text-center"></span></a>
+<div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">נוסף</p></div>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-kones.html"><span class="material-symbols-outlined">gavel</span><span>כינוסי נכסים</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-news.html"><span class="material-symbols-outlined">newspaper</span><span>חדשות שוק</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-tasks.html"><span class="material-symbols-outlined">task_alt</span><span>משימות</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-sellers.html"><span class="material-symbols-outlined">home</span><span>מוכרים</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-buyers.html"><span class="material-symbols-outlined">groups</span><span>קונים</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-publish.html"><span class="material-symbols-outlined">publish</span><span>פרסום מודעות</span></a>
+<div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">מערכת</p></div>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-scans.html"><span class="material-symbols-outlined">radar</span><span>סריקות</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-reports.html"><span class="material-symbols-outlined">description</span><span>דוחות</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-settings.html"><span class="material-symbols-outlined">settings</span><span>הגדרות</span></a>
+</nav>
+<div class="p-4 mt-auto">
+<div class="flex items-center gap-3 px-2">
+<div class="size-10 rounded-full bg-primary/20 flex items-center justify-center"><span class="material-symbols-outlined text-primary">person</span></div>
+<div class="flex-1 min-w-0"><p class="text-sm font-bold text-white truncate">QUANTUM Admin</p><p class="text-xs text-slate-500 truncate"><span class="q-ver">v...</span></p></div>
+</div></div>
+</aside>
+<main class="flex-1 min-w-0 h-screen overflow-y-auto overflow-x-hidden flex flex-col">
+<header class="flex flex-wrap items-center justify-between gap-2 px-4 md:px-8 py-3 md:py-5 border-b border-white/5 glass-panel sticky top-0 z-10">
+<div class="flex flex-col"><h2 class="text-base md:text-2xl font-bold text-white leading-tight">הודעות ו-WhatsApp</h2><p class="text-sm text-slate-400">SMS דרך INFORU + ניהול שיחות WhatsApp</p></div>
+<div class="flex items-center gap-3"><button class="flex items-center gap-2 bg-primary hover:brightness-110 px-5 py-2.5 rounded-xl text-sm font-bold text-white transition-all" id="btn-new-msg"><span class="material-symbols-outlined text-lg">edit</span>הודעה חדשה</button></div>
+</header>
+<div class="p-8 space-y-6" id="main-content">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="stats-grid">
+<div class="glass-panel rounded-2xl p-5"><div class="flex justify-between items-start mb-3"><div><p class="text-slate-400 text-xs font-medium">הודעות שנשלחו</p><h3 class="text-2xl font-bold text-white mt-1 tracking-tight" id="stat-sent">-</h3></div><div class="p-2 bg-primary/20 text-primary rounded-lg"><span class="material-symbols-outlined text-xl">send</span></div></div><p class="text-[11px] text-slate-500">נתון אמת מ-INFORU</p></div>
+<div class="glass-panel rounded-2xl p-5"><div class="flex justify-between items-start mb-3"><div><p class="text-slate-400 text-xs font-medium">הודעות שהצליחו</p><h3 class="text-2xl font-bold text-white mt-1 tracking-tight" id="stat-success">-</h3></div><div class="p-2 bg-success-green/20 text-success-green rounded-lg"><span class="material-symbols-outlined text-xl">check_circle</span></div></div><p class="text-[11px] text-slate-500" id="stat-success-rate"></p></div>
+<div class="glass-panel rounded-2xl p-5"><div class="flex justify-between items-start mb-3"><div><p class="text-slate-400 text-xs font-medium">נמענים ייחודיים</p><h3 class="text-2xl font-bold text-white mt-1 tracking-tight" id="stat-recipients">-</h3></div><div class="p-2 bg-amber-400/20 text-amber-400 rounded-lg"><span class="material-symbols-outlined text-xl">group</span></div></div><p class="text-[11px] text-slate-500" id="stat-last-msg"></p></div>
+<div class="glass-panel rounded-2xl p-5"><div class="flex justify-between items-start mb-3"><div><p class="text-slate-400 text-xs font-medium">מתחמים שנפנו</p><h3 class="text-2xl font-bold text-white mt-1 tracking-tight" id="stat-complexes">-</h3></div><div class="p-2 bg-alert-rose/20 text-alert-rose rounded-lg"><span class="material-symbols-outlined text-xl">apartment</span></div></div><p class="text-[11px] text-slate-500">מתחמים ייחודיים</p></div>
+</div>
+<div class="glass-panel rounded-2xl">
+<div class="p-5 border-b border-white/5 flex items-center gap-3"><span class="material-symbols-outlined text-primary">article</span><div><h3 class="font-bold text-white">תבניות הודעות</h3><p class="text-xs text-slate-400">תבניות מוכנות לשימוש</p></div></div>
+<div class="p-5 grid grid-cols-1 md:grid-cols-2 gap-4" id="templates-grid"><div class="text-center p-8 text-slate-500">טוען תבניות...</div></div>
+</div>
+<div class="glass-panel rounded-2xl hidden" id="send-form">
+<div class="p-5 border-b border-white/5 flex items-center justify-between"><div class="flex items-center gap-3"><span class="material-symbols-outlined text-success-green">send</span><div><h3 class="font-bold text-white">שליחת הודעה</h3><p class="text-xs text-slate-400" id="form-template-name"></p></div></div><button class="text-slate-400 hover:text-white" id="btn-close-form"><span class="material-symbols-outlined">close</span></button></div>
+<div class="p-5 space-y-4">
+<div><label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-1">מספר טלפון</label><input class="w-full bg-surface border-white/10 rounded-lg text-sm py-2.5 px-3 focus:ring-primary focus:border-primary" placeholder="05X-XXXXXXX" type="tel" id="input-phone" dir="ltr"/></div>
+<div><label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-1">שם הנמען</label><input class="w-full bg-surface border-white/10 rounded-lg text-sm py-2.5 px-3 focus:ring-primary focus:border-primary" placeholder="שם מלא" type="text" id="input-name"/></div>
+<div class="grid grid-cols-2 gap-4"><div><label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-1">כתובת</label><input class="w-full bg-surface border-white/10 rounded-lg text-sm py-2.5 px-3" placeholder="רחוב ומספר" type="text" id="input-address"/></div><div><label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-1">עיר</label><input class="w-full bg-surface border-white/10 rounded-lg text-sm py-2.5 px-3" placeholder="עיר" type="text" id="input-city"/></div></div>
+<div><label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-1">טלפון סוכן</label><input class="w-full bg-surface border-white/10 rounded-lg text-sm py-2.5 px-3" placeholder="050-XXXXXXX" type="tel" id="input-agent-phone" dir="ltr"/></div>
+<div><label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-1">תצוגה מקדימה</label><div class="bg-surface/80 border border-white/10 rounded-lg p-4 text-sm leading-relaxed whitespace-pre-line" id="msg-preview">בחר תבנית כדי לראות תצוגה מקדימה</div></div>
+<div class="flex gap-3 pt-2"><button class="bg-primary hover:brightness-110 px-6 py-2.5 rounded-xl text-sm font-bold text-white transition-all flex items-center gap-2" id="btn-send"><span class="material-symbols-outlined text-lg">send</span>שלח SMS</button><button class="bg-white/5 hover:bg-white/10 px-6 py-2.5 rounded-xl text-sm font-bold text-slate-400 transition-all" id="btn-cancel">ביטול</button></div>
+<div class="hidden p-3 rounded-lg text-sm font-bold" id="send-result"></div>
+</div></div>
+<div class="glass-panel rounded-2xl"><div class="p-5 border-b border-white/5 flex items-center gap-3"><span class="material-symbols-outlined text-amber-400">history</span><div><h3 class="font-bold text-white">היסטוריית הודעות SMS</h3><p class="text-xs text-slate-400">הודעות שנשלחו בפועל דרך המערכת</p></div></div><div class="p-5" id="history-container"><div class="text-center py-12 text-slate-500"><span class="material-symbols-outlined text-4xl block mb-3 opacity-30">mail</span><p class="font-semibold">עדיין לא נשלחה אף הודעה</p><p class="text-xs mt-1">שלח את ההודעה הראשונה דרך תבניות למעלה</p></div></div></div>
+<!-- WhatsApp Section -->
+<div class="glass-panel rounded-2xl">
+<div class="p-5 border-b border-white/5 flex items-center justify-between">
+<div class="flex items-center gap-3"><span class="material-symbols-outlined text-success-green">chat</span><div><h3 class="font-bold text-white">שיחות WhatsApp</h3><p class="text-xs text-slate-400" id="wa-count">טוען...</p></div></div>
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-surface border border-white/10">
+<div class="size-2 rounded-full bg-success-green animate-pulse" id="wa-dot"></div>
+<span class="text-xs font-bold text-success-green" id="wa-status">מחובר</span>
+</div>
+<button onclick="loadWAConversations()" class="p-2 hover:bg-white/10 rounded-lg transition-all"><span class="material-symbols-outlined text-slate-400">refresh</span></button>
+</div>
+</div>
+<div class="flex h-[500px]">
+<!-- Conversation List -->
+<div class="w-72 border-l border-white/5 overflow-y-auto custom-scrollbar" id="wa-conv-list">
+<div class="text-center py-8 text-slate-500 text-sm">טוען שיחות...</div>
+</div>
+<!-- Chat Window -->
+<div class="flex-1 flex flex-col">
+<div class="flex-1 overflow-y-auto p-5 space-y-3 custom-scrollbar" id="wa-messages">
+<div class="text-center py-16 text-slate-500"><span class="material-symbols-outlined text-4xl block mb-3 opacity-30">chat</span><p>בחר שיחה מהרשימה</p></div>
+</div>
+<div class="p-4 border-t border-white/5 flex gap-3" id="wa-reply-bar" style="display:none!important">
+<input type="text" id="wa-reply-input" class="flex-1 bg-surface border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white" placeholder="כתוב הודעה..."/>
+<button onclick="sendWAReply()" class="bg-success-green hover:brightness-110 px-4 py-2.5 rounded-xl text-sm font-bold text-white"><span class="material-symbols-outlined">send</span></button>
+</div>
+</div>
+</div>
+</div>
+<!-- WhatsApp Stats -->
+<div class="glass-panel rounded-2xl">
+<div class="p-5 border-b border-white/5 flex items-center gap-3"><span class="material-symbols-outlined text-primary">analytics</span><div><h3 class="font-bold text-white">סטטיסטיקות WhatsApp</h3><p class="text-xs text-slate-400">נתוני שיחות ובוט</p></div></div>
+<div class="p-5 grid grid-cols-2 md:grid-cols-4 gap-4" id="wa-stats-grid">
+<div class="bg-surface/50 border border-white/5 rounded-xl p-4 text-center"><p class="text-2xl font-bold text-white" id="wa-stat-total">-</p><p class="text-xs text-slate-500 mt-1">סה"כ שיחות</p></div>
+<div class="bg-surface/50 border border-white/5 rounded-xl p-4 text-center"><p class="text-2xl font-bold text-success-green" id="wa-stat-active">-</p><p class="text-xs text-slate-500 mt-1">שיחות פעילות</p></div>
+<div class="bg-surface/50 border border-white/5 rounded-xl p-4 text-center"><p class="text-2xl font-bold text-amber-400" id="wa-stat-escalated">-</p><p class="text-xs text-slate-500 mt-1">Escalations</p></div>
+<div class="bg-surface/50 border border-white/5 rounded-xl p-4 text-center"><p class="text-2xl font-bold text-primary" id="wa-stat-leads">-</p><p class="text-xs text-slate-500 mt-1">לידים שנלכדו</p></div>
+</div>
+</div>
+</div>
+<footer class="mt-auto px-8 py-6 border-t border-white/5 text-center text-slate-500 text-[11px] font-medium tracking-widest uppercase">&copy; 2026 QUANTUM Unified Analytics | <span class="q-ver">v...</span></footer>
+</main>
+<script src="shared/toast.js"></script>
+<script src="shared/state-store.js"></script>
+<script src="shared/api-client.js"></script>
+<script>
+const API_BASE=(typeof QuantumAPI!=='undefined')?QuantumAPI.API_BASE:'https://pinuy-binuy-analyzer-production.up.railway.app';let currentTemplate=null;let templatesData=[];
+function esc(s){return typeof DOMPurify!=='undefined'?DOMPurify.sanitize(String(s||'-'),{ALLOWED_TAGS:[]}):String(s||'-').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+async function loadStats(){try{const r=await fetch(API_BASE+'/api/inforu/status');const d=await r.json();const s=d.stats||{};document.getElementById('stat-sent').textContent=s.total_sent||'0';document.getElementById('stat-success').textContent=s.successful||'0';document.getElementById('stat-recipients').textContent=s.unique_recipients||'0';document.getElementById('stat-complexes').textContent=s.complexes_contacted||'0';const total=parseInt(s.total_sent)||0;const success=parseInt(s.successful)||0;const rate=total>0?Math.round((success/total)*100):0;document.getElementById('stat-success-rate').textContent=total>0?'אחוז הצלחה: '+rate+'%':'טרם נשלחו הודעות';document.getElementById('stat-last-msg').textContent=s.last_message?'אחרונה: '+new Date(s.last_message).toLocaleDateString('he-IL'):'טרם נשלחו'}catch(e){document.getElementById('stat-sent').textContent='0'}}
+async function loadTemplates(){try{
+  // Try DB templates first, fall back to inforu hardcoded
+  let dbTemplates=[];
+  try{const r2=await fetch(API_BASE+'/api/templates');const d2=await r2.json();dbTemplates=d2.templates||[];}catch(e){}
+  const r=await fetch(API_BASE+'/api/inforu/templates');const d=await r.json();
+  templatesData=(dbTemplates.length?dbTemplates:d.templates||[]).map(t=>({...t,template:t.body||t.template,maxLength:t.max_length||t.maxLength||480}));
+  const grid=document.getElementById('templates-grid');
+  const icons={seller_initial:'real_estate_agent',seller_followup:'follow_the_signs',buyer_opportunity:'diamond',kones_inquiry:'gavel'};
+  grid.innerHTML='<button onclick="openNewTemplateModal()" class="bg-surface/50 border border-dashed border-white/20 rounded-xl p-6 hover:border-primary/50 transition-all cursor-pointer flex flex-col items-center justify-center gap-2"><span class="material-symbols-outlined text-3xl text-primary">add</span><span class="text-sm text-slate-400">+ תבנית חדשה</span></button>'+
+  templatesData.map(function(t){var icon=icons[t.key]||'article';var tid=t.id||'';
+  return'<div class="bg-surface/50 border border-white/5 rounded-xl p-4 hover:border-white/20 transition-all template-card" data-key="'+(t.key||'')+'" data-id="'+tid+'">'+
+    '<div class="flex items-center gap-3 mb-3">'+
+      '<div class="p-2 bg-primary/20 text-primary rounded-lg"><span class="material-symbols-outlined">'+icon+'</span></div>'+
+      '<div class="flex-1"><p class="font-bold text-white text-sm">'+esc(t.name)+'</p>'+
+        '<p class="text-[10px] text-slate-500">עד '+(t.maxLength||480)+' תווים'+(t.inforu_template_id?' | InforU #'+esc(t.inforu_template_id):'')+'</p>'+
+      '</div>'+
+    '</div>'+
+    '<pre class="text-xs text-slate-400 leading-relaxed whitespace-pre-wrap bg-white/5 p-3 rounded-lg max-h-24 overflow-y-auto mb-3">'+esc(t.template||t.body||'')+'</pre>'+
+    (tid?'<div class="flex items-center gap-2 mb-2"><input type="text" value="'+(t.inforu_template_id||'')+'" placeholder="מס\' תבנית InforU" class="flex-1 bg-white/5 border border-white/10 rounded-lg text-xs px-2 py-1 text-slate-300" onblur="saveTemplateField('+tid+',\'inforu_template_id\',this.value)"/></div>':'')+
+    '<div class="flex gap-2">'+
+      '<button class="flex-1 bg-primary/10 hover:bg-primary/20 text-primary text-xs font-bold py-2 rounded-lg transition-all cursor-pointer" onclick="event.stopPropagation();openForm(\''+(t.key||'')+'\')">השתמש</button>'+
+      (tid?'<button class="bg-alert-rose/10 hover:bg-alert-rose/20 text-alert-rose text-xs font-bold py-2 px-3 rounded-lg transition-all" onclick="event.stopPropagation();deleteTemplate('+tid+')">מחק</button>':'')+'</div></div>'}).join('')
+}catch(e){document.getElementById('templates-grid').innerHTML='<div class="col-span-2 text-center p-8 text-alert-rose">שגיאה בטעינת תבניות</div>'}}
+async function saveTemplateField(id,field,value){try{const body={};body[field]=value;await fetch(API_BASE+'/api/templates/'+id,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)})}catch(e){}}
+async function deleteTemplate(id){if(!confirm('למחוק תבנית זו?'))return;try{await fetch(API_BASE+'/api/templates/'+id,{method:'DELETE'});loadTemplates();}catch(e){alert('שגיאה');}}
+function openNewTemplateModal(){var name=prompt('שם התבנית:');if(!name)return;var body=prompt('תוכן התבנית:');if(!body)return;fetch(API_BASE+'/api/templates',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:name,body:body,category:'general'})}).then(()=>loadTemplates()).catch(e=>alert('שגיאה: '+e.message));}
+function openForm(k){currentTemplate=templatesData.find(function(t){return t.key===k});if(!currentTemplate)return;document.getElementById('form-template-name').textContent='תבנית: '+currentTemplate.name;document.getElementById('send-form').classList.remove('hidden');document.getElementById('send-result').classList.add('hidden');updatePreview();document.getElementById('send-form').scrollIntoView({behavior:'smooth'})}
+function updatePreview(){if(!currentTemplate)return;var text=currentTemplate.template||'';var vars={name:document.getElementById('input-name').value||'{name}',address:document.getElementById('input-address').value||'{address}',city:document.getElementById('input-city').value||'{city}',agent_phone:document.getElementById('input-agent-phone').value||'{agent_phone}'};Object.keys(vars).forEach(function(k){text=text.replace(new RegExp('\\{'+k+'\\}','g'),vars[k])});document.getElementById('msg-preview').textContent=text}
+async function sendMessage(){var phone=document.getElementById('input-phone').value.trim();if(!phone){if(typeof QuantumToast!=='undefined')QuantumToast.warning('יש להזין מספר טלפון');return}var result=document.getElementById('send-result');var btn=document.getElementById('btn-send');btn.disabled=true;btn.innerHTML='<span class="material-symbols-outlined text-lg animate-spin">refresh</span>שולח...';try{var r=await fetch(API_BASE+'/api/inforu/send',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({phone:phone,template:currentTemplate.key,variables:{name:document.getElementById('input-name').value||'לקוח/ה',address:document.getElementById('input-address').value||'',city:document.getElementById('input-city').value||'',agent_phone:document.getElementById('input-agent-phone').value||''}})});var d=await r.json();if(d.success){result.className='p-3 rounded-lg text-sm font-bold bg-success-green/20 text-success-green';result.textContent='ההודעה נשלחה בהצלחה!';loadStats()}else{result.className='p-3 rounded-lg text-sm font-bold bg-alert-rose/20 text-alert-rose';result.textContent='שגיאה: '+(d.error||d.message||'לא ידוע')}}catch(e){result.className='p-3 rounded-lg text-sm font-bold bg-alert-rose/20 text-alert-rose';result.textContent='שגיאת רשת: '+e.message}result.classList.remove('hidden');btn.disabled=false;btn.innerHTML='<span class="material-symbols-outlined text-lg">send</span>שלח SMS'}
+document.addEventListener('click',function(e){var card=e.target.closest('.template-card');if(card){openForm(card.getAttribute('data-key'));return}});
+document.getElementById('btn-close-form').addEventListener('click',function(){document.getElementById('send-form').classList.add('hidden')});
+document.getElementById('btn-cancel').addEventListener('click',function(){document.getElementById('send-form').classList.add('hidden')});
+document.getElementById('btn-send').addEventListener('click',sendMessage);
+document.getElementById('btn-new-msg').addEventListener('click',function(){if(templatesData.length>0)openForm(templatesData[0].key)});
+['input-name','input-address','input-city','input-agent-phone'].forEach(function(id){document.getElementById(id).addEventListener('input',updatePreview)});
+var currentWAPhone=null;
+async function loadWAConversations(){try{var r=await fetch(API_BASE+'/api/whatsapp/conversations?limit=30');var d=await r.json();var convs=d.conversations||d||[];document.getElementById('wa-count').textContent=convs.length+' שיחות';var list=document.getElementById('wa-conv-list');if(!convs.length){list.innerHTML='<div class="text-center py-8 text-slate-500 text-sm">אין שיחות</div>';return;}list.innerHTML=convs.map(function(c){var dt=c.last_message_at?new Date(c.last_message_at).toLocaleString('he-IL',{hour:'2-digit',minute:'2-digit'}):'';var title=(c.listing_title||'').substring(0,30);return'<div class="p-4 border-b border-white/5 hover:bg-white/5 cursor-pointer transition-all" onclick="openWAConv(\''+c.phone+'\')">'+'<div class="flex justify-between items-start gap-1">'+'<div class="min-w-0 flex-1">'+(title?'<p class="text-xs text-primary truncate">'+title+'</p>':'')+'<p class="font-semibold text-white text-sm">'+(c.display_name||c.phone||'-')+'</p></div>'+'<div class="flex items-center gap-1 flex-shrink-0">'+(c.listing_url?'<a href="'+c.listing_url+'" target="_blank" onclick="event.stopPropagation()" class="text-slate-400 hover:text-primary"><span class="material-symbols-outlined text-sm">open_in_new</span></a>':'')+'<span class="text-[10px] text-slate-500">'+dt+'</span></div>'+'</div>'+'<p class="text-xs text-slate-400 mt-1 truncate">'+(c.last_message||'')+'</p>'+(c.escalated?'<span class="text-[10px] bg-amber-400/20 text-amber-400 px-2 py-0.5 rounded-full mt-1 inline-block">Escalated</span>':'')+'</div>';}).join('');}catch(e){document.getElementById('wa-conv-list').innerHTML='<div class="text-center py-8 text-slate-500 text-sm">שגיאה</div>';}}
+async function openWAConv(phone){currentWAPhone=phone;var msgs=document.getElementById('wa-messages');msgs.innerHTML='<div class="text-center py-8 text-slate-500">טוען...</div>';try{var r=await fetch(API_BASE+'/api/whatsapp/conversations/'+encodeURIComponent(phone)+'/messages?limit=50');var d=await r.json();var messages=d.messages||d.data||d||[];if(!messages.length){msgs.innerHTML='<div class="text-center py-8 text-slate-500">אין הודעות</div>';return;}msgs.innerHTML=messages.map(function(m){var isBot=m.direction==='outgoing'||m.from_bot;return'<div class="flex '+(isBot?'justify-start':'justify-end')+'">'+'<div class="max-w-xs px-4 py-2.5 rounded-2xl text-sm '+(isBot?'bg-surface/80 border border-white/10 text-slate-200':'bg-primary text-white')+'">'+(m.message||m.text||'')+'<p class="text-[10px] opacity-60 mt-1">'+(m.created_at?new Date(m.created_at).toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'}):'')+'</p></div></div>';}).join('');msgs.scrollTop=msgs.scrollHeight;document.getElementById('wa-reply-bar').style.display='flex';}catch(e){msgs.innerHTML='<div class="text-center py-8 text-alert-rose">שגיאה</div>';}}
+async function sendWAReply(){var input=document.getElementById('wa-reply-input');var text=input.value.trim();if(!text||!currentWAPhone)return;try{await fetch(API_BASE+'/api/whatsapp/conversations/'+encodeURIComponent(currentWAPhone)+'/reply',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:text})});input.value='';openWAConv(currentWAPhone);}catch(e){if(typeof QuantumToast!=='undefined')QuantumToast.error('שגיאה בשליחה');else console.error('שגיאה בשליחה',e);}}
+async function loadWAStats(){try{var r=await fetch(API_BASE+'/api/whatsapp/status');var d=await r.json();var s=d||{};document.getElementById('wa-stat-total').textContent=s.total_conversations||0;document.getElementById('wa-stat-active').textContent=s.active_conversations||0;document.getElementById('wa-stat-escalated').textContent=s.escalations_today||0;document.getElementById('wa-stat-leads').textContent=s.leads_captured_today||0;var connected=s.status==='ok'||s.active||false;document.getElementById('wa-dot').className='size-2 rounded-full '+(connected?'bg-success-green animate-pulse':'bg-alert-rose');document.getElementById('wa-status').textContent=connected?'מחובר':'מנותק';document.getElementById('wa-status').className='text-xs font-bold '+(connected?'text-success-green':'text-alert-rose');}catch(e){}}
+loadStats();loadTemplates();loadWAConversations();loadWAStats();
+</script>
+<script>
+(function(){
+  var base="https://pinuy-binuy-analyzer-production.up.railway.app";
+  fetch(base+"/health").then(function(r){return r.json()}).then(function(d){
+    var ver="v"+d.version;
+    document.querySelectorAll(".q-ver").forEach(function(el){el.textContent=ver});
+  }).catch(function(){});
+  fetch(base+"/api/alerts?limit=500").then(function(r){return r.json()}).then(function(d){
+    var u=(d.alerts||[]).filter(function(a){return !a.is_read}).length;
+    var b=document.getElementById("nav-alert-badge")||document.getElementById("sidebar-badge");
+    if(b&&u>0){b.textContent=u>99?"99+":u;b.classList.remove("hidden")}
+  }).catch(function(){});
+})();
+</script>
+<script src="shared/mobile-nav.js"></script>
+</body>
+</html>

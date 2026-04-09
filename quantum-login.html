@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="he">
+<head>
+<meta charset="UTF-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>QUANTUM | התחברות</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js"></script>
+<script src="shared/toast.js"></script>
+<script src="shared/state-store.js"></script>
+<script src="shared/api-client.js"></script>
+<script>
+tailwind.config = {
+    theme: { extend: { colors: { "primary": "#137fec", "background-dark": "#101922", "surface": "#1a2530", "border-dark": "#2d3a4b" }, fontFamily: { "display": ["Manrope", "sans-serif"] } } },
+};
+</script>
+<style>
+body { font-family: 'Manrope', sans-serif; background: linear-gradient(135deg, #0a1018 0%, #101922 50%, #0d1520 100%); }
+.glass-panel { background: rgba(26, 37, 48, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.05); }
+.glow-primary { box-shadow: 0 0 30px rgba(19,127,236,0.15), 0 0 60px rgba(19,127,236,0.05); }
+</style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+<div class="w-full max-w-md">
+    <div class="text-center mb-8">
+        <div class="inline-flex items-center justify-center size-16 rounded-2xl bg-primary/10 border border-primary/20 mb-4 glow-primary">
+            <span class="material-symbols-outlined text-white text-3xl">diamond</span>
+        </div>
+        <h1 class="text-3xl font-extrabold text-white tracking-tight">QUANTUM</h1>
+        <p class="text-sm text-primary font-bold tracking-widest mt-1">UNIFIED ANALYTICS</p>
+    </div>
+    <div class="glass-panel rounded-3xl p-8 glow-primary">
+        <h2 class="text-xl font-bold text-white mb-6 text-center">התחברות למערכת</h2>
+        <form id="login-form" onsubmit="handleLogin(event)">
+            <div class="space-y-5">
+                <div>
+                    <label class="block text-sm font-semibold text-slate-400 mb-2">שם משתמש</label>
+                    <div class="relative">
+                        <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-500">person</span>
+                        <input type="text" id="username" required placeholder="הכנס שם משתמש" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 pr-11 text-white placeholder-slate-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"/>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-400 mb-2">סיסמה</label>
+                    <div class="relative">
+                        <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-500">lock</span>
+                        <input type="password" id="password" required placeholder="הכנס סיסמה" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 pr-11 text-white placeholder-slate-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"/>
+                        <button type="button" onclick="togglePassword()" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white transition-colors">
+                            <span class="material-symbols-outlined" id="pw-toggle">visibility_off</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="flex items-center justify-between">
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox" id="remember" class="rounded border-white/20 bg-white/5 text-primary focus:ring-primary focus:ring-offset-0"/>
+                        <span class="text-sm text-slate-400">זכור אותי</span>
+                    </label>
+                </div>
+                <button type="submit" id="login-btn" class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-3.5 rounded-xl transition-all duration-200 flex items-center justify-center gap-2">
+                    <span>כניסה</span>
+                    <span class="material-symbols-outlined text-lg">arrow_back</span>
+                </button>
+            </div>
+        </form>
+        <div id="login-error" class="hidden mt-4 p-3 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-sm text-center"></div>
+    </div>
+    <p class="text-center text-slate-600 text-xs mt-6">QUANTUM Unified Analytics <span class="q-ver">v...</span></p>
+</div>
+<script src="shared/toast.js"></script>
+<script src="shared/state-store.js"></script>
+<script src="shared/api-client.js"></script>
+<script>
+function togglePassword() {
+    var pw = document.getElementById('password');
+    var icon = document.getElementById('pw-toggle');
+    if (pw.type === 'password') { pw.type = 'text'; icon.textContent = 'visibility'; }
+    else { pw.type = 'password'; icon.textContent = 'visibility_off'; }
+}
+function handleLogin(e) {
+    e.preventDefault();
+    var btn = document.getElementById('login-btn');
+    var err = document.getElementById('login-error');
+    btn.innerHTML = '<span class="animate-spin material-symbols-outlined">progress_activity</span>';
+    btn.disabled = true;
+    err.classList.add('hidden');
+    setTimeout(function() {
+        var user = document.getElementById('username').value;
+        var pass = document.getElementById('password').value;
+        if ((user === 'admin' && pass === 'quantum2026') || (user === 'hemi' && pass === 'quantum')) {
+            sessionStorage.setItem('quantum_auth', 'true');
+            sessionStorage.setItem('quantum_user', user);
+            window.location.href = 'quantum-properties.html';
+        } else {
+            err.textContent = 'שם משתמש או סיסמה שגויים';
+            err.classList.remove('hidden');
+            btn.innerHTML = '<span>כניסה</span><span class="material-symbols-outlined text-lg">arrow_back</span>';
+            btn.disabled = false;
+        }
+    }, 800);
+}
+</script>
+<script>fetch("https://pinuy-binuy-analyzer-production.up.railway.app/health").then(function(r){return r.json()}).then(function(d){var v="v"+d.version;document.querySelectorAll(".q-ver").forEach(function(el){el.textContent=v})}).catch(function(){});</script>
+</body>
+</html>

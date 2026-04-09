@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html class="dark" dir="rtl" lang="he">
+<head>
+<meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>QUANTUM | לוח בקרה</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js"></script>
+<script>tailwind.config={darkMode:"class",theme:{extend:{colors:{"primary":"#137fec","background-dark":"#101922","surface":"#1a2530","border-dark":"#2d3a4b","alert-rose":"#f43f5e","success-green":"#10b981","warning-amber":"#f59e0b"},fontFamily:{"display":["Manrope","sans-serif"]}}}}</script>
+<style>
+body{font-family:'Manrope',sans-serif;}
+.glass-panel{background:rgba(26,37,48,0.7);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.05);}
+.custom-scrollbar::-webkit-scrollbar{width:6px;}
+.custom-scrollbar::-webkit-scrollbar-track{background:transparent;}
+.custom-scrollbar::-webkit-scrollbar-thumb{background:#2d3a4b;border-radius:10px;}
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+.skeleton{background:linear-gradient(90deg,rgba(255,255,255,0.03) 25%,rgba(255,255,255,0.08) 50%,rgba(255,255,255,0.03) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.fade-in{animation:fadeIn 0.4s ease-out forwards;opacity:0;}
+.iai-excellent{background:rgba(16,185,129,0.15);color:#10b981;border:1px solid rgba(16,185,129,0.3);}
+.iai-good{background:rgba(19,127,236,0.15);color:#137fec;border:1px solid rgba(19,127,236,0.3);}
+.iai-moderate{background:rgba(245,158,11,0.15);color:#f59e0b;border:1px solid rgba(245,158,11,0.3);}
+.iai-low{background:rgba(244,63,94,0.15);color:#f43f5e;border:1px solid rgba(244,63,94,0.3);}
+.sig-green{color:#10b981;} .sig-yellow{color:#f59e0b;} .sig-gray{color:#64748b;}
+tr.data-row:hover{background:rgba(255,255,255,0.04);}
+</style>
+</head>
+<body class="bg-background-dark text-slate-200 min-h-screen flex">
+
+<!-- Sidebar -->
+<aside class="w-64 flex-shrink-0 border-l border-white/5 bg-surface/50 h-screen sticky top-0 hidden lg:flex flex-col">
+<div class="p-5 flex items-center gap-3">
+<img src="quantum-logo.png" alt="QUANTUM" class="h-12 w-auto object-contain" style="filter:drop-shadow(0 0 8px rgba(19,127,236,0.4));"/>
+<div><h1 class="text-xl font-extrabold tracking-tight text-white uppercase">QUANTUM</h1>
+<p class="text-[10px] text-primary font-bold tracking-widest leading-none">UNIFIED ANALYTICS</p></div>
+</div>
+<nav class="flex-1 px-4 space-y-1 mt-2 overflow-y-auto custom-scrollbar">
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary text-white font-semibold transition-all" href="quantum-dashboard.html"><span class="material-symbols-outlined">dashboard</span><span>לוח בקרה</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-opportunities.html"><span class="material-symbols-outlined">diamond</span><span>הזדמנויות</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-complexes.html"><span class="material-symbols-outlined">location_city</span><span>מתחמים</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-map-view.html"><span class="material-symbols-outlined">map</span><span>מפת פרויקטים</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-market-analysis.html"><span class="material-symbols-outlined">monitoring</span><span>ניתוח שוק</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-properties.html"><span class="material-symbols-outlined">apartment</span><span>נכסים</span></a>
+<div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">CRM ולידים</p></div>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-leads.html"><span class="material-symbols-outlined">people</span><span>לידים ו-CRM</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-campaigns.html"><span class="material-symbols-outlined">campaign</span><span>קמפיינים</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-appointments.html"><span class="material-symbols-outlined">calendar_month</span><span>פגישות ויומן</span></a>
+<div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">תקשורת</p></div>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-messaging.html"><span class="material-symbols-outlined">mail</span><span>הודעות ו-WA</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-bot-settings.html"><span class="material-symbols-outlined">smart_toy</span><span>הגדרות בוט</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-alerts.html"><span class="material-symbols-outlined">notifications</span><span>התראות</span><span id="nav-alert-badge" class="hidden mr-auto px-1.5 py-0.5 bg-alert-rose text-white text-[9px] font-bold rounded-full min-w-[18px] text-center"></span></a>
+<div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">נוסף</p></div>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-kones.html"><span class="material-symbols-outlined">gavel</span><span>כינוסי נכסים</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-news.html"><span class="material-symbols-outlined">newspaper</span><span>חדשות שוק</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-tasks.html"><span class="material-symbols-outlined">task_alt</span><span>משימות</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-sellers.html"><span class="material-symbols-outlined">home</span><span>מוכרים</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-buyers.html"><span class="material-symbols-outlined">groups</span><span>קונים</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-publish.html"><span class="material-symbols-outlined">publish</span><span>פרסום מודעות</span></a>
+<div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">מערכת</p></div>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-scans.html"><span class="material-symbols-outlined">radar</span><span>סריקות</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-reports.html"><span class="material-symbols-outlined">description</span><span>דוחות</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-settings.html"><span class="material-symbols-outlined">settings</span><span>הגדרות</span></a>
+</nav>
+<div class="p-4 mt-auto">
+<div class="flex items-center gap-3 px-2">
+<div class="size-10 rounded-full bg-primary/20 flex items-center justify-center"><span class="material-symbols-outlined text-primary">person</span></div>
+<div class="flex-1 min-w-0"><p class="text-sm font-bold text-white truncate">QUANTUM Admin</p><p class="text-xs text-slate-500 truncate"><span class="q-ver">v...</span></p></div>
+</div></div>
+</aside>
+
+<!-- Main Content -->
+<main class="flex-1 min-w-0 h-screen overflow-y-auto overflow-x-hidden flex flex-col">
+
+<!-- Header -->
+<header class="flex flex-wrap items-center justify-between gap-2 px-4 md:px-8 py-3 md:py-5 border-b border-white/5 glass-panel sticky top-0 z-10">
+<div class="flex flex-col">
+<h2 class="text-base md:text-2xl font-bold text-white leading-tight">QUANTUM Unified Analytics</h2>
+<p class="text-sm text-slate-400">נתונים חיים מ-<span id="total-complexes">...</span> מתחמים | עדכון אחרון: <span id="last-update">...</span></p>
+</div>
+<div class="flex items-center gap-3">
+<div class="relative group">
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors">search</span>
+<input id="search-input" class="bg-surface/50 border-white/10 rounded-xl pr-10 pl-4 py-2.5 text-sm w-72 focus:ring-primary focus:border-primary transition-all" placeholder="חיפוש מתחם, עיר או יזם..." type="text"/>
+</div>
+<select id="city-filter" class="bg-surface/50 border-white/10 rounded-xl px-4 py-2.5 text-sm focus:ring-primary">
+<option value="">כל הערים</option>
+</select>
+<select id="iai-filter" class="bg-surface/50 border-white/10 rounded-xl px-4 py-2.5 text-sm focus:ring-primary">
+<option value="">כל ה-IAI</option>
+<option value="excellent">מצוין (70+)</option>
+<option value="good">טוב (50-69)</option>
+<option value="moderate">בינוני (30-49)</option>
+<option value="low">נמוך (&lt;30)</option>
+</select>
+<button onclick="refreshData()" class="flex items-center gap-2 bg-primary hover:brightness-110 px-5 py-2.5 rounded-xl text-sm font-bold text-white transition-all shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-xl">refresh</span><span>רענון</span>
+</button>
+</div>
+</header>
+
+<div class="p-8 space-y-8">
+
+<!-- KPI Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="kpi-cards">
+
+<div class="bg-surface/40 border border-white/5 p-6 rounded-2xl fade-in cursor-pointer hover:border-primary/30 hover:bg-surface/60 transition-all group" style="animation-delay:0.1s" data-go="quantum-properties.html">
+<div class="flex justify-between items-start mb-4">
+<div><p class="text-slate-400 text-sm font-medium group-hover:text-primary transition-colors">סה"כ מתחמים</p>
+<h3 class="text-3xl font-bold text-white mt-1 tracking-tight" id="kpi-total">...</h3></div>
+<div class="p-2 bg-primary/20 text-primary rounded-lg"><span class="material-symbols-outlined">apartment</span></div>
+</div>
+<p class="text-[11px] text-slate-500 font-medium"><span id="kpi-enriched" class="text-primary font-bold">...</span> מועשרים מתוך הסה"כ</p>
+</div>
+
+<div class="bg-surface/40 border border-white/5 p-6 rounded-2xl fade-in cursor-pointer hover:border-success-green/30 hover:bg-surface/60 transition-all group" style="animation-delay:0.15s" data-go-filter="excellent">
+<div class="flex justify-between items-start mb-4">
+<div><p class="text-slate-400 text-sm font-medium group-hover:text-success-green transition-colors">הזדמנויות מצוינות</p>
+<h3 class="text-3xl font-bold text-white mt-1 tracking-tight" id="kpi-excellent">...</h3></div>
+<div class="p-2 bg-success-green/20 text-success-green rounded-lg"><span class="material-symbols-outlined">trending_up</span></div>
+</div>
+<p class="text-[11px] text-success-green font-medium">IAI 70+ | הכי אטרקטיביים להשקעה</p>
+</div>
+
+<div class="bg-surface/40 border border-white/5 p-6 rounded-2xl fade-in cursor-pointer hover:border-warning-amber/30 hover:bg-surface/60 transition-all group" style="animation-delay:0.2s" data-go="quantum-market-analysis.html">
+<div class="flex justify-between items-start mb-4">
+<div><p class="text-slate-400 text-sm font-medium group-hover:text-warning-amber transition-colors">כיסוי חתימות</p>
+<h3 class="text-3xl font-bold text-white mt-1 tracking-tight" id="kpi-signatures">...</h3></div>
+<div class="p-2 bg-warning-amber/20 text-warning-amber rounded-lg"><span class="material-symbols-outlined">draw</span></div>
+</div>
+<p class="text-[11px] text-slate-500 font-medium"><span id="kpi-sig-avg" class="text-warning-amber font-bold">...</span> ממוצע חתימות</p>
+</div>
+
+<div class="bg-surface/40 border border-white/5 p-6 rounded-2xl fade-in cursor-pointer hover:border-success-green/30 hover:bg-surface/60 transition-all group" style="animation-delay:0.25s" data-go="quantum-market-analysis.html">
+<div class="flex justify-between items-start mb-4">
+<div><p class="text-slate-400 text-sm font-medium group-hover:text-success-green transition-colors">פרמיום ממוצע</p>
+<h3 class="text-3xl font-bold text-white mt-1 tracking-tight" id="kpi-premium">...</h3></div>
+<div class="p-2 bg-success-green/20 text-success-green rounded-lg"><span class="material-symbols-outlined">payments</span></div>
+</div>
+<p class="text-[11px] text-slate-500 font-medium"><span id="kpi-premium-count" class="text-success-green font-bold">...</span> מתחמים עם פרמיום מחושב</p>
+</div>
+</div>
+
+<!-- Enrichment Coverage Bar -->
+<div class="bg-surface/40 border border-white/5 rounded-2xl p-6 fade-in" style="animation-delay:0.3s">
+<div class="flex justify-between items-center mb-4">
+<h4 class="font-bold text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">database</span>
+כיסוי העשרת נתונים
+</h4>
+<span class="text-xs text-slate-400" id="enrichment-timestamp"></span>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4" id="coverage-bars"></div>
+</div>
+
+<!-- Main Data Table -->
+<div class="bg-surface/40 border border-white/5 rounded-2xl overflow-hidden fade-in" style="animation-delay:0.35s">
+<div class="p-6 border-b border-white/5 flex justify-between items-center">
+<h4 class="font-bold text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">analytics</span>
+הזדמנויות השקעה
+<span class="text-xs text-slate-500 font-normal mr-2" id="table-count"></span>
+</h4>
+<div class="flex items-center gap-3">
+<button onclick="exportCSV()" class="flex items-center gap-1 text-slate-400 hover:text-white text-xs font-bold transition-all">
+<span class="material-symbols-outlined text-sm">download</span>ייצוא CSV
+</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-right border-collapse" id="main-table">
+<thead>
+<tr class="bg-white/5">
+<th class="px-4 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest cursor-pointer hover:text-white" onclick="sortTable('name')">מתחם</th>
+<th class="px-4 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest cursor-pointer hover:text-white" onclick="sortTable('city')">עיר</th>
+<th class="px-4 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest text-center cursor-pointer hover:text-white" onclick="sortTable('iai_score')">IAI</th>
+<th class="px-4 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest text-center cursor-pointer hover:text-white" onclick="sortTable('avg_ssi')">SSI</th>
+<th class="px-4 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest cursor-pointer hover:text-white" onclick="sortTable('status')">שלב</th>
+<th class="px-4 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest cursor-pointer hover:text-white" onclick="sortTable('developer')">יזם</th>
+<th class="px-4 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest text-center cursor-pointer hover:text-white" onclick="sortTable('actual_premium')">פרמיום %</th>
+<th class="px-4 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest text-center cursor-pointer hover:text-white" onclick="sortTable('signature_percent')">חתימות</th>
+<th class="px-4 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest text-center cursor-pointer hover:text-white" onclick="sortTable('active_listings')">מודעות</th>
+<th class="px-4 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest text-center">פעולות</th>
+</tr>
+</thead>
+<tbody id="table-body"></tbody>
+</table>
+</div>
+<div class="p-4 border-t border-white/5 flex justify-between items-center">
+<span class="text-xs text-slate-500" id="pagination-info"></span>
+<div class="flex gap-2">
+<button onclick="prevPage()" class="px-3 py-1.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-xs font-semibold transition-all" id="prev-btn">הקודם</button>
+<button onclick="nextPage()" class="px-3 py-1.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-xs font-semibold transition-all" id="next-btn">הבא</button>
+</div>
+</div>
+</div>
+
+<!-- Operational Status Widgets -->
+<div class="grid grid-cols-2 md:grid-cols-5 gap-4 fade-in" style="animation-delay:0.38s">
+  <div class="glass-panel rounded-2xl p-4 text-center">
+    <div class="text-xs text-slate-500 mb-1">🎙️ Vapi היום</div>
+    <div id="widget-vapi" class="text-xl font-bold text-white">...</div>
+    <div class="text-[10px] text-slate-500">שיחות</div>
+  </div>
+  <div class="glass-panel rounded-2xl p-4 text-center">
+    <div class="text-xs text-slate-500 mb-1">📨 InforU היום</div>
+    <div id="widget-inforu" class="text-xl font-bold text-white">...</div>
+    <div class="text-[10px] text-slate-500">הודעות</div>
+  </div>
+  <div class="glass-panel rounded-2xl p-4 text-center">
+    <div class="text-xs text-slate-500 mb-1">⚡ Pipeline</div>
+    <div id="widget-pipeline" class="text-sm font-bold text-white leading-tight">...</div>
+    <div class="text-[10px] text-slate-500">ריצה אחרונה</div>
+  </div>
+  <div class="glass-panel rounded-2xl p-4 text-center">
+    <div class="text-xs text-slate-500 mb-1">🔔 תזכורות</div>
+    <div id="widget-reminders" class="text-xl font-bold text-white">...</div>
+    <div class="text-[10px] text-slate-500">ממתינות</div>
+  </div>
+  <div class="glass-panel rounded-2xl p-4 text-center">
+    <div class="text-xs text-slate-500 mb-1">🔥 לידים חמים</div>
+    <div id="widget-hot-leads" class="text-xl font-bold text-alert-rose">...</div>
+    <div class="text-[10px] text-slate-500">לא טופלו</div>
+  </div>
+</div>
+
+<!-- System Health Widget -->
+<div class="bg-surface/40 border border-white/5 rounded-2xl p-6 fade-in" style="animation-delay:0.4s">
+<div class="flex justify-between items-center mb-4">
+<h4 class="font-bold text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">monitor_heart</span>
+מצב מערכת
+</h4>
+<a href="quantum-scans.html" class="text-xs text-primary hover:text-white transition-all flex items-center gap-1"><span class="material-symbols-outlined text-sm">open_in_new</span>פרטים מלאים</a>
+</div>
+<!-- Row 1: infra status -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+<div class="glass-panel rounded-xl p-4 text-center"><div class="text-xs text-slate-500 mb-1">מסד נתונים</div><div id="sys-db" class="text-sm font-bold text-slate-400">טוען...</div></div>
+<div class="glass-panel rounded-xl p-4 text-center"><div class="text-xs text-slate-500 mb-1">סריקה אחרונה</div><div id="sys-scan" class="text-sm font-bold text-slate-400">טוען...</div></div>
+<div class="glass-panel rounded-xl p-4 text-center"><div class="text-xs text-slate-500 mb-1">גיבוי אחרון</div><div id="sys-backup" class="text-sm font-bold text-slate-400">טוען...</div></div>
+<div class="glass-panel rounded-xl p-4 text-center"><div class="text-xs text-slate-500 mb-1">שירותי AI</div><div id="sys-ai" class="text-sm font-bold text-slate-400">טוען...</div></div>
+</div>
+<!-- Row 2: AI credits -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+  <!-- Claude -->
+  <div id="claude-credits-card" class="glass-panel rounded-xl p-4 border border-white/5 transition-all duration-300">
+    <div class="flex items-center justify-between mb-3">
+      <div class="flex items-center gap-2">
+        <span class="text-lg">🤖</span>
+        <span class="font-bold text-white text-sm">Claude (Anthropic)</span>
+        <span id="claude-status-badge" class="px-2 py-0.5 rounded-full text-[10px] font-bold">טוען...</span>
+      </div>
+      <a id="claude-buy-btn" href="https://console.anthropic.com/settings/billing" target="_blank"
+         class="flex items-center gap-1 text-[11px] font-bold px-3 py-1.5 rounded-lg border transition-all"
+         style="background:rgba(19,127,236,0.15);border-color:rgba(19,127,236,0.4);color:#137fec">
+        <span class="material-symbols-outlined text-sm">add_card</span>רכישה
+      </a>
+    </div>
+    <div class="mb-2">
+      <div class="flex justify-between text-xs text-slate-400 mb-1">
+        <span>נותרו מהתקציב</span>
+        <span id="claude-pct-text">100%</span>
+      </div>
+      <div class="w-full bg-white/5 rounded-full h-2 overflow-hidden">
+        <div id="claude-bar" class="h-2 rounded-full transition-all duration-700" style="width:100%;background:#10b981"></div>
+      </div>
+    </div>
+    <div class="flex justify-between text-[11px] text-slate-500">
+      <span id="claude-tokens-text">— טוקנים נותרו</span>
+      <span id="claude-cost-text">~$0</span>
+    </div>
+  </div>
+  <!-- Perplexity -->
+  <div id="pplx-credits-card" class="glass-panel rounded-xl p-4 border border-white/5 transition-all duration-300">
+    <div class="flex items-center justify-between mb-3">
+      <div class="flex items-center gap-2">
+        <span class="text-lg">🔍</span>
+        <span class="font-bold text-white text-sm">Perplexity AI</span>
+        <span id="pplx-status-badge" class="px-2 py-0.5 rounded-full text-[10px] font-bold">טוען...</span>
+      </div>
+      <a id="pplx-buy-btn" href="https://www.perplexity.ai/settings/api" target="_blank"
+         class="flex items-center gap-1 text-[11px] font-bold px-3 py-1.5 rounded-lg border transition-all"
+         style="background:rgba(19,127,236,0.15);border-color:rgba(19,127,236,0.4);color:#137fec">
+        <span class="material-symbols-outlined text-sm">add_card</span>רכישה
+      </a>
+    </div>
+    <div class="mb-2">
+      <div class="flex justify-between text-xs text-slate-400 mb-1">
+        <span>נותרו מהתקציב</span>
+        <span id="pplx-pct-text">100%</span>
+      </div>
+      <div class="w-full bg-white/5 rounded-full h-2 overflow-hidden">
+        <div id="pplx-bar" class="h-2 rounded-full transition-all duration-700" style="width:100%;background:#10b981"></div>
+      </div>
+    </div>
+    <div class="flex justify-between text-[11px] text-slate-500">
+      <span id="pplx-tokens-text">— טוקנים נותרו</span>
+      <span id="pplx-cost-text">~$0</span>
+    </div>
+  </div>
+</div>
+</div>
+
+</div>
+
+<footer class="mt-auto px-8 py-6 border-t border-white/5 text-center text-slate-500 text-[11px] font-medium tracking-widest uppercase">
+&copy; 2026 QUANTUM Unified Analytics | <span class="q-ver">v...</span>
+</footer>
+</main>
+
+<script src="shared/toast.js"></script>
+<script src="shared/state-store.js"></script>
+<script src="shared/api-client.js"></script>
+<script>
+const API_BASE=(typeof QuantumAPI!=='undefined')?QuantumAPI.API_BASE:'https://pinuy-binuy-analyzer-production.up.railway.app';
+function esc(s){return typeof DOMPurify!=='undefined'?DOMPurify.sanitize(String(s||'-'),{ALLOWED_TAGS:[]}):String(s||'-').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+let allData = [];
+let filteredData = [];
+let currentPage = 0;
+const PAGE_SIZE = 25;
+let sortField = 'iai_score';
+let sortDir = 'desc';
+let enrichmentStatus = null;
+let signatureStats = null;
+
+async function fetchJSON(url) {
+  try {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return await res.json();
+  } catch (e) {
+    console.error('Fetch error:', url, e);
+    return null;
+  }
+}
+
+async function loadAllData() {
+  showLoadingState();
+  const [opps, enrichment, sigs] = await Promise.all([
+    fetchJSON(`${API_BASE}/api/opportunities`),
+    fetchJSON(`${API_BASE}/api/enrichment/status`),
+    fetchJSON(`${API_BASE}/api/signatures/stats`)
+  ]);
+  if (opps) { allData = opps.opportunities || []; }
+  enrichmentStatus = enrichment;
+  signatureStats = sigs;
+  if (sigs && sigs.top_signed) {
+    const sigMap = {};
+    sigs.top_signed.forEach(s => { sigMap[s.id] = s; });
+    allData.forEach(item => {
+      if (sigMap[item.id]) {
+        item.signature_percent = sigMap[item.id].signature_percent;
+        item.signature_source = sigMap[item.id].source;
+        item.signature_color = sigMap[item.id].color;
+        item.signature_confidence = sigMap[item.id].confidence;
+      }
+    });
+  }
+  updateKPIs();
+  updateCoverageChart();
+  populateCityFilter();
+  applyFilters();
+  document.getElementById('last-update').textContent = new Date().toLocaleTimeString('he-IL');
+}
+
+function updateKPIs() {
+  const total = enrichmentStatus ? enrichmentStatus.total_complexes : allData.length;
+  const enriched = enrichmentStatus ? enrichmentStatus.enriched_recently : 0;
+  const excellent = allData.filter(d => d.iai_score >= 70).length;
+  document.getElementById('total-complexes').textContent = total.toLocaleString();
+  document.getElementById('kpi-total').textContent = total.toLocaleString();
+  document.getElementById('kpi-enriched').textContent = enriched.toLocaleString();
+  document.getElementById('kpi-excellent').textContent = excellent.toLocaleString();
+  if (signatureStats) {
+    document.getElementById('kpi-signatures').textContent = signatureStats.coverage.has_signature + ' מתחמים';
+    document.getElementById('kpi-sig-avg').textContent = signatureStats.coverage.avg_signature + '%';
+  }
+  const withPremium = allData.filter(d => d.actual_premium && parseFloat(d.actual_premium) > 0);
+  if (withPremium.length > 0) {
+    const avgPrem = withPremium.reduce((s, d) => s + parseFloat(d.actual_premium), 0) / withPremium.length;
+    document.getElementById('kpi-premium').textContent = avgPrem.toFixed(0) + '%';
+    document.getElementById('kpi-premium-count').textContent = withPremium.length;
+  }
+}
+
+function updateCoverageChart() {
+  if (!enrichmentStatus || !enrichmentStatus.coverage) return;
+  const cov = enrichmentStatus.coverage;
+  const container = document.getElementById('coverage-bars');
+  container.innerHTML = '';
+  const labels = {
+    'news_sentiment': 'סנטימנט', 'developer_status': 'סטטוס יזם', 'plan_stage': 'שלב תכנון',
+    'neighborhood': 'שכונה', 'price_trend': 'מגמת מחיר', 'city_avg': 'ממוצע עיר',
+    'price_per_sqm': 'מחיר/מ"ר', 'actual_premium': 'פרמיום', 'signature_percent': 'חתימות',
+    'precise_address': 'כתובת מדויקת', 'num_buildings': "מס' בניינים"
+  };
+  Object.entries(cov).forEach(([key, val]) => {
+    if (!labels[key]) return;
+    const pct = val.percent;
+    const color = pct >= 50 ? '#10b981' : pct >= 20 ? '#f59e0b' : '#f43f5e';
+    const el = document.createElement('div');
+    el.className = 'space-y-1.5';
+    el.innerHTML = `<div class="flex justify-between text-xs font-medium"><span class="text-slate-400">${labels[key]}</span><span class="text-white">${val.count} (${pct}%)</span></div><div class="w-full h-2 bg-white/5 rounded-full overflow-hidden"><div class="h-full rounded-full transition-all duration-700" style="width:${pct}%;background:${color}"></div></div>`;
+    container.appendChild(el);
+  });
+}
+
+function renderTable() {
+  const tbody = document.getElementById('table-body');
+  const start = currentPage * PAGE_SIZE;
+  const pageData = filteredData.slice(start, start + PAGE_SIZE);
+  document.getElementById('table-count').textContent = `${filteredData.length} תוצאות`;
+  document.getElementById('pagination-info').textContent = filteredData.length > 0 ? `${start + 1}-${Math.min(start + PAGE_SIZE, filteredData.length)} מתוך ${filteredData.length}` : 'אין תוצאות';
+  document.getElementById('prev-btn').disabled = currentPage === 0;
+  document.getElementById('next-btn').disabled = (start + PAGE_SIZE) >= filteredData.length;
+  tbody.innerHTML = pageData.map((d, i) => {
+    const iai = d.iai_score || 0;
+    const iaiClass = iai >= 70 ? 'iai-excellent' : iai >= 50 ? 'iai-good' : iai >= 30 ? 'iai-moderate' : 'iai-low';
+    const iaiLabel = iai >= 70 ? 'מצוין' : iai >= 50 ? 'טוב' : iai >= 30 ? 'בינוני' : 'נמוך';
+    const ssi = parseFloat(d.avg_ssi) || 0;
+    const ssiColor = ssi >= 5 ? 'text-alert-rose' : ssi >= 2 ? 'text-warning-amber' : 'text-white';
+    const prem = d.actual_premium ? parseFloat(d.actual_premium) : null;
+    const premHtml = prem !== null ? `<span class="${prem >= 50 ? 'text-success-green' : prem >= 20 ? 'text-primary' : 'text-warning-amber'} font-bold">${prem.toFixed(0)}%</span>` : '<span class="text-slate-600">-</span>';
+    const sig = d.signature_percent;
+    const sigSource = d.signature_source;
+    const sigColor = sigSource === 'protocol' ? 'sig-green' : sig ? 'sig-yellow' : 'sig-gray';
+    const sigIcon = sigSource === 'protocol' ? '🟢' : sig ? '🟡' : '';
+    const sigHtml = sig ? `<span class="${sigColor} font-bold">${sigIcon} ${sig}%</span>` : '<span class="text-slate-600">-</span>';
+    const statusMap = {'approved':'מאושר','construction':'בנייה','planning':'תכנון','permit':'היתר','marketing':'שיווק','deposit':'הפקדה','initial':'ראשוני','stalled':'תקוע'};
+    const statusLabel = statusMap[d.status] || d.status || '-';
+    const listings = parseInt(d.active_listings) || 0;
+    return `<tr class="data-row border-b border-white/5 transition-colors cursor-pointer fade-in" style="animation-delay:${i * 0.02}s" onclick="openDetail(${d.id})">
+      <td class="px-4 py-3.5 font-semibold text-white text-sm max-w-[200px] truncate" title="${esc(d.name)}">${esc(d.name)}</td>
+      <td class="px-4 py-3.5 text-slate-400 text-sm">${esc(d.city)}</td>
+      <td class="px-4 py-3.5 text-center"><span class="px-2 py-0.5 rounded-lg text-[11px] font-bold ${iaiClass}">${iaiLabel} (${iai})</span></td>
+      <td class="px-4 py-3.5 text-center ${ssiColor} font-bold text-sm">${ssi.toFixed(1)}</td>
+      <td class="px-4 py-3.5 text-slate-400 text-sm">${statusLabel}</td>
+      <td class="px-4 py-3.5 text-slate-400 text-xs max-w-[150px] truncate" title="${esc(d.developer)}">${esc(d.developer)}</td>
+      <td class="px-4 py-3.5 text-center">${premHtml}</td>
+      <td class="px-4 py-3.5 text-center">${sigHtml}</td>
+      <td class="px-4 py-3.5 text-center">${listings > 0 ? `<div class="inline-flex items-center justify-center size-8 rounded-full bg-primary/10 text-primary text-xs font-bold">${listings}</div>` : '<span class="text-slate-600">0</span>'}</td>
+      <td class="px-4 py-3.5 text-center"><button onclick="event.stopPropagation();openDetail(${d.id})" class="p-1.5 bg-white/5 hover:bg-primary/20 rounded-lg transition-all" title="פרטים"><span class="material-symbols-outlined text-sm text-slate-400 hover:text-primary">arrow_back</span></button></td>
+    </tr>`;
+  }).join('');
+}
+
+function populateCityFilter() {
+  const cities = [...new Set(allData.map(d => d.city).filter(Boolean))].sort();
+  const select = document.getElementById('city-filter');
+  select.innerHTML = '<option value="">כל הערים (' + cities.length + ')</option>';
+  cities.forEach(c => {
+    const count = allData.filter(d => d.city === c).length;
+    select.innerHTML += `<option value="${c}">${c} (${count})</option>`;
+  });
+}
+
+function applyFilters() {
+  const search = document.getElementById('search-input').value.trim().toLowerCase();
+  const city = document.getElementById('city-filter').value;
+  const iai = document.getElementById('iai-filter').value;
+  filteredData = allData.filter(d => {
+    if (search && !(d.name || '').toLowerCase().includes(search) && !(d.city || '').toLowerCase().includes(search) && !(d.developer || '').toLowerCase().includes(search)) return false;
+    if (city && d.city !== city) return false;
+    if (iai) {
+      const score = d.iai_score || 0;
+      if (iai === 'excellent' && score < 70) return false;
+      if (iai === 'good' && (score < 50 || score >= 70)) return false;
+      if (iai === 'moderate' && (score < 30 || score >= 50)) return false;
+      if (iai === 'low' && score >= 30) return false;
+    }
+    return true;
+  });
+  filteredData.sort((a, b) => {
+    let va = a[sortField], vb = b[sortField];
+    if (va === null || va === undefined) va = sortDir === 'desc' ? -Infinity : Infinity;
+    if (vb === null || vb === undefined) vb = sortDir === 'desc' ? -Infinity : Infinity;
+    if (typeof va === 'string' && typeof vb === 'string') return sortDir === 'asc' ? va.localeCompare(vb, 'he') : vb.localeCompare(va, 'he');
+    va = parseFloat(va) || 0; vb = parseFloat(vb) || 0;
+    return sortDir === 'asc' ? va - vb : vb - va;
+  });
+  currentPage = 0;
+  renderTable();
+}
+
+function sortTable(field) {
+  if (sortField === field) { sortDir = sortDir === 'desc' ? 'asc' : 'desc'; }
+  else { sortField = field; sortDir = 'desc'; }
+  applyFilters();
+}
+
+function nextPage() { currentPage++; renderTable(); window.scrollTo(0, document.getElementById('main-table').offsetTop - 100); }
+function prevPage() { currentPage--; renderTable(); window.scrollTo(0, document.getElementById('main-table').offsetTop - 100); }
+function openDetail(id) { window.location.href = `quantum-project-detail.html?id=${id}`; }
+
+function exportCSV() {
+  const headers = ['שם,עיר,IAI,SSI,שלב,יזם,פרמיום,חתימות,מודעות'];
+  const rows = filteredData.map(d => `"${esc(d.name)}","${esc(d.city)}",${d.iai_score || 0},${parseFloat(d.avg_ssi) || 0},"${d.status || ''}","${esc(d.developer)}",${d.actual_premium || ''},${d.signature_percent || ''},${d.active_listings || 0}`);
+  const csv = '\uFEFF' + headers.concat(rows).join('\n');
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = `quantum-opportunities-${new Date().toISOString().split('T')[0]}.csv`;
+  a.click(); URL.revokeObjectURL(url);
+}
+
+function showLoadingState() {
+  const tbody = document.getElementById('table-body');
+  tbody.innerHTML = Array(8).fill(0).map(() => `<tr><td colspan="10" class="px-4 py-4"><div class="h-6 skeleton rounded"></div></td></tr>`).join('');
+}
+
+async function refreshData() { await loadAllData(); }
+
+document.getElementById('search-input').addEventListener('input', debounce(applyFilters, 300));
+document.getElementById('city-filter').addEventListener('change', applyFilters);
+document.getElementById('iai-filter').addEventListener('change', applyFilters);
+
+function debounce(fn, delay) { let timer; return (...args) => { clearTimeout(timer); timer = setTimeout(() => fn(...args), delay); }; }
+
+// KPI Card click handlers
+document.querySelectorAll('[data-go]').forEach(function(card) {
+  card.addEventListener('click', function() {
+    window.location.href = this.getAttribute('data-go');
+  });
+});
+document.querySelectorAll('[data-go-filter]').forEach(function(card) {
+  card.addEventListener('click', function() {
+    var filterVal = this.getAttribute('data-go-filter');
+    var iaiFilter = document.getElementById('iai-filter');
+    if (iaiFilter) {
+      iaiFilter.value = filterVal;
+      applyFilters();
+      document.getElementById('main-table').scrollIntoView({behavior:'smooth', block:'start'});
+    }
+  });
+});
+
+loadAllData();
+
+// System Health Widget + AI Credits
+(async function loadSysHealth(){
+  const API=(typeof QuantumAPI!=='undefined')?QuantumAPI.API_BASE:'https://pinuy-binuy-analyzer-production.up.railway.app';
+function esc(s){return typeof DOMPurify!=='undefined'?DOMPurify.sanitize(String(s||'-'),{ALLOWED_TAGS:[]}):String(s||'-').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+  try{
+    const [h,s,b]=await Promise.all([
+      fetch(`${API}/api/scan/health`).then(r=>r.json()).catch(()=>({})),
+      fetch(`${API}/api/scan/status`).then(r=>r.json()).catch(()=>({})),
+      fetch(`${API}/api/backup/list`).then(r=>r.json()).catch(()=>({}))
+    ]);
+    var dbEl=document.getElementById('sys-db');
+    if(dbEl) dbEl.innerHTML=h.database==='healthy'?'<span style="color:#10b981">✅ מחובר</span>':'<span style="color:#f43f5e">❌ מנותק</span>';
+    var scanEl=document.getElementById('sys-scan');
+    if(scanEl && s.lastScan){
+      var ls=s.lastScan;
+      scanEl.innerHTML=ls.status==='running'?'<span style="color:#f59e0b">⏳ רץ עכשיו</span>':ls.status==='completed'?'<span style="color:#10b981">✅ הושלם</span>':'<span style="color:#f43f5e">❌ נכשל</span>';
+    }
+    var bkEl=document.getElementById('sys-backup');
+    var stats=b.stats||{};
+    if(bkEl) bkEl.innerHTML=stats.newestBackup?'<span style="color:#10b981">✅ '+new Date(stats.newestBackup).toLocaleDateString('he-IL')+'</span>':'<span style="color:#f43f5e">❌ אין גיבוי</span>';
+    var aiEl=document.getElementById('sys-ai');
+    if(aiEl){
+      var ai=h.ai_services||{};
+      var cnt=(ai.claude==='configured'?1:0)+(ai.perplexity==='configured'?1:0);
+      aiEl.innerHTML=cnt===2?'<span style="color:#10b981">✅ Claude + Perplexity</span>':cnt===1?'<span style="color:#f59e0b">⚠️ חלקי (1/2)</span>':'<span style="color:#f43f5e">❌ לא מוגדר</span>';
+    }
+  }catch(e){}
+  // AI Credits
+  try{
+    var cr=await fetch(`${API}/api/scan/ai-credits`).then(r=>r.json()).catch(()=>null);
+    if(!cr) return;
+    function applyCredits(prefix, data){
+      var remainPct = data.remaining_pct !== undefined ? data.remaining_pct : 100;
+      var status=data.status||'ok';
+      var barColor=status==='critical'?'#f43f5e':status==='warning'?'#f59e0b':'#10b981';
+      var badgeBg=status==='critical'?'rgba(244,63,94,0.2)':status==='warning'?'rgba(245,158,11,0.2)':'rgba(16,185,129,0.2)';
+      var badgeColor=status==='critical'?'#f43f5e':status==='warning'?'#f59e0b':'#10b981';
+      var badgeBorder=status==='critical'?'rgba(244,63,94,0.4)':status==='warning'?'rgba(245,158,11,0.4)':'rgba(16,185,129,0.4)';
+      var badgeText=status==='critical'?'🔴 קריטי':status==='warning'?'🟠 נמוך':'🟢 תקין';
+      var card=document.getElementById(prefix+'-credits-card');
+      var badge=document.getElementById(prefix+'-status-badge');
+      var bar=document.getElementById(prefix+'-bar');
+      var pctText=document.getElementById(prefix+'-pct-text');
+      var tokensText=document.getElementById(prefix+'-tokens-text');
+      var costText=document.getElementById(prefix+'-cost-text');
+      if(badge){badge.textContent=badgeText;badge.style.background=badgeBg;badge.style.color=badgeColor;badge.style.border='1px solid '+badgeBorder;}
+      // Bar represents remaining (full = all left, empty = depleted)
+      if(bar){bar.style.width=Math.min(remainPct,100)+'%';bar.style.background=barColor;}
+      if(pctText) pctText.textContent=remainPct+'%';
+      if(tokensText) tokensText.textContent=(data.tokens_remaining||0).toLocaleString()+' טוקנים נותרו';
+      if(costText) costText.textContent='~$'+(data.estimated_cost_usd||0);
+      if(card && status==='critical') card.style.borderColor='rgba(244,63,94,0.4)';
+      else if(card && status==='warning') card.style.borderColor='rgba(245,158,11,0.4)';
+      else if(card) card.style.borderColor='rgba(255,255,255,0.05)';
+    }
+    applyCredits('claude', cr.claude||{});
+    applyCredits('pplx', cr.perplexity||{});
+  }catch(e){}
+})();
+</script>
+<script>fetch('https://pinuy-binuy-analyzer-production.up.railway.app/api/alerts?limit=500').then(function(r){return r.json()}).then(function(d){var u=(d.alerts||[]).filter(function(a){return !a.is_read}).length;var b=document.getElementById('nav-alert-badge');if(b&&u>0){b.textContent=u>99?'99+':u;b.classList.remove('hidden')}}).catch(function(){});
+</script>
+<script>fetch("https://pinuy-binuy-analyzer-production.up.railway.app/health").then(function(r){return r.json()}).then(function(d){var v="v"+d.version;document.querySelectorAll(".q-ver").forEach(function(el){el.textContent=v})}).catch(function(){});</script>
+<script>
+(function loadOperationalWidgets(){
+  var API='https://pinuy-binuy-analyzer-production.up.railway.app';
+  var today=new Date().toISOString().slice(0,10);
+  // Vapi calls today
+  fetch(API+'/api/vapi/stats?date='+today).then(r=>r.json()).then(d=>{
+    var el=document.getElementById('widget-vapi');
+    if(el) el.textContent=(d.calls_today||d.total||0);
+  }).catch(()=>{ var el=document.getElementById('widget-vapi'); if(el) el.textContent='—'; });
+  // InforU messages today
+  fetch(API+'/api/messaging/stats?date='+today).then(r=>r.json()).then(d=>{
+    var el=document.getElementById('widget-inforu');
+    if(el) el.textContent=(d.sent_today||d.total||0);
+  }).catch(()=>{ var el=document.getElementById('widget-inforu'); if(el) el.textContent='—'; });
+  // Pipeline last run
+  fetch(API+'/api/scan/logs?limit=1').then(r=>r.json()).then(d=>{
+    var el=document.getElementById('widget-pipeline');
+    if(!el) return;
+    var logs=d.logs||d.data||[];
+    if(logs.length){
+      var t=new Date(logs[0].created_at||logs[0].started_at);
+      var diff=Math.round((Date.now()-t)/60000);
+      el.textContent=diff<60?(diff+' דק\' '):(Math.round(diff/60)+' שע\' ');
+    } else { el.textContent='—'; }
+  }).catch(()=>{ var el=document.getElementById('widget-pipeline'); if(el) el.textContent='—'; });
+  // Pending reminders
+  fetch(API+'/api/reminders?status=pending').then(r=>r.json()).then(d=>{
+    var el=document.getElementById('widget-reminders');
+    if(el) el.textContent=((d.reminders||d.data||[]).length||0);
+  }).catch(()=>{ var el=document.getElementById('widget-reminders'); if(el) el.textContent='—'; });
+  // Hot leads (score >= 70, not contacted)
+  fetch(API+'/api/leads?hot=true&contacted=false').then(r=>r.json()).then(d=>{
+    var el=document.getElementById('widget-hot-leads');
+    if(el) el.textContent=((d.leads||d.data||[]).length||0);
+  }).catch(()=>{ var el=document.getElementById('widget-hot-leads'); if(el) el.textContent='—'; });
+})();
+</script>
+<script src="shared/mobile-nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QUANTUM — הרשמה אושרה!</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Heebo', sans-serif;
+      background: #0d1117;
+      color: #e6edf3;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      direction: rtl;
+    }
+    .card {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 16px;
+      padding: 48px 40px;
+      max-width: 480px;
+      width: 100%;
+      text-align: center;
+    }
+    .logo { font-size: 28px; font-weight: 800; letter-spacing: 4px; color: #e94560; margin-bottom: 32px; }
+    .check {
+      width: 72px; height: 72px;
+      background: rgba(63,185,80,0.12);
+      border: 2px solid rgba(63,185,80,0.4);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 32px;
+      margin: 0 auto 24px;
+    }
+    h1 { font-size: 24px; font-weight: 700; margin-bottom: 12px; }
+    p { color: #8b949e; line-height: 1.7; margin-bottom: 8px; font-size: 15px; }
+    .email { color: #e94560; font-weight: 600; }
+    .back-btn {
+      display: inline-block;
+      margin-top: 28px;
+      padding: 12px 28px;
+      background: #e94560;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 14px;
+      transition: background 0.2s;
+    }
+    .back-btn:hover { background: #c73652; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="logo">QUANTUM</div>
+    <div class="check">✅</div>
+    <h1>ההרשמה אושרה!</h1>
+    <p>כתובת האימייל <span class="email" id="email-display"></span> אומתה בהצלחה.</p>
+    <p>מעכשיו תקבל התראות על עסקאות נדל"ן שמתאימות לפרמטרים שהגדרת.</p>
+    <a href="/newsletter.html" class="back-btn">חזרה לדף ההרשמה</a>
+  </div>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const email = params.get('email');
+    if (email) document.getElementById('email-display').textContent = email;
+  </script>
+</body>
+</html>

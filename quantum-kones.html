@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html class="dark" dir="rtl" lang="he">
+<head>
+<meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>QUANTUM | כינוסי נכסים</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>tailwind.config={darkMode:"class",theme:{extend:{colors:{"primary":"#137fec","background-dark":"#101922","surface":"#1a2530","border-dark":"#2d3a4b","alert-rose":"#f43f5e","success-green":"#10b981"},fontFamily:{"display":["Manrope","sans-serif"]}}}}</script>
+<style>body{font-family:'Manrope',sans-serif;}.glass-panel{background:rgba(26,37,48,0.7);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.05);}.custom-scrollbar::-webkit-scrollbar{width:6px;}.custom-scrollbar::-webkit-scrollbar-track{background:transparent;}.custom-scrollbar::-webkit-scrollbar-thumb{background:#2d3a4b;border-radius:10px;}.status-badge{padding:2px 10px;border-radius:999px;font-size:11px;font-weight:700;}</style>
+</head>
+<body class="bg-background-dark text-slate-200 min-h-screen flex">
+<aside class="w-64 flex-shrink-0 border-l border-white/5 bg-surface/50 h-screen sticky top-0 hidden lg:flex flex-col">
+<div class="p-5 flex items-center gap-3">
+<img src="quantum-logo.png" alt="QUANTUM" class="h-12 w-auto object-contain" style="filter:drop-shadow(0 0 8px rgba(19,127,236,0.4));"/>
+<div><h1 class="text-xl font-extrabold tracking-tight text-white uppercase">QUANTUM</h1>
+<p class="text-[10px] text-primary font-bold tracking-widest leading-none">UNIFIED ANALYTICS</p></div>
+</div>
+<nav class="flex-1 px-4 space-y-1 mt-2 overflow-y-auto custom-scrollbar">
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-dashboard.html"><span class="material-symbols-outlined">dashboard</span><span>לוח בקרה</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-opportunities.html"><span class="material-symbols-outlined">diamond</span><span>הזדמנויות</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-complexes.html"><span class="material-symbols-outlined">location_city</span><span>מתחמים</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-map-view.html"><span class="material-symbols-outlined">map</span><span>מפת פרויקטים</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-market-analysis.html"><span class="material-symbols-outlined">monitoring</span><span>ניתוח שוק</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-properties.html"><span class="material-symbols-outlined">apartment</span><span>נכסים</span></a>
+<div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">CRM ולידים</p></div>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-leads.html"><span class="material-symbols-outlined">people</span><span>לידים ו-CRM</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-campaigns.html"><span class="material-symbols-outlined">campaign</span><span>קמפיינים</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-appointments.html"><span class="material-symbols-outlined">calendar_month</span><span>פגישות ויומן</span></a>
+<div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">תקשורת</p></div>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-messaging.html"><span class="material-symbols-outlined">mail</span><span>הודעות ו-WA</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-bot-settings.html"><span class="material-symbols-outlined">smart_toy</span><span>הגדרות בוט</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-alerts.html"><span class="material-symbols-outlined">notifications</span><span>התראות</span></a>
+<div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">נוסף</p></div>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary text-white font-semibold transition-all" href="quantum-kones.html"><span class="material-symbols-outlined">gavel</span><span>כינוסי נכסים</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-news.html"><span class="material-symbols-outlined">newspaper</span><span>חדשות שוק</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-tasks.html"><span class="material-symbols-outlined">task_alt</span><span>משימות</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-sellers.html"><span class="material-symbols-outlined">home</span><span>מוכרים</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-buyers.html"><span class="material-symbols-outlined">groups</span><span>קונים</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-publish.html"><span class="material-symbols-outlined">publish</span><span>פרסום מודעות</span></a>
+<div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">מערכת</p></div>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-scans.html"><span class="material-symbols-outlined">radar</span><span>סריקות</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-reports.html"><span class="material-symbols-outlined">description</span><span>דוחות</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-settings.html"><span class="material-symbols-outlined">settings</span><span>הגדרות</span></a>
+</nav>
+<div class="p-4 mt-auto">
+<div class="flex items-center gap-3 px-2">
+<div class="size-10 rounded-full bg-primary/20 flex items-center justify-center"><span class="material-symbols-outlined text-primary">person</span></div>
+<div class="flex-1 min-w-0"><p class="text-sm font-bold text-white truncate">QUANTUM Admin</p><p class="text-xs text-slate-500 truncate"><span class="q-ver">v...</span></p></div>
+</div></div>
+</aside>
+<main class="flex-1 min-w-0 h-screen overflow-y-auto overflow-x-hidden flex flex-col">
+<header class="flex flex-wrap items-center justify-between gap-2 px-4 md:px-8 py-3 md:py-5 border-b border-white/5 glass-panel sticky top-0 z-10">
+<div><h2 class="text-base md:text-2xl font-bold text-white leading-tight">&#x1F3D7;&#xFE0F; כינוסי נכסים</h2><p class="text-sm text-slate-400">נכסים בהליך כינוס — הזדמנויות רכישה מתחת לשוק</p></div>
+<div class="flex items-center gap-3">
+<button class="flex items-center gap-2 bg-amber-500 hover:brightness-110 px-5 py-2.5 rounded-xl text-sm font-bold text-white transition-all" onclick="runKonesAutoContact()"><span class="material-symbols-outlined text-lg">phone_in_talk</span>Auto Contact</button>
+<button class="flex items-center gap-2 bg-primary hover:brightness-110 px-5 py-2.5 rounded-xl text-sm font-bold text-white transition-all" onclick="loadKones()"><span class="material-symbols-outlined text-lg">refresh</span>רענן</button>
+</div>
+</header>
+<div class="p-4 md:p-8 space-y-6">
+<!-- Stats -->
+<div class="grid grid-cols-2 md:grid-cols-5 gap-4" id="kones-stats">
+<div class="glass-panel rounded-2xl p-5"><p class="text-slate-400 text-xs font-medium">סה"כ כינוסים</p><h3 class="text-2xl font-bold text-white mt-1" id="stat-total">-</h3></div>
+<div class="glass-panel rounded-2xl p-5"><p class="text-slate-400 text-xs font-medium">ממתינים לפנייה</p><h3 class="text-2xl font-bold text-amber-400 mt-1" id="stat-pending">-</h3></div>
+<div class="glass-panel rounded-2xl p-5"><p class="text-slate-400 text-xs font-medium">נוצר קשר</p><h3 class="text-2xl font-bold text-success-green mt-1" id="stat-contacted">-</h3></div>
+<div class="glass-panel rounded-2xl p-5"><p class="text-slate-400 text-xs font-medium">קווי ארץ</p><h3 class="text-2xl font-bold text-slate-400 mt-1" id="stat-landline">-</h3></div>
+<div class="glass-panel rounded-2xl p-5"><p class="text-slate-400 text-xs font-medium">ללא טלפון</p><h3 class="text-2xl font-bold text-slate-500 mt-1" id="stat-nophone">-</h3></div>
+</div>
+<!-- Filters -->
+<div class="glass-panel rounded-2xl p-4 flex flex-wrap gap-3 items-center">
+<input type="text" id="filter-city" placeholder="&#x1F3D9;&#xFE0F; עיר..." class="bg-surface border border-white/10 rounded-xl text-sm px-4 py-2.5 text-slate-300 focus:ring-primary w-36" oninput="applyFilters()"/>
+<input type="text" id="filter-search" placeholder="&#x1F50D; חיפוש חופשי..." class="bg-surface border border-white/10 rounded-xl text-sm px-4 py-2.5 text-slate-300 focus:ring-primary w-48" oninput="applyFilters()"/>
+<select id="filter-status" class="bg-surface border border-white/10 rounded-xl text-sm px-4 py-2.5 text-slate-300 focus:ring-primary" onchange="applyFilters()">
+<option value="">כל הסטטוסים</option>
+<option value="pending">&#x23F3; ממתין לפנייה</option>
+<option value="contacted">&#x2705; נוצר קשר</option>
+<option value="landline">&#x1F4DE; קו ארץ</option>
+<option value="no_phone">&#x274C; אין טלפון</option>
+<option value="failed">&#x26A0;&#xFE0F; נכשל</option>
+</select>
+<button class="flex items-center gap-1 text-xs text-slate-400 hover:text-white px-3 py-2 rounded-lg hover:bg-white/5 transition-all" onclick="exportCSV()"><span class="material-symbols-outlined text-sm">download</span>ייצוא CSV</button>
+</div>
+<!-- Table -->
+<div class="glass-panel rounded-2xl overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-right text-sm">
+<thead><tr class="border-b border-white/5">
+<th class="px-4 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest cursor-pointer hover:text-white" onclick="sortBy('title')">כותרת</th>
+<th class="px-4 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest cursor-pointer hover:text-white" onclick="sortBy('address')">כתובת</th>
+<th class="px-4 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest cursor-pointer hover:text-white" onclick="sortBy('city')">עיר</th>
+<th class="px-4 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest">טלפון</th>
+<th class="px-4 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest cursor-pointer hover:text-white" onclick="sortBy('price')">מחיר</th>
+<th class="px-4 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest">סטטוס</th>
+<th class="px-4 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest">כונס</th>
+<th class="px-4 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest text-center">ניסיונות</th>
+<th class="px-4 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest">גוש/חלקה</th>
+<th class="px-4 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest text-center">קישור</th>
+</tr></thead>
+<tbody id="kones-tbody"><tr><td colspan="10" class="text-center py-12 text-slate-500">טוען כינוסי נכסים...</td></tr></tbody>
+</table>
+</div>
+</div>
+</div>
+</main>
+<script src="shared/api-client.js"></script>
+<script src="shared/toast.js"></script>
+<script src="shared/state-store.js"></script>
+<script src="sidebar-alerts.js"></script>
+<script>
+const API = QuantumAPI.API_BASE;
+function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+let _allKones = [];
+let _sortField = 'title', _sortDir = 'asc';
+
+const STATUS_LABELS = { pending:'ממתין', contacted:'נוצר קשר', failed:'נכשל', landline:'קו ארץ', no_phone:'אין טלפון' };
+const STATUS_COLORS = { pending:'text-amber-400 bg-amber-400/10', contacted:'text-success-green bg-success-green/10', failed:'text-alert-rose bg-alert-rose/10', landline:'text-slate-400 bg-slate-400/10', no_phone:'text-slate-500 bg-slate-500/10' };
+
+async function loadKones() {
+  const tbody = document.getElementById('kones-tbody');
+  tbody.innerHTML = '<tr><td colspan="10" class="text-center py-12 text-slate-500">טוען...</td></tr>';
+  try {
+    const r = await fetch(API + '/api/kones');
+    const d = await r.json();
+    _allKones = d.data || d || [];
+    updateStats();
+    applyFilters();
+  } catch(e) {
+    tbody.innerHTML = '<tr><td colspan="10" class="text-center py-12 text-alert-rose">שגיאה: ' + e.message + '</td></tr>';
+  }
+}
+
+function updateStats() {
+  document.getElementById('stat-total').textContent = _allKones.length;
+  document.getElementById('stat-pending').textContent = _allKones.filter(k=>!k.contact_status||k.contact_status==='pending').length;
+  document.getElementById('stat-contacted').textContent = _allKones.filter(k=>k.contact_status==='contacted').length;
+  document.getElementById('stat-landline').textContent = _allKones.filter(k=>k.contact_status==='landline').length;
+  document.getElementById('stat-nophone').textContent = _allKones.filter(k=>k.contact_status==='no_phone').length;
+}
+
+function applyFilters() {
+  const city = document.getElementById('filter-city').value.toLowerCase();
+  const search = document.getElementById('filter-search').value.toLowerCase();
+  const status = document.getElementById('filter-status').value;
+  let filtered = _allKones.filter(k => {
+    if (city && !(k.city||'').toLowerCase().includes(city)) return false;
+    if (status && (k.contact_status||'pending') !== status) return false;
+    if (search) {
+      const s = ((k.title||'')+(k.address||'')+(k.contact_person||'')).toLowerCase();
+      if (!s.includes(search)) return false;
+    }
+    return true;
+  });
+  filtered = filtered.sort((a,b) => {
+    let va = a[_sortField]||'', vb = b[_sortField]||'';
+    if (!isNaN(parseFloat(va))&&!isNaN(parseFloat(vb))) { va=parseFloat(va); vb=parseFloat(vb); }
+    return _sortDir==='asc' ? (va>vb?1:va<vb?-1:0) : (va<vb?1:va>vb?-1:0);
+  });
+  renderTable(filtered);
+}
+
+function sortBy(field) {
+  if (_sortField===field) _sortDir = _sortDir==='asc'?'desc':'asc';
+  else { _sortField=field; _sortDir='asc'; }
+  applyFilters();
+}
+
+function renderTable(rows) {
+  const tbody = document.getElementById('kones-tbody');
+  if (!rows.length) {
+    tbody.innerHTML = '<tr><td colspan="10" class="text-center py-12 text-slate-500">אין כינוסים בסינון זה</td></tr>';
+    return;
+  }
+  tbody.innerHTML = rows.map(k => {
+    const st = k.contact_status||'pending';
+    const stClass = STATUS_COLORS[st]||'text-slate-400 bg-slate-400/10';
+    const stLabel = STATUS_LABELS[st]||st;
+    const price = k.price ? '&#x20AA;'+parseInt(k.price).toLocaleString() : '—';
+    const price = k.price ? '₪'+parseInt(k.price).toLocaleString() : '—';
+    const phone = k.phone ? '<a href="tel:'+esc(k.phone)+'" class="text-primary hover:underline">'+esc(k.phone)+'</a>' : '—';
+    const title = esc((k.title||k.address||'כינוס').substring(0,30));
+    return `<tr class="border-b border-white/5 hover:bg-white/3 transition-all">
+      <td class="px-4 py-3 font-medium text-white max-w-[160px] truncate" title="${esc(k.title)}">${title}</td>
+      <td class="px-4 py-3 text-slate-400 text-xs max-w-[130px] truncate">${esc(k.address||'—')}</td>
+      <td class="px-4 py-3 text-slate-300">${esc(k.city||'—')}</td>
+      <td class="px-4 py-3">${phone}</td>
+      <td class="px-4 py-3 text-amber-400 font-semibold">${price}</td>
+      <td class="px-4 py-3"><span class="status-badge ${stClass}">${esc(stLabel)}</span></td>
+      <td class="px-4 py-3 text-slate-400 text-xs">${esc(k.contact_person||'—')}</td>
+      <td class="px-4 py-3 text-center text-slate-400">${k.contact_attempts||0}</td>
+      <td class="px-4 py-3 text-slate-400 text-xs">${esc(k.gush_helka||'—')}</td>
+      <td class="px-4 py-3 text-center">${k.url?'<a href="'+esc(k.url)+'" target="_blank" class="text-xs text-primary hover:underline">פתח</a>':'—'}</td>
+    </tr>`;
+  }).join('');
+}
+
+async function runKonesAutoContact() {
+  if (!confirm('להפעיל Auto Contact לכינוסי נכסים?')) return;
+  try {
+    const r = await fetch(API+'/api/auto-contact/run-kones', {method:'POST',headers:{'Content-Type':'application/json'}});
+    const d = await r.json();
+    const res = d.result||{};
+    QuantumToast.success('Auto Contact הופעל! נוצר קשר: '+(res.contacted||0)+' | קו ארץ: '+(res.skipped_landline||0)+' | ללא טלפון: '+(res.skipped_no_phone||0)+' | נכשל: '+(res.failed||0));
+    loadKones();
+  } catch(e) { QuantumToast.error('נכשל: '+e.message); }
+}
+
+function exportCSV() {
+  const rows = [['כותרת','כתובת','עיר','טלפון','מחיר','סטטוס','כונס','גוש/חלקה','קישור']];
+  _allKones.forEach(k=>rows.push([k.title||'',k.address||'',k.city||'',k.phone||'',k.price||'',k.contact_status||'',k.contact_person||'',k.gush_helka||'',k.url||'']));
+  const csv = rows.map(r=>r.map(c=>'"'+(c+'').replace(/"/g,'""')+'"').join(',')).join('\n');
+  const a=document.createElement('a');a.href='data:text/csv;charset=utf-8,\uFEFF'+encodeURIComponent(csv);a.download='kones.csv';a.click();
+}
+
+// Load version
+fetch(API+'/api/version').then(r=>r.json()).then(d=>{ document.querySelectorAll('.q-ver').forEach(el=>el.textContent='v'+(d.version||'?')); }).catch(()=>{});
+loadKones();
+</script>
+<script src="shared/mobile-nav.js"></script>
+</body>
+</html>

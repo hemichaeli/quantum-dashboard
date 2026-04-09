@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html class="dark" dir="rtl" lang="he">
+<head>
+<meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>QUANTUM | מוכרים</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>tailwind.config={darkMode:"class",theme:{extend:{colors:{"primary":"#137fec","background-dark":"#101922","surface":"#1a2530","border-dark":"#2d3a4b","alert-rose":"#f43f5e","success-green":"#10b981"},fontFamily:{"display":["Manrope","sans-serif"]}}}}</script>
+<style>
+body{font-family:'Manrope',sans-serif;}
+.glass-panel{background:rgba(26,37,48,0.7);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.05);}
+.custom-scrollbar::-webkit-scrollbar{width:6px;}.custom-scrollbar::-webkit-scrollbar-track{background:transparent;}.custom-scrollbar::-webkit-scrollbar-thumb{background:#2d3a4b;border-radius:10px;}
+.bubble-out{background:rgba(19,127,236,0.2);border:1px solid rgba(19,127,236,0.3);border-radius:12px 12px 4px 12px;padding:8px 12px;max-width:75%;font-size:13px;}
+.bubble-in{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:12px 12px 12px 4px;padding:8px 12px;max-width:75%;font-size:13px;}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);display:flex;align-items:center;justify-content:center;z-index:50;}
+</style>
+</head>
+<body class="bg-background-dark text-slate-200 min-h-screen flex">
+<aside class="w-64 flex-shrink-0 border-l border-white/5 bg-surface/50 h-screen sticky top-0 hidden lg:flex flex-col">
+<div class="p-5 flex items-center gap-3">
+<img src="quantum-logo.png" alt="QUANTUM" class="h-12 w-auto object-contain" style="filter:drop-shadow(0 0 8px rgba(19,127,236,0.4));"/>
+<div><h1 class="text-xl font-extrabold tracking-tight text-white uppercase">QUANTUM</h1>
+<p class="text-[10px] text-primary font-bold tracking-widest leading-none">UNIFIED ANALYTICS</p></div>
+</div>
+<nav class="flex-1 px-4 space-y-1 mt-2 overflow-y-auto custom-scrollbar">
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-dashboard.html"><span class="material-symbols-outlined">dashboard</span><span>לוח בקרה</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-opportunities.html"><span class="material-symbols-outlined">diamond</span><span>הזדמנויות</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-complexes.html"><span class="material-symbols-outlined">location_city</span><span>מתחמים</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-map-view.html"><span class="material-symbols-outlined">map</span><span>מפת פרויקטים</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-market-analysis.html"><span class="material-symbols-outlined">monitoring</span><span>ניתוח שוק</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-properties.html"><span class="material-symbols-outlined">apartment</span><span>נכסים</span></a>
+<div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">CRM ולידים</p></div>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-leads.html"><span class="material-symbols-outlined">people</span><span>לידים ו-CRM</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-campaigns.html"><span class="material-symbols-outlined">campaign</span><span>קמפיינים</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-appointments.html"><span class="material-symbols-outlined">calendar_month</span><span>פגישות ויומן</span></a>
+<div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">תקשורת</p></div>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-messaging.html"><span class="material-symbols-outlined">mail</span><span>הודעות ו-WA</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-bot-settings.html"><span class="material-symbols-outlined">smart_toy</span><span>הגדרות בוט</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-alerts.html"><span class="material-symbols-outlined">notifications</span><span>התראות</span></a>
+<div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">נוסף</p></div>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-kones.html"><span class="material-symbols-outlined">gavel</span><span>כינוסי נכסים</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-news.html"><span class="material-symbols-outlined">newspaper</span><span>חדשות שוק</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-tasks.html"><span class="material-symbols-outlined">task_alt</span><span>משימות</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary text-white font-semibold transition-all" href="quantum-sellers.html"><span class="material-symbols-outlined">home</span><span>מוכרים</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-buyers.html"><span class="material-symbols-outlined">groups</span><span>קונים</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-publish.html"><span class="material-symbols-outlined">publish</span><span>פרסום מודעות</span></a>
+<div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">מערכת</p></div>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-scans.html"><span class="material-symbols-outlined">radar</span><span>סריקות</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-reports.html"><span class="material-symbols-outlined">description</span><span>דוחות</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-settings.html"><span class="material-symbols-outlined">settings</span><span>הגדרות</span></a>
+</nav>
+<div class="p-4 mt-auto">
+<div class="flex items-center gap-3 px-2">
+<div class="size-10 rounded-full bg-primary/20 flex items-center justify-center"><span class="material-symbols-outlined text-primary">person</span></div>
+<div class="flex-1 min-w-0"><p class="text-sm font-bold text-white truncate">QUANTUM Admin</p><p class="text-xs text-slate-500 truncate"><span class="q-ver">v...</span></p></div>
+</div></div>
+</aside>
+<main class="flex-1 min-w-0 flex flex-col h-screen overflow-hidden">
+<header class="flex flex-wrap items-center justify-between gap-2 px-4 md:px-8 py-3 md:py-5 border-b border-white/5 glass-panel flex-shrink-0">
+<div><h2 class="text-base md:text-2xl font-bold text-white leading-tight">🏠 מוכרים</h2><p class="text-sm text-slate-400">ניהול שיחות עם בעלי דירות</p></div>
+<div class="flex items-center gap-3">
+<div class="flex rounded-xl overflow-hidden border border-white/10">
+<button id="tab-outreach" onclick="switchView('outreach')" class="px-4 py-2 text-sm font-semibold bg-primary text-white transition-all">📤 פניות שלנו</button>
+<button id="tab-inbound" onclick="switchView('inbound')" class="px-4 py-2 text-sm font-semibold text-slate-400 hover:bg-white/5 transition-all">📥 פנו אלינו</button>
+</div>
+<button onclick="openAddModal()" class="flex items-center gap-2 bg-success-green hover:brightness-110 px-4 py-2 rounded-xl text-sm font-bold text-white transition-all"><span class="material-symbols-outlined text-lg">add</span>הוסף</button>
+<input type="text" id="search-input" placeholder="🔍 חיפוש..." class="bg-surface border border-white/10 rounded-xl text-sm px-4 py-2 text-slate-300 w-48" oninput="loadSellers()"/>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden">
+<!-- List -->
+<div class="w-72 flex-shrink-0 border-l border-white/5 overflow-y-auto custom-scrollbar bg-surface/30" id="sellers-list">
+<div class="p-4 text-center text-slate-500 text-sm">טוען מוכרים...</div>
+</div>
+<!-- Thread -->
+<div class="flex-1 flex flex-col overflow-hidden" id="sellers-thread">
+<div class="flex-1 flex items-center justify-center text-slate-500">
+<div class="text-center"><div class="text-5xl mb-4">🏠</div><p>בחר מוכר מהרשימה</p></div>
+</div>
+</div>
+</div>
+</main>
+
+<!-- Add Seller Modal -->
+<div id="add-modal" class="modal-overlay hidden">
+<div class="glass-panel rounded-2xl p-6 w-full max-w-md mx-4 space-y-4">
+<h3 class="text-lg font-bold text-white">➕ הוסף מוכר</h3>
+<div class="grid grid-cols-2 gap-3">
+<div><label class="text-xs text-slate-400 block mb-1">שם *</label><input id="as-name" type="text" class="w-full bg-surface border border-white/10 rounded-xl px-3 py-2.5 text-sm text-slate-200"/></div>
+<div><label class="text-xs text-slate-400 block mb-1">טלפון *</label><input id="as-phone" type="text" class="w-full bg-surface border border-white/10 rounded-xl px-3 py-2.5 text-sm text-slate-200"/></div>
+</div>
+<div><label class="text-xs text-slate-400 block mb-1">כתובת</label><input id="as-address" type="text" class="w-full bg-surface border border-white/10 rounded-xl px-3 py-2.5 text-sm text-slate-200"/></div>
+<div><label class="text-xs text-slate-400 block mb-1">מקור</label><select id="as-source" class="w-full bg-surface border border-white/10 rounded-xl px-3 py-2.5 text-sm text-slate-200"><option value="manual">ידני</option><option value="whatsapp">WhatsApp</option><option value="sms">SMS</option><option value="referral">הפניה</option></select></div>
+<div><label class="text-xs text-slate-400 block mb-1">הודעה ראשונית</label><textarea id="as-message" rows="2" class="w-full bg-surface border border-white/10 rounded-xl px-3 py-2.5 text-sm text-slate-200 resize-none"></textarea></div>
+<div class="flex gap-3 pt-2">
+<button onclick="submitAddSeller()" class="flex-1 bg-primary hover:brightness-110 py-2.5 rounded-xl text-sm font-bold text-white">שמור</button>
+<button onclick="closeAddModal()" class="flex-1 bg-surface hover:bg-white/5 py-2.5 rounded-xl text-sm font-semibold text-slate-400">ביטול</button>
+</div>
+</div>
+</div>
+
+<script src="shared/api-client.js"></script>
+<script src="shared/toast.js"></script>
+<script src="shared/state-store.js"></script>
+<script src="sidebar-alerts.js"></script>
+<script>
+const API = QuantumAPI.API_BASE;
+function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+let _view = 'outreach';
+let _activeSellerId = null;
+
+function switchView(v) {
+  _view = v;
+  document.getElementById('tab-outreach').className = v==='outreach' ? 'px-4 py-2 text-sm font-semibold bg-primary text-white transition-all' : 'px-4 py-2 text-sm font-semibold text-slate-400 hover:bg-white/5 transition-all';
+  document.getElementById('tab-inbound').className = v==='inbound' ? 'px-4 py-2 text-sm font-semibold bg-primary text-white transition-all' : 'px-4 py-2 text-sm font-semibold text-slate-400 hover:bg-white/5 transition-all';
+  loadSellers();
+}
+
+async function loadSellers() {
+  const list = document.getElementById('sellers-list');
+  list.innerHTML = '<div class="p-4 text-center text-slate-500 text-sm">טוען...</div>';
+  try {
+    const search = document.getElementById('search-input').value;
+    const params = new URLSearchParams({ view: _view });
+    if (search) params.append('search', search);
+    const r = await fetch(API+'/api/comms/sellers?'+params);
+    const d = await r.json();
+    if (!d.success) throw new Error(d.error);
+    const items = d.data || [];
+    if (!items.length) {
+      list.innerHTML = '<div class="p-6 text-center text-slate-500 text-sm">אין מוכרים</div>';
+      return;
+    }
+    list.innerHTML = items.map(s => {
+      const lastMsg = s.last_message ? (s.last_message.length > 40 ? s.last_message.substring(0,40)+'...' : s.last_message) : '';
+      const time = s.last_message_at ? new Date(s.last_message_at).toLocaleDateString('he-IL') : '';
+      const active = _activeSellerId === s.id;
+      return `<div onclick="openConv(${s.id},'${(s.phone||'').replace(/'/g,"\\'")}','${(s.name||'').replace(/'/g,"\\'")}')" class="p-4 border-b border-white/5 cursor-pointer hover:bg-white/5 transition-all ${active?'bg-primary/10 border-r-2 border-r-primary':''}">
+        <div class="flex items-center justify-between mb-1">
+          <span class="font-semibold text-sm text-white">${esc(s.name||s.phone||'—')}</span>
+          <span class="text-[10px] text-slate-500">${time}</span>
+        </div>
+        <p class="text-xs text-slate-500 truncate">${esc(s.address||lastMsg||'—')}</p>
+        ${s.unread_count ? `<span class="text-[10px] font-bold text-primary">${s.unread_count} חדשות</span>` : ''}
+      </div>`;
+    }).join('');
+  } catch(e) {
+    list.innerHTML = `<div class="p-4 text-center text-alert-rose text-sm">שגיאה: ${e.message}</div>`;
+  }
+}
+
+let _activeSellerName = '';
+async function openConv(id, phone, name) {
+  _activeSellerId = id;
+  _activeSellerName = name || _activeSellerName;
+  // Re-highlight active seller in list without re-fetching
+  document.querySelectorAll('#sellers-list > div[onclick]').forEach(el => {
+    el.classList.toggle('bg-primary/10', el.getAttribute('onclick')?.includes('openConv('+id+','));
+  });
+  const thread = document.getElementById('sellers-thread');
+  thread.innerHTML = '<div class="flex-1 flex items-center justify-center text-slate-500 text-sm">טוען שיחה...</div>';
+  try {
+    const r = await fetch(API+'/api/comms/sellers/'+id+'/messages');
+    const d = await r.json();
+    const msgs = d.messages || [];
+    let html = `<div class="flex items-center gap-3 px-6 py-4 border-b border-white/5 flex-shrink-0">
+      <div class="size-10 rounded-full bg-primary/20 flex items-center justify-center"><span class="material-symbols-outlined text-primary">person</span></div>
+      <div><p class="font-bold text-white text-sm">${esc(name||phone)}</p><p class="text-xs text-slate-500">${esc(phone)}</p></div>
+    </div>
+    <div class="flex-1 overflow-y-auto custom-scrollbar p-4 space-y-3" id="msg-container">`;
+    if (!msgs.length) html += '<p class="text-center text-slate-500 text-sm py-8">אין הודעות עדיין</p>';
+    msgs.forEach(m => {
+      const isOut = m.direction === 'outgoing';
+      const time = m.created_at ? new Date(m.created_at).toLocaleString('he-IL',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}) : '';
+      html += `<div class="flex ${isOut?'justify-start':'justify-end'}">
+        <div class="${isOut?'bubble-out':'bubble-in'}">
+          <p>${esc(m.message).replace(/\n/g,'<br>')}</p>
+          <p class="text-[10px] text-slate-500 mt-1 ${isOut?'text-right':'text-left'}">${time}</p>
+        </div>
+      </div>`;
+    });
+    html += `</div>
+    <div class="flex gap-3 p-4 border-t border-white/5 flex-shrink-0">
+      <textarea id="reply-text" rows="2" class="flex-1 bg-surface border border-white/10 rounded-xl px-4 py-2.5 text-sm text-slate-200 resize-none" placeholder="כתוב הודעה..."></textarea>
+      <button onclick="sendMsg(${id},'${phone}')" class="bg-primary hover:brightness-110 px-5 rounded-xl text-sm font-bold text-white transition-all">שלח ↑</button>
+    </div>`;
+    thread.innerHTML = html;
+    const mc = document.getElementById('msg-container');
+    if (mc) mc.scrollTop = mc.scrollHeight;
+  } catch(e) {
+    thread.innerHTML = `<div class="flex-1 flex items-center justify-center text-alert-rose text-sm">שגיאה: ${e.message}</div>`;
+  }
+}
+
+async function sendMsg(id, phone) {
+  const text = document.getElementById('reply-text')?.value?.trim();
+  if (!text) return;
+  try {
+    const d = await fetch(API+'/api/comms/sellers/'+id+'/send', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:text,phone})}).then(r=>r.json());
+    if (!d.success) throw new Error(d.error);
+    document.getElementById('reply-text').value = '';
+    openConv(id, phone, _activeSellerName);
+  } catch(e) { QuantumToast.error('שגיאה בשליחה: '+e.message); }
+}
+
+function openAddModal() { document.getElementById('add-modal').classList.remove('hidden'); }
+function closeAddModal() { document.getElementById('add-modal').classList.add('hidden'); }
+
+async function submitAddSeller() {
+  const name = document.getElementById('as-name').value.trim();
+  const phone = document.getElementById('as-phone').value.trim();
+  if (!name||!phone) { QuantumToast.warning('שם וטלפון הם שדות חובה'); return; }
+  try {
+    const d = await fetch(API+'/api/comms/sellers/inbound', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,phone,address:document.getElementById('as-address').value.trim(),source:document.getElementById('as-source').value,initial_message:document.getElementById('as-message').value.trim()})}).then(r=>r.json());
+    if (!d.success) throw new Error(d.error);
+    closeAddModal();
+    loadSellers();
+  } catch(e) { QuantumToast.error('שגיאה: '+e.message); }
+}
+
+fetch(API+'/api/version').then(r=>r.json()).then(d=>{ document.querySelectorAll('.q-ver').forEach(el=>el.textContent='v'+(d.version||'?')); }).catch(()=>{});
+loadSellers();
+</script>
+<script src="shared/mobile-nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html class="dark" dir="rtl" lang="he">
+<head>
+<meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>QUANTUM | הזדמנויות השקעה</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js"></script>
+<script>tailwind.config={darkMode:"class",theme:{extend:{colors:{"primary":"#137fec","background-dark":"#101922","surface":"#1a2530","border-dark":"#2d3a4b","alert-rose":"#f43f5e","success-green":"#10b981","warning-amber":"#f59e0b"},fontFamily:{"display":["Manrope","sans-serif"]}}}}</script>
+<style>
+body{font-family:'Manrope',sans-serif;}
+.glass-panel{background:rgba(26,37,48,0.7);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.05);}
+.custom-scrollbar::-webkit-scrollbar{width:6px;}
+.custom-scrollbar::-webkit-scrollbar-track{background:transparent;}
+.custom-scrollbar::-webkit-scrollbar-thumb{background:#2d3a4b;border-radius:10px;}
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+.skeleton{background:linear-gradient(90deg,rgba(255,255,255,0.03) 25%,rgba(255,255,255,0.08) 50%,rgba(255,255,255,0.03) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.fade-in{animation:fadeIn 0.4s ease-out forwards;opacity:0;}
+tr.data-row:hover{background:rgba(255,255,255,0.04);}
+</style>
+</head>
+<body class="bg-background-dark text-slate-200 min-h-screen flex">
+<!-- Sidebar -->
+<aside class="w-64 flex-shrink-0 border-l border-white/5 bg-surface/50 h-screen sticky top-0 hidden lg:flex flex-col">
+<div class="p-5 flex items-center gap-3">
+<img src="quantum-logo.png" alt="QUANTUM" class="h-12 w-auto object-contain" style="filter:drop-shadow(0 0 8px rgba(19,127,236,0.4));"/>
+<div><h1 class="text-xl font-extrabold tracking-tight text-white uppercase">QUANTUM</h1>
+<p class="text-[10px] text-primary font-bold tracking-widest leading-none">UNIFIED ANALYTICS</p></div>
+</div>
+<nav class="flex-1 px-4 space-y-1 mt-2 overflow-y-auto custom-scrollbar">
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-dashboard.html"><span class="material-symbols-outlined">dashboard</span><span>לוח בקרה</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary text-white font-semibold transition-all" href="quantum-opportunities.html"><span class="material-symbols-outlined">diamond</span><span>הזדמנויות</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-complexes.html"><span class="material-symbols-outlined">location_city</span><span>מתחמים</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-map-view.html"><span class="material-symbols-outlined">map</span><span>מפת פרויקטים</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-market-analysis.html"><span class="material-symbols-outlined">monitoring</span><span>ניתוח שוק</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-properties.html"><span class="material-symbols-outlined">apartment</span><span>נכסים</span></a>
+<div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">CRM ולידים</p></div>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-leads.html"><span class="material-symbols-outlined">people</span><span>לידים ו-CRM</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-campaigns.html"><span class="material-symbols-outlined">campaign</span><span>קמפיינים</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-appointments.html"><span class="material-symbols-outlined">calendar_month</span><span>פגישות ויומן</span></a>
+<div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">תקשורת</p></div>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-messaging.html"><span class="material-symbols-outlined">mail</span><span>הודעות ו-WA</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-bot-settings.html"><span class="material-symbols-outlined">smart_toy</span><span>הגדרות בוט</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-alerts.html"><span class="material-symbols-outlined">notifications</span><span>התראות</span><span id="nav-alert-badge" class="hidden mr-auto px-1.5 py-0.5 bg-alert-rose text-white text-[9px] font-bold rounded-full min-w-[18px] text-center"></span></a>
+<div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">מערכת</p></div>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-scans.html"><span class="material-symbols-outlined">radar</span><span>סריקות</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-reports.html"><span class="material-symbols-outlined">description</span><span>דוחות</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-settings.html"><span class="material-symbols-outlined">settings</span><span>הגדרות</span></a>
+</nav>
+<div class="p-4 mt-auto">
+<div class="flex items-center gap-3 px-2">
+<div class="size-10 rounded-full bg-primary/20 flex items-center justify-center"><span class="material-symbols-outlined text-primary">person</span></div>
+<div class="flex-1 min-w-0"><p class="text-sm font-bold text-white truncate">QUANTUM Admin</p><p class="text-xs text-slate-500 truncate"><span class="q-ver">v...</span></p></div>
+</div>
+</div>
+</aside>
+<!-- Main -->
+<main class="flex-1 min-w-0 h-screen overflow-y-auto overflow-x-hidden flex flex-col">
+<header class="flex flex-wrap items-center justify-between gap-2 px-4 md:px-8 py-3 md:py-5 border-b border-white/5 glass-panel sticky top-0 z-10">
+<div>
+<h2 class="text-base md:text-2xl font-bold text-white leading-tight">הזדמנויות השקעה</h2>
+<p class="text-sm text-slate-400">מתחמים עם IAI גבוה — מומלצים לרכישה</p>
+</div>
+<div class="flex items-center gap-3">
+<select id="filter-city" onchange="applyFilters()" class="bg-surface/50 border border-white/10 rounded-xl px-4 py-2.5 text-sm focus:ring-primary focus:border-primary"><option value="">כל הערים</option></select>
+<select id="filter-status" onchange="applyFilters()" class="bg-surface/50 border border-white/10 rounded-xl px-4 py-2.5 text-sm focus:ring-primary focus:border-primary"><option value="">כל הסטטוסים</option></select>
+</div>
+</header>
+<div class="p-8 flex-1 custom-scrollbar overflow-y-auto">
+<!-- Stats row -->
+<div class="grid grid-cols-3 gap-4 mb-6" id="stats-row">
+<div class="glass-panel rounded-2xl p-5"><p class="text-xs text-slate-400 uppercase tracking-wider mb-1">סה"כ הזדמנויות</p><p class="text-3xl font-bold text-primary" id="stat-total">...</p></div>
+<div class="glass-panel rounded-2xl p-5"><p class="text-xs text-slate-400 uppercase tracking-wider mb-1">IAI מצוין (70+)</p><p class="text-3xl font-bold text-success-green" id="stat-excellent">...</p></div>
+<div class="glass-panel rounded-2xl p-5"><p class="text-xs text-slate-400 uppercase tracking-wider mb-1">מודעות פעילות</p><p class="text-3xl font-bold text-warning-amber" id="stat-listings">...</p></div>
+</div>
+<!-- Table -->
+<div class="glass-panel rounded-2xl overflow-hidden">
+<table class="w-full text-sm" id="opp-table">
+<thead><tr class="border-b border-white/5">
+<th class="px-4 py-3 text-right text-xs text-slate-400 font-semibold uppercase tracking-wider cursor-pointer hover:text-primary select-none" onclick="sortOpps('iai_score')">IAI <span id="osort-iai_score" class="text-[10px]">▼</span></th>
+<th class="px-4 py-3 text-right text-xs text-slate-400 font-semibold uppercase tracking-wider cursor-pointer hover:text-primary select-none" onclick="sortOpps('name')">פרויקט <span id="osort-name" class="text-[10px]"></span></th>
+<th class="px-4 py-3 text-right text-xs text-slate-400 font-semibold uppercase tracking-wider cursor-pointer hover:text-primary select-none" onclick="sortOpps('city')">עיר <span id="osort-city" class="text-[10px]"></span></th>
+<th class="px-4 py-3 text-right text-xs text-slate-400 font-semibold uppercase tracking-wider cursor-pointer hover:text-primary select-none" onclick="sortOpps('status')">סטטוס <span id="osort-status" class="text-[10px]"></span></th>
+<th class="px-4 py-3 text-right text-xs text-slate-400 font-semibold uppercase tracking-wider cursor-pointer hover:text-primary select-none" onclick="sortOpps('planned_units')">יח"ד מתוכנן <span id="osort-planned_units" class="text-[10px]"></span></th>
+<th class="px-4 py-3 text-right text-xs text-slate-400 font-semibold uppercase tracking-wider cursor-pointer hover:text-primary select-none" onclick="sortOpps('developer')">יזם <span id="osort-developer" class="text-[10px]"></span></th>
+<th class="px-4 py-3 text-right text-xs text-slate-400 font-semibold uppercase tracking-wider cursor-pointer hover:text-primary select-none" onclick="sortOpps('active_listings')">מודעות <span id="osort-active_listings" class="text-[10px]"></span></th>
+<th class="px-4 py-3 text-right text-xs text-slate-400 font-semibold uppercase tracking-wider">המלצה</th>
+</tr></thead>
+<tbody id="opp-body">
+<tr><td colspan="8" class="px-4 py-8 text-center text-slate-500">טוען נתונים...</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</main>
+<script src="shared/toast.js"></script>
+<script src="shared/state-store.js"></script>
+<script src="shared/api-client.js"></script>
+<script>
+const API = (typeof QuantumAPI!=='undefined')?QuantumAPI.API_BASE:'https://pinuy-binuy-analyzer-production.up.railway.app';
+const STATUS_HE = {declared:'הכרזה',planning:'תכנון',pre_deposit:'לפני הפקדה',deposited:'הופקד',approved:'אושר',permit:'היתר',construction:'בנייה'};
+const IAI_COLORS = {excellent:'#10b981',good:'#137fec',moderate:'#f59e0b',low:'#f43f5e'};
+function iaiCat(s){return s>=70?'excellent':s>=50?'good':s>=30?'moderate':'low';}
+function iaiBar(score){const c=IAI_COLORS[iaiCat(score)];return `<div class="flex items-center gap-2"><div class="w-20 h-2 bg-white/10 rounded-full overflow-hidden"><div style="width:${score}%;background:${c}" class="h-full rounded-full"></div></div><span style="color:${c}" class="font-bold text-sm font-mono">${score}</span></div>`;}
+function statusPill(s){const colors={declared:'#8b5cf6',planning:'#6366f1',pre_deposit:'#3b82f6',deposited:'#0ea5e9',approved:'#10b981',permit:'#22d3ee',construction:'#f59e0b'};const c=colors[s]||'#6b7280';return `<span style="background:${c}18;color:${c};border:1px solid ${c}30" class="px-2 py-0.5 rounded-md text-xs font-semibold">${STATUS_HE[s]||s}</span>`;}
+function recBadge(score){if(score>=70)return`<span class="px-2 py-0.5 rounded-md text-xs font-bold bg-success-green/20 text-success-green border border-success-green/30">קנה עכשיו</span>`;if(score>=50)return`<span class="px-2 py-0.5 rounded-md text-xs font-bold bg-primary/20 text-primary border border-primary/30">עקוב</span>`;return`<span class="px-2 py-0.5 rounded-md text-xs font-bold bg-white/5 text-slate-400 border border-white/10">המתן</span>`;}
+let allData=[],oppSortCol='iai_score',oppSortDir='desc';
+function esc(s){return typeof DOMPurify!=='undefined'?DOMPurify.sanitize(String(s||'-'),{ALLOWED_TAGS:[]}):String(s||'-').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function sortOpps(col){
+  if(oppSortCol===col)oppSortDir=oppSortDir==='asc'?'desc':'asc';
+  else{oppSortCol=col;oppSortDir=col==='iai_score'||col==='active_listings'||col==='planned_units'?'desc':'asc';}
+  document.querySelectorAll('[id^="osort-"]').forEach(el=>el.textContent='');
+  const el=document.getElementById('osort-'+col);
+  if(el)el.textContent=oppSortDir==='asc'?' ▲':' ▼';
+  applyFilters();
+}
+async function loadData(){
+  try{
+    const r=await fetch(`${API}/api/opportunities?limit=1000&min_iai=1`);
+    const d=await r.json();
+    allData=d.opportunities||d.data||[];
+    // populate city filter
+    const cities=[...new Set(allData.map(p=>p.city))].sort();
+    const cf=document.getElementById('filter-city');
+    cities.forEach(c=>{const o=document.createElement('option');o.value=c;o.textContent=c;cf.appendChild(o);});
+    // populate status filter
+    const statuses=[...new Set(allData.map(p=>p.status))];
+    const sf=document.getElementById('filter-status');
+    statuses.forEach(s=>{const o=document.createElement('option');o.value=s;o.textContent=STATUS_HE[s]||s;sf.appendChild(o);});
+    applyFilters();
+  }catch(e){document.getElementById('opp-body').innerHTML=`<tr><td colspan="8" class="px-4 py-8 text-center text-alert-rose">שגיאה בטעינת נתונים</td></tr>`;}
+}
+function applyFilters(){
+  const city=document.getElementById('filter-city').value;
+  const status=document.getElementById('filter-status').value;
+  let filtered=allData;
+  if(city)filtered=filtered.filter(p=>p.city===city);
+  if(status)filtered=filtered.filter(p=>p.status===status);
+  filtered=filtered.slice().sort((a,b)=>{
+    let va=a[oppSortCol],vb=b[oppSortCol];
+    if(oppSortCol==='name'||oppSortCol==='city'||oppSortCol==='developer'||oppSortCol==='status')
+      return oppSortDir==='asc'?(va||'').localeCompare(vb||''):(vb||'').localeCompare(va||'');
+    va=parseFloat(va)||0;vb=parseFloat(vb)||0;
+    return oppSortDir==='asc'?va-vb:vb-va;
+  });
+  // stats
+  document.getElementById('stat-total').textContent=filtered.length;
+  document.getElementById('stat-excellent').textContent=filtered.filter(p=>p.iai_score>=70).length;
+  document.getElementById('stat-listings').textContent=filtered.reduce((a,p)=>a+(parseInt(p.active_listings)||0),0);
+  // table
+  const tbody=document.getElementById('opp-body');
+  if(!filtered.length){tbody.innerHTML=`<tr><td colspan="8" class="px-4 py-8 text-center text-slate-500">אין תוצאות</td></tr>`;return;}
+  tbody.innerHTML=filtered.map(p=>`
+    <tr class="data-row border-b border-white/5 cursor-pointer" onclick="window.location='quantum-complex-detail.html?id=${p.id}'">
+      <td class="px-4 py-3">${iaiBar(p.iai_score||0)}</td>
+      <td class="px-4 py-3 font-semibold text-white">${esc(p.name)}</td>
+      <td class="px-4 py-3 text-slate-400">${esc(p.city)}</td>
+      <td class="px-4 py-3">${statusPill(p.status)}</td>
+      <td class="px-4 py-3 text-slate-400">${p.planned_units?p.planned_units.toLocaleString():'-'}</td>
+      <td class="px-4 py-3 text-slate-400">${esc(p.developer)}</td>
+      <td class="px-4 py-3">${parseInt(p.active_listings)>0?`<span class="px-2 py-0.5 rounded-md text-xs font-bold bg-success-green/20 text-success-green border border-success-green/30">${p.active_listings}</span>`:`<span class="text-slate-600">0</span>`}</td>
+      <td class="px-4 py-3">${recBadge(p.iai_score||0)}</td>
+    </tr>`).join('');
+}
+loadData();
+fetch(`${API}/api/alerts?limit=500`).then(r=>r.json()).then(d=>{const u=(d.alerts||[]).filter(a=>!a.is_read).length;const b=document.getElementById('nav-alert-badge');if(b&&u>0){b.textContent=u>99?'99+':u;b.classList.remove('hidden')}}).catch(()=>{});
+fetch(`${API}/health`).then(r=>r.json()).then(d=>{document.querySelectorAll('.q-ver').forEach(el=>el.textContent='v'+d.version)}).catch(()=>{});
+</script>
+<script src="shared/mobile-nav.js"></script>
+</body>
+</html>

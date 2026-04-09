@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html class="dark" dir="rtl" lang="he">
+<head>
+<meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>QUANTUM | פירוט מתחם</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>tailwind.config={darkMode:"class",theme:{extend:{colors:{"primary":"#137fec","background-dark":"#101922","surface":"#1a2530","border-dark":"#2d3a4b","alert-rose":"#f43f5e","success-green":"#10b981"},fontFamily:{"display":["Manrope","sans-serif"]}}}}</script>
+<style>body{font-family:'Manrope',sans-serif;}.glass-panel{background:rgba(26,37,48,0.7);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.05);}.custom-scrollbar::-webkit-scrollbar{width:6px;}.custom-scrollbar::-webkit-scrollbar-track{background:transparent;}.custom-scrollbar::-webkit-scrollbar-thumb{background:#2d3a4b;border-radius:10px;}.timeline-dot{width:12px;height:12px;border-radius:50%;border:2px solid;position:relative;z-index:1;}.timeline-line{position:absolute;top:12px;right:5px;width:2px;height:calc(100% - 12px);}</style>
+</head>
+<body class="bg-background-dark text-slate-200 min-h-screen flex">
+<aside class="w-64 flex-shrink-0 border-l border-white/5 bg-surface/50 h-screen sticky top-0 hidden lg:flex flex-col">
+<div class="p-5 flex items-center gap-3">
+<img src="quantum-logo.png" alt="QUANTUM" class="h-12 w-auto object-contain" style="filter:drop-shadow(0 0 8px rgba(19,127,236,0.4));"/>
+<div><h1 class="text-xl font-extrabold tracking-tight text-white uppercase">QUANTUM</h1>
+<p class="text-[10px] text-primary font-bold tracking-widest leading-none">UNIFIED ANALYTICS</p></div>
+</div>
+<nav class="flex-1 px-4 space-y-1 mt-2 overflow-y-auto custom-scrollbar">
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-dashboard.html"><span class="material-symbols-outlined">dashboard</span><span>לוח בקרה</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary text-white font-semibold transition-all" href="quantum-opportunities.html"><span class="material-symbols-outlined">diamond</span><span>הזדמנויות</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-complexes.html"><span class="material-symbols-outlined">location_city</span><span>מתחמים</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-map-view.html"><span class="material-symbols-outlined">map</span><span>מפת פרויקטים</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-market-analysis.html"><span class="material-symbols-outlined">monitoring</span><span>ניתוח שוק</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-properties.html"><span class="material-symbols-outlined">apartment</span><span>נכסים</span></a>
+<div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">CRM ולידים</p></div>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-leads.html"><span class="material-symbols-outlined">people</span><span>לידים ו-CRM</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-campaigns.html"><span class="material-symbols-outlined">campaign</span><span>קמפיינים</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-appointments.html"><span class="material-symbols-outlined">calendar_month</span><span>פגישות ויומן</span></a>
+<div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">תקשורת</p></div>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-messaging.html"><span class="material-symbols-outlined">mail</span><span>הודעות ו-WA</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-bot-settings.html"><span class="material-symbols-outlined">smart_toy</span><span>הגדרות בוט</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-alerts.html"><span class="material-symbols-outlined">notifications</span><span>התראות</span><span id="nav-alert-badge" class="hidden mr-auto px-1.5 py-0.5 bg-alert-rose text-white text-[9px] font-bold rounded-full min-w-[18px] text-center"></span></a>
+<div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">מערכת</p></div>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-scans.html"><span class="material-symbols-outlined">radar</span><span>סריקות</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-reports.html"><span class="material-symbols-outlined">description</span><span>דוחות</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-settings.html"><span class="material-symbols-outlined">settings</span><span>הגדרות</span></a>
+</nav>
+<div class="p-4 mt-auto">
+<div class="flex items-center gap-3 px-2">
+<div class="size-10 rounded-full bg-primary/20 flex items-center justify-center"><span class="material-symbols-outlined text-primary">person</span></div>
+<div class="flex-1 min-w-0"><p class="text-sm font-bold text-white truncate">QUANTUM Admin</p><p class="text-xs text-slate-500 truncate"><span class="q-ver">v...</span></p></div>
+</div></div>
+</aside>
+<main class="flex-1 min-w-0 h-screen overflow-y-auto overflow-x-hidden flex flex-col">
+<div class="px-8 py-3 border-b border-white/5 flex items-center gap-2 text-xs">
+<a href="quantum-dashboard.html" class="text-slate-500 hover:text-primary transition-colors">לוח בקרה</a>
+<span class="material-symbols-outlined text-slate-600 text-sm">chevron_left</span>
+<a href="quantum-properties.html" class="text-slate-500 hover:text-primary transition-colors">נכסים</a>
+<span class="material-symbols-outlined text-slate-600 text-sm">chevron_left</span>
+<span id="breadcrumb-name" class="text-white font-semibold">טוען...</span>
+</div>
+<div class="px-8 py-6 border-b border-white/5">
+<div class="flex items-start justify-between">
+<div>
+<div class="flex items-center gap-3 mb-2"><h2 id="complex-name" class="text-3xl font-extrabold text-white">טוען נתונים...</h2><span id="stage-badge" class="px-3 py-1 rounded-lg bg-white/10 text-slate-400 text-xs font-bold border border-white/10"></span></div>
+<p id="complex-subtitle" class="text-slate-400 text-sm"></p>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all"><span class="material-symbols-outlined text-lg">bookmark</span>שמור</button>
+<button class="flex items-center gap-2 bg-primary hover:brightness-110 px-6 py-2.5 rounded-xl text-sm font-bold text-white transition-all shadow-lg shadow-primary/20"><span class="material-symbols-outlined text-lg">ios_share</span>ייצוא דוח</button>
+</div></div></div>
+<div class="px-8 py-6"><div id="kpi-grid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4"></div></div>
+<div class="px-8 pb-8 space-y-6">
+<div class="grid grid-cols-12 gap-6">
+<div class="col-span-12 lg:col-span-7 bg-surface/40 border border-white/5 rounded-2xl p-6"><h4 class="font-bold text-white mb-4">מגמת מחירי עסקאות</h4><div class="h-64"><canvas id="txChart"></canvas></div></div>
+<div class="col-span-12 lg:col-span-5 bg-surface/40 border border-white/5 rounded-2xl p-6"><h4 class="font-bold text-white mb-4">ציר זמן תכנוני</h4><div id="timeline-container" class="space-y-6 mt-2"><p class="text-slate-500 text-sm">טוען...</p></div></div>
+</div></div>
+<footer class="mt-auto px-8 py-6 border-t border-white/5 text-center text-slate-500 text-[11px] font-medium tracking-widest uppercase">&copy; 2026 Quantum Unified Analytics</footer>
+</main>
+<script src="shared/toast.js"></script>
+<script src="shared/state-store.js"></script>
+<script src="shared/api-client.js"></script>
+<script>
+Chart.defaults.color='#64748b';Chart.defaults.borderColor='rgba(255,255,255,0.05)';Chart.defaults.font.family='Manrope';
+var API='https://pinuy-binuy-analyzer-production.up.railway.app';
+var params=new URLSearchParams(window.location.search);var complexId=params.get('id');
+function renderKPI(label,value,sub,color){return '<div class="bg-surface/40 border border-'+(color||'white')+'/20 rounded-2xl p-4 text-center"><p class="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-1">'+label+'</p><p class="text-4xl font-extrabold text-'+(color||'white')+'">'+value+'</p><p class="text-[10px] text-slate-500 mt-1">'+sub+'</p></div>';}
+function loadComplex(){if(!complexId){document.getElementById('complex-name').textContent='\u05DC\u05D0 \u05E0\u05D1\u05D7\u05E8 \u05DE\u05EA\u05D7\u05DD';return;}
+fetch(API+'/api/opportunities?limit=600').then(function(r){return r.json()}).then(function(d){var opps=d.opportunities||[];var c=opps.find(function(o){return String(o.id)===String(complexId)});if(!c){document.getElementById('complex-name').textContent='\u05DE\u05EA\u05D7\u05DD \u05DC\u05D0 \u05E0\u05DE\u05E6\u05D0 (ID: '+complexId+')';return;}
+document.getElementById('complex-name').textContent=c.name||c.addresses||'\u05DE\u05EA\u05D7\u05DD '+complexId;document.getElementById('breadcrumb-name').textContent=(c.name||c.addresses)+', '+(c.city||'');document.getElementById('complex-subtitle').textContent=(c.city||'')+' | '+(c.precise_address||c.addresses||'')+' | '+(c.num_buildings||'?')+' \u05D1\u05E0\u05D9\u05D9\u05E0\u05D9\u05DD';
+var stage=c.plan_stage||c.status||'';var sb=document.getElementById('stage-badge');sb.textContent=stage;
+if(stage.includes('\u05D0\u05D9\u05E9\u05D5\u05E8')||stage.includes('\u05D1\u05E0\u05D9\u05D9\u05D4')||stage.includes('\u05D4\u05D9\u05EA\u05E8')){sb.className='px-3 py-1 rounded-lg bg-success-green/20 text-success-green text-xs font-bold border border-success-green/30';}
+else if(stage.includes('\u05D4\u05E4\u05E7\u05D3\u05D4')||stage.includes('\u05D4\u05D2\u05E9\u05D4')){sb.className='px-3 py-1 rounded-lg bg-primary/20 text-primary text-xs font-bold border border-primary/30';}
+else{sb.className='px-3 py-1 rounded-lg bg-amber-500/20 text-amber-500 text-xs font-bold border border-amber-500/30';}
+var iai=c.iai_score||0;var iaiColor=iai>=70?'success-green':iai>=50?'primary':'amber-500';
+var ssi=c.enhanced_ssi_score||0;var ssiColor=ssi>=60?'alert-rose':ssi>=40?'amber-500':'white';
+document.getElementById('kpi-grid').innerHTML=renderKPI('IAI Score',iai,iai>=70?'\u05DE\u05E6\u05D5\u05D9\u05DF':iai>=50?'\u05D8\u05D5\u05D1':'\u05D1\u05D9\u05E0\u05D5\u05E0\u05D9',iaiColor)+renderKPI('SSI',ssi,ssi>=60?'\u05E7\u05E8\u05D9\u05D8\u05D9':ssi>=40?'\u05D2\u05D1\u05D5\u05D4':'\u05E0\u05DE\u05D5\u05DA',ssiColor)+renderKPI('\u05E4\u05E8\u05DE\u05D9\u05D4',(c.actual_premium?c.actual_premium+'%':'-'),'\u05D1\u05E4\u05D5\u05E2\u05DC','primary')+renderKPI('\u05DE\u05D7\u05D9\u05E8/\u05DE"\u05E8',(c.price_per_sqm?Math.round(c.price_per_sqm/1000)+'K':'-'),'&#8362;','white')+renderKPI('\u05D1\u05E0\u05D9\u05D9\u05E0\u05D9\u05DD',c.num_buildings||'?','\u05D1\u05DE\u05EA\u05D7\u05DD','white')+renderKPI('\u05D7\u05EA\u05D9\u05DE\u05D5\u05EA',(c.signature_percent?c.signature_percent+'%':'-'),'\u05D3\u05D9\u05D9\u05E8\u05D9\u05DD','white');
+// Render planning timeline
+var tc=document.getElementById('timeline-container');
+var STAGE_ORDER=['declared','planning','pre_deposit','deposited','approved','permit','construction'];
+var STAGE_HE={declared:'\u05D4\u05DB\u05E8\u05D6\u05D4',planning:'\u05EA\u05DB\u05E0\u05D5\u05DF',pre_deposit:'\u05DC\u05E4\u05E0\u05D9 \u05D4\u05E4\u05E7\u05D3\u05D4',deposited:'\u05D4\u05D5\u05E4\u05E7\u05D3',approved:'\u05D0\u05D5\u05E9\u05E8',permit:'\u05D4\u05D9\u05EA\u05E8',construction:'\u05D1\u05E0\u05D9\u05D9\u05D4'};
+var STAGE_ICON={declared:'campaign',planning:'architecture',pre_deposit:'pending',deposited:'upload_file',approved:'verified',permit:'badge',construction:'construction'};
+var curStatus=c.status||'';
+var curIdx=STAGE_ORDER.indexOf(curStatus);
+if(curIdx===-1){curIdx=0;}
+var planText=c.plan_stage||'';
+var timelineHtml=STAGE_ORDER.map(function(s,i){
+  var done=i<curIdx;
+  var active=i===curIdx;
+  var bgColor=done?'bg-success-green':active?'bg-primary':'bg-slate-700';
+  var textColor=done?'text-success-green':active?'text-primary':'text-slate-500';
+  var label=STAGE_HE[s]||s;
+  var icon=STAGE_ICON[s]||'radio_button_unchecked';
+  var extra='';
+  if(active&&planText){extra='<p class="text-[11px] text-slate-400 mt-1 leading-relaxed">'+planText+'</p>';}
+  var connector=(i<STAGE_ORDER.length-1)?'<div class="absolute right-[9px] top-6 w-0.5 h-full '+(done?'bg-success-green':'bg-slate-700')+'/40"></div>':'';
+  return '<div class="flex items-start gap-3 relative">'+connector+'<div class="size-5 rounded-full '+bgColor+' flex items-center justify-center flex-shrink-0 mt-0.5 z-10"><span class="material-symbols-outlined text-white" style="font-size:12px">'+(done?'check':icon)+'</span></div><div class="flex-1 pb-4"><p class="text-sm font-bold '+textColor+'">'+label+(active?' <span class="text-[9px] bg-primary/20 text-primary px-1.5 py-0.5 rounded font-bold">\u05E0\u05D5\u05DB\u05D7\u05D9</span>':'')+'</p>'+extra+'</div></div>';
+}).join('');
+tc.innerHTML=timelineHtml||'<p class="text-slate-500 text-sm">\u05D0\u05D9\u05DF \u05E0\u05EA\u05D5\u05E0\u05D9 \u05EA\u05DB\u05E0\u05D5\u05DF</p>';
+}).catch(function(e){document.getElementById('complex-name').textContent='\u05E9\u05D2\u05D9\u05D0\u05D4 \u05D1\u05D8\u05E2\u05D9\u05E0\u05D4';console.error(e);});}
+loadComplex();
+</script>
+<!-- Dynamic version + alert badge -->
+<script src="shared/toast.js"></script>
+<script src="shared/state-store.js"></script>
+<script src="shared/api-client.js"></script>
+<script>
+(function(){
+  fetch('https://pinuy-binuy-analyzer-production.up.railway.app/health').then(function(r){return r.json()}).then(function(d){
+    var v='v'+(d.version||'?');
+    document.querySelectorAll('.q-version').forEach(function(el){el.textContent=v});
+  }).catch(function(){
+    document.querySelectorAll('.q-version').forEach(function(el){el.textContent='v4.30.0'});
+  });
+  fetch('https://pinuy-binuy-analyzer-production.up.railway.app/api/alerts?limit=500').then(function(r){return r.json()}).then(function(d){
+    var u=(d.alerts||[]).filter(function(a){return !a.is_read}).length;
+    var b=document.getElementById('nav-alert-badge')||document.getElementById('sidebar-badge');
+    if(b&&u>0){b.textContent=u>99?'99+':u;b.classList.remove('hidden')}
+  }).catch(function(){});
+})();
+</script>
+<script src="shared/mobile-nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+{
+  "directoryListing": false,
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "/quantum-dashboard.html",
+      "type": 302
+    }
+  ],
+  "headers": [
+    {
+      "source": "**/*.html",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }
+      ]
+    }
+  ]
+}

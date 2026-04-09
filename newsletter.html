@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QUANTUM נדל"ן — קבל התראות על עסקאות</title>
+  <meta name="description" content="הירשם לעדכוני נדל"ן מותאמים אישית מ-QUANTUM. קבל התראות על עסקאות פינוי-בינוי, כינוס נכסים ועסקאות פרמייה לפי האזור והתקציב שלך.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-dark:    #0d1117;
+      --bg-card:    #161b22;
+      --bg-input:   #1c2128;
+      --border:     #30363d;
+      --accent:     #e94560;
+      --accent-dim: #c73652;
+      --text:       #e6edf3;
+      --text-muted: #8b949e;
+      --success:    #3fb950;
+      --gold:       #f0c040;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Heebo', sans-serif;
+      background: var(--bg-dark);
+      color: var(--text);
+      min-height: 100vh;
+      direction: rtl;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      background: linear-gradient(135deg, #0d1117 0%, #161b22 40%, #0f1e35 100%);
+      padding: 60px 20px 40px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -80px; left: 50%; transform: translateX(-50%);
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(233,69,96,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .logo {
+      font-size: 36px;
+      font-weight: 800;
+      letter-spacing: 4px;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .logo span { color: var(--text-muted); font-size: 14px; font-weight: 400; letter-spacing: 1px; display: block; margin-top: 4px; }
+    .hero h1 {
+      font-size: clamp(22px, 4vw, 34px);
+      font-weight: 700;
+      margin: 24px 0 12px;
+      line-height: 1.3;
+    }
+    .hero p {
+      color: var(--text-muted);
+      font-size: 16px;
+      max-width: 560px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* ── Stats bar ── */
+    .stats-bar {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      padding: 24px 20px;
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+    .stat { text-align: center; }
+    .stat-value { font-size: 26px; font-weight: 700; color: var(--accent); }
+    .stat-label { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+
+    /* ── Main layout ── */
+    .main {
+      max-width: 760px;
+      margin: 40px auto;
+      padding: 0 20px 60px;
+    }
+
+    /* ── Form card ── */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px;
+      margin-bottom: 24px;
+    }
+    .card-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .card-title .icon {
+      width: 32px; height: 32px;
+      background: rgba(233,69,96,0.15);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px;
+    }
+
+    /* ── Form elements ── */
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+    .form-row.single { grid-template-columns: 1fr; }
+    .form-row.triple { grid-template-columns: 1fr 1fr 1fr; }
+
+    @media (max-width: 560px) {
+      .form-row, .form-row.triple { grid-template-columns: 1fr; }
+    }
+
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    .field label {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+    .field label .req { color: var(--accent); margin-right: 2px; }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="number"],
+    select {
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: 'Heebo', sans-serif;
+      font-size: 14px;
+      padding: 10px 14px;
+      width: 100%;
+      transition: border-color 0.2s;
+      direction: rtl;
+    }
+    input:focus, select:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    input::placeholder { color: var(--text-muted); }
+    select option { background: var(--bg-card); }
+
+    /* ── City chips ── */
+    .cities-section { margin-bottom: 16px; }
+    .cities-label { font-size: 13px; font-weight: 500; color: var(--text-muted); margin-bottom: 10px; }
+    .cities-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .city-chip {
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      background: var(--bg-input);
+      color: var(--text-muted);
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.2s;
+      user-select: none;
+    }
+    .city-chip:hover { border-color: var(--accent); color: var(--text); }
+    .city-chip.selected {
+      background: rgba(233,69,96,0.15);
+      border-color: var(--accent);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .city-chip.all-cities {
+      background: rgba(233,69,96,0.08);
+      border-color: rgba(233,69,96,0.3);
+      color: var(--text);
+    }
+    .city-chip.all-cities.selected {
+      background: rgba(233,69,96,0.2);
+      border-color: var(--accent);
+    }
+
+    /* ── Property type chips ── */
+    .type-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+    .type-chip {
+      padding: 7px 16px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--bg-input);
+      color: var(--text-muted);
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.2s;
+      user-select: none;
+    }
+    .type-chip:hover { border-color: var(--accent); color: var(--text); }
+    .type-chip.selected {
+      background: rgba(233,69,96,0.15);
+      border-color: var(--accent);
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    /* ── Range slider ── */
+    .range-row {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .range-sep { color: var(--text-muted); font-size: 13px; text-align: center; }
+
+    /* ── Frequency selector ── */
+    .freq-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 8px; }
+    .freq-option {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: var(--bg-input);
+    }
+    .freq-option:hover { border-color: var(--accent); }
+    .freq-option.selected {
+      border-color: var(--accent);
+      background: rgba(233,69,96,0.1);
+    }
+    .freq-option input { display: none; }
+    .freq-icon { font-size: 22px; margin-bottom: 6px; }
+    .freq-title { font-size: 14px; font-weight: 600; }
+    .freq-desc { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
+
+    /* ── Submit ── */
+    .submit-btn {
+      width: 100%;
+      padding: 16px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-family: 'Heebo', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      margin-top: 8px;
+    }
+    .submit-btn:hover { background: var(--accent-dim); }
+    .submit-btn:active { transform: scale(0.99); }
+    .submit-btn:disabled { background: #444; cursor: not-allowed; }
+
+    /* ── Messages ── */
+    .msg {
+      padding: 14px 18px;
+      border-radius: 8px;
+      font-size: 14px;
+      margin-top: 16px;
+      display: none;
+    }
+    .msg.success { background: rgba(63,185,80,0.12); border: 1px solid rgba(63,185,80,0.3); color: var(--success); }
+    .msg.error   { background: rgba(233,69,96,0.12); border: 1px solid rgba(233,69,96,0.3); color: var(--accent); }
+
+    /* ── Features ── */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 32px;
+    }
+    @media (max-width: 560px) { .features { grid-template-columns: 1fr; } }
+    .feature {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+    }
+    .feature-icon { font-size: 28px; margin-bottom: 10px; }
+    .feature-title { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+    .feature-desc { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 24px;
+      color: var(--text-muted);
+      font-size: 12px;
+      border-top: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="logo">QUANTUM<span>מערכת ניתוח נדל"ן מתקדמת</span></div>
+  <h1>קבל התראות על עסקאות נדל"ן<br>שמתאימות בדיוק לך</h1>
+  <p>הגדר את הפרמטרים שלך — אזור גאוגרפי, תקציב, פרמייה — ואנחנו נשלח לך עדכון ברגע שתופיע עסקה מתאימה.</p>
+</div>
+
+<!-- Stats bar -->
+<div class="stats-bar">
+  <div class="stat">
+    <div class="stat-value" id="stat-listings">1,014</div>
+    <div class="stat-label">מודעות פעילות</div>
+  </div>
+  <div class="stat">
+    <div class="stat-value" id="stat-complexes">762</div>
+    <div class="stat-label">מתחמי פינוי-בינוי</div>
+  </div>
+  <div class="stat">
+    <div class="stat-value" id="stat-opportunities">66</div>
+    <div class="stat-label">הזדמנויות IAI גבוהות</div>
+  </div>
+</div>
+
+<!-- Main form -->
+<div class="main">
+  <form id="subscribe-form" novalidate>
+
+    <!-- Personal details -->
+    <div class="card">
+      <div class="card-title"><div class="icon">👤</div> פרטים אישיים</div>
+      <div class="form-row">
+        <div class="field">
+          <label>שם מלא</label>
+          <input type="text" id="full_name" placeholder="ישראל ישראלי">
+        </div>
+        <div class="field">
+          <label>אימייל <span class="req">*</span></label>
+          <input type="email" id="email" placeholder="israel@example.com" required>
+        </div>
+      </div>
+      <div class="form-row single">
+        <div class="field">
+          <label>טלפון (אופציונלי)</label>
+          <input type="tel" id="phone" placeholder="05X-XXXXXXX">
+        </div>
+      </div>
+    </div>
+
+    <!-- Geographic filter -->
+    <div class="card">
+      <div class="card-title"><div class="icon">📍</div> אזור גאוגרפי</div>
+      <div class="cities-section">
+        <div class="cities-label">בחר ערים (ניתן לבחור מספר ערים, או "כל הארץ")</div>
+        <div class="cities-grid" id="cities-grid">
+          <div class="city-chip all-cities selected" data-city="all">🇮🇱 כל הארץ</div>
+          <div class="city-chip" data-city="תל אביב">תל אביב</div>
+          <div class="city-chip" data-city="רמת גן">רמת גן</div>
+          <div class="city-chip" data-city="גבעתיים">גבעתיים</div>
+          <div class="city-chip" data-city="בני ברק">בני ברק</div>
+          <div class="city-chip" data-city="פתח תקווה">פתח תקווה</div>
+          <div class="city-chip" data-city="ראשון לציון">ראשון לציון</div>
+          <div class="city-chip" data-city="חולון">חולון</div>
+          <div class="city-chip" data-city="בת ים">בת ים</div>
+          <div class="city-chip" data-city="הרצליה">הרצליה</div>
+          <div class="city-chip" data-city="נתניה">נתניה</div>
+          <div class="city-chip" data-city="רחובות">רחובות</div>
+          <div class="city-chip" data-city="אשדוד">אשדוד</div>
+          <div class="city-chip" data-city="חיפה">חיפה</div>
+          <div class="city-chip" data-city="ירושלים">ירושלים</div>
+          <div class="city-chip" data-city="באר שבע">באר שבע</div>
+          <div class="city-chip" data-city="רמלה">רמלה</div>
+          <div class="city-chip" data-city="לוד">לוד</div>
+          <div class="city-chip" data-city="אור יהודה">אור יהודה</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Price range -->
+    <div class="card">
+      <div class="card-title"><div class="icon">💰</div> טווח מחיר</div>
+      <div class="range-row">
+        <div class="field">
+          <label>מחיר מינימלי (₪)</label>
+          <input type="number" id="price_min" placeholder="500,000" min="0" step="50000">
+        </div>
+        <div class="range-sep">עד</div>
+        <div class="field">
+          <label>מחיר מקסימלי (₪)</label>
+          <input type="number" id="price_max" placeholder="3,000,000" min="0" step="50000">
+        </div>
+      </div>
+    </div>
+
+    <!-- Premium / Discount filter -->
+    <div class="card">
+      <div class="card-title"><div class="icon">📊</div> פרמייה ורווחיות</div>
+      <div class="form-row">
+        <div class="field">
+          <label>הנחה מינימלית מ-IAI (%)</label>
+          <input type="number" id="min_discount_pct" placeholder="לדוגמה: 10" min="0" max="100" step="1">
+        </div>
+        <div class="field">
+          <label>הנחה מינימלית בש"ח</label>
+          <input type="number" id="min_discount_nis" placeholder="לדוגמה: 200,000" min="0" step="10000">
+        </div>
+      </div>
+      <p style="font-size:12px;color:var(--text-muted);margin-top:8px;">
+        IAI = מחיר ממוצע לפי ועדת הערכה. הנחה = הפרש בין מחיר הדירה למחיר ה-IAI.
+      </p>
+    </div>
+
+    <!-- Property type -->
+    <div class="card">
+      <div class="card-title"><div class="icon">🏠</div> סוג נכס</div>
+      <div class="type-grid" id="type-grid">
+        <div class="type-chip selected" data-type="all">הכל</div>
+        <div class="type-chip" data-type="apartment">דירה</div>
+        <div class="type-chip" data-type="penthouse">פנטהאוז</div>
+        <div class="type-chip" data-type="garden">דירת גן</div>
+        <div class="type-chip" data-type="duplex">דופלקס</div>
+        <div class="type-chip" data-type="studio">סטודיו</div>
+        <div class="type-chip" data-type="cottage">קוטג'</div>
+      </div>
+    </div>
+
+    <!-- Rooms & Floor -->
+    <div class="card">
+      <div class="card-title"><div class="icon">🛏</div> חדרים וקומה</div>
+      <div class="form-row">
+        <div class="field">
+          <label>חדרים מינימלי</label>
+          <select id="min_rooms">
+            <option value="">ללא הגבלה</option>
+            <option value="1">1</option>
+            <option value="1.5">1.5</option>
+            <option value="2">2</option>
+            <option value="2.5">2.5</option>
+            <option value="3">3</option>
+            <option value="3.5">3.5</option>
+            <option value="4">4</option>
+            <option value="4.5">4.5</option>
+            <option value="5">5</option>
+            <option value="6">6+</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>חדרים מקסימלי</label>
+          <select id="max_rooms">
+            <option value="">ללא הגבלה</option>
+            <option value="2">2</option>
+            <option value="2.5">2.5</option>
+            <option value="3">3</option>
+            <option value="3.5">3.5</option>
+            <option value="4">4</option>
+            <option value="4.5">4.5</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7+</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row single">
+        <div class="field">
+          <label>קומה מינימלית</label>
+          <select id="min_floor">
+            <option value="">ללא הגבלה</option>
+            <option value="1">1+</option>
+            <option value="2">2+</option>
+            <option value="3">3+</option>
+            <option value="5">5+</option>
+            <option value="8">8+</option>
+            <option value="10">10+</option>
+            <option value="15">15+</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Frequency -->
+    <div class="card">
+      <div class="card-title"><div class="icon">🔔</div> תדירות עדכונים</div>
+      <div class="freq-grid">
+        <label class="freq-option selected" id="freq-immediate">
+          <input type="radio" name="frequency" value="immediate" checked>
+          <div class="freq-icon">⚡</div>
+          <div class="freq-title">מיידי</div>
+          <div class="freq-desc">ברגע שמופיעה עסקה</div>
+        </label>
+        <label class="freq-option" id="freq-daily">
+          <input type="radio" name="frequency" value="daily">
+          <div class="freq-icon">📅</div>
+          <div class="freq-title">יומי</div>
+          <div class="freq-desc">סיכום יומי בבוקר</div>
+        </label>
+        <label class="freq-option" id="freq-weekly">
+          <input type="radio" name="frequency" value="weekly">
+          <div class="freq-icon">📆</div>
+          <div class="freq-title">שבועי</div>
+          <div class="freq-desc">סיכום שבועי בראשון</div>
+        </label>
+      </div>
+    </div>
+
+    <!-- Submit -->
+    <button type="submit" class="submit-btn" id="submit-btn">
+      🔔 הירשם לעדכונים
+    </button>
+
+    <div class="msg success" id="msg-success">
+      ✅ <strong>נרשמת בהצלחה!</strong> שלחנו אימייל אישור לכתובת שהזנת. אנא אשר את הרשמתך כדי להתחיל לקבל עדכונים.
+    </div>
+    <div class="msg error" id="msg-error"></div>
+
+  </form>
+
+  <!-- Features -->
+  <div class="features">
+    <div class="feature">
+      <div class="feature-icon">🔍</div>
+      <div class="feature-title">ניתוח IAI מתקדם</div>
+      <div class="feature-desc">כל עסקה מנותחת מול מחיר ועדת הערכה לזיהוי פרמייה אמיתית</div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">⚡</div>
+      <div class="feature-title">עדכון בזמן אמת</div>
+      <div class="feature-desc">סריקה אוטומטית של 8 פלטפורמות נדל"ן מדי שעה</div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">🔒</div>
+      <div class="feature-title">ללא ספאם</div>
+      <div class="feature-desc">רק עסקאות שעומדות בדיוק בקריטריונים שהגדרת</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  QUANTUM נדל"ן &copy; 2026 | <a href="/newsletter-unsubscribe.html" style="color:var(--text-muted)">ביטול הרשמה</a>
+</footer>
+
+<script>
+  const API_BASE = 'https://pinuy-binuy-analyzer-production.up.railway.app';
+
+  // ── Load live stats ──
+  fetch(API_BASE + '/health')
+    .then(r => r.json())
+    .then(d => {
+      if (d.complexes) document.getElementById('stat-complexes').textContent = d.complexes.toLocaleString('he-IL');
+    }).catch(() => {});
+
+  fetch(API_BASE + '/api/scan/phone-coverage')
+    .then(r => r.json())
+    .then(d => {
+      if (d.total_listings) document.getElementById('stat-listings').textContent = Number(d.total_listings).toLocaleString('he-IL');
+    }).catch(() => {});
+
+  // ── City chips ──
+  const citiesGrid = document.getElementById('cities-grid');
+  let selectedCities = new Set(['all']);
+
+  citiesGrid.addEventListener('click', e => {
+    const chip = e.target.closest('.city-chip');
+    if (!chip) return;
+    const city = chip.dataset.city;
+
+    if (city === 'all') {
+      selectedCities.clear();
+      selectedCities.add('all');
+    } else {
+      selectedCities.delete('all');
+      if (selectedCities.has(city)) {
+        selectedCities.delete(city);
+        if (selectedCities.size === 0) selectedCities.add('all');
+      } else {
+        selectedCities.add(city);
+      }
+    }
+
+    citiesGrid.querySelectorAll('.city-chip').forEach(c => {
+      c.classList.toggle('selected', selectedCities.has(c.dataset.city));
+    });
+  });
+
+  // ── Property type chips ──
+  const typeGrid = document.getElementById('type-grid');
+  let selectedTypes = new Set(['all']);
+
+  typeGrid.addEventListener('click', e => {
+    const chip = e.target.closest('.type-chip');
+    if (!chip) return;
+    const type = chip.dataset.type;
+
+    if (type === 'all') {
+      selectedTypes.clear();
+      selectedTypes.add('all');
+    } else {
+      selectedTypes.delete('all');
+      if (selectedTypes.has(type)) {
+        selectedTypes.delete(type);
+        if (selectedTypes.size === 0) selectedTypes.add('all');
+      } else {
+        selectedTypes.add(type);
+      }
+    }
+
+    typeGrid.querySelectorAll('.type-chip').forEach(c => {
+      c.classList.toggle('selected', selectedTypes.has(c.dataset.type));
+    });
+  });
+
+  // ── Frequency ──
+  document.querySelectorAll('.freq-option').forEach(opt => {
+    opt.addEventListener('click', () => {
+      document.querySelectorAll('.freq-option').forEach(o => o.classList.remove('selected'));
+      opt.classList.add('selected');
+    });
+  });
+
+  // ── Form submit ──
+  document.getElementById('subscribe-form').addEventListener('submit', async e => {
+    e.preventDefault();
+
+    const email = document.getElementById('email').value.trim();
+    if (!email || !email.includes('@')) {
+      showMsg('error', 'אנא הזן כתובת אימייל תקינה.');
+      return;
+    }
+
+    const cities = selectedCities.has('all') ? null : Array.from(selectedCities);
+    const property_types = selectedTypes.has('all') ? null : Array.from(selectedTypes);
+    const frequency = document.querySelector('input[name="frequency"]:checked')?.value || 'immediate';
+
+    const payload = {
+      email,
+      full_name:        document.getElementById('full_name').value.trim() || null,
+      phone:            document.getElementById('phone').value.trim() || null,
+      cities:           cities,
+      price_min:        parseNum('price_min'),
+      price_max:        parseNum('price_max'),
+      min_discount_pct: parseNum('min_discount_pct'),
+      min_discount_nis: parseNum('min_discount_nis'),
+      property_types:   property_types,
+      min_rooms:        parseNum('min_rooms'),
+      max_rooms:        parseNum('max_rooms'),
+      min_floor:        parseNum('min_floor'),
+      frequency
+    };
+
+    const btn = document.getElementById('submit-btn');
+    btn.disabled = true;
+    btn.textContent = 'שולח...';
+
+    try {
+      const res = await fetch(API_BASE + '/api/newsletter/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+
+      if (res.ok && data.success) {
+        showMsg('success', null);
+        document.getElementById('subscribe-form').style.opacity = '0.4';
+        document.getElementById('subscribe-form').style.pointerEvents = 'none';
+        btn.textContent = '✅ נרשמת!';
+      } else {
+        showMsg('error', data.error || 'אירעה שגיאה. אנא נסה שוב.');
+        btn.disabled = false;
+        btn.textContent = '🔔 הירשם לעדכונים';
+      }
+    } catch (err) {
+      showMsg('error', 'שגיאת רשת. אנא בדוק את החיבור ונסה שוב.');
+      btn.disabled = false;
+      btn.textContent = '🔔 הירשם לעדכונים';
+    }
+  });
+
+  function parseNum(id) {
+    const v = document.getElementById(id)?.value;
+    if (!v || v === '') return null;
+    const n = parseFloat(v);
+    return isNaN(n) ? null : n;
+  }
+
+  function showMsg(type, text) {
+    const el = document.getElementById('msg-' + type);
+    if (text) el.innerHTML = text;
+    el.style.display = 'block';
+    el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+</script>
+</body>
+</html>

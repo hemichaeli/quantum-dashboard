@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html class="dark" dir="rtl" lang="he">
+<head>
+<meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>QUANTUM | הגדרות בוט</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js"></script>
+<script>tailwind.config={darkMode:"class",theme:{extend:{colors:{"primary":"#137fec","background-dark":"#101922","surface":"#1a2530","border-dark":"#2d3a4b","alert-rose":"#f43f5e","success-green":"#10b981"},fontFamily:{"display":["Manrope","sans-serif"]}}}}</script>
+<style>body{font-family:'Manrope',sans-serif;}.glass-panel{background:rgba(26,37,48,0.7);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.05);}.custom-scrollbar::-webkit-scrollbar{width:6px;}.custom-scrollbar::-webkit-scrollbar-track{background:transparent;}.custom-scrollbar::-webkit-scrollbar-thumb{background:#2d3a4b;border-radius:10px;}.status-badge{padding:2px 10px;border-radius:999px;font-size:11px;font-weight:700;}.toggle{position:relative;display:inline-block;width:44px;height:24px;}.toggle input{opacity:0;width:0;height:0;}.slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background-color:#2d3a4b;transition:.3s;border-radius:24px;}.slider:before{position:absolute;content:"";height:18px;width:18px;left:3px;bottom:3px;background-color:white;transition:.3s;border-radius:50%;}.toggle input:checked+.slider{background-color:#137fec;}.toggle input:checked+.slider:before{transform:translateX(20px);}</style>
+</head>
+<body class="bg-background-dark text-slate-200 min-h-screen flex">
+<aside class="w-64 flex-shrink-0 border-l border-white/5 bg-surface/50 h-screen sticky top-0 hidden lg:flex flex-col">
+<div class="p-5 flex items-center gap-3">
+<img src="quantum-logo.png" alt="QUANTUM" class="h-12 w-auto object-contain" style="filter:drop-shadow(0 0 8px rgba(19,127,236,0.4));"/>
+<div><h1 class="text-xl font-extrabold tracking-tight text-white uppercase">QUANTUM</h1>
+<p class="text-[10px] text-primary font-bold tracking-widest leading-none">UNIFIED ANALYTICS</p></div>
+</div>
+<nav class="flex-1 px-4 space-y-1 mt-2 overflow-y-auto custom-scrollbar">
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-dashboard.html"><span class="material-symbols-outlined">dashboard</span><span>לוח בקרה</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-opportunities.html"><span class="material-symbols-outlined">diamond</span><span>הזדמנויות</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-complexes.html"><span class="material-symbols-outlined">location_city</span><span>מתחמים</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-map-view.html"><span class="material-symbols-outlined">map</span><span>מפת פרויקטים</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-market-analysis.html"><span class="material-symbols-outlined">monitoring</span><span>ניתוח שוק</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-properties.html"><span class="material-symbols-outlined">apartment</span><span>נכסים</span></a>
+<div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">CRM ולידים</p></div>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-leads.html"><span class="material-symbols-outlined">people</span><span>לידים ו-CRM</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-campaigns.html"><span class="material-symbols-outlined">campaign</span><span>קמפיינים</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-appointments.html"><span class="material-symbols-outlined">calendar_month</span><span>פגישות ויומן</span></a>
+<div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">תקשורת</p></div>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-messaging.html"><span class="material-symbols-outlined">mail</span><span>הודעות ו-WA</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary text-white font-semibold transition-all" href="quantum-bot-settings.html"><span class="material-symbols-outlined">smart_toy</span><span>הגדרות בוט</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-alerts.html"><span class="material-symbols-outlined">notifications</span><span>התראות</span></a>
+<div class="pt-2 pb-1"><p class="text-[9px] font-bold text-slate-600 uppercase tracking-widest px-4">מערכת</p></div>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-scans.html"><span class="material-symbols-outlined">radar</span><span>סריקות</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-reports.html"><span class="material-symbols-outlined">description</span><span>דוחות</span></a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-white/5 hover:text-white transition-all" href="quantum-settings.html"><span class="material-symbols-outlined">settings</span><span>הגדרות</span></a>
+</nav>
+<div class="p-4 mt-auto">
+<div class="flex items-center gap-3 px-2">
+<div class="size-10 rounded-full bg-primary/20 flex items-center justify-center"><span class="material-symbols-outlined text-primary">person</span></div>
+<div class="flex-1 min-w-0"><p class="text-sm font-bold text-white truncate">QUANTUM Admin</p><p class="text-xs text-slate-500 truncate"><span class="q-ver">v...</span></p></div>
+</div></div>
+</aside>
+<main class="flex-1 min-w-0 h-screen overflow-y-auto overflow-x-hidden flex flex-col">
+<header class="flex flex-wrap items-center justify-between gap-2 px-4 md:px-8 py-3 md:py-5 border-b border-white/5 glass-panel sticky top-0 z-10">
+<div><h2 class="text-base md:text-2xl font-bold text-white leading-tight">הגדרות בוט</h2><p class="text-sm text-slate-400">WhatsApp Bot, תגובות אוטומטיות, escalation ו-AI</p></div>
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-2 px-4 py-2 rounded-xl bg-surface border border-white/10">
+<div class="size-2 rounded-full bg-success-green animate-pulse"></div>
+<span class="text-sm font-bold text-success-green" id="bot-status-text">בוט פעיל</span>
+</div>
+<button class="flex items-center gap-2 bg-primary hover:brightness-110 px-5 py-2.5 rounded-xl text-sm font-bold text-white transition-all" onclick="saveAllSettings()"><span class="material-symbols-outlined text-lg">save</span>שמור הכל</button>
+</div>
+</header>
+<div class="p-8 space-y-6">
+<div class="glass-panel rounded-2xl">
+<div class="p-5 border-b border-white/5 flex items-center gap-3">
+<span class="material-symbols-outlined text-success-green">smart_toy</span>
+<div><h3 class="font-bold text-white">סטטוס בוט WhatsApp</h3><p class="text-xs text-slate-400">מצב חיבור ופעילות</p></div>
+</div>
+<div class="p-5 grid grid-cols-2 md:grid-cols-4 gap-4" id="bot-status-grid">
+<div class="text-center py-8 text-slate-500 col-span-4">טוען...</div>
+</div>
+</div>
+<div class="glass-panel rounded-2xl">
+<div class="p-5 border-b border-white/5 flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">tune</span>
+<div><h3 class="font-bold text-white">הגדרות בסיסיות</h3><p class="text-xs text-slate-400">הפעלה/כיבוי ופרמטרים</p></div>
+</div>
+<div class="p-6 space-y-5">
+<div class="flex items-center justify-between">
+<div><p class="font-semibold text-white">בוט WhatsApp פעיל</p><p class="text-xs text-slate-400 mt-1">הבוט מגיב אוטומטית להודעות נכנסות</p></div>
+<label class="toggle"><input type="checkbox" id="bot-enabled" checked/><span class="slider"></span></label>
+</div>
+<div class="flex items-center justify-between">
+<div><p class="font-semibold text-white">מצב AI (GPT)</p><p class="text-xs text-slate-400 mt-1">שימוש ב-AI לתגובות חכמות</p></div>
+<label class="toggle"><input type="checkbox" id="ai-enabled" checked/><span class="slider"></span></label>
+</div>
+<div class="flex items-center justify-between">
+<div><p class="font-semibold text-white">Escalation אוטומטי</p><p class="text-xs text-slate-400 mt-1">העברה לנציג אנושי לאחר זמן מוגדר</p></div>
+<label class="toggle"><input type="checkbox" id="escalation-enabled" checked/><span class="slider"></span></label>
+</div>
+<div class="grid grid-cols-2 gap-4 pt-2">
+<div>
+<label class="text-sm text-slate-400 block mb-2">זמן Escalation (דקות)</label>
+<input type="number" id="escalation-minutes" value="30" min="1" max="1440" class="w-full bg-surface border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:ring-primary"/>
+</div>
+<div>
+<label class="text-sm text-slate-400 block mb-2">מקסימום הודעות בשיחה</label>
+<input type="number" id="max-messages" value="10" min="1" max="50" class="w-full bg-surface border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:ring-primary"/>
+</div>
+</div>
+</div>
+</div>
+<div class="glass-panel rounded-2xl">
+<div class="p-5 border-b border-white/5 flex items-center gap-3">
+<span class="material-symbols-outlined text-amber-400">chat</span>
+<div><h3 class="font-bold text-white">תגובות אוטומטיות</h3><p class="text-xs text-slate-400">הודעות ברירת מחדל לתרחישים שונים</p></div>
+</div>
+<div class="p-6 space-y-4" id="auto-responses">
+<div>
+<label class="text-sm text-slate-400 block mb-2">הודעת ברוכים הבאים</label>
+<textarea id="msg-welcome" rows="3" class="w-full bg-surface border border-white/10 rounded-xl px-4 py-3 text-white text-sm resize-none focus:ring-primary" placeholder="שלום! אני הבוט של QUANTUM נדל&quot;ן..."></textarea>
+</div>
+<div>
+<label class="text-sm text-slate-400 block mb-2">הודעת Escalation (העברה לנציג)</label>
+<textarea id="msg-escalation" rows="3" class="w-full bg-surface border border-white/10 rounded-xl px-4 py-3 text-white text-sm resize-none focus:ring-primary" placeholder="מעביר אותך לנציג שלנו..."></textarea>
+</div>
+<div>
+<label class="text-sm text-slate-400 block mb-2">הודעת סיום שיחה</label>
+<textarea id="msg-end" rows="3" class="w-full bg-surface border border-white/10 rounded-xl px-4 py-3 text-white text-sm resize-none focus:ring-primary" placeholder="תודה על פנייתך! נחזור אליך בהקדם..."></textarea>
+</div>
+</div>
+</div>
+<div class="glass-panel rounded-2xl">
+<div class="p-5 border-b border-white/5 flex items-center gap-3">
+<span class="material-symbols-outlined text-purple-400">account_tree</span>
+<div><h3 class="font-bold text-white">פלואו שיחה</h3><p class="text-xs text-slate-400">שלבי השיחה האוטומטית</p></div>
+</div>
+<div class="p-5" id="flow-container">
+<div class="text-center py-8 text-slate-500">טוען פלואו...</div>
+</div>
+</div>
+<div class="glass-panel rounded-2xl">
+<div class="p-5 border-b border-white/5 flex items-center gap-3">
+<span class="material-symbols-outlined text-slate-400">history</span>
+<div><h3 class="font-bold text-white">פעילות בוט אחרונה</h3><p class="text-xs text-slate-400">שיחות ב-24 שעות האחרונות</p></div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-sm">
+<thead><tr class="border-b border-white/5 text-slate-500 text-xs uppercase tracking-widest">
+<th class="text-right px-5 py-3">טלפון</th>
+<th class="text-right px-5 py-3">הודעות</th>
+<th class="text-right px-5 py-3">שלב</th>
+<th class="text-right px-5 py-3">Escalation</th>
+<th class="text-right px-5 py-3">זמן</th>
+</tr></thead>
+<tbody id="activity-tbody"><tr><td colspan="5" class="text-center py-12 text-slate-500">טוען...</td></tr></tbody>
+</table>
+</div>
+</div>
+</div>
+<footer class="mt-auto px-8 py-6 border-t border-white/5 text-center text-slate-500 text-[11px] font-medium tracking-widest uppercase">&copy; 2026 QUANTUM Unified Analytics | <span class="q-ver">v...</span></footer>
+</main>
+<script src="shared/toast.js"></script>
+<script src="shared/state-store.js"></script>
+<script src="shared/api-client.js"></script>
+<script>
+const API=(typeof QuantumAPI!=='undefined')?QuantumAPI.API_BASE:'https://pinuy-binuy-analyzer-production.up.railway.app';
+function esc(s){return typeof DOMPurify!=='undefined'?DOMPurify.sanitize(String(s||'-'),{ALLOWED_TAGS:[]}):String(s||'-').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+async function loadBotStatus(){
+  try{
+    const r=await fetch(API+'/api/whatsapp/status');
+    const d=await r.json();
+    const s=d||{};
+    const isActive=s.status==='ok'||s.active||false;
+    document.getElementById('bot-status-text').textContent=isActive?'בוט פעיל':'בוט מנותק';
+    document.getElementById('bot-status-text').className='text-sm font-bold '+(isActive?'text-success-green':'text-alert-rose');
+    document.getElementById('bot-status-grid').innerHTML=`
+      <div class="bg-surface/50 border border-white/5 rounded-xl p-4 text-center">
+        <div class="size-3 rounded-full ${isActive?'bg-success-green':'bg-alert-rose'} mx-auto mb-2 ${isActive?'animate-pulse':''}"></div>
+        <p class="font-bold text-white text-sm">${isActive?'מחובר':'מנותק'}</p>
+        <p class="text-xs text-slate-500 mt-1">חיבור WA</p>
+      </div>
+      <div class="bg-surface/50 border border-white/5 rounded-xl p-4 text-center">
+        <p class="text-2xl font-bold text-white">${s.conversations_today||0}</p>
+        <p class="text-xs text-slate-500 mt-1">שיחות היום</p>
+      </div>
+      <div class="bg-surface/50 border border-white/5 rounded-xl p-4 text-center">
+        <p class="text-2xl font-bold text-amber-400">${s.escalations_today||0}</p>
+        <p class="text-xs text-slate-500 mt-1">Escalations היום</p>
+      </div>
+      <div class="bg-surface/50 border border-white/5 rounded-xl p-4 text-center">
+        <p class="text-2xl font-bold text-success-green">${s.leads_captured_today||0}</p>
+        <p class="text-xs text-slate-500 mt-1">לידים שנלכדו</p>
+      </div>`;
+  }catch(e){document.getElementById('bot-status-grid').innerHTML='<div class="col-span-4 text-center py-8 text-slate-500">לא ניתן לטעון סטטוס בוט</div>';}
+}
+
+async function loadBotSettings(){
+  try{
+    const [r1,r2]=await Promise.all([fetch(API+'/api/whatsapp/stats'),fetch(API+'/api/campaigns/settings')]);
+    const d1=await r1.json();const d2=await r2.json();
+    const s={...d1,...d2,bot_enabled:d1.success!==false,ai_enabled:d1.ai?.currentProvider?true:false,escalation_enabled:d2.wa_bot_enabled!==false,escalation_minutes:d2.wa_bot_escalation_minutes||d2.escalation_minutes||60,welcome_message:d1.persona?'שלום! אני '+d1.persona+', איך אוכל לעזור?':'שלום! איך אוכל לעזור?'};
+    if(s.bot_enabled!==undefined)document.getElementById('bot-enabled').checked=s.bot_enabled;
+    if(s.ai_enabled!==undefined)document.getElementById('ai-enabled').checked=s.ai_enabled;
+    if(s.escalation_enabled!==undefined)document.getElementById('escalation-enabled').checked=s.escalation_enabled;
+    if(s.escalation_minutes)document.getElementById('escalation-minutes').value=s.escalation_minutes;
+    if(s.max_messages)document.getElementById('max-messages').value=s.max_messages;
+    if(s.welcome_message)document.getElementById('msg-welcome').value=s.welcome_message;
+    if(s.escalation_message)document.getElementById('msg-escalation').value=s.escalation_message;
+    if(s.end_message)document.getElementById('msg-end').value=s.end_message;
+  }catch(e){}
+}
+
+async function loadFlow(){
+  try{
+    const r=await fetch(API+'/api/whatsapp/stats');
+    const d=await r.json();
+    const steps=d.flow||d.steps||[];
+    const container=document.getElementById('flow-container');
+    if(!steps.length){container.innerHTML='<div class="text-center py-8 text-slate-500">אין פלואו מוגדר</div>';return;}
+    container.innerHTML=`<div class="space-y-3">${steps.map((step,i)=>`
+      <div class="flex items-center gap-4 bg-surface/50 border border-white/5 rounded-xl p-4">
+        <div class="size-8 rounded-full bg-primary/20 text-primary flex items-center justify-center font-bold text-sm flex-shrink-0">${i+1}</div>
+        <div class="flex-1">
+          <p class="font-semibold text-white text-sm">${step.name||step.step||'שלב '+i}</p>
+          <p class="text-xs text-slate-400 mt-1">${step.message||step.description||''}</p>
+        </div>
+        <span class="text-xs bg-primary/10 text-primary px-2 py-1 rounded-lg">${step.type||'message'}</span>
+      </div>`).join('')}</div>`;
+  }catch(e){document.getElementById('flow-container').innerHTML='<div class="text-center py-8 text-slate-500">אין פלואו זמין</div>';}
+}
+
+async function loadActivity(){
+  try{
+    const r=await fetch(API+'/api/whatsapp/conversations?limit=20');
+    const d=await r.json();
+    const convs=d.conversations||d||[];
+    const tbody=document.getElementById('activity-tbody');
+    if(!convs.length){tbody.innerHTML='<tr><td colspan="5" class="text-center py-12 text-slate-500">אין פעילות</td></tr>';return;}
+    tbody.innerHTML=convs.map(c=>`<tr class="border-b border-white/5 hover:bg-white/5 transition-all">
+      <td class="px-5 py-3 font-mono text-xs text-slate-300" dir="ltr">${esc(c.phone||c.from)}</td>
+      <td class="px-5 py-3 text-center font-bold text-white">${c.message_count||0}</td>
+      <td class="px-5 py-3 text-xs text-slate-400">${c.current_step||c.stage||'-'}</td>
+      <td class="px-5 py-3">${c.escalated?'<span class="status-badge bg-amber-400/20 text-amber-400">כן</span>':'<span class="status-badge bg-slate-700/50 text-slate-400">לא</span>'}</td>
+      <td class="px-5 py-3 text-slate-500 text-xs">${c.last_message_at?new Date(c.last_message_at).toLocaleString('he-IL'):'-'}</td>
+    </tr>`).join('');
+  }catch(e){document.getElementById('activity-tbody').innerHTML='<tr><td colspan="5" class="text-center py-8 text-slate-500">אין נתונים</td></tr>';}
+}
+
+async function saveAllSettings(){
+  const settings={
+    bot_enabled:document.getElementById('bot-enabled').checked,
+    ai_enabled:document.getElementById('ai-enabled').checked,
+    escalation_enabled:document.getElementById('escalation-enabled').checked,
+    escalation_minutes:parseInt(document.getElementById('escalation-minutes').value),
+    max_messages:parseInt(document.getElementById('max-messages').value),
+    welcome_message:document.getElementById('msg-welcome').value,
+    escalation_message:document.getElementById('msg-escalation').value,
+    end_message:document.getElementById('msg-end').value
+  };
+  try{
+    await fetch(API+'/api/campaigns/settings',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({wa_bot_enabled:settings.bot_enabled,wa_bot_ai_enabled:settings.ai_enabled,wa_bot_escalation_enabled:settings.escalation_enabled,wa_bot_escalation_minutes:settings.escalation_minutes,escalation_minutes:settings.escalation_minutes,wa_bot_max_messages:settings.max_messages,wa_bot_welcome_message:settings.welcome_message,wa_bot_escalation_message:settings.escalation_message,wa_bot_end_message:settings.end_message})});
+    const btn=document.querySelector('button[onclick="saveAllSettings()"]');
+    btn.textContent='נשמר!';btn.className=btn.className.replace('bg-primary','bg-success-green');
+    setTimeout(()=>{btn.innerHTML='<span class="material-symbols-outlined text-lg">save</span>שמור הכל';btn.className=btn.className.replace('bg-success-green','bg-primary');},2000);
+  }catch(e){QuantumToast.error('שגיאה בשמירה');}
+}
+
+async function loadVersion(){try{const r=await fetch(API+'/api/version');const d=await r.json();document.querySelectorAll('.q-ver').forEach(el=>el.textContent=d.version||'v1');}catch(e){}}
+
+loadBotStatus();loadBotSettings();loadFlow();loadActivity();loadVersion();
+</script>
+<script src="shared/mobile-nav.js"></script>
+</body>
+</html>
