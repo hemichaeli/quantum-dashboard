@@ -1,0 +1,248 @@
+{
+  "campaign": {
+    "name": "QUANTUM Investor Leads - Pilot",
+    "objective": "Leads",
+    "special_category": "Housing",
+    "cbo": false
+  },
+  "ad_sets": [
+    {
+      "id": "EN",
+      "name": "QUANTUM EN - US/CA/UK",
+      "budget_daily": 10,
+      "currency": "USD",
+      "locations": ["United States", "Canada", "United Kingdom"],
+      "interests": ["Nefesh B'Nefesh", "Birthright Israel", "Times of Israel", "Jewish National Fund", "Israel Bonds", "El Al Airlines", "Real estate investing"],
+      "placements": {
+        "facebook": ["Feed", "Video feeds", "Stories", "Reels"],
+        "instagram": ["Feed", "Stories", "Reels", "Explore"]
+      },
+      "optimization": "Lead generation",
+      "bid_strategy": "Lowest cost",
+      "ads": [
+        {
+          "video": "QUANTUM_EN_A.mp4",
+          "name": "EN_A - Family + Hidden Properties",
+          "primary_text": "Israeli real estate has been climbing for over a decade. Thanks to our profound connection to the urban renewal market, we know deals others don't know about. Not available to the public. Tell us what your family needs and we'll match you with the right opportunity.",
+          "headline": "Find Your Family's Home in Israel",
+          "description": "Hidden properties. High returns.",
+          "cta": "Learn More",
+          "url": "https://u-r-quantum.com/international-investors?source=meta_en_a&utm_source=meta&utm_medium=paid&utm_campaign=quantum_pilot&utm_content=EN_A_Family_Hidden_Properties&utm_term=QUANTUM_EN_US_CA_UK"
+        },
+        {
+          "video": "QUANTUM_EN_B.mp4",
+          "name": "EN_B - Kids + Hidden Gems",
+          "primary_text": "Your kids are serving in the IDF. Studying at university. Building their future in Israel. Your next investment can be their home. Thanks to our deep knowledge of the urban renewal market, we find hidden gems with returns other investors can only dream of. Tell us what you need.",
+          "headline": "A Home for Your Kids in Israel",
+          "description": "Hidden gems. Dream returns.",
+          "cta": "Learn More",
+          "url": "https://u-r-quantum.com/international-investors?source=meta_en_b&utm_source=meta&utm_medium=paid&utm_campaign=quantum_pilot&utm_content=EN_B_Kids_Hidden_Gems&utm_term=QUANTUM_EN_US_CA_UK"
+        },
+        {
+          "video": "QUANTUM_EN_C.mp4",
+          "name": "EN_C - Urgency + Pre-Renewal",
+          "primary_text": "The world has changed. More Jewish families than ever need a foothold in Israel. Thanks to our deep connection to the urban renewal ecosystem, we identify pre-renewal properties before prices jump. Returns of 30-80%. Real security for your family. Tell us what you need.",
+          "headline": "Your Place in Israel",
+          "description": "Pre-renewal. Real security.",
+          "cta": "Learn More",
+          "url": "https://u-r-quantum.com/international-investors?source=meta_en_c&utm_source=meta&utm_medium=paid&utm_campaign=quantum_pilot&utm_content=EN_C_Urgency_Pre_Renewal&utm_term=QUANTUM_EN_US_CA_UK"
+        }
+      ]
+    },
+    {
+      "id": "FR",
+      "name": "QUANTUM FR - France/Belgium",
+      "budget_daily": 10,
+      "currency": "USD",
+      "locations": ["France", "Belgium"],
+      "interests": ["Qualita", "Agence Juive", "Tribune Juive", "Radio J", "Israel", "Aliyah", "Investissement immobilier"],
+      "placements": {
+        "facebook": ["Feed", "Video feeds", "Stories", "Reels"],
+        "instagram": ["Feed", "Stories", "Reels", "Explore"]
+      },
+      "optimization": "Lead generation",
+      "bid_strategy": "Lowest cost",
+      "ads": [
+        {
+          "video": "QUANTUM_FR_A.mp4",
+          "name": "FR_A - Votre chez-vous",
+          "primary_text": "L'immobilier israelien connait une croissance constante depuis plus de 10 ans. Grace a notre connexion profonde avec le marche du renouvellement urbain, nous connaissons des biens que le marche ne connait pas encore. Rendement de 30-80%. Dites-nous ce que votre famille recherche.",
+          "headline": "Votre chez-vous en Israel",
+          "description": "Biens caches. Haut rendement.",
+          "cta": "En savoir plus",
+          "url": "https://u-r-quantum.com/international-investors?source=meta_fr_a&utm_source=meta&utm_medium=paid&utm_campaign=quantum_pilot&utm_content=FR_A_Votre_chez_vous&utm_term=QUANTUM_FR_France_Belgium"
+        },
+        {
+          "video": "QUANTUM_FR_B.mp4",
+          "name": "FR_B - Enfants + joyaux",
+          "primary_text": "Vos enfants servent dans Tsahal. Etudient en Israel. Construisent leur avenir. Votre prochain investissement peut etre leur chez-soi. Grace a notre connaissance intime du renouvellement urbain, nous trouvons des joyaux caches avec des rendements dont les autres ne font que rever.",
+          "headline": "Un foyer pour vos enfants en Israel",
+          "description": "Joyaux caches. Rendements rares.",
+          "cta": "En savoir plus",
+          "url": "https://u-r-quantum.com/international-investors?source=meta_fr_b&utm_source=meta&utm_medium=paid&utm_campaign=quantum_pilot&utm_content=FR_B_Enfants_joyaux&utm_term=QUANTUM_FR_France_Belgium"
+        },
+        {
+          "video": "QUANTUM_FR_C.mp4",
+          "name": "FR_C - Urgence",
+          "primary_text": "Les prix dans les zones de renouvellement urbain augmentent a chaque avancee statutaire du projet. Celui qui entre aujourd'hui paie 20-40% de moins que celui qui entrera demain. Grace a notre connexion directe avec de nombreux complexes, nous savons exactement ou sont les meilleures opportunites.",
+          "headline": "Avant que les prix ne montent",
+          "description": "Pre-renouvellement. Sans engagement.",
+          "cta": "En savoir plus",
+          "url": "https://u-r-quantum.com/international-investors?source=meta_fr_c&utm_source=meta&utm_medium=paid&utm_campaign=quantum_pilot&utm_content=FR_C_Urgence&utm_term=QUANTUM_FR_France_Belgium"
+        }
+      ]
+    },
+    {
+      "id": "ES",
+      "name": "QUANTUM ES - LATAM",
+      "budget_daily": 10,
+      "currency": "USD",
+      "locations": ["Argentina", "Mexico", "Panama"],
+      "interests": ["AMIA", "DAIA", "Israel", "Taglit Birthright", "Keren Hayesod"],
+      "placements": {
+        "facebook": ["Feed", "Video feeds", "Stories", "Reels"],
+        "instagram": ["Feed", "Stories", "Reels", "Explore"]
+      },
+      "optimization": "Lead generation",
+      "bid_strategy": "Lowest cost",
+      "ads": [
+        {
+          "video": "QUANTUM_ES_A.mp4",
+          "name": "ES_A - Tu hogar",
+          "primary_text": "El mercado inmobiliario israeli crece de forma constante. Gracias a nuestra profunda conexion con el mercado de renovacion urbana, conocemos propiedades que el mercado aun no conoce. Retornos de 30-80%. Cuentanos que necesita tu familia.",
+          "headline": "Tu hogar en Israel",
+          "description": "Propiedades ocultas. Alta rentabilidad.",
+          "cta": "Mas informacion",
+          "url": "https://u-r-quantum.com/international-investors?source=meta_es_a&utm_source=meta&utm_medium=paid&utm_campaign=quantum_pilot&utm_content=ES_A_Tu_hogar&utm_term=QUANTUM_ES_LATAM"
+        },
+        {
+          "video": "QUANTUM_ES_B.mp4",
+          "name": "ES_B - Hijos + joyas",
+          "primary_text": "Tus hijos sirven en las FDI. Estudian. Construyen su futuro en Israel. Tu proxima inversion puede ser su hogar. Gracias a nuestro conocimiento profundo del mercado de renovacion, encontramos joyas ocultas con retornos que otros inversores solo pueden sonar.",
+          "headline": "Un hogar para tus hijos en Israel",
+          "description": "Joyas ocultas. Retornos unicos.",
+          "cta": "Mas informacion",
+          "url": "https://u-r-quantum.com/international-investors?source=meta_es_b&utm_source=meta&utm_medium=paid&utm_campaign=quantum_pilot&utm_content=ES_B_Hijos_joyas&utm_term=QUANTUM_ES_LATAM"
+        }
+      ]
+    },
+    {
+      "id": "DE",
+      "name": "QUANTUM DE - Germany/Austria",
+      "budget_daily": 10,
+      "currency": "USD",
+      "locations": ["Germany", "Austria"],
+      "interests": ["Israel", "Zentralrat der Juden", "Judische Allgemeine", "Keren Hayesod", "El Al Airlines", "Immobilieninvestment"],
+      "placements": {
+        "facebook": ["Feed", "Video feeds", "Stories", "Reels"],
+        "instagram": ["Feed", "Stories", "Reels", "Explore"]
+      },
+      "optimization": "Lead generation",
+      "bid_strategy": "Lowest cost",
+      "ads": [
+        {
+          "video": "QUANTUM_DE_A.mp4",
+          "name": "DE_A - Zuhause + Rendite",
+          "primary_text": "Der israelische Immobilienmarkt wachst seit uber einem Jahrzehnt stetig. Dank unserer tiefen Verbindung zum Stadterneuerungsmarkt kennen wir Objekte, von denen der Markt noch nichts weiss. Renditen von 30-80%. Sagen Sie uns, was Ihre Familie braucht.",
+          "headline": "Ihr Zuhause in Israel",
+          "description": "Verborgene Objekte. Hohe Rendite.",
+          "cta": "Mehr erfahren",
+          "url": "https://u-r-quantum.com/international-investors?source=meta_de_a&utm_source=meta&utm_medium=paid&utm_campaign=quantum_pilot&utm_content=DE_A_Zuhause_Rendite&utm_term=QUANTUM_DE_Germany_Austria"
+        },
+        {
+          "video": "QUANTUM_DE_B.mp4",
+          "name": "DE_B - Kinder + Juwelen",
+          "primary_text": "Ihre Kinder dienen in der IDF. Studieren. Bauen ihre Zukunft in Israel. Ihre Investition kann ihr Zuhause sein. Dank unserer tiefen Kenntnis des Erneuerungsmarktes finden wir verborgene Juwelen mit Renditen, von denen andere Investoren nur traumen.",
+          "headline": "Ein Zuhause fur Ihre Kinder",
+          "description": "Verborgene Juwelen. Traumrenditen.",
+          "cta": "Mehr erfahren",
+          "url": "https://u-r-quantum.com/international-investors?source=meta_de_b&utm_source=meta&utm_medium=paid&utm_campaign=quantum_pilot&utm_content=DE_B_Kinder_Juwelen&utm_term=QUANTUM_DE_Germany_Austria"
+        }
+      ]
+    },
+    {
+      "id": "RU",
+      "name": "QUANTUM RU - Russia/CIS",
+      "budget_daily": 10,
+      "currency": "USD",
+      "locations": ["Russia", "Ukraine", "Belarus", "Kazakhstan"],
+      "interests": ["Israel", "Nefesh B'Nefesh", "Jewish Agency", "El Al Airlines"],
+      "placements": {
+        "facebook": ["Feed", "Video feeds", "Stories", "Reels"],
+        "instagram": ["Feed", "Stories", "Reels", "Explore"]
+      },
+      "optimization": "Lead generation",
+      "bid_strategy": "Lowest cost",
+      "ads": [
+        {
+          "video": "QUANTUM_RU_A.mp4",
+          "name": "RU_A - Дом + доходность",
+          "primary_text": "Израильская недвижимость стабильно растет уже более 10 лет. Благодаря нашей глубокой связи с рынком городского обновления, мы знаем об объектах, о которых рынок ещё не знает. Доходность 30-80%. Расскажите, что нужно вашей семье.",
+          "headline": "Ваш дом в Израиле",
+          "description": "Скрытые объекты. Высокий рост.",
+          "cta": "Подробнее",
+          "url": "https://u-r-quantum.com/international-investors?source=meta_ru_a&utm_source=meta&utm_medium=paid&utm_campaign=quantum_pilot&utm_content=RU_A_Dom_dohodnost&utm_term=QUANTUM_RU_Russia_CIS"
+        },
+        {
+          "video": "QUANTUM_RU_B.mp4",
+          "name": "RU_B - Дети + жемчужины",
+          "primary_text": "Ваши дети служат в ЦАХАЛ. Учатся. Строят будущее в Израиле. Ваша инвестиция может стать их домом. Благодаря глубокому знанию рынка обновления, мы находим скрытые жемчужины с доходностью, о которой другие инвесторы могут только мечтать.",
+          "headline": "Дом для ваших детей в Израиле",
+          "description": "Скрытые жемчужины. Высокая доходность.",
+          "cta": "Подробнее",
+          "url": "https://u-r-quantum.com/international-investors?source=meta_ru_b&utm_source=meta&utm_medium=paid&utm_campaign=quantum_pilot&utm_content=RU_B_Deti_zhemchuzhiny&utm_term=QUANTUM_RU_Russia_CIS"
+        }
+      ]
+    },
+    {
+      "id": "HE",
+      "name": "QUANTUM HE - Israel",
+      "budget_daily": 10,
+      "currency": "USD",
+      "locations": ["Israel"],
+      "interests": ["השקעות נדל\"ן", "פינוי בינוי", "התחדשות עירונית", "מדלן", "יד2 נדל\"ן", "כלכליסט נדל\"ן"],
+      "placements": {
+        "facebook": ["Feed", "Video feeds", "Stories", "Reels"],
+        "instagram": ["Feed", "Stories", "Reels", "Explore"]
+      },
+      "optimization": "Lead generation",
+      "bid_strategy": "Lowest cost",
+      "ads": [
+        {
+          "video": "QUANTUM_HE_A.mp4",
+          "name": "HE_A - נכסים שהשוק לא יודע",
+          "primary_text": "כולם רואים את אותם נכסים. בזכות החיבור העמוק שלנו לעולם הפינוי-בינוי, אנחנו יודעים על נכסים שהשוק לא יודע עליהם, רגע לפני שהמחיר קופץ. תשואה של 30-80%. ספרו לנו מה אתם מחפשים.",
+          "headline": "נכסים שהשוק לא יודע עליהם",
+          "description": "לפני השוק. תשואה גבוהה.",
+          "cta": "מידע נוסף",
+          "url": "https://u-r-quantum.com/international-investors?source=meta_he_a&utm_source=meta&utm_medium=paid&utm_campaign=quantum_pilot&utm_content=HE_A_Hidden_Properties&utm_term=QUANTUM_HE_Israel"
+        },
+        {
+          "video": "QUANTUM_HE_B.mp4",
+          "name": "HE_B - הילדים שלכם בישראל",
+          "primary_text": "הילדים שלכם בישראל. משרתים, לומדים, בונים עתיד. ההשקעה הבאה שלכם יכולה להיות הבית שלהם. בזכות ההיכרות העמוקה שלנו עם שוק ההתחדשות העירונית, אנחנו מוצאים נכסים נסתרים עם תשואה שמשקיעים אחרים רק חולמים עליה. ספרו לנו על המשפחה שלכם.",
+          "headline": "ההשקעה הבאה שלכם - הבית שלהם",
+          "description": "נכסים נסתרים. תשואה יוצאת דופן.",
+          "cta": "מידע נוסף",
+          "url": "https://u-r-quantum.com/international-investors?source=meta_he_b&utm_source=meta&utm_medium=paid&utm_campaign=quantum_pilot&utm_content=HE_B_Kids_Israel&utm_term=QUANTUM_HE_Israel"
+        }
+      ]
+    }
+  ],
+  "video_assets": [
+    {"file": "QUANTUM_EN_A.mp4", "lang": "EN", "variant": "Family + Hidden Properties", "clip": 1},
+    {"file": "QUANTUM_EN_B.mp4", "lang": "EN", "variant": "Kids + Hidden Gems", "clip": 1},
+    {"file": "QUANTUM_EN_C.mp4", "lang": "EN", "variant": "Urgency + Pre-Renewal", "clip": 3},
+    {"file": "QUANTUM_FR_A.mp4", "lang": "FR", "variant": "Votre chez-vous", "clip": 2},
+    {"file": "QUANTUM_FR_B.mp4", "lang": "FR", "variant": "Enfants + joyaux", "clip": 1},
+    {"file": "QUANTUM_FR_C.mp4", "lang": "FR", "variant": "Urgence", "clip": 3},
+    {"file": "QUANTUM_ES_A.mp4", "lang": "ES", "variant": "Tu hogar", "clip": 2},
+    {"file": "QUANTUM_ES_B.mp4", "lang": "ES", "variant": "Hijos + joyas", "clip": 1},
+    {"file": "QUANTUM_DE_A.mp4", "lang": "DE", "variant": "Zuhause + Rendite", "clip": 2},
+    {"file": "QUANTUM_DE_B.mp4", "lang": "DE", "variant": "Kinder + Juwelen", "clip": 1},
+    {"file": "QUANTUM_RU_A.mp4", "lang": "RU", "variant": "Дом + доходность", "clip": 2},
+    {"file": "QUANTUM_RU_B.mp4", "lang": "RU", "variant": "Дети + жемчужины", "clip": 1},
+    {"file": "QUANTUM_HE_A.mp4", "lang": "HE", "variant": "נכסים שהשוק לא יודע", "clip": 1},
+    {"file": "QUANTUM_HE_B.mp4", "lang": "HE", "variant": "הילדים שלכם בישראל", "clip": 2}
+  ]
+}

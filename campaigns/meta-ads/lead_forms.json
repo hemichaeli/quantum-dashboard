@@ -1,0 +1,516 @@
+{
+  "lead_forms": [
+    {
+      "id": "form_en",
+      "language": "EN",
+      "name": "QUANTUM - Find Your Investment Property",
+      "locale": "en_US",
+      "intro": {
+        "headline": "Find Your Investment Property in Israel",
+        "description": "QUANTUM specializes in Israel's urban renewal market, identifying high-potential properties before prices rise. Our deep connections give you access to deals not available to the public, with projected returns of 30-80%. Tell us about your investment goals and we'll match you with the right opportunity."
+      },
+      "questions": [
+        {
+          "type": "FULL_NAME",
+          "key": "full_name",
+          "label": "Full Name"
+        },
+        {
+          "type": "EMAIL",
+          "key": "email",
+          "label": "Email Address"
+        },
+        {
+          "type": "PHONE",
+          "key": "phone_number",
+          "label": "Phone Number"
+        },
+        {
+          "type": "CUSTOM",
+          "key": "investment_budget",
+          "label": "What is your investment budget range?",
+          "field_type": "MULTIPLE_CHOICE",
+          "options": [
+            "$100K - $200K",
+            "$200K - $500K",
+            "$500K - $1M",
+            "$1M+"
+          ]
+        },
+        {
+          "type": "CUSTOM",
+          "key": "investment_timeline",
+          "label": "When are you looking to invest?",
+          "field_type": "MULTIPLE_CHOICE",
+          "options": [
+            "Immediately",
+            "1-3 months",
+            "3-6 months",
+            "Just exploring"
+          ]
+        },
+        {
+          "type": "CUSTOM",
+          "key": "family_in_israel",
+          "label": "Do you have family in Israel?",
+          "field_type": "MULTIPLE_CHOICE",
+          "options": [
+            "Yes",
+            "No"
+          ]
+        }
+      ],
+      "privacy_policy": {
+        "url": "https://u-r-quantum.com/privacy",
+        "link_text": "Privacy Policy"
+      },
+      "thank_you_screen": {
+        "headline": "Thank You for Your Interest!",
+        "description": "A QUANTUM investment advisor will contact you within 24 hours to discuss opportunities tailored to your needs.",
+        "cta": {
+          "type": "VISIT_WEBSITE",
+          "label": "Visit Our Website",
+          "url": "https://u-r-quantum.com/international-investors"
+        }
+      },
+      "context_card": {
+        "title": "About QUANTUM",
+        "content": [
+          "Israel's urban renewal market expert",
+          "Access to pre-renewal properties before prices jump",
+          "Projected returns of 30-80%",
+          "Personalized investment matching for international families",
+          "Deep connections across the urban renewal ecosystem"
+        ]
+      }
+    },
+    {
+      "id": "form_fr",
+      "language": "FR",
+      "name": "QUANTUM - Trouvez Votre Investissement",
+      "locale": "fr_FR",
+      "intro": {
+        "headline": "Trouvez Votre Investissement Immobilier en Israel",
+        "description": "QUANTUM est specialise dans le marche du renouvellement urbain en Israel, identifiant des biens a fort potentiel avant la hausse des prix. Nos connexions profondes vous donnent acces a des opportunites non disponibles au public, avec des rendements projetes de 30-80%. Parlez-nous de vos objectifs d'investissement."
+      },
+      "questions": [
+        {
+          "type": "FULL_NAME",
+          "key": "full_name",
+          "label": "Nom complet"
+        },
+        {
+          "type": "EMAIL",
+          "key": "email",
+          "label": "Adresse e-mail"
+        },
+        {
+          "type": "PHONE",
+          "key": "phone_number",
+          "label": "Numero de telephone"
+        },
+        {
+          "type": "CUSTOM",
+          "key": "investment_budget",
+          "label": "Quel est votre budget d'investissement ?",
+          "field_type": "MULTIPLE_CHOICE",
+          "options": [
+            "100K$ - 200K$",
+            "200K$ - 500K$",
+            "500K$ - 1M$",
+            "1M$+"
+          ]
+        },
+        {
+          "type": "CUSTOM",
+          "key": "investment_timeline",
+          "label": "Quand souhaitez-vous investir ?",
+          "field_type": "MULTIPLE_CHOICE",
+          "options": [
+            "Immediatement",
+            "1-3 mois",
+            "3-6 mois",
+            "Je me renseigne"
+          ]
+        },
+        {
+          "type": "CUSTOM",
+          "key": "family_in_israel",
+          "label": "Avez-vous de la famille en Israel ?",
+          "field_type": "MULTIPLE_CHOICE",
+          "options": [
+            "Oui",
+            "Non"
+          ]
+        }
+      ],
+      "privacy_policy": {
+        "url": "https://u-r-quantum.com/privacy",
+        "link_text": "Politique de confidentialite"
+      },
+      "thank_you_screen": {
+        "headline": "Merci pour votre interet !",
+        "description": "Un conseiller en investissement QUANTUM vous contactera dans les 24 heures pour discuter des opportunites adaptees a vos besoins.",
+        "cta": {
+          "type": "VISIT_WEBSITE",
+          "label": "Visitez notre site",
+          "url": "https://u-r-quantum.com/international-investors"
+        }
+      },
+      "context_card": {
+        "title": "A propos de QUANTUM",
+        "content": [
+          "Expert du marche du renouvellement urbain en Israel",
+          "Acces a des biens pre-renouvellement avant la hausse des prix",
+          "Rendements projetes de 30-80%",
+          "Accompagnement personnalise pour les familles internationales",
+          "Connexions profondes dans l'ecosysteme du renouvellement urbain"
+        ]
+      }
+    },
+    {
+      "id": "form_es",
+      "language": "ES",
+      "name": "QUANTUM - Encuentra Tu Inversion",
+      "locale": "es_LA",
+      "intro": {
+        "headline": "Encuentra Tu Inversion Inmobiliaria en Israel",
+        "description": "QUANTUM se especializa en el mercado de renovacion urbana de Israel, identificando propiedades de alto potencial antes de que suban los precios. Nuestras conexiones profundas te dan acceso a oportunidades no disponibles al publico, con retornos proyectados del 30-80%. Cuentanos sobre tus objetivos de inversion."
+      },
+      "questions": [
+        {
+          "type": "FULL_NAME",
+          "key": "full_name",
+          "label": "Nombre completo"
+        },
+        {
+          "type": "EMAIL",
+          "key": "email",
+          "label": "Correo electronico"
+        },
+        {
+          "type": "PHONE",
+          "key": "phone_number",
+          "label": "Numero de telefono"
+        },
+        {
+          "type": "CUSTOM",
+          "key": "investment_budget",
+          "label": "Cual es tu rango de presupuesto de inversion?",
+          "field_type": "MULTIPLE_CHOICE",
+          "options": [
+            "$100K - $200K",
+            "$200K - $500K",
+            "$500K - $1M",
+            "$1M+"
+          ]
+        },
+        {
+          "type": "CUSTOM",
+          "key": "investment_timeline",
+          "label": "Cuando deseas invertir?",
+          "field_type": "MULTIPLE_CHOICE",
+          "options": [
+            "Inmediatamente",
+            "1-3 meses",
+            "3-6 meses",
+            "Solo estoy explorando"
+          ]
+        },
+        {
+          "type": "CUSTOM",
+          "key": "family_in_israel",
+          "label": "Tienes familia en Israel?",
+          "field_type": "MULTIPLE_CHOICE",
+          "options": [
+            "Si",
+            "No"
+          ]
+        }
+      ],
+      "privacy_policy": {
+        "url": "https://u-r-quantum.com/privacy",
+        "link_text": "Politica de privacidad"
+      },
+      "thank_you_screen": {
+        "headline": "Gracias por tu interes!",
+        "description": "Un asesor de inversiones de QUANTUM te contactara dentro de las proximas 24 horas para hablar sobre oportunidades adaptadas a tus necesidades.",
+        "cta": {
+          "type": "VISIT_WEBSITE",
+          "label": "Visita nuestro sitio web",
+          "url": "https://u-r-quantum.com/international-investors"
+        }
+      },
+      "context_card": {
+        "title": "Sobre QUANTUM",
+        "content": [
+          "Expertos en el mercado de renovacion urbana de Israel",
+          "Acceso a propiedades pre-renovacion antes de que suban los precios",
+          "Retornos proyectados del 30-80%",
+          "Acompanamiento personalizado para familias internacionales",
+          "Conexiones profundas en el ecosistema de renovacion urbana"
+        ]
+      }
+    },
+    {
+      "id": "form_de",
+      "language": "DE",
+      "name": "QUANTUM - Finden Sie Ihre Investition",
+      "locale": "de_DE",
+      "intro": {
+        "headline": "Finden Sie Ihre Immobilieninvestition in Israel",
+        "description": "QUANTUM ist spezialisiert auf den israelischen Stadterneuerungsmarkt und identifiziert Objekte mit hohem Potenzial, bevor die Preise steigen. Unsere tiefen Verbindungen geben Ihnen Zugang zu Angeboten, die der Offentlichkeit nicht zur Verfugung stehen, mit prognostizierten Renditen von 30-80%. Erzahlen Sie uns von Ihren Investitionszielen."
+      },
+      "questions": [
+        {
+          "type": "FULL_NAME",
+          "key": "full_name",
+          "label": "Vollstandiger Name"
+        },
+        {
+          "type": "EMAIL",
+          "key": "email",
+          "label": "E-Mail-Adresse"
+        },
+        {
+          "type": "PHONE",
+          "key": "phone_number",
+          "label": "Telefonnummer"
+        },
+        {
+          "type": "CUSTOM",
+          "key": "investment_budget",
+          "label": "Wie hoch ist Ihr Investitionsbudget?",
+          "field_type": "MULTIPLE_CHOICE",
+          "options": [
+            "$100K - $200K",
+            "$200K - $500K",
+            "$500K - $1M",
+            "$1M+"
+          ]
+        },
+        {
+          "type": "CUSTOM",
+          "key": "investment_timeline",
+          "label": "Wann mochten Sie investieren?",
+          "field_type": "MULTIPLE_CHOICE",
+          "options": [
+            "Sofort",
+            "1-3 Monate",
+            "3-6 Monate",
+            "Ich informiere mich nur"
+          ]
+        },
+        {
+          "type": "CUSTOM",
+          "key": "family_in_israel",
+          "label": "Haben Sie Familie in Israel?",
+          "field_type": "MULTIPLE_CHOICE",
+          "options": [
+            "Ja",
+            "Nein"
+          ]
+        }
+      ],
+      "privacy_policy": {
+        "url": "https://u-r-quantum.com/privacy",
+        "link_text": "Datenschutzrichtlinie"
+      },
+      "thank_you_screen": {
+        "headline": "Vielen Dank fur Ihr Interesse!",
+        "description": "Ein QUANTUM-Investitionsberater wird Sie innerhalb von 24 Stunden kontaktieren, um Moglichkeiten zu besprechen, die auf Ihre Bedurfnisse zugeschnitten sind.",
+        "cta": {
+          "type": "VISIT_WEBSITE",
+          "label": "Besuchen Sie unsere Website",
+          "url": "https://u-r-quantum.com/international-investors"
+        }
+      },
+      "context_card": {
+        "title": "Uber QUANTUM",
+        "content": [
+          "Experte fur den israelischen Stadterneuerungsmarkt",
+          "Zugang zu Pre-Renewal-Objekten vor Preisanstiegen",
+          "Prognostizierte Renditen von 30-80%",
+          "Personalisierte Investitionsberatung fur internationale Familien",
+          "Tiefe Verbindungen im Stadterneuerungs-Okosystem"
+        ]
+      }
+    },
+    {
+      "id": "form_ru",
+      "language": "RU",
+      "name": "QUANTUM - Найдите Вашу Инвестицию",
+      "locale": "ru_RU",
+      "intro": {
+        "headline": "Найдите вашу инвестиционную недвижимость в Израиле",
+        "description": "QUANTUM специализируется на рынке городского обновления Израиля, выявляя объекты с высоким потенциалом до роста цен. Наши глубокие связи дают вам доступ к предложениям, недоступным широкой публике, с прогнозируемой доходностью 30-80%. Расскажите нам о ваших инвестиционных целях."
+      },
+      "questions": [
+        {
+          "type": "FULL_NAME",
+          "key": "full_name",
+          "label": "Полное имя"
+        },
+        {
+          "type": "EMAIL",
+          "key": "email",
+          "label": "Электронная почта"
+        },
+        {
+          "type": "PHONE",
+          "key": "phone_number",
+          "label": "Номер телефона"
+        },
+        {
+          "type": "CUSTOM",
+          "key": "investment_budget",
+          "label": "Какой у вас бюджет для инвестиций?",
+          "field_type": "MULTIPLE_CHOICE",
+          "options": [
+            "$100K - $200K",
+            "$200K - $500K",
+            "$500K - $1M",
+            "$1M+"
+          ]
+        },
+        {
+          "type": "CUSTOM",
+          "key": "investment_timeline",
+          "label": "Когда вы планируете инвестировать?",
+          "field_type": "MULTIPLE_CHOICE",
+          "options": [
+            "Немедленно",
+            "1-3 месяца",
+            "3-6 месяцев",
+            "Просто изучаю"
+          ]
+        },
+        {
+          "type": "CUSTOM",
+          "key": "family_in_israel",
+          "label": "Есть ли у вас семья в Израиле?",
+          "field_type": "MULTIPLE_CHOICE",
+          "options": [
+            "Да",
+            "Нет"
+          ]
+        }
+      ],
+      "privacy_policy": {
+        "url": "https://u-r-quantum.com/privacy",
+        "link_text": "Политика конфиденциальности"
+      },
+      "thank_you_screen": {
+        "headline": "Спасибо за ваш интерес!",
+        "description": "Инвестиционный консультант QUANTUM свяжется с вами в течение 24 часов, чтобы обсудить возможности, подобранные под ваши потребности.",
+        "cta": {
+          "type": "VISIT_WEBSITE",
+          "label": "Посетите наш сайт",
+          "url": "https://u-r-quantum.com/international-investors"
+        }
+      },
+      "context_card": {
+        "title": "О компании QUANTUM",
+        "content": [
+          "Эксперт на рынке городского обновления Израиля",
+          "Доступ к объектам до начала обновления и роста цен",
+          "Прогнозируемая доходность 30-80%",
+          "Персонализированный подбор инвестиций для международных семей",
+          "Глубокие связи в экосистеме городского обновления"
+        ]
+      }
+    },
+    {
+      "id": "form_he",
+      "language": "HE",
+      "name": "QUANTUM - מצאו את ההשקעה שלכם",
+      "locale": "he_IL",
+      "intro": {
+        "headline": "מצאו את ההשקעה הנדל\"נית שלכם בישראל",
+        "description": "QUANTUM מתמחה בשוק ההתחדשות העירונית בישראל, ומזהה נכסים בעלי פוטנציאל גבוה לפני עליית המחירים. הקשרים העמוקים שלנו נותנים לכם גישה לעסקאות שלא זמינות לציבור הרחב, עם תשואה צפויה של 30-80%. ספרו לנו על יעדי ההשקעה שלכם."
+      },
+      "questions": [
+        {
+          "type": "FULL_NAME",
+          "key": "full_name",
+          "label": "שם מלא"
+        },
+        {
+          "type": "EMAIL",
+          "key": "email",
+          "label": "כתובת אימייל"
+        },
+        {
+          "type": "PHONE",
+          "key": "phone_number",
+          "label": "מספר טלפון"
+        },
+        {
+          "type": "CUSTOM",
+          "key": "investment_budget",
+          "label": "מה טווח התקציב להשקעה?",
+          "field_type": "MULTIPLE_CHOICE",
+          "options": [
+            "$100K - $200K",
+            "$200K - $500K",
+            "$500K - $1M",
+            "+$1M"
+          ]
+        },
+        {
+          "type": "CUSTOM",
+          "key": "investment_timeline",
+          "label": "מתי אתם מתכננים להשקיע?",
+          "field_type": "MULTIPLE_CHOICE",
+          "options": [
+            "מיידית",
+            "1-3 חודשים",
+            "3-6 חודשים",
+            "רק בודקים"
+          ]
+        },
+        {
+          "type": "CUSTOM",
+          "key": "family_in_israel",
+          "label": "יש לכם משפחה בישראל?",
+          "field_type": "MULTIPLE_CHOICE",
+          "options": [
+            "כן",
+            "לא"
+          ]
+        }
+      ],
+      "privacy_policy": {
+        "url": "https://u-r-quantum.com/privacy",
+        "link_text": "מדיניות פרטיות"
+      },
+      "thank_you_screen": {
+        "headline": "תודה על ההתעניינות!",
+        "description": "יועץ השקעות של QUANTUM ייצור איתכם קשר תוך 24 שעות כדי לדון בהזדמנויות המותאמות לצרכים שלכם.",
+        "cta": {
+          "type": "VISIT_WEBSITE",
+          "label": "בקרו באתר שלנו",
+          "url": "https://u-r-quantum.com/international-investors"
+        }
+      },
+      "context_card": {
+        "title": "אודות QUANTUM",
+        "content": [
+          "מומחים בשוק ההתחדשות העירונית בישראל",
+          "גישה לנכסים לפני התחדשות ולפני עליית מחירים",
+          "תשואה צפויה של 30-80%",
+          "ליווי השקעות מותאם אישית למשפחות בינלאומיות",
+          "קשרים עמוקים באקוסיסטם של ההתחדשות העירונית"
+        ]
+      }
+    }
+  ],
+  "form_settings": {
+    "form_type": "INSTANT_FORM",
+    "sharing": "RESTRICTED",
+    "format": "MORE_VOLUME",
+    "follow_up_action": "WEBSITE",
+    "block_off_facebook_leads": false,
+    "organic_leads_enabled": false
+  }
+}

@@ -1,0 +1,7 @@
+name = "yad2-proxy"
+main = "src/index.js"
+compatibility_date = "2024-01-01"
+account_id = "28a3221ab3de3e6f6d9b931129a951ee"
+
+[vars]
+SECRET_KEY = "pinuy-binuy-2026"
