@@ -9,3 +9,6 @@ __pycache__/
 dist/
 build/
 outputs/
+
+# campaign video assets (live in Google Drive Campaign_Package_v7, not git)
+*.mp4

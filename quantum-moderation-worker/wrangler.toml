@@ -1,0 +1,7 @@
+name = "quantum-moderation"
+main = "worker.js"
+compatibility_date = "2024-03-01"
+
+[[kv_namespaces]]
+binding = "MODERATION_LOG"
+id = "b21d1d334c264464b3e58ab52e1ed3e5"
